@@ -1,11 +1,81 @@
-<ion-header [translucent]="true">
+<!-- <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
       Home
     </ion-title>
   </ion-toolbar>
-</ion-header>
+</ion-header> -->
 
 <ion-content [fullscreen]="true">
+  <div class="background"></div>
 
+  <div class="button-container">
+    <ion-button shape="round" class="left">PetPalooza</ion-button>
+    <ion-button shape="round" class="right"></ion-button>
+  </div>
+
+  <swiper-container navigation>
+    <swiper-slide class="centered-slide">
+      <ion-card mode="md" class="card">
+        <img class="img" alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/thumbnail.svg" />
+      </ion-card>
+    </swiper-slide>
+    
+    <swiper-slide class="centered-slide">
+      <ion-card mode="md" class="card">
+        <img class="img" alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/thumbnail.svg" />
+      </ion-card>
+    </swiper-slide>
+    
+    <swiper-slide class="centered-slide">
+      <ion-card mode="md" class="card">
+        <img class="img" alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/thumbnail.svg" />
+      </ion-card>
+    </swiper-slide>
+  </swiper-container>
+
+  <swiper-container class="card-container">
+    <swiper-slide>
+      <ion-row id="Services">
+        <ion-col size-lg="1" size-md="2" size-sm="3" size-xs="4">
+          <ion-card mode="md">
+            <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/thumbnail.svg" />
+          </ion-card>
+        </ion-col>
+        <ion-col size-lg="1" size-md="2" size-sm="3" size-xs="4">
+          <ion-card mode="md">
+            <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/thumbnail.svg" />
+          </ion-card>
+        </ion-col>
+        <ion-col size-lg="1" size-md="2" size-sm="3" size-xs="4">
+          <ion-card mode="md">
+            <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/thumbnail.svg" />
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </swiper-slide>
+    <swiper-slide>
+      <ion-row id="Services">
+        <ion-col size-lg="1" size-md="2" size-sm="3" size-xs="4">
+          <ion-card mode="md">
+            <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/thumbnail.svg" />
+          </ion-card>
+        </ion-col>
+        <ion-col size-lg="1" size-md="2" size-sm="3" size-xs="4">
+          <ion-card mode="md">
+            <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/thumbnail.svg" />
+          </ion-card>
+        </ion-col>
+        <ion-col size-lg="1" size-md="2" size-sm="3" size-xs="4">
+          <ion-card mode="md">
+            <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/thumbnail.svg" />
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </swiper-slide>
+  </swiper-container>
+  
+  <ion-card class="card-container">
+    <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/card-media.png" />
+  </ion-card> 
 </ion-content>
