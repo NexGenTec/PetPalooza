@@ -4,9 +4,9 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { PerfilPageRoutingModule } from './perfil-routing.module';
+import { PerfilPerroPageRoutingModule } from './perfil-perro-routing.module';
 
-import { PerfilPage } from './perfil.page';
+import { PerfilPerroPage } from './perfil-perro.page';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { register } from 'swiper/element/bundle';
 register();
@@ -17,9 +17,9 @@ register();
     CommonModule,
     FormsModule,
     IonicModule,
-    PerfilPageRoutingModule
+    PerfilPerroPageRoutingModule
   ],
-  declarations: [PerfilPage],
+  declarations: [PerfilPerroPage],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
-export class PerfilPageModule { }
+export class PerfilPerroPageModule { }

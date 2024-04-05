@@ -2,7 +2,7 @@
   <div class="background"></div>
 
   <div class="button-container">
-    <ion-button class="left">PetPalooza</ion-button>
+    <ion-button >PetPalooza</ion-button>
   </div>
 
   <swiper-container navigation>
@@ -24,4 +24,26 @@
       </ion-card>
     </swiper-slide>
   </swiper-container>
+  <ion-segment mode="ios" [(ngModel)]="selectedSegmentValue" (ionChange)="changeCardContent(selectedSegmentValue)" style="margin-bottom: 20px;">
+    <ion-segment-button value="origen">
+      <ion-label>Origen</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="caracteristicas">
+      <ion-label>Caracteristicas Fisicas</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="temperamento">
+      <ion-label>Temperamento</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="cuidado">
+      <ion-label>Cuidado y Salud</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+  <ion-card style="margin-bottom: 20px;">
+    <ion-card-header>
+      <h6>{{ cardHeading }}</h6>
+    </ion-card-header>
+    <ion-card-content>
+      {{ cardContent }}
+    </ion-card-content>
+  </ion-card>
 </ion-content>
