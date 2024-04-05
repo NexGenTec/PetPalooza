@@ -1,0 +1,17 @@
+.card-with-image-and-text {
+    display: flex;
+}
+
+.card-with-image-and-text .image-container {
+    flex: 0 0 auto;
+    margin-right: 16px;
+}
+
+.card-with-image-and-text .image-container img {
+    max-width: 150px;
+    height: auto;
+}
+
+.text-container {
+    flex: 1;
+}

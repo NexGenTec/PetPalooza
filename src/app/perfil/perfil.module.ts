@@ -1,11 +1,12 @@
-import { IonicModule } from '@ionic/angular';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Tab1Page } from './tab1.page';
 
+import { IonicModule } from '@ionic/angular';
 
-import { Tab1PageRoutingModule } from './tab1-routing.module';
+import { PerfilPageRoutingModule } from './perfil-routing.module';
+
+import { PerfilPage } from './perfil.page';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { register } from 'swiper/element/bundle';
 register();
@@ -13,12 +14,12 @@ register();
 
 @NgModule({
   imports: [
-    IonicModule,
     CommonModule,
     FormsModule,
-    Tab1PageRoutingModule
+    IonicModule,
+    PerfilPageRoutingModule
   ],
-  declarations: [Tab1Page],
+  declarations: [PerfilPage],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
-export class Tab1PageModule { }
+export class PerfilPageModule { }

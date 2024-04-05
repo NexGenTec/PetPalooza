@@ -14,7 +14,6 @@ register();
     IonicModule,
     CommonModule,
     FormsModule,
-
     Tab2PageRoutingModule
   ],
   declarations: [Tab2Page],
