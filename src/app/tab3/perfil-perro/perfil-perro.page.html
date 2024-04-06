@@ -6,27 +6,25 @@
     </ion-buttons>
   </ion-toolbar>
 
-  <swiper-container navigation>
-    <swiper-slide class="centered-slide" *ngFor="let perro of getPerroById(selectedPerroId)">
+  <swiper-container navigation *ngFor="let perro of getPerroById(selectedPerroId)">
+    <swiper-slide class="centered-slide" *ngFor="let img of getImagesArray(perro)">
       <ion-card mode="md" class="card">
-        <ion-img *ngFor="let img of getImagesArray(perro)" [src]="img" [alt]="'Imagen de ' + perro.Raza"></ion-img>
+        <ion-img (click)="openModal(img)"  [src]="img" [alt]="'Imagen de ' + perro.Raza"></ion-img>
       </ion-card>
     </swiper-slide>
   </swiper-container>
-  
-  
 
   <ion-segment mode="ios" [(ngModel)]="selectedSegmentValue" (ionChange)="changeCardContent(selectedSegmentValue)" style="margin-bottom: 20px;">
-    <ion-segment-button value="origen">
+    <ion-segment-button value="origen" [checked]="selectedSegmentValue === 'origen'">
       <ion-label>Origen</ion-label>
     </ion-segment-button>
-    <ion-segment-button value="caracteristicas">
+    <ion-segment-button value="caracteristicas" [checked]="selectedSegmentValue === 'caracteristicas'">
       <ion-label>Caracteristicas Fisicas</ion-label>
     </ion-segment-button>
-    <ion-segment-button value="temperamento">
+    <ion-segment-button value="temperamento" [checked]="selectedSegmentValue === 'temperamento'">
       <ion-label>Temperamento</ion-label>
     </ion-segment-button>
-    <ion-segment-button value="cuidado">
+    <ion-segment-button value="cuidado" [checked]="selectedSegmentValue === 'cuidado'">
       <ion-label>Cuidado y Salud</ion-label>
     </ion-segment-button>
   </ion-segment>
@@ -39,4 +37,5 @@
       {{ cardContent }}
     </ion-card-content>
   </ion-card>
+  
 </ion-content>

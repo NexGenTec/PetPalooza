@@ -23,13 +23,13 @@
             "Alimentación": "Se recomienda una dieta equilibrada y de alta calidad para satisfacer sus necesidades nutricionales.",
             "Salud": [
                 "Son generalmente una raza saludable, pero pueden ser propensos a problemas de salud como la enfermedad renal y problemas dentales. Es importante realizar chequeos veterinarios regulares."
-            ],
-            "Longevidad": "La esperanza de vida promedio de un gato Siamés es de alrededor de 12 a 15 años."
+            ]
         },
+        "Longevidad": "La esperanza de vida promedio de un gato Siamés es de alrededor de 12 a 15 años.",
         "img": {
-            "1": "assets/img/imgGato/siamese/siames.jpg",
-            "2": "assets/img/imgGato/siamese/siames.jpg",
-            "3": "assets/img/imgGato/siamese/siames.jpg"
+            "1": "assets/img/imgGato/siamese/siames2.jpg",
+            "2": "assets/img/imgGato/siamese/siames3.jpg",
+            "3": "assets/img/imgGato/siamese/siames4.jpg"
         }
     },
     {
@@ -56,9 +56,9 @@
             "Alimentación": "Se recomienda una dieta equilibrada y de alta calidad para satisfacer sus necesidades nutricionales.",
             "Salud": [
                 "Son generalmente una raza saludable, pero pueden ser propensos a problemas como problemas respiratorios, enfermedades oculares y enfermedades dentales. Los chequeos veterinarios regulares son importantes."
-            ],
-            "Longevidad": "La esperanza de vida promedio de un gato Persa es de alrededor de 12 a 15 años."
+            ]
         },
+        "Longevidad": "La esperanza de vida promedio de un gato Persa es de alrededor de 12 a 15 años.",
         "img": {
             "1": "assets/img/imgGato/persa/persa2.jpg",
             "2": "assets/img/imgGato/persa/persa3.jpg",
@@ -89,9 +89,9 @@
             "Baños regulares": "A pesar de su falta de pelaje, los Sphynx necesitan baños regulares para eliminar la acumulación de aceite en la piel y mantenerla limpia.",
             "Cuidado de la piel": "También es importante mantener la piel del Sphynx hidratada, ya que pueden ser propensos a la sequedad y la irritación.",
             "Alimentación": "Se recomienda una dieta equilibrada y de alta calidad para satisfacer sus necesidades nutricionales y mantener su piel y pelaje saludables.",
-            "Visitas al veterinario": "Es importante llevar al Sphynx al veterinario regularmente para chequeos de salud y vacunas.",
-            "Longevidad": "La esperanza de vida promedio de un Sphynx es de alrededor de 12 a 14 años."
+            "Visitas al veterinario": "Es importante llevar al Sphynx al veterinario regularmente para chequeos de salud y vacunas."
         },
+        "Longevidad": "La esperanza de vida promedio de un Sphynx es de alrededor de 12 a 14 años.",
         "img": {
             "1": "assets/img/imgGato/Sphynx/Sphynx2.jpg",
             "2": "assets/img/imgGato/Sphynx/Sphynx3.jpg",
@@ -124,9 +124,9 @@
             "Alimentación": "Se recomienda una dieta equilibrada y de alta calidad para satisfacer sus necesidades nutricionales y mantener su peso saludable.",
             "Salud": [
                 "Son generalmente una raza saludable, pero pueden ser propensos a problemas como la enfermedad cardíaca y la displasia de cadera. Los chequeos veterinarios regulares son importantes."
-            ],
-            "Longevidad": "La esperanza de vida promedio de un Maine Coon es de alrededor de 12 a 15 años."
+            ]
         },
+        "Longevidad": "La esperanza de vida promedio de un Maine Coon es de alrededor de 12 a 15 años.",
         "img": {
             "1": "assets/img/imgGato/Maine Coon/MaineCoon2.jpg",
             "2": "assets/img/imgGato/Maine Coon//MaineCoon3.jpg",

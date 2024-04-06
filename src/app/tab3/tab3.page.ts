@@ -20,10 +20,9 @@ export class Tab3Page {
     }
   }
 
-  navigateToTargetPage(segment: string, perroId: number) {
-    this.router.navigate(['/tabs/tab3', segment, perroId]);
+  navigateToTargetPage(page: string, perroId: number) {
+    this.router.navigate(['/tabs/tab3', page, perroId]);
   }
-
 
   async openModal(imageUrl: string) {
     const modal = await this.modalController.create({
@@ -40,6 +39,4 @@ export class Tab3Page {
     spaceBetween: 10,
     navigation: true
   };
-
-
 }

@@ -1,33 +1,36 @@
 <ion-content [fullscreen]="true">
   <div class="background"></div>
-  <div class="button-container">
-    <ion-button >PetPalooza</ion-button>
+  <ion-toolbar>
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/"></ion-back-button>
     </ion-buttons>
-  </div>
+  </ion-toolbar>
 
-  <swiper-container navigation>
-    <swiper-slide class="centered-slide" *ngFor="let gato of infoGato">
+  <swiper-container navigation *ngFor="let gato of getGatoById(selectedGatoId)">
+    <swiper-slide class="centered-slide" *ngFor="let img of getImagesArray(gato)">
       <ion-card mode="md" class="card">
-        <ion-img [src]="gato.imgPerfil" alt="Imagen de {{ gato.Raza }}"></ion-img>
+        <ion-img (click)="openModal(img)" [src]="img" [alt]="'Imagen de ' + gato.Raza"></ion-img>
       </ion-card>
     </swiper-slide>
   </swiper-container>
+  
+
+  
   <ion-segment mode="ios" [(ngModel)]="selectedSegmentValue" (ionChange)="changeCardContent(selectedSegmentValue)" style="margin-bottom: 20px;">
-    <ion-segment-button value="origen">
+    <ion-segment-button value="origen" [checked]="selectedSegmentValue === 'origen'">
       <ion-label>Origen</ion-label>
     </ion-segment-button>
-    <ion-segment-button value="caracteristicas">
+    <ion-segment-button value="caracteristicas" [checked]="selectedSegmentValue === 'caracteristicas'">
       <ion-label>Caracteristicas Fisicas</ion-label>
     </ion-segment-button>
-    <ion-segment-button value="temperamento">
+    <ion-segment-button value="temperamento" [checked]="selectedSegmentValue === 'temperamento'">
       <ion-label>Temperamento</ion-label>
     </ion-segment-button>
-    <ion-segment-button value="cuidado">
+    <ion-segment-button value="cuidado" [checked]="selectedSegmentValue === 'cuidado'">
       <ion-label>Cuidado y Salud</ion-label>
     </ion-segment-button>
   </ion-segment>
+
   <ion-card style="margin-bottom: 20px;">
     <ion-card-header>
       <h6>{{ cardHeading }}</h6>
@@ -36,5 +39,7 @@
       {{ cardContent }}
     </ion-card-content>
   </ion-card>
+  
 </ion-content>
+
 
