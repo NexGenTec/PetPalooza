@@ -6,11 +6,15 @@ const routes: Routes = [
   {
     path: '',
     component: Tab1Page,
-  }
+  },
+  {
+    path: 'perfil-gato',
+    loadChildren: () => import('../tab1/perfil-gato/perfil-gato.module').then(m => m.PerfilGatoPageModule)
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class Tab1PageRoutingModule {}
+export class Tab1PageRoutingModule { }

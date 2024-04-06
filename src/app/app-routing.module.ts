@@ -7,12 +7,8 @@ const routes: Routes = [
     loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule)
   },
   {
-    path: 'perfil-gato',
-    loadChildren: () => import('./tab1/perfil-gato/perfil-gato.module').then(m => m.PerfilGatoPageModule)
-  },
-  {
-    path: 'perfil-perro',
-    loadChildren: () => import('./tab3/perfil-perro/perfil-perro.module').then(m => m.PerfilPerroPageModule)
+    path: 'img-modal',
+    loadChildren: () => import('./img-modal/img-modal.module').then( m => m.ImgModalPageModule)
   },
 ];
 @NgModule({

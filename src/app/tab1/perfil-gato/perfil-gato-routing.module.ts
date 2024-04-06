@@ -7,11 +7,11 @@ const routes: Routes = [
   {
     path: '',
     component: PerfilGatoPage
-  }
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class PerfilGatoPageRoutingModule {}
+export class PerfilGatoPageRoutingModule { }

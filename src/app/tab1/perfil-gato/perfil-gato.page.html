@@ -1,8 +1,10 @@
 <ion-content [fullscreen]="true">
   <div class="background"></div>
-
   <div class="button-container">
     <ion-button >PetPalooza</ion-button>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
   </div>
 
   <swiper-container navigation>
@@ -38,7 +40,7 @@
       <ion-label>Cuidado y Salud</ion-label>
     </ion-segment-button>
   </ion-segment>
-  <ion-card style="margin-bottom: 20px;">
+  <ion-card style="margin-bottom: 20px;"*ngIf="infoGato">
     <ion-card-header>
       <h6>{{ cardHeading }}</h6>
     </ion-card-header>

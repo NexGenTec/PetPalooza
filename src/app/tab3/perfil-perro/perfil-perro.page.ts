@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import * as infoPerro from '../../../assets/data/InfoGato.json';
 
 @Component({
   selector: 'app-perfil-perro',
@@ -8,6 +9,8 @@ import { Component, OnInit } from '@angular/core';
 export class PerfilPerroPage implements OnInit {
   ngOnInit() {
   }
+
+  infoPerro: any = (infoPerro as any).default;
 
   selectedSegmentValue: string = 'origen';
   cardHeading: string = 'Origen';
@@ -19,23 +22,22 @@ export class PerfilPerroPage implements OnInit {
     switch (segmentValue) {
       case 'origen':
         this.cardHeading = 'Origen';
-        this.cardContent = 'Contenido de la tarjeta para el segmento "Origen".';
+        this.cardContent = this.infoPerro[0]['Origen e Historia'];
         break;
       case 'caracteristicas':
-        this.cardHeading = 'Caracteristicas Fisicas';
-        this.cardContent = 'Contenido de la tarjeta para el segmento "Caracteristicas Fisicas".';
+        this.cardHeading = 'Características Físicas';
+        this.cardContent = JSON.stringify(this.infoPerro[0]['Características Físicas']);
         break;
       case 'temperamento':
         this.cardHeading = 'Temperamento';
-        this.cardContent = 'Contenido de la tarjeta para el segmento "Temperamento".';
+        this.cardContent = JSON.stringify(this.infoPerro[0].Temperamento);
         break;
       case 'cuidado':
         this.cardHeading = 'Cuidado y Salud';
-        this.cardContent = 'Contenido de la tarjeta para el segmento "Cuidado y Salud".';
+        this.cardContent = JSON.stringify(this.infoPerro[0]['Cuidados y Salud']);
         break;
       default:
         break;
     }
   }
-
 }

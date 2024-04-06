@@ -1,0 +1,171 @@
+[
+    {
+        "id": 1,
+        "imgPerfil": "assets/img/imgGato/siamese/siames.jpg",
+        "Raza": "Siamés",
+        "Origen": "Tailandia",
+        "Año": "siglo XIV",
+        "Origen e Historia": "Razas de gatos más antiguas y distintivas del mundo. Se cree que los primeros registros de esta raza datan del siglo XIV. Se les consideraba gatos sagrados y se les asociaba con la realeza tailandesa.",
+        "Características Físicas": {
+            "Cuerpo": "Son gatos de tamaño mediano, esbeltos y elegantes, con una musculatura bien desarrollada.",
+            "Cabeza": "Tienen una cabeza triangular y alargada, con orejas grandes y puntiagudas.",
+            "Pelaje": "Su pelaje es corto, fino y pegado al cuerpo. Presenta un patrón de color punto, donde el cuerpo es de un color claro y las extremidades, la cola, las orejas y la cara son más oscuras."
+        },
+        "Temperamento": {
+            "Inteligente": true,
+            "Sociable": true,
+            "Comunicativo": true,
+            "Activo": true,
+            "Leal": true
+        },
+        "Cuidados y Salud": {
+            "Cepillado": "Su pelaje corto no requiere mucho mantenimiento, pero un cepillado semanal puede ayudar a eliminar el pelo suelto y prevenir la formación de nudos.",
+            "Alimentación": "Se recomienda una dieta equilibrada y de alta calidad para satisfacer sus necesidades nutricionales.",
+            "Salud": [
+                "Son generalmente una raza saludable, pero pueden ser propensos a problemas de salud como la enfermedad renal y problemas dentales. Es importante realizar chequeos veterinarios regulares."
+            ],
+            "Longevidad": "La esperanza de vida promedio de un gato Siamés es de alrededor de 12 a 15 años."
+        },
+        "img": {
+            "1": "assets/img/imgGato/siamese/siames.jpg",
+            "2": "assets/img/imgGato/siamese/siames.jpg",
+            "3": "assets/img/imgGato/siamese/siames.jpg"
+        }
+    },
+    {
+        "id": 2,
+        "imgPerfil": "assets/img/imgGato/persa/persa.jpg",
+        "Raza": "Persa",
+        "Origen": "Gran Bretaña y Estados Unidos",
+        "Año": "siglo XVII",
+        "Origen e Historia": "Es una de las razas de gatos más antiguas y reconocibles del mundo. Fueron introducidos en Europa en el siglo XVII y rápidamente ganaron popularidad por su pelaje lujoso y su apariencia majestuosa.",
+        "Características Físicas": {
+            "Cuerpo": "Son gatos de tamaño mediano a grande, con cuerpos robustos y musculosos, pero elegantes y bien proporcionados.",
+            "Cabeza": "Tienen una cabeza redonda y ancha con una cara plana y nariz respingada.",
+            "Pelaje": "Su rasgo más distintivo es su pelaje largo, denso y sedoso que requiere un cuidado regular."
+        },
+        "Temperamento": {
+            "Tranquilo": true,
+            "Afectuoso": true,
+            "Adaptable": true,
+            "Independiente": true,
+            "No muy activo": true
+        },
+        "Cuidados y Salud": {
+            "Cepillado": "Su pelaje largo necesita cepillado regular para evitar enredos y nudos, especialmente en las áreas propensas como debajo de las axilas y en el cuello.",
+            "Alimentación": "Se recomienda una dieta equilibrada y de alta calidad para satisfacer sus necesidades nutricionales.",
+            "Salud": [
+                "Son generalmente una raza saludable, pero pueden ser propensos a problemas como problemas respiratorios, enfermedades oculares y enfermedades dentales. Los chequeos veterinarios regulares son importantes."
+            ],
+            "Longevidad": "La esperanza de vida promedio de un gato Persa es de alrededor de 12 a 15 años."
+        },
+        "img": {
+            "1": "assets/img/imgGato/persa/persa2.jpg",
+            "2": "assets/img/imgGato/persa/persa3.jpg",
+            "3": "assets/img/imgGato/persa/persa4.jpg"
+        }
+    },
+    {
+        "id": 3,
+        "imgPerfil": "assets/img/imgGato/Sphynx/Sphynx.jpg",
+        "Raza": "Sphynx",
+        "Origen": "Canadá",
+        "Año": "-",
+        "Origen e Historia": "Aunque el Sphynx es conocido por su apariencia sin pelo, no es completamente calvo; tiene una capa de vello fino y corto que a menudo es descrito como una sensación de terciopelo. La raza Sphynx es el resultado de una mutación genética natural.",
+        "Características Físicas": {
+            "Ausencia de pelaje": "La característica más distintiva del Sphynx es su apariencia sin pelo, aunque pueden tener un poco de vello corto en ciertas partes del cuerpo.",
+            "Piel arrugada": "A menudo tienen pliegues de piel en la cabeza, el cuello y otras áreas del cuerpo.",
+            "Cuerpo musculoso": "Tienen un cuerpo musculoso y atlético, con una estructura ósea sólida."
+        },
+        "Temperamento": {
+            "Cariñoso": true,
+            "Sociable": true,
+            "Juguetón": true,
+            "Curioso": true,
+            "Inteligente": true
+        },
+        "Cuidados y Salud": {
+            "Protección solar": "Debido a su falta de pelaje, los Sphynx son sensibles a la luz solar directa y pueden quemarse fácilmente.",
+            "Baños regulares": "A pesar de su falta de pelaje, los Sphynx necesitan baños regulares para eliminar la acumulación de aceite en la piel y mantenerla limpia.",
+            "Cuidado de la piel": "También es importante mantener la piel del Sphynx hidratada, ya que pueden ser propensos a la sequedad y la irritación.",
+            "Alimentación": "Se recomienda una dieta equilibrada y de alta calidad para satisfacer sus necesidades nutricionales y mantener su piel y pelaje saludables.",
+            "Visitas al veterinario": "Es importante llevar al Sphynx al veterinario regularmente para chequeos de salud y vacunas.",
+            "Longevidad": "La esperanza de vida promedio de un Sphynx es de alrededor de 12 a 14 años."
+        },
+        "img": {
+            "1": "assets/img/imgGato/Sphynx/Sphynx2.jpg",
+            "2": "assets/img/imgGato/Sphynx/Sphynx3.jpg",
+            "3": "assets/img/imgGato/Sphynx/Sphynx4.jpg"
+        }
+    },
+    {
+        "id": 4,
+        "imgPerfil": "assets/img/imgGato/Maine Coon/MaineCoon.jpg",
+        "Raza": "Maine Coon",
+        "Origen": "Estados Unidos",
+        "Año": "siglo XIX",
+        "Origen e Historia": "Raza de gato originaria de Estados Unidos, específicamente del estado de Maine. Se cree que esta raza se desarrolló a partir de gatos europeos que llegaron a América del Norte en los barcos de colonos. Los Maine Coons se hicieron populares en el siglo XIX y fueron reconocidos como una raza oficial en la década de 1860.",
+        "Características Físicas": {
+            "Tamaño": "Son conocidos por ser una de las razas de gatos más grandes.",
+            "Peso": "machos que pueden pesar hasta 6-10 kilogramos y hembras de 4-7 kilogramos.",
+            "Cuerpo": "Tienen cuerpos musculosos, robustos y bien proporcionados, con patas largas y fuertes.",
+            "Cabeza": "Tienen cabezas grandes y cuadradas, con orejas grandes y puntiagudas.",
+            "Pelaje": "Su pelaje es denso, sedoso y resistente al agua, con una capa interna gruesa que los protege del frío."
+        },
+        "Temperamento": {
+            "Sociable": true,
+            "Inteligente": true,
+            "Vocal": true,
+            "Adaptable": true,
+            "Juguetón": true
+        },
+        "Cuidados y Salud": {
+            "Cepillado": "Debido a su pelaje largo y denso, los Maine Coons necesitan cepillado regular para evitar la formación de nudos y enredos, especialmente durante las épocas de muda.",
+            "Alimentación": "Se recomienda una dieta equilibrada y de alta calidad para satisfacer sus necesidades nutricionales y mantener su peso saludable.",
+            "Salud": [
+                "Son generalmente una raza saludable, pero pueden ser propensos a problemas como la enfermedad cardíaca y la displasia de cadera. Los chequeos veterinarios regulares son importantes."
+            ],
+            "Longevidad": "La esperanza de vida promedio de un Maine Coon es de alrededor de 12 a 15 años."
+        },
+        "img": {
+            "1": "assets/img/imgGato/Maine Coon/MaineCoon2.jpg",
+            "2": "assets/img/imgGato/Maine Coon//MaineCoon3.jpg",
+            "3": "assets/img/imgGato/Maine Coon/MaineCoon4.jpg"
+        }
+    },
+    {
+        "id": 5,
+        "imgPerfil": "assets/img/imgGato/Birmano/birmano.webp",
+        "Raza": "Birmano",
+        "Origen": "Birmania",
+        "Año": "mediados del siglo XX",
+        "Origen e Historia": "También conocido como Sagrado de Birmania, es una raza de gato que se originó en Birmania (ahora Myanmar). La leyenda cuenta que los gatos Birmanos fueron criados por monjes en los templos budistas de Birmania, donde se les consideraba sagrados y se les otorgaba un estatus especial. La raza fue introducida en Europa a mediados del siglo XX y se ha ganado una gran popularidad en todo el mundo.",
+        "Características Físicas": {
+            "Tamaño": "Son gatos de tamaño mediano.",
+            "Peso": "machos que pueden pesar entre 4-6 kilogramos y hembras que generalmente pesan un poco menos.",
+            "Cuerpo": "Tienen un cuerpo robusto y bien proporcionado, con patas moderadamente largas y musculosas.",
+            "Cabeza": "Tienen cabezas redondeadas y orejas medianas a grandes, con una expresión dulce y suave.",
+            "Pelaje": "Su pelaje es semilargo, sedoso y sin capa interna. La característica más distintiva del Birmano es su manto de color claro con patrones oscuros en las extremidades (puntos), las orejas y la cola."
+        },
+        "Temperamento": {
+            "Tranquilo": true,
+            "Afectuoso": true,
+            "Sociable": true,
+            "Inteligente": true,
+            "Vocal": true
+        },
+        "Cuidados y Salud": {
+            "Cepillado": "Su pelaje semilargo requiere cepillado regular para evitar la formación de nudos y enredos, especialmente durante las épocas de muda.",
+            "Alimentación": "Se recomienda una dieta equilibrada y de alta calidad para satisfacer sus necesidades nutricionales y mantener su peso saludable.",
+            "Salud": [
+                "Son generalmente una raza saludable, pero pueden ser propensos a problemas como la enfermedad cardíaca y la obesidad. Los chequeos veterinarios regulares son importantes."
+            ],
+            "Longevidad": "La esperanza de vida promedio de un Birmano es de alrededor de 12 a 16 años."
+        },
+        "img": {
+            "1": "assets/img/imgGato/Birmano/birmano2.jpg",
+            "2": "assets/img/imgGato/Birmano/birmano3.webp",
+            "3": "assets/img/imgGato/Birmano/birmano4.webp"
+        }
+    }
+]
