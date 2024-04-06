@@ -19,8 +19,8 @@ export class Tab1Page {
     }
   }
 
-  navigateToTargetPage(segment: string) {
-    this.router.navigate(['/tabs/tab1', segment]);
+  navigateToTargetPage(segment: string, gatoId: number) {
+    this.router.navigate(['/tabs/tab1', segment, gatoId]);
   }
 
   async openModal(imageUrl: string) {

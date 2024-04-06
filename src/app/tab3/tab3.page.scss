@@ -12,6 +12,58 @@
     height: auto;
 }
 
-.text-container {
-    flex: 1;
+.card-with-image-and-text {
+    margin-bottom: 10px;
+}
+
+.image-container {
+    width: 100%;
+    padding-top: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+.image-container ion-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+}
+
+.large-card {
+    margin-bottom: 10px;
+}
+
+.small-card {
+    margin-bottom: 10px;
+}
+
+.small-image {
+    width: 100%;
+    height: auto;
+    max-height: 100px;
+}
+
+.ver-mas-button {
+    color: black;
+    margin-left: auto;
+}
+
+.card-container {
+    width: 100%;
+}
+
+.swiper-slide {
+    width: 100%;
+}
+
+.swiper-container {
+    width: 100%;
+}
+
+h6 {
+    font-size: 1.2em;
+    font-weight: bold;
+    font-family: Arial, sans-serif;
+    margin-bottom: 10px;
 }

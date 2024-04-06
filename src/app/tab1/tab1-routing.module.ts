@@ -8,7 +8,7 @@ const routes: Routes = [
     component: Tab1Page,
   },
   {
-    path: 'perfil-gato',
+    path: 'perfil-gato/:id',
     loadChildren: () => import('../tab1/perfil-gato/perfil-gato.module').then(m => m.PerfilGatoPageModule)
   },
 ];

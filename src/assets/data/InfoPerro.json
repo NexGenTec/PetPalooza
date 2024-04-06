@@ -1,6 +1,7 @@
 [
     {
         "id": 1,
+        "imgPerfil": "assets/img/imgPerro/Bulldog Inglés/BulldogIngles.jpg",
         "Raza": "Bulldog Inglés",
         "Origen": "Inglaterra, Reino Unido",
         "Año": "Siglo XIII",
@@ -30,40 +31,16 @@
             "Visitas al veterinario": "Se recomienda regularmente para chequeos de salud y vacunaciones"
         },
         "Longevidad": "8-10 años",
-        "Información Final": "El Bulldog Inglés es una mascota maravillosa para aquellos que buscan un compañero leal y cariñoso que no requiera un nivel extremadamente alto de actividad física. Es importante proporcionarle una dieta equilibrada, ejercicio regular y atención veterinaria adecuada para asegurar su salud y bienestar a lo largo de su vida."
+        "Información Final": "El Bulldog Inglés es una mascota maravillosa para aquellos que buscan un compañero leal y cariñoso que no requiera un nivel extremadamente alto de actividad física. Es importante proporcionarle una dieta equilibrada, ejercicio regular y atención veterinaria adecuada para asegurar su salud y bienestar a lo largo de su vida.",
+        "img": {
+            "1": "assets/img/imgPerro/Bulldog Inglés/BulldogIngles2.jpg",
+            "2": "assets/img/imgPerro/Bulldog Inglés/BulldogIngles3.jpg",
+            "3": "assets/img/imgPerro/Bulldog Inglés/BulldogIngles4.jpg"
+        }
     },
     {
         "id": 2,
-        "Raza": "Fox Terrier de pelo liso",
-        "Origen": "Gran Bretaña",
-        "Año": "Siglo XIX",
-        "Origen e Historia": "Fue criado originalmente para la caza de zorros y otras presas pequeñas, siendo especialmente hábil en la caza bajo tierra gracias a su tamaño compacto y su valentía.",
-        "Características Físicas": {
-            "Tamaño": "Mediano",
-            "Peso": "7-9 kg",
-            "Cuerpo": "Musculoso y compacto",
-            "Pelaje": "Corto, liso y denso, colores comunes: blanco con manchas negras o marrones",
-            "Cabeza": "Alargada y estrecha, hocico fuerte, ojos pequeños y oscuros, orejas en forma de 'V'"
-        },
-        "Temperamento": {
-            "Energético": true,
-            "Inteligente": true,
-            "Valiente": true,
-            "Amigable": true,
-            "Necesidad de estimulación": true
-        },
-        "Cuidados y Salud": {
-            "Ejercicio": "Necesita ejercicio diario para mantenerse feliz y saludable",
-            "Cuidado del Pelo": "Requiere cepillado regular",
-            "Salud": [
-                "Luxación de rótula, enfermedades oculares"
-            ],
-            "Longevidad": "12-15 años"
-        },
-        "Consideraciones Finales": "Es un perro activo y enérgico que se adapta bien a familias activas que pueden proporcionarle el ejercicio y la estimulación mental que necesita. Con el entrenamiento adecuado y una socialización temprana, puede ser un compañero leal y afectuoso para personas de todas las edades. Proporcionarle una dieta equilibrada, cuidados veterinarios regulares y mucho amor y atención garantizará su felicidad y bienestar a lo largo de su vida."
-    },
-    {
-        "id": 3,
+        "imgPerfil": "assets/img/imgPerro/Pug/Pug.jpg",
         "Raza": "Pug / Carlino",
         "Origen": "China",
         "Año": "Siglo XVI",
@@ -92,10 +69,16 @@
             "Temperatura": "Sensibles al calor"
         },
         "Longevidad": "12-15 años",
-        "Consideraciones Finales": "El Pug es una mascota encantadora y adaptable que se adapta bien a una variedad de entornos y estilos de vida. Requiere cuidados regulares, incluido el control de su salud y peso, así como la atención a su bienestar emocional. Con el amor y la atención adecuados, el Pug puede ser un compañero fiel y cariñoso durante muchos años."
+        "Consideraciones Finales": "El Pug es una mascota encantadora y adaptable que se adapta bien a una variedad de entornos y estilos de vida. Requiere cuidados regulares, incluido el control de su salud y peso, así como la atención a su bienestar emocional. Con el amor y la atención adecuados, el Pug puede ser un compañero fiel y cariñoso durante muchos años.",
+        "img": {
+            "1": "assets/img/imgPerro/Pug/Pug2.jpg",
+            "2": "assets/img/imgPerro/Pug/Pug3.jpg",
+            "3": "assets/img/imgPerro/Pug/Pug4.jpg"
+        }
     },
     {
-        "id": 4,
+        "id": 3,
+        "imgPerfil": "assets/img/imgPerro/Yorkshire/Yorkshire.jpg",
         "Raza": "Yorkshire Terrier",
         "Origen": "Inglaterra",
         "Año": "Siglo XIX",
@@ -124,10 +107,16 @@
             "Alimentación": "Dieta equilibrada y controlada para evitar sobrepeso"
         },
         "Longevidad": "12-15 años",
-        "Consideraciones Finales": "El Yorkshire Terrier es una mascota encantadora y cariñosa que se adapta bien a diferentes entornos y estilos de vida, incluyendo hogares urbanos y rurales. Requiere cuidados regulares, incluido el cepillado diario y visitas periódicas al veterinario. Con el amor y la atención adecuados, el Yorkshire Terrier puede ser un compañero leal y afectuoso durante muchos años."
+        "Consideraciones Finales": "El Yorkshire Terrier es una mascota encantadora y cariñosa que se adapta bien a diferentes entornos y estilos de vida, incluyendo hogares urbanos y rurales. Requiere cuidados regulares, incluido el cepillado diario y visitas periódicas al veterinario. Con el amor y la atención adecuados, el Yorkshire Terrier puede ser un compañero leal y afectuoso durante muchos años.",
+        "img": {
+            "1": "assets/img/imgPerro/Yorkshire/Yorkshire2.jpg",
+            "2": "assets/img/imgPerro/Yorkshire/Yorkshire3.jpeg",
+            "3": "assets/img/imgPerro/Yorkshire/Yorkshire4.jpg"
+        }
     },
     {
-        "id": 5,
+        "id": 4,
+        "imgPerfil": "assets/img/imgPerro/Bóxer/Boxer.jpg",
         "Raza": "Bóxer",
         "Origen": "Alemania",
         "Año": "Finales del siglo XIX",
@@ -155,6 +144,11 @@
             "Alimentación": "Dieta equilibrada y controlada para evitar sobrepeso"
         },
         "Longevidad": "10-12 años",
-        "Consideraciones Finales": "El Bóxer es una mascota encantadora y leal que puede ser un compañero maravilloso para personas y familias activas. Requiere cuidados regulares, incluido el ejercicio, el entrenamiento y la atención veterinaria, para garantizar su salud y bienestar a lo largo de su vida. Con el amor y la atención adecuados, el Bóxer puede ser un compañero leal y afectuoso durante muchos años."
+        "Consideraciones Finales": "El Bóxer es una mascota encantadora y leal que puede ser un compañero maravilloso para personas y familias activas. Requiere cuidados regulares, incluido el ejercicio, el entrenamiento y la atención veterinaria, para garantizar su salud y bienestar a lo largo de su vida. Con el amor y la atención adecuados, el Bóxer puede ser un compañero leal y afectuoso durante muchos años.",
+        "img": {
+            "1": "assets/img/imgPerro/Bóxer/Boxer2.jpg",
+            "2": "assets/img/imgPerro/Bóxer/Boxer3.jpg",
+            "3": "assets/img/imgPerro/Bóxer/Boxer4.jpg"
+        }
     }
 ]

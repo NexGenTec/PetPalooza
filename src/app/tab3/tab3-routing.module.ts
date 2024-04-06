@@ -8,7 +8,7 @@ const routes: Routes = [
     component: Tab3Page,
   },
   {
-    path: 'perfil-perro',
+    path: 'perfil-perro/:id',
     loadChildren: () => import('../tab3/perfil-perro/perfil-perro.module').then(m => m.PerfilPerroPageModule)
   },
 ];

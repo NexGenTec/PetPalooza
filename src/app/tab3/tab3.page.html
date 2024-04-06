@@ -1,83 +1,46 @@
-
 <ion-content [fullscreen]="true">
   <div class="button-container">
     <ion-button class="center">PetPalooza</ion-button>
   </div>
   <ion-searchbar></ion-searchbar>
   <swiper-container>
-    <swiper-slide>
-      <ion-card class="card-with-image-and-text">
-        <div class="image-container">
-          <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/card-media.png" />
-        </div>
-        <ion-card-header class="text-container">
-            <ion-card-title>Card Title</ion-card-title>
-            <ion-card-subtitle>Card Subtitle</ion-card-subtitle>
-        </ion-card-header>
-      </ion-card>    
-    </swiper-slide>
-    <swiper-slide>
-      <ion-card class="card-with-image-and-text">
-        <div class="image-container">
-          <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/card-media.png" />
-        </div>
-        <ion-card-header class="text-container">
-            <ion-card-title>Card Title</ion-card-title>
-            <ion-card-subtitle>Card Subtitle</ion-card-subtitle>
-        </ion-card-header>
-      </ion-card>    
-    </swiper-slide>
-    <swiper-slide>
-      <ion-card class="card-with-image-and-text">
-        <div class="image-container">
-          <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/card-media.png" />
-        </div>
-        <ion-card-header class="text-container">
-            <ion-card-title>Card Title</ion-card-title>
-            <ion-card-subtitle>Card Subtitle</ion-card-subtitle>
-        </ion-card-header>
-      </ion-card>    
+    <swiper-slide *ngFor="let perro of infoPerro">
+      <ion-card class="large-card">
+        <ion-row>
+          <ion-col size="5">
+            <div class="image-container">
+              <ion-img (click)="openModal(perro.imgPerfil)" [src]="perro.imgPerfil" alt="Imagen de {{ perro.Raza }}"></ion-img>
+            </div>
+          </ion-col>
+          <ion-col size="7">
+            <ion-card-header class="text-container">
+              <ion-card-title>{{ perro.Raza }}</ion-card-title>
+              <ion-card-subtitle>{{ perro.Origen }}</ion-card-subtitle>
+            </ion-card-header>
+            <ion-card-content>
+              <p>Año: {{ perro['Año'] }}</p>
+            </ion-card-content>
+          </ion-col>
+        </ion-row>
+      </ion-card>
     </swiper-slide>
   </swiper-container>
-  
-  <h6>Perros</h6>
+  <h6>Perro</h6>
   <swiper-container class="card-container">
-    <swiper-slide>
+    <swiper-slide *ngFor="let group of infoPerroChunks">
       <ion-row>
-        <ion-col size-lg="1" size-md="2" size-sm="3" size-xs="4">
-          <ion-card mode="md" (click)="navigateToTargetPage('perfil-perro')">
-            <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/thumbnail.svg" />
-          </ion-card>
-        </ion-col>
-        <ion-col size-lg="1" size-md="2" size-sm="3" size-xs="4">
-          <ion-card mode="md" (click)="navigateToTargetPage('perfil-perro')">
-            <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/thumbnail.svg" />
-          </ion-card>
-        </ion-col>
-        <ion-col size-lg="1" size-md="2" size-sm="3" size-xs="4">
-          <ion-card mode="md" (click)="navigateToTargetPage('perfil-perro')">
-            <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/thumbnail.svg" />
-          </ion-card>
-        </ion-col>
-      </ion-row>
-    </swiper-slide>
-    <swiper-slide>
-      <ion-row>
-        <ion-col size-lg="1" size-md="2" size-sm="3" size-xs="4">
-          <ion-card mode="md" (click)="navigateToTargetPage('perfil-perro')">
-            <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/thumbnail.svg" />
-          </ion-card>
-        </ion-col>
-        <ion-col size-lg="1" size-md="2" size-sm="3" size-xs="4">
-          <ion-card mode="md" (click)="navigateToTargetPage('perfil-perro')">
-            <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/thumbnail.svg" />
-          </ion-card>
-        </ion-col>
-        <ion-col size-lg="1" size-md="2" size-sm="3" size-xs="4">
-          <ion-card mode="md" (click)="navigateToTargetPage('perfil-perro')">
-            <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/thumbnail.svg" />
-          </ion-card>
-        </ion-col>
+        <ng-container *ngFor="let perro of group">
+          <ion-col size-md="4" size-sm="6" size-xs="12">
+            <ion-card class="small-card">
+              <ion-img class="small-image" (click)="openModal(perro.imgPerfil)" [src]="perro.imgPerfil" alt="Imagen de {{ perro.Raza }}"></ion-img>
+              <ion-card-content>
+                <ion-card-title>{{ perro.Raza }}</ion-card-title>
+                <ion-card-subtitle>{{ perro.Origen }}</ion-card-subtitle>
+              </ion-card-content>
+              <ion-button fill="clear" class="ver-mas-button" (click)="navigateToTargetPage('perfil-perro', perro.id)">Ver más</ion-button>
+            </ion-card>
+          </ion-col>
+        </ng-container>
       </ion-row>
     </swiper-slide>
   </swiper-container>

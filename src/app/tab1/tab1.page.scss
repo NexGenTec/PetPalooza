@@ -14,7 +14,6 @@
 
 .card-with-image-and-text {
     margin-bottom: 10px;
-    /* Espacio entre cada tarjeta */
 }
 
 .image-container {
@@ -29,7 +28,6 @@
     top: 0;
     left: 0;
     width: 100%;
-    height: 100%;
 }
 
 .large-card {
@@ -38,16 +36,12 @@
 
 .small-card {
     margin-bottom: 10px;
-    /* Espaciado entre cada tarjeta */
 }
 
 .small-image {
     width: 100%;
-    /* Ajusta el ancho al 100% del contenedor */
     height: auto;
-    /* Mantén la proporción de aspecto */
     max-height: 100px;
-    /* Establece la altura máxima */
 }
 
 .ver-mas-button {
@@ -61,21 +55,15 @@
 
 .swiper-slide {
     width: 100%;
-    /* Ajusta el ancho de cada slide al 100% */
 }
 
 .swiper-container {
     width: 100%;
-    /* Ajusta el ancho del contenedor del swiper al 100% */
 }
 
 h6 {
     font-size: 1.2em;
-    /* Tamaño de fuente más grande */
     font-weight: bold;
-    /* Texto en negrita */
     font-family: Arial, sans-serif;
-    /* Familia de fuente preferida */
     margin-bottom: 10px;
-    /* Espaciado inferior para separar el texto del contenido siguiente */
 }

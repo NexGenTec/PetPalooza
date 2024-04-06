@@ -132,40 +132,5 @@
             "2": "assets/img/imgGato/Maine Coon//MaineCoon3.jpg",
             "3": "assets/img/imgGato/Maine Coon/MaineCoon4.jpg"
         }
-    },
-    {
-        "id": 5,
-        "imgPerfil": "assets/img/imgGato/Birmano/birmano.webp",
-        "Raza": "Birmano",
-        "Origen": "Birmania",
-        "Año": "mediados del siglo XX",
-        "Origen e Historia": "También conocido como Sagrado de Birmania, es una raza de gato que se originó en Birmania (ahora Myanmar). La leyenda cuenta que los gatos Birmanos fueron criados por monjes en los templos budistas de Birmania, donde se les consideraba sagrados y se les otorgaba un estatus especial. La raza fue introducida en Europa a mediados del siglo XX y se ha ganado una gran popularidad en todo el mundo.",
-        "Características Físicas": {
-            "Tamaño": "Son gatos de tamaño mediano.",
-            "Peso": "machos que pueden pesar entre 4-6 kilogramos y hembras que generalmente pesan un poco menos.",
-            "Cuerpo": "Tienen un cuerpo robusto y bien proporcionado, con patas moderadamente largas y musculosas.",
-            "Cabeza": "Tienen cabezas redondeadas y orejas medianas a grandes, con una expresión dulce y suave.",
-            "Pelaje": "Su pelaje es semilargo, sedoso y sin capa interna. La característica más distintiva del Birmano es su manto de color claro con patrones oscuros en las extremidades (puntos), las orejas y la cola."
-        },
-        "Temperamento": {
-            "Tranquilo": true,
-            "Afectuoso": true,
-            "Sociable": true,
-            "Inteligente": true,
-            "Vocal": true
-        },
-        "Cuidados y Salud": {
-            "Cepillado": "Su pelaje semilargo requiere cepillado regular para evitar la formación de nudos y enredos, especialmente durante las épocas de muda.",
-            "Alimentación": "Se recomienda una dieta equilibrada y de alta calidad para satisfacer sus necesidades nutricionales y mantener su peso saludable.",
-            "Salud": [
-                "Son generalmente una raza saludable, pero pueden ser propensos a problemas como la enfermedad cardíaca y la obesidad. Los chequeos veterinarios regulares son importantes."
-            ],
-            "Longevidad": "La esperanza de vida promedio de un Birmano es de alrededor de 12 a 16 años."
-        },
-        "img": {
-            "1": "assets/img/imgGato/Birmano/birmano2.jpg",
-            "2": "assets/img/imgGato/Birmano/birmano3.webp",
-            "3": "assets/img/imgGato/Birmano/birmano4.webp"
-        }
     }
 ]

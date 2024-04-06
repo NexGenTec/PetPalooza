@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import * as infoPerro from '../../../assets/data/InfoGato.json';
+import * as infoPerro from '../../../assets/data/InfoPerro.json';
+import { Dog } from '../../interface/perro';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-perfil-perro',
@@ -7,8 +9,9 @@ import * as infoPerro from '../../../assets/data/InfoGato.json';
   styleUrls: ['./perfil-perro.page.scss'],
 })
 export class PerfilPerroPage implements OnInit {
-  ngOnInit() {
-  }
+
+  Perro: Dog[] = [];
+  selectedPerroId!: number;
 
   infoPerro: any = (infoPerro as any).default;
 
@@ -16,7 +19,25 @@ export class PerfilPerroPage implements OnInit {
   cardHeading: string = 'Origen';
   cardContent: string = 'Contenido de la tarjeta para el segmento "Origen"';
 
-  constructor() { }
+  constructor(private route: ActivatedRoute) { }
+
+  ngOnInit() {
+    this.route.params.subscribe(params => {
+      this.selectedSegmentValue = params['segment'];
+      this.selectedPerroId = +params['perroId']; // Convert to number
+      // Other initialization logic...
+    });
+  }
+
+  getImagesArray(perro: Dog): string[] {
+    // Convertir el objeto ImagenesPerro en un array de URLs de imágenes
+    return Object.values(perro.img);
+  }
+
+
+  getPerroById(id: number): Dog[] {
+    return this.infoPerro.filter((perro: Dog) => perro.id === id);
+  }
 
   changeCardContent(segmentValue: string) {
     switch (segmentValue) {

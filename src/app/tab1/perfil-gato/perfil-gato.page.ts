@@ -8,6 +8,7 @@ import * as infoGato from '../../../assets/data/InfoGato.json';
 })
 export class PerfilGatoPage implements OnInit {
   infoGato: any = (infoGato as any).default;
+  infoGatoChunks: any[][] = [];
 
   selectedSegmentValue: string = 'origen';
   cardHeading: string = 'Origen';
