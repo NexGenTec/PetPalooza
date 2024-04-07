@@ -1,8 +1,8 @@
 <ion-content [fullscreen]="true">
   <div class="button-container">
-    <ion-button class="center">PetPalooza</ion-button>
+    <ion-button>PetPalooza</ion-button>
   </div>
-  <ion-searchbar></ion-searchbar>
+  <!-- <ion-searchbar></ion-searchbar> -->
   <swiper-container>
     <swiper-slide *ngFor="let perro of infoPerro">
       <ion-card class="large-card">
@@ -25,7 +25,6 @@
       </ion-card>
     </swiper-slide>
   </swiper-container>
-  <h6>Perro</h6>
   <swiper-container class="card-container">
     <swiper-slide *ngFor="let group of infoPerroChunks">
       <ion-row>

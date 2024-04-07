@@ -8,7 +8,11 @@ const routes: Routes = [
   },
   {
     path: 'img-modal',
-    loadChildren: () => import('./img-modal/img-modal.module').then( m => m.ImgModalPageModule)
+    loadChildren: () => import('./img-modal/img-modal.module').then(m => m.ImgModalPageModule)
+  },
+  {
+    path: 'search-modal',
+    loadChildren: () => import('./search-modal/search-modal.module').then( m => m.SearchModalPageModule)
   },
 ];
 @NgModule({

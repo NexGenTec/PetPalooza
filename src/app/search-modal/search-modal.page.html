@@ -1,0 +1,19 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Resultados de la búsqueda</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismiss()">Cerrar</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card *ngFor="let gato of gatos">
+    <ion-card-header>
+      <ion-card-title>{{ gato.Nombre }}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-label>Raza: {{ gato.Raza }}</ion-label>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

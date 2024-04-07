@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import * as infoPerro from '../../../assets/data/InfoPerro.json';
-import { Dog } from '../../interface/perro';
+import { CuidadosYSalud, Dog } from '../../interface/perro';
 import { ActivatedRoute } from '@angular/router';
 import { ImgModalPage } from '../../img-modal/img-modal.page';
 import { ModalController } from '@ionic/angular';
@@ -57,23 +57,68 @@ export class PerfilPerroPage implements OnInit {
         break;
       case 'caracteristicas':
         this.cardHeading = 'Características Físicas';
-        this.cardContent = JSON.stringify(selectedPerro['Características Físicas']);
+        this.cardContent = this.formatCaracteristicas(selectedPerro['Características Físicas']);
         break;
       case 'temperamento':
         this.cardHeading = 'Temperamento';
-        this.cardContent = JSON.stringify(selectedPerro.Temperamento);
+        this.cardContent = this.formatTemperamento(selectedPerro.Temperamento);
         break;
       case 'cuidado':
         this.cardHeading = 'Cuidado y Salud';
-        this.cardContent = JSON.stringify(selectedPerro['Cuidados y Salud']);
+        this.cardContent = this.formatCuidado(selectedPerro['Cuidados y Salud'] as CuidadosYSalud);
         break;
       default:
-        this.selectedSegmentValue = 'origen'
+        this.selectedSegmentValue = 'origen';
         this.cardHeading = 'Origen';
         this.cardContent = this.infoPerro[0]['Origen e Historia'];
         break;
     }
   }
+
+
+  formatCaracteristicas(caracteristicas: any): string {
+    let formatted = '<ul>';
+    for (const key in caracteristicas) {
+      if (caracteristicas.hasOwnProperty(key)) {
+        formatted += `<li><strong>${key}:</strong> ${caracteristicas[key]}</li>`;
+      }
+    }
+    formatted += '</ul>';
+    return formatted;
+  }
+
+  formatTemperamento(temperamento: any): string {
+    let formatted = '<ul>';
+    for (const key in temperamento) {
+      if (temperamento.hasOwnProperty(key) && temperamento[key]) {
+        formatted += `<li>${key}</li>`;
+      }
+    }
+    formatted += '</ul>';
+    return formatted;
+  }
+
+  formatCuidado(cuidado: any): string {
+    let formatted = '<ul>';
+    for (const key in cuidado) {
+      if (cuidado.hasOwnProperty(key)) {
+        if (Array.isArray(cuidado[key])) {
+          formatted += `<li><strong>${key}:</strong> <ul>`;
+          cuidado[key].forEach((item: string) => { // Specify the type of 'item'
+            formatted += `<li>${item}</li>`;
+          });
+          formatted += '</ul></li>';
+        } else {
+          formatted += `<li><strong>${key}:</strong> ${cuidado[key]}</li>`;
+        }
+      }
+    }
+    formatted += '</ul>';
+    return formatted;
+  }
+
+
+
 
   async openModal(imageUrl: string) {
     const modal = await this.modalController.create({
