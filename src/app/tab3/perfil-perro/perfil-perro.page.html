@@ -33,9 +33,6 @@
     <ion-card-header>
       <h6>{{ cardHeading }}</h6>
     </ion-card-header>
-    <ion-card-content>
-      {{ cardContent }}
-    </ion-card-content>
+    <ion-card-content [innerHTML]="cardContent"></ion-card-content>
   </ion-card>
-  
 </ion-content>

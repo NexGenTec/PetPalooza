@@ -55,15 +55,15 @@ export class PerfilGatoPage implements OnInit {
         break;
       case 'caracteristicas':
         this.cardHeading = 'Características Físicas';
-        this.cardContent = JSON.stringify(selectedGato['Características Físicas']);
+        this.cardContent = this.formatCaracteristicas(selectedGato['Características Físicas']);
         break;
       case 'temperamento':
         this.cardHeading = 'Temperamento';
-        this.cardContent = JSON.stringify(selectedGato.Temperamento);
+        this.cardContent = this.formatTemperamento(selectedGato.Temperamento);
         break;
       case 'cuidado':
         this.cardHeading = 'Cuidado y Salud';
-        this.cardContent = JSON.stringify(selectedGato['Cuidados y Salud']);
+        this.cardContent = this.formatCuidado(selectedGato['Cuidados y Salud']);
         break;
       default:
         this.selectedSegmentValue = 'origen'
@@ -72,6 +72,40 @@ export class PerfilGatoPage implements OnInit {
         break;
     }
   }
+
+  formatCaracteristicas(caracteristicas: any): string {
+    let formatted = '';
+    for (const key in caracteristicas) {
+      if (caracteristicas.hasOwnProperty(key)) {
+        formatted += `<strong>${key}:</strong> ${caracteristicas[key]}<br>`;
+      }
+    }
+    return formatted;
+  }
+
+  formatTemperamento(temperamento: any): string {
+    let formatted = '';
+    for (const key in temperamento) {
+      if (temperamento.hasOwnProperty(key) && temperamento[key]) {
+        formatted += `${key}, `;
+      }
+    }
+    // Remove trailing comma and space
+    formatted = formatted.slice(0, -2);
+    return formatted;
+  }
+
+  formatCuidado(cuidado: any): string {
+    let formatted = '';
+    for (const key in cuidado) {
+      if (cuidado.hasOwnProperty(key)) {
+        formatted += `<strong>${key}:</strong> ${cuidado[key]}<br>`;
+      }
+    }
+    return formatted;
+  }
+
+
 
   async openModal(imageUrl: string) {
     const modal = await this.modalController.create({

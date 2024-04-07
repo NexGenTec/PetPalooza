@@ -15,6 +15,7 @@ export class Tab2Page {
   infoPerro: any = (infoPerro as any).default;
   infoPerroChunks: any[][] = [];
   infoGatoChunks: any[][] = [];
+  combinedAnimals: any[] = [];
 
 
   constructor(private router: Router, private modalController: ModalController) {
@@ -24,6 +25,7 @@ export class Tab2Page {
     for (let i = 0; i < this.infoGato.length; i += 3) {
       this.infoGatoChunks.push(this.infoGato.slice(i, i + 3));
     }
+    this.combineAnimals();
   }
 
   navigateToTargetPage(segment: string, gatoId: number) {
@@ -49,5 +51,16 @@ export class Tab2Page {
     navigation: true
   };
 
+  combineAnimals() {
+    const maxLength = Math.max(this.infoGato.length, this.infoPerro.length);
+    for (let i = 0; i < maxLength; i++) {
+      if (this.infoGato[i]) {
+        this.combinedAnimals.push(this.infoGato[i]);
+      }
+      if (this.infoPerro[i]) {
+        this.combinedAnimals.push(this.infoPerro[i]);
+      }
+    }
+  }
 
 }

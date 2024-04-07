@@ -27,7 +27,7 @@ export interface Temperamento {
 
 export interface CuidadosYSalud {
     Cepillado: string;
-    'Alimentación': string;
+    Alimentación: string;
     Salud: string[];
     Longevidad: string;
 }
