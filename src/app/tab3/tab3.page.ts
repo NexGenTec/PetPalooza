@@ -15,8 +15,8 @@ export class Tab3Page {
 
 
   constructor(private router: Router, private modalController: ModalController) {
-    for (let i = 0; i < this.infoPerro.length; i += 3) {
-      this.infoPerroChunks.push(this.infoPerro.slice(i, i + 3));
+    for (let i = 0; i < this.infoPerro.length; i += 1) {
+      this.infoPerroChunks.push(this.infoPerro.slice(i, i + 1));
     }
   }
 

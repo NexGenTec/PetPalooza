@@ -17,8 +17,8 @@ export class Tab1Page {
 
 
   constructor(private router: Router, private modalController: ModalController) {
-    for (let i = 0; i < this.infoGato.length; i += 3) {
-      this.infoGatoChunks.push(this.infoGato.slice(i, i + 3));
+    for (let i = 0; i < this.infoGato.length; i += 1) {
+      this.infoGatoChunks.push(this.infoGato.slice(i, i + 1));
     }
     this.filteredInfoGatoChunks = this.infoGatoChunks;
   }

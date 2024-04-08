@@ -1,22 +1,20 @@
-.bg-tab-menu{
+.bg-tab-menu {
     width: 5px !important;
     height: 35px;
     border-radius: 50px;
     background-color: var(--ion-color-secondary);
     opacity: .4;
     margin: 20px;
-    -webkit-box-shadow: 0px 3px 6px 7px rgba(0,0,0,0.2); 
-    box-shadow: 0px 3px 6px 7px rgba(0,0,0,0.2);
+    -webkit-box-shadow: 0px 3px 6px 7px rgba(0, 0, 0, 0.2);
+    box-shadow: 0px 3px 6px 7px rgba(0, 0, 0, 0.2);
 }
 
-.bg-tab-menu:hover{
+.bg-tab-menu:hover {
     border-color: var(--ion-color-secondary);
     opacity: .9;
 }
 
 svg {
     width: 20px;
-    /* Ajusta el ancho según sea necesario */
     height: 20px;
-    /* Ajusta la altura según sea necesario */
 }

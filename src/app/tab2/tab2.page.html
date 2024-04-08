@@ -1,6 +1,6 @@
 <ion-content [fullscreen]="true">
   <div class="button-container">
-    <ion-button>PetPalooza</ion-button>
+    <ion-button color="secondary">PetPalooza</ion-button>
   </div>
   <ion-searchbar></ion-searchbar>
   <swiper-container [options]="swiperOptions">
@@ -25,48 +25,6 @@
       </ion-card>
     </swiper-slide>
   </swiper-container> 
-  <!-- <swiper-container>   
-    <swiper-slide *ngFor="let gato of infoGato">
-      <ion-card class="large-card">
-        <ion-row>
-          <ion-col size="5">
-            <div class="image-container">
-              <ion-img (click)="openModal(gato.imgPerfil)" [src]="gato.imgPerfil" alt="Imagen de {{ gato.Raza }}"></ion-img>
-            </div>
-          </ion-col>
-          <ion-col size="7">
-            <ion-card-header class="text-container">
-              <ion-card-title>{{ gato.Raza }}</ion-card-title>
-              <ion-card-subtitle>{{ gato.Origen }}</ion-card-subtitle>
-            </ion-card-header>
-            <ion-card-content>
-              <p>Año: {{ gato['Año'] }}</p>
-            </ion-card-content>
-          </ion-col>
-        </ion-row>
-      </ion-card>
-    </swiper-slide>
-    <swiper-slide *ngFor="let perro of infoPerro">
-      <ion-card class="large-card">
-        <ion-row>
-          <ion-col size="5">
-            <div class="image-container">
-              <ion-img (click)="openModal(perro.imgPerfil)" [src]="perro.imgPerfil" alt="Imagen de {{ perro.Raza }}"></ion-img>
-            </div>
-          </ion-col>
-          <ion-col size="7"> 
-            <ion-card-header class="text-container">
-              <ion-card-title>{{ perro.Raza }}</ion-card-title>
-              <ion-card-subtitle>{{ perro.Origen }}</ion-card-subtitle>
-            </ion-card-header>
-            <ion-card-content>
-              <p>Año: {{ perro['Año'] }}</p>
-            </ion-card-content>
-          </ion-col>
-        </ion-row>
-      </ion-card>
-    </swiper-slide>
-  </swiper-container> -->
   <h6>Gatos</h6>
   <swiper-container class="card-container">
     <swiper-slide *ngFor="let group of infoGatoChunks">
