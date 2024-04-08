@@ -19,11 +19,11 @@ export class Tab2Page {
 
 
   constructor(private router: Router, private modalController: ModalController) {
-    for (let i = 0; i < this.infoPerro.length; i += 3) {
-      this.infoPerroChunks.push(this.infoPerro.slice(i, i + 3));
+    for (let i = 0; i < this.infoPerro.length; i += 1) {
+      this.infoPerroChunks.push(this.infoPerro.slice(i, i + 1));
     }
-    for (let i = 0; i < this.infoGato.length; i += 3) {
-      this.infoGatoChunks.push(this.infoGato.slice(i, i + 3));
+    for (let i = 0; i < this.infoGato.length; i += 1) {
+      this.infoGatoChunks.push(this.infoGato.slice(i, i + 1));
     }
     this.combineAnimals();
   }
