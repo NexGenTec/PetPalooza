@@ -1,66 +1,74 @@
 <ion-content [fullscreen]="true">
-  <div class="button-container">
-    <ion-button color="secondary">PetPalooza</ion-button>
-  </div>
-  <ion-searchbar></ion-searchbar>
-  <swiper-container [options]="swiperOptions">
-    <swiper-slide *ngFor="let animal of combinedAnimals">
-      <ion-card class="large-card">
-        <ion-row>
-          <ion-col size="5">
-            <div class="image-container">
-              <ion-img (click)="openModal(animal.imgPerfil)" [src]="animal.imgPerfil" [alt]="'Imagen de ' + animal.Raza"></ion-img>
-            </div>
-          </ion-col>
-          <ion-col size="7">
-            <ion-card-header class="text-container">
-              <ion-card-title>{{ animal.Raza }}</ion-card-title>
-              <ion-card-subtitle>{{ animal.Origen }}</ion-card-subtitle>
-            </ion-card-header>
-            <ion-card-content>
-              <p>Año: {{ animal['Año'] }}</p>
-            </ion-card-content>
-          </ion-col>
-        </ion-row>
-      </ion-card>
-    </swiper-slide>
-  </swiper-container> 
-  <h6>Gatos</h6>
-  <swiper-container class="card-container">
-    <swiper-slide *ngFor="let group of infoGatoChunks">
-      <ion-row>
-        <ng-container *ngFor="let gato of group">
-          <ion-col size-md="4" size-sm="6" size-xs="12"> <!-- Ajusta el tamaño de las columnas para dispositivos móviles -->
-            <ion-card class="small-card">
-              <ion-img class="small-image" (click)="openModal(gato.imgPerfil)" [src]="gato.imgPerfil" alt="Imagen de {{ gato.Raza }}"></ion-img>
+  
+    <div class="button-container">
+      PetPalooza
+    </div>
+    <ion-searchbar class="search-bar" placeholder="Buscar"></ion-searchbar>
+    <swiper-container [options]="swiperOptions">
+      <swiper-slide *ngFor="let animal of combinedAnimals">
+        <ion-card class="large-card">
+          <ion-row>
+            <ion-col size="5">
+              <div class="image-container">
+                <ion-img (click)="openModal(animal.imgPerfil)" [src]="animal.imgPerfil" [alt]="'Imagen de ' + animal.Raza"></ion-img>
+              </div>
+            </ion-col>
+            <ion-col size="7">
+              <ion-card-header class="text-container">
+                <ion-card-title>{{ animal.Raza }}</ion-card-title>
+                <ion-card-subtitle>{{ animal.Origen }}</ion-card-subtitle>
+              </ion-card-header>
               <ion-card-content>
-                <ion-card-title>{{ gato.Raza }}</ion-card-title>
-                <ion-card-subtitle>{{ gato.Origen }}</ion-card-subtitle>
+                <p>Año: {{ animal['Año'] }}</p>
               </ion-card-content>
-              <ion-button fill="clear" class="ver-mas-button" (click)="navigateToTargetPage('perfil-gato', gato.id)">Ver más</ion-button>
-            </ion-card>
-          </ion-col>
-        </ng-container>
-      </ion-row>
-    </swiper-slide>
-  </swiper-container>
-  <h6>Perro</h6>
-  <swiper-container class="card-container">
-    <swiper-slide *ngFor="let group of infoPerroChunks">
-      <ion-row>
-        <ng-container *ngFor="let perro of group">
-          <ion-col size-md="4" size-sm="6" size-xs="12"> <!-- Ajusta el tamaño de las columnas para dispositivos móviles -->
-            <ion-card class="small-card">
-              <ion-img class="small-image" (click)="openModal(perro.imgPerfil)" [src]="perro.imgPerfil" alt="Imagen de {{ perro.Raza }}"></ion-img>
-              <ion-card-content>
-                <ion-card-title>{{ perro.Raza }}</ion-card-title>
-                <ion-card-subtitle>{{ perro.Origen }}</ion-card-subtitle>
-              </ion-card-content>
-              <ion-button fill="clear" class="ver-mas-button" (click)="navigateToTargetPage('perfil-perro', perro.id)">Ver más</ion-button>
-            </ion-card>
-          </ion-col>
-        </ng-container>
-      </ion-row>
-    </swiper-slide>
-  </swiper-container>
+            </ion-col>
+          </ion-row>
+        </ion-card>
+      </swiper-slide>
+    </swiper-container> 
+    <ion-list >
+      <h6>Gatos</h6>  
+        <ion-item-divider>
+          <swiper-container class="card-container">
+            <swiper-slide *ngFor="let group of infoGatoChunks">
+              <ion-row>
+                <ng-container *ngFor="let gato of group">
+                  <ion-col size-md="4" size-sm="6" size-xs="12"> <!-- Ajusta el tamaño de las columnas para dispositivos móviles -->
+                    <ion-card class="small-card">
+                      <ion-img class="small-image" (click)="openModal(gato.imgPerfil)" [src]="gato.imgPerfil" alt="Imagen de {{ gato.Raza }}"></ion-img>
+                      <ion-card-content>
+                        <ion-card-title>{{ gato.Raza }}</ion-card-title>
+                        <ion-card-subtitle>{{ gato.Origen }}</ion-card-subtitle>
+                      </ion-card-content>
+                      <ion-button fill="clear" class="ver-mas-button" (click)="navigateToTargetPage('perfil-gato', gato.id)">Ver más</ion-button>
+                    </ion-card>
+                  </ion-col>
+                </ng-container>
+              </ion-row>
+            </swiper-slide>
+          </swiper-container>
+        </ion-item-divider>
+        <h6>Perros</h6> 
+        <ion-item-divider>
+          <swiper-container class="card-container">
+            <swiper-slide *ngFor="let group of infoPerroChunks">
+              <ion-row>
+                <ng-container *ngFor="let perro of group">
+                  <ion-col size-md="4" size-sm="6" size-xs="12"> <!-- Ajusta el tamaño de las columnas para dispositivos móviles -->
+                    <ion-card class="small-card">
+                      <ion-img class="small-image" (click)="openModal(perro.imgPerfil)" [src]="perro.imgPerfil" alt="Imagen de {{ perro.Raza }}"></ion-img>
+                      <ion-card-content>
+                        <ion-card-title>{{ perro.Raza }}</ion-card-title>
+                        <ion-card-subtitle>{{ perro.Origen }}</ion-card-subtitle>
+                      </ion-card-content>
+                      <ion-button fill="clear" class="ver-mas-button" (click)="navigateToTargetPage('perfil-perro', perro.id)">Ver más</ion-button>
+                    </ion-card>
+                  </ion-col>
+                </ng-container>
+              </ion-row>
+            </swiper-slide>
+          </swiper-container>
+        </ion-item-divider>
+    </ion-list>
+
 </ion-content>
