@@ -15,13 +15,33 @@
             "Ojos": "Grandes y redondos, generalmente oscuros",
             "Orejas": "Pequeñas y caídas hacia adelante"
         },
-        "Temperamento": {
-            "Amigable": true,
-            "Tranquilo": true,
-            "Dulce": true,
-            "Terco": true,
-            "Sociable": true
-        },
+        "Temperamento": [
+            {
+                "tipo": "Valiente",
+                "descripcion": "A pesar de su tamaño pequeño, es valiente y decidido.",
+                "aplicable": true
+            },
+            {
+                "tipo": "Inteligente",
+                "descripcion": "Es una raza inteligente y aprende rápidamente.",
+                "aplicable": true
+            },
+            {
+                "tipo": "Afectuoso",
+                "descripcion": "Tiene tendencia a ser muy cariñoso y afectuoso con su familia.",
+                "aplicable": true
+            },
+            {
+                "tipo": "Energético",
+                "descripcion": "Tiene mucha energía y disfruta de actividades tanto en interiores como en exteriores.",
+                "aplicable": true
+            },
+            {
+                "tipo": "Alerta",
+                "descripcion": "Es un perro alerta que puede ladrar para alertar de la presencia de extraños.",
+                "aplicable": true
+            }
+        ],
         "Cuidados y Salud": {
             "Ejercicio": "Necesita ejercicio regular para mantenerse en forma",
             "Cuidado del Pelo": "Requiere poco mantenimiento, cepillados ocasionales",
@@ -53,13 +73,33 @@
             "Pelaje": "Corto, suave y brillante, colores comunes: beige, albaricoque, negro y plata",
             "Cola": "Tradicionalmente rizada sobre la espalda"
         },
-        "Temperamento": {
-            "Afectuoso": true,
-            "Sociable": true,
-            "Juguetón": true,
-            "Adaptable": true,
-            "Dulce": true
-        },
+        "Temperamento": [
+            {
+                "tipo": "Valiente",
+                "descripcion": "A pesar de su tamaño pequeño, es valiente y decidido.",
+                "aplicable": true
+            },
+            {
+                "tipo": "Inteligente",
+                "descripcion": "Es una raza inteligente y aprende rápidamente.",
+                "aplicable": true
+            },
+            {
+                "tipo": "Afectuoso",
+                "descripcion": "Tiene tendencia a ser muy cariñoso y afectuoso con su familia.",
+                "aplicable": true
+            },
+            {
+                "tipo": "Energético",
+                "descripcion": "Tiene mucha energía y disfruta de actividades tanto en interiores como en exteriores.",
+                "aplicable": true
+            },
+            {
+                "tipo": "Alerta",
+                "descripcion": "Es un perro alerta que puede ladrar para alertar de la presencia de extraños.",
+                "aplicable": true
+            }
+        ],
         "Cuidados y Salud": {
             "Ejercicio": "Necesitan paseos cortos y juegos regulares",
             "Cuidado del Pelo": "Requiere poco mantenimiento, cepillados ocasionales",
@@ -91,13 +131,33 @@
             "Cabeza": "Pequeña y plana, con expresión alerta y ojos oscuros y brillantes",
             "Cola": "Tradicionalmente amputada a una longitud media"
         },
-        "Temperamento": {
-            "Valiente": true,
-            "Inteligente": true,
-            "Afectuoso": true,
-            "Energético": true,
-            "Alerta": true
-        },
+        "Temperamento": [
+            {
+                "tipo": "Valiente",
+                "descripcion": "A pesar de su tamaño pequeño, es valiente y decidido.",
+                "aplicable": true
+            },
+            {
+                "tipo": "Inteligente",
+                "descripcion": "Es una raza inteligente y aprende rápidamente.",
+                "aplicable": true
+            },
+            {
+                "tipo": "Afectuoso",
+                "descripcion": "Tiene tendencia a ser muy cariñoso y afectuoso con su familia.",
+                "aplicable": true
+            },
+            {
+                "tipo": "Energético",
+                "descripcion": "Tiene mucha energía y disfruta de actividades tanto en interiores como en exteriores.",
+                "aplicable": true
+            },
+            {
+                "tipo": "Alerta",
+                "descripcion": "Es un perro alerta que puede ladrar para alertar de la presencia de extraños.",
+                "aplicable": true
+            }
+        ],
         "Cuidados y Salud": {
             "Ejercicio": "Necesitan ejercicio diario",
             "Cuidado del Pelo": "Requiere cepillado diario y corte de pelo regular",
@@ -128,13 +188,33 @@
             "Pelaje": "Corto, liso y brillante, colores: leonado, atigrado y blanco",
             "Cabeza": "Fuerte y cuadrada, mandíbula ancha, ojos oscuros, orejas en forma de V"
         },
-        "Temperamento": {
-            "Amistoso": true,
-            "Leal": true,
-            "Energético": true,
-            "Inteligente": true,
-            "Dócil": true
-        },
+        "Temperamento": [
+            {
+                "tipo": "Valiente",
+                "descripcion": "A pesar de su tamaño pequeño, es valiente y decidido.",
+                "aplicable": true
+            },
+            {
+                "tipo": "Inteligente",
+                "descripcion": "Es una raza inteligente y aprende rápidamente.",
+                "aplicable": true
+            },
+            {
+                "tipo": "Afectuoso",
+                "descripcion": "Tiene tendencia a ser muy cariñoso y afectuoso con su familia.",
+                "aplicable": true
+            },
+            {
+                "tipo": "Energético",
+                "descripcion": "Tiene mucha energía y disfruta de actividades tanto en interiores como en exteriores.",
+                "aplicable": true
+            },
+            {
+                "tipo": "Alerta",
+                "descripcion": "Es un perro alerta que puede ladrar para alertar de la presencia de extraños.",
+                "aplicable": true
+            }
+        ],
         "Cuidados y Salud": {
             "Ejercicio": "Necesita ejercicio diario",
             "Cuidado del Pelo": "Requiere poco mantenimiento, cepillados ocasionales",

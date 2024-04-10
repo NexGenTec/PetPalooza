@@ -1,35 +1,43 @@
 export interface Dog {
     id: number;
+    imgPerfil: string;
     Raza: string;
-    img: ImagenesPerro;
     Origen: string;
     Año: string;
     'Origen e Historia': string;
     'Características Físicas': CaracterísticasFísicas;
-    Temperamento: Temperamento;
+    Temperamento: Temperamento[];
     'Cuidados y Salud': CuidadosYSalud;
+    Longevidad: string;
+    'Información Final'?: string;
+    img: ImagenesPerro;
 }
+
 export interface CaracterísticasFísicas {
-    'Tamaño': string;
+    Tamaño: string;
     Peso: string;
     Cuerpo: string;
-    Cabeza: string;
+    Cara?: string;
+    Ojos?: string;
+    Orejas?: string;
     Pelaje: string;
+    Cola?: string;
 }
 
 export interface Temperamento {
-    Tranquilo: boolean;
-    Afectuoso: boolean;
-    Sociable: boolean;
-    Inteligente: boolean;
-    Vocal: boolean;
+    tipo: string;
+    descripcion: string;
+    aplicable: boolean;
 }
 
 export interface CuidadosYSalud {
-    Cepillado: string;
-    Alimentación: string;
-    Salud: string[];
-    Longevidad: string;
+    Ejercicio: string;
+    'Cuidado del Pelo': string;
+    'Problemas de Salud': string[];
+    'Visitas al veterinario'?: string;
+    Temperatura?: string;
+    Salud?: string[];
+    Alimentación?: string;
 }
 
 export interface ImagenesPerro {

@@ -12,7 +12,15 @@ const routes: Routes = [
   },
   {
     path: 'search-modal',
-    loadChildren: () => import('./search-modal/search-modal.module').then( m => m.SearchModalPageModule)
+    loadChildren: () => import('./search-modal/search-modal.module').then(m => m.SearchModalPageModule)
+  },
+  {
+    path: 'perfil-gato/:id',
+    loadChildren: () => import('./perfil-gato/perfil-gato.module').then(m => m.PerfilGatoPageModule)
+  },
+  {
+    path: 'perfil-perro/:id',
+    loadChildren: () => import('./perfil-perro/perfil-perro.module').then(m => m.PerfilPerroPageModule)
   },
 ];
 @NgModule({

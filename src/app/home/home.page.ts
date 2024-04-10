@@ -6,11 +6,11 @@ import * as infoPerro from '../../assets/data/InfoPerro.json';
 import * as infoGato from '../../assets/data/InfoGato.json';
 
 @Component({
-  selector: 'app-tab2',
-  templateUrl: 'tab2.page.html',
-  styleUrls: ['tab2.page.scss']
+  selector: 'app-home',
+  templateUrl: 'home.page.html',
+  styleUrls: ['home.page.scss']
 })
-export class Tab2Page {
+export class homePage {
   infoGato: any = (infoGato as any).default;
   infoPerro: any = (infoPerro as any).default;
   infoPerroChunks: any[][] = [];
@@ -29,10 +29,10 @@ export class Tab2Page {
   }
 
   navigateToTargetPage(segment: string, gatoId: number) {
-    this.router.navigate(['/tabs/tab1', segment, gatoId]);
+    this.router.navigate([segment, gatoId]);
   }
   navigateToTargetPage2(segment: string, perroId: number) {
-    this.router.navigate(['/tabs/tab3', segment, perroId]);
+    this.router.navigate([segment, perroId]);
   }
 
   async openModal(imageUrl: string) {
