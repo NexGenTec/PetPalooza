@@ -29,3 +29,20 @@
     display: flex;
     justify-content: center;
 }
+
+@font-face {
+    font-family: 'CustomFontBlack';
+    src: url('../src/assets/fonts/roboto/Roboto-Black.ttf');
+  }
+@font-face {
+    font-family: 'CustomFontMedium';
+    src: url('../src/assets/fonts/roboto/Roboto-Medium.ttf');
+}
+@font-face {
+    font-family: 'CustomFontThin';
+    src: url('../src/assets/fonts/roboto/Roboto-Thin.ttf');
+  }
+
+* {
+    font-family: "CustomFontMedium";
+}
