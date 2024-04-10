@@ -123,9 +123,9 @@ export class PerfilPerroPage implements OnInit {
     for (const key in cuidado) {
       if (cuidado.hasOwnProperty(key)) {
         if (Array.isArray(cuidado[key])) {
-          formatted += `<li><strong>${key}:</strong> <ul>`;
+          formatted += `<li style="list-style: none"><strong>${key}:</strong> <ul style="list-style: none">`;
           cuidado[key].forEach((item: string) => { // Specify the type of 'item'
-            formatted += `<li>${item}</li>`;
+            formatted += `<li >${item}</li>`;
           });
           formatted += '</ul></li>';
         } else {
@@ -146,17 +146,17 @@ export class PerfilPerroPage implements OnInit {
   getChipColor(tipo: string): string {
     switch (tipo.toLowerCase()) {
       case 'valiente':
-        return 'primary';
+        return 'secondary';
       case 'inteligente':
         return 'secondary';
       case 'afectuoso':
-        return 'tertiary';
+        return 'secondary';
       case 'energético':
-        return 'success';
+        return 'secondary';
       case 'alerta':
-        return 'warning';
+        return 'secondary';
       default:
-        return 'medium';
+        return 'secondary';
     }
   }
 

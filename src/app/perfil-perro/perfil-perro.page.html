@@ -18,30 +18,33 @@
     </swiper-slide>
   </swiper-container>
 
-  <ion-segment mode="ios" [(ngModel)]="selectedSegmentValue" (ionChange)="changeCardContent(selectedSegmentValue)" style="margin-bottom: 20px;">
+  <ion-segment mode="ios" [(ngModel)]="selectedSegmentValue" (ionChange)="changeCardContent(selectedSegmentValue)" style="margin-bottom: 20px ;padding: 2px 3px 3px 2px;">
     <ion-segment-button value="origen" [checked]="selectedSegmentValue === 'origen'">
-      <ion-label>Origen</ion-label>
+      <!-- <ion-label>Origen</ion-label> -->
+      <ion-icon name="flask-outline"></ion-icon>
     </ion-segment-button>
     <ion-segment-button value="caracteristicas" [checked]="selectedSegmentValue === 'caracteristicas'">
-      <ion-label>Caracteristicas Fisicas</ion-label>
+      <!-- <ion-label>Caracteristicas Fisicas</ion-label> -->
+      <ion-icon name="paw-outline"></ion-icon>
     </ion-segment-button>
     <ion-segment-button value="temperamento" [checked]="selectedSegmentValue === 'temperamento'">
-      <ion-label>Temperamento</ion-label>
+      <!-- <ion-label>Temperamento</ion-label> -->
+      <ion-icon name="leaf-outline"></ion-icon>
     </ion-segment-button>
     <ion-segment-button value="cuidado" [checked]="selectedSegmentValue === 'cuidado'">
-      <ion-label>Cuidado y Salud</ion-label>
+      <!-- <ion-label>Cuidado y Salud</ion-label> -->
+      <ion-icon name="fitness-outline"></ion-icon>
     </ion-segment-button>
   </ion-segment>
 
-  <ion-card style="margin-bottom: 20px;">
-    <ion-card-header>
+  <ion-card style="margin-bottom: 5px; padding: 2px; text-align: center;">
+    <ion-card-content>
       <h6>{{ cardHeading }}</h6>
-    </ion-card-header>
-    <ion-card-content [innerHTML]="cardContent"></ion-card-content>
-  </ion-card>
-  <ion-card-content class="ion-text-center">
+    </ion-card-content>
     <ion-chip *ngFor="let chip of temperamentoChips" [color]="getChipColor(chip.tipo)">
       {{ chip.tipo }}
     </ion-chip>
-  </ion-card-content>
+    <ion-card-content class="ion-text-start" [innerHTML]="cardContent"></ion-card-content>
+  </ion-card>
+
 </ion-content>

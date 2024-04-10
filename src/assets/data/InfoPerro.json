@@ -17,56 +17,57 @@
         },
         "Temperamento": [
             {
-                "tipo": "Valiente",
-                "descripcion": "A pesar de su tamaño pequeño, es valiente y decidido.",
+                "tipo": "Amigable",
+                "descripcion": "A pesar de su apariencia intimidante, el Bulldog Inglés es conocido por ser amigable, cariñoso y leal hacia su familia",
                 "aplicable": true
             },
             {
-                "tipo": "Inteligente",
-                "descripcion": "Es una raza inteligente y aprende rápidamente.",
+                "tipo": "Tranquilo",
+                "descripcion": "Tiende a ser una raza tranquila y relajada, pero aún así necesita ejercicio regular para mantenerse saludable.",
                 "aplicable": true
             },
             {
-                "tipo": "Afectuoso",
-                "descripcion": "Tiene tendencia a ser muy cariñoso y afectuoso con su familia.",
+                "tipo": "Dulce",
+                "descripcion": "Es especialmente tierno con los niños y puede ser un excelente compañero familiar.",
                 "aplicable": true
             },
             {
-                "tipo": "Energético",
-                "descripcion": "Tiene mucha energía y disfruta de actividades tanto en interiores como en exteriores.",
+                "tipo": "Terco",
+                "descripcion": " A veces puede mostrar terquedad, lo que hace que el entrenamiento pueda ser un desafío si no se aborda adecuadamente desde una edad temprana.",
                 "aplicable": true
             },
             {
-                "tipo": "Alerta",
-                "descripcion": "Es un perro alerta que puede ladrar para alertar de la presencia de extraños.",
+                "tipo": "Sociable",
+                "descripcion": "Suele llevarse bien con otros animales y puede adaptarse bien a diferentes entornos, siempre que reciba la socialización adecuada.",
                 "aplicable": true
             }
         ],
         "Cuidados y Salud": {
-            "Ejercicio": "Necesita ejercicio regular para mantenerse en forma",
+            "Ejercicio": "El Bulldog Inglés necesita ejercicio regular para mantenerse en forma y evitar el sobrepeso.",
             "Cuidado del Pelo": "Requiere poco mantenimiento, cepillados ocasionales",
             "Problemas de Salud": [
                 "Problemas respiratorios, problemas de piel y articulaciones, sobrepeso"
             ],
             "Visitas al veterinario": "Se recomienda regularmente para chequeos de salud y vacunaciones"
         },
-        "Longevidad": "8-10 años",
+        "Longevidad": "Esperanza promedio es alrededor de 8-10 años",
         "Información Final": "El Bulldog Inglés es una mascota maravillosa para aquellos que buscan un compañero leal y cariñoso que no requiera un nivel extremadamente alto de actividad física. Es importante proporcionarle una dieta equilibrada, ejercicio regular y atención veterinaria adecuada para asegurar su salud y bienestar a lo largo de su vida.",
         "img": {
-            "1": "assets/img/imgPerro/Bulldog Inglés/BulldogIngles2.jpg",
-            "2": "assets/img/imgPerro/Bulldog Inglés/BulldogIngles3.jpg",
-            "3": "assets/img/imgPerro/Bulldog Inglés/BulldogIngles4.jpg"
+            "1": "assets/img/imgPerro/Bulldog Inglés/BulldogIngles.jpg",
+            "2": "assets/img/imgPerro/Bulldog Inglés/BulldogIngles2.jpg",
+            "3": "assets/img/imgPerro/Bulldog Inglés/BulldogIngles3.jpg",
+            "4": "assets/img/imgPerro/Bulldog Inglés/BulldogIngles4.jpg"
         }
     },
     {
         "id": 2,
         "imgPerfil": "assets/img/imgPerro/Pug/Pug.jpg",
-        "Raza": "Pug / Carlino",
+        "Raza": "Pug o Carlino",
         "Origen": "China",
         "Año": "Siglo XVI",
         "Origen e Historia": "Se cree que los Pugs fueron criados por primera vez como compañeros de la realeza china y eran muy apreciados por su personalidad amigable y su apariencia distintiva.",
         "Características Físicas": {
-            "Tamaño": "Pequeño y compacto",
+            "Tamaño": "Pequeño y compacto; altura entre 25 o 30 cm.",
             "Peso": "6-8 kg",
             "Cuerpo": "Robusto y musculoso",
             "Cabeza": "Redonda y maciza, con ojos grandes y redondos, nariz achatada",
@@ -75,28 +76,28 @@
         },
         "Temperamento": [
             {
-                "tipo": "Valiente",
-                "descripcion": "A pesar de su tamaño pequeño, es valiente y decidido.",
-                "aplicable": true
-            },
-            {
-                "tipo": "Inteligente",
-                "descripcion": "Es una raza inteligente y aprende rápidamente.",
-                "aplicable": true
-            },
-            {
                 "tipo": "Afectuoso",
-                "descripcion": "Tiene tendencia a ser muy cariñoso y afectuoso con su familia.",
+                "descripcion": "El Pug es conocido por ser un compañero cariñoso y afectuoso que tiende a formar fuertes vínculos con su familia humana.",
                 "aplicable": true
             },
             {
-                "tipo": "Energético",
-                "descripcion": "Tiene mucha energía y disfruta de actividades tanto en interiores como en exteriores.",
+                "tipo": "Sociable",
+                "descripcion": "Suele llevarse bien con otros perros y mascotas, así como con niños y extraños, lo convierte en un excelente perro de compañía.",
                 "aplicable": true
             },
             {
-                "tipo": "Alerta",
-                "descripcion": "Es un perro alerta que puede ladrar para alertar de la presencia de extraños.",
+                "tipo": "Jugetón",
+                "descripcion": "A pesar de su pequeño tamaño, el Pug es bastante activo y disfruta de jugar y participar en actividades con su familia",
+                "aplicable": true
+            },
+            {
+                "tipo": "Adaptable",
+                "descripcion": "Pueden vivir cómodamente en entornos tanto urbanos como rurales, siempre que reciban la atención y el ejercicio adecuados.",
+                "aplicable": true
+            },
+            {
+                "tipo": "Dulce",
+                "descripcion": "Son conocidos por su naturaleza dulce y su disposición a complacer a sus dueños..",
                 "aplicable": true
             }
         ],
@@ -106,14 +107,16 @@
             "Problemas de Salud": [
                 "Dificultades respiratorias, problemas oculares, problemas de piel y articulaciones"
             ],
-            "Temperatura": "Sensibles al calor"
+            "Temperatura": "Debido a su nariz achatada, suelen tener dificultades para regular su temperatura corporal y son sensibles al calor. Se deben evitar los ejercicios vigorosos en climas cálidos."
         },
-        "Longevidad": "12-15 años",
+        "Longevidad": "La esperanza de vida promedio es de 12 a 15 años, aunque esto puede variar según la salud individual de cada perro y los cuidados que reciba.",
         "Consideraciones Finales": "El Pug es una mascota encantadora y adaptable que se adapta bien a una variedad de entornos y estilos de vida. Requiere cuidados regulares, incluido el control de su salud y peso, así como la atención a su bienestar emocional. Con el amor y la atención adecuados, el Pug puede ser un compañero fiel y cariñoso durante muchos años.",
         "img": {
-            "1": "assets/img/imgPerro/Pug/Pug2.jpg",
-            "2": "assets/img/imgPerro/Pug/Pug3.jpg",
-            "3": "assets/img/imgPerro/Pug/Pug4.jpg"
+            "1":"assets/img/imgPerro/Pug/Pug.jpg",
+            "2": "assets/img/imgPerro/Pug/Pug2.jpg",
+            "3": "assets/img/imgPerro/Pug/Pug3.jpg",
+            "4": "assets/img/imgPerro/Pug/Pug4.jpg"
+            
         }
     },
     {
@@ -169,9 +172,10 @@
         "Longevidad": "12-15 años",
         "Consideraciones Finales": "El Yorkshire Terrier es una mascota encantadora y cariñosa que se adapta bien a diferentes entornos y estilos de vida, incluyendo hogares urbanos y rurales. Requiere cuidados regulares, incluido el cepillado diario y visitas periódicas al veterinario. Con el amor y la atención adecuados, el Yorkshire Terrier puede ser un compañero leal y afectuoso durante muchos años.",
         "img": {
-            "1": "assets/img/imgPerro/Yorkshire/Yorkshire2.jpg",
-            "2": "assets/img/imgPerro/Yorkshire/Yorkshire3.jpeg",
-            "3": "assets/img/imgPerro/Yorkshire/Yorkshire4.jpg"
+            "1": "assets/img/imgPerro/Yorkshire/Yorkshire.jpg",
+            "2": "assets/img/imgPerro/Yorkshire/Yorkshire2.jpg",
+            "3": "assets/img/imgPerro/Yorkshire/Yorkshire3.jpeg",
+            "4": "assets/img/imgPerro/Yorkshire/Yorkshire4.jpg"
         }
     },
     {
@@ -226,9 +230,10 @@
         "Longevidad": "10-12 años",
         "Consideraciones Finales": "El Bóxer es una mascota encantadora y leal que puede ser un compañero maravilloso para personas y familias activas. Requiere cuidados regulares, incluido el ejercicio, el entrenamiento y la atención veterinaria, para garantizar su salud y bienestar a lo largo de su vida. Con el amor y la atención adecuados, el Bóxer puede ser un compañero leal y afectuoso durante muchos años.",
         "img": {
-            "1": "assets/img/imgPerro/Bóxer/Boxer2.jpg",
-            "2": "assets/img/imgPerro/Bóxer/Boxer3.jpg",
-            "3": "assets/img/imgPerro/Bóxer/Boxer4.jpg"
+            "1": "assets/img/imgPerro/Bóxer/Boxer.jpg",
+            "2": "assets/img/imgPerro/Bóxer/Boxer2.jpg",
+            "3": "assets/img/imgPerro/Bóxer/Boxer3.jpg",
+            "4": "assets/img/imgPerro/Bóxer/Boxer4.jpg"
         }
     }
 ]
