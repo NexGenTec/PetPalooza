@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import * as infoGato from '../../../assets/data/InfoGato.json';
+import * as infoGato from '../../assets/data/InfoGato.json';
 import { ActivatedRoute } from '@angular/router';
-import { Cat } from '../../interface/gato';
+import { Cat } from '../interface/gato';
 import { ModalController } from '@ionic/angular';
-import { ImgModalPage } from '../../img-modal/img-modal.page';
+import { ImgModalPage } from '../img-modal/img-modal.page';
 
 @Component({
   selector: 'app-perfil-gato',

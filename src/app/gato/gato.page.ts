@@ -5,11 +5,11 @@ import { ImgModalPage } from '../img-modal/img-modal.page';
 import * as infoGato from '../../assets/data/InfoGato.json';
 import { SearchModalPage } from '../search-modal/search-modal.page';
 @Component({
-  selector: 'app-tab1',
-  templateUrl: 'tab1.page.html',
-  styleUrls: ['tab1.page.scss']
+  selector: 'app-gato',
+  templateUrl: 'gato.page.html',
+  styleUrls: ['gato.page.scss']
 })
-export class Tab1Page {
+export class gatoPage {
   infoGato: any = (infoGato as any).default;
   infoGatoChunks: any[][] = [];
   searchTerm: string = '';
@@ -24,7 +24,7 @@ export class Tab1Page {
   }
 
   navigateToTargetPage(page: string, gatoId: number) {
-    this.router.navigate(['/tabs/tab1', page, gatoId]);
+    this.router.navigate([page, gatoId]);
   }
 
   async openModal(imageUrl: string) {

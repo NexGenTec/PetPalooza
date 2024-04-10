@@ -5,11 +5,11 @@ import { ImgModalPage } from '../img-modal/img-modal.page';
 import * as infoPerro from '../../assets/data/InfoPerro.json';
 
 @Component({
-  selector: 'app-tab3',
-  templateUrl: 'tab3.page.html',
-  styleUrls: ['tab3.page.scss']
+  selector: 'app-perro',
+  templateUrl: 'perro.page.html',
+  styleUrls: ['perro.page.scss']
 })
-export class Tab3Page {
+export class perroPage {
   infoPerro: any = (infoPerro as any).default;
   infoPerroChunks: any[][] = [];
 
@@ -21,7 +21,7 @@ export class Tab3Page {
   }
 
   navigateToTargetPage(page: string, perroId: number) {
-    this.router.navigate(['/tabs/tab3', page, perroId]);
+    this.router.navigate([page, perroId]);
   }
 
   async openModal(imageUrl: string) {

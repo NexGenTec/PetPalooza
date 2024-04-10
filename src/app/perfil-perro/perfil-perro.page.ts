@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import * as infoPerro from '../../../assets/data/InfoPerro.json';
-import { CuidadosYSalud, Dog } from '../../interface/perro';
+import * as infoPerro from '../../assets/data/InfoPerro.json';
+import { CuidadosYSalud, Dog, Temperamento } from '../interface/perro';
 import { ActivatedRoute } from '@angular/router';
-import { ImgModalPage } from '../../img-modal/img-modal.page';
+import { ImgModalPage } from '../img-modal/img-modal.page';
 import { ModalController } from '@ionic/angular';
 
 @Component({
@@ -18,6 +18,7 @@ export class PerfilPerroPage implements OnInit {
 
   Perro: Dog[] = [];
   selectedPerroId!: number;
+  temperamentoChips: Temperamento[] = [];
 
   infoPerro: any = (infoPerro as any).default;
 
@@ -54,26 +55,32 @@ export class PerfilPerroPage implements OnInit {
       case 'origen':
         this.cardHeading = 'Origen';
         this.cardContent = this.infoPerro[0]['Origen e Historia'];
+        this.temperamentoChips = []; // Restablecer a un arreglo vacío
         break;
       case 'caracteristicas':
         this.cardHeading = 'Características Físicas';
         this.cardContent = this.formatCaracteristicas(selectedPerro['Características Físicas']);
+        this.temperamentoChips = []; // Restablecer a un arreglo vacío
         break;
       case 'temperamento':
         this.cardHeading = 'Temperamento';
         this.cardContent = this.formatTemperamento(selectedPerro.Temperamento);
+        this.temperamentoChips = this.getTemperamentoChips(selectedPerro.Temperamento);
         break;
       case 'cuidado':
         this.cardHeading = 'Cuidado y Salud';
         this.cardContent = this.formatCuidado(selectedPerro['Cuidados y Salud'] as CuidadosYSalud);
+        this.temperamentoChips = []; // Restablecer a un arreglo vacío
         break;
       default:
         this.selectedSegmentValue = 'origen';
         this.cardHeading = 'Origen';
         this.cardContent = this.infoPerro[0]['Origen e Historia'];
+        this.temperamentoChips = []; // Restablecer a un arreglo vacío
         break;
     }
   }
+
 
 
   formatCaracteristicas(caracteristicas: any): string {
@@ -89,14 +96,27 @@ export class PerfilPerroPage implements OnInit {
 
   formatTemperamento(temperamento: any): string {
     let formatted = '<ul>';
-    for (const key in temperamento) {
-      if (temperamento.hasOwnProperty(key) && temperamento[key]) {
-        formatted += `<li>${key}</li>`;
+    if (Array.isArray(temperamento)) {
+      temperamento.forEach((item: any) => {
+        if (item.aplicable) {
+          formatted += `<li><strong>${item.tipo}:</strong> ${item.descripcion}</li>`;
+        }
+      });
+    } else {
+      for (const key in temperamento) {
+        if (temperamento.hasOwnProperty(key)) {
+          const item = temperamento[key];
+          if (item.aplicable) {
+            formatted += `<li><strong>${key}:</strong> ${item.descripcion}</li>`;
+          }
+        }
       }
     }
     formatted += '</ul>';
     return formatted;
   }
+
+
 
   formatCuidado(cuidado: any): string {
     let formatted = '<ul>';
@@ -118,7 +138,27 @@ export class PerfilPerroPage implements OnInit {
   }
 
 
+  getTemperamentoChips(temperamento: Temperamento[]): Temperamento[] {
+    return temperamento.filter(item => item.aplicable);
+  }
 
+
+  getChipColor(tipo: string): string {
+    switch (tipo.toLowerCase()) {
+      case 'valiente':
+        return 'primary';
+      case 'inteligente':
+        return 'secondary';
+      case 'afectuoso':
+        return 'tertiary';
+      case 'energético':
+        return 'success';
+      case 'alerta':
+        return 'warning';
+      default:
+        return 'medium';
+    }
+  }
 
   async openModal(imageUrl: string) {
     const modal = await this.modalController.create({

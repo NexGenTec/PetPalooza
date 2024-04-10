@@ -3,19 +3,19 @@ import { IonicModule } from '@ionic/angular';
 
 
 
-import { Tab3Page } from './tab3.page';
+import { gatoPage } from './gato.page';
 
-describe('Tab3Page', () => {
-  let component: Tab3Page;
-  let fixture: ComponentFixture<Tab3Page>;
+describe('gatoPage', () => {
+  let component: gatoPage;
+  let fixture: ComponentFixture<gatoPage>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [Tab3Page],
+      declarations: [gatoPage],
       imports: [IonicModule.forRoot(),]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(Tab3Page);
+    fixture = TestBed.createComponent(gatoPage);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
