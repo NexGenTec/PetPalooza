@@ -90,7 +90,6 @@ export class PerfilGatoPage implements OnInit {
         formatted += `${key}, `;
       }
     }
-    // Remove trailing comma and space
     formatted = formatted.slice(0, -2);
     return formatted;
   }

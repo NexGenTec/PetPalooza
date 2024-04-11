@@ -17,28 +17,28 @@
         },
         "Temperamento": [
             {
-                "tipo": "Valiente",
-                "descripcion": "A pesar de su tamaño pequeño, es valiente y decidido.",
+                "tipo": "Amigable",
+                "descripcion": "A pesar de su apariencia intimidante, el Bulldog Inglés es conocido por ser amigable, cariñoso y leal hacia su familia.",
                 "aplicable": true
             },
             {
-                "tipo": "Inteligente",
-                "descripcion": "Es una raza inteligente y aprende rápidamente.",
+                "tipo": "Tranquilo",
+                "descripcion": "Tiene tendencia a ser una raza tranquila y relajada, pero aún así necesita ejercicio regular para mantenerse saludable.",
                 "aplicable": true
             },
             {
-                "tipo": "Afectuoso",
-                "descripcion": "Tiene tendencia a ser muy cariñoso y afectuoso con su familia.",
+                "tipo": "Dulce",
+                "descripcion": "Es especialmente tierno con los niños y puede ser un excelente compañero familiar.",
                 "aplicable": true
             },
             {
-                "tipo": "Energético",
-                "descripcion": "Tiene mucha energía y disfruta de actividades tanto en interiores como en exteriores.",
+                "tipo": "Terco",
+                "descripcion": "A veces puede mostrar terquedad, lo que hace que el entrenamiento pueda ser un desafío si no se aborda adecuadamente desde una edad temprana.",
                 "aplicable": true
             },
             {
-                "tipo": "Alerta",
-                "descripcion": "Es un perro alerta que puede ladrar para alertar de la presencia de extraños.",
+                "tipo": "Sociable",
+                "descripcion": "Suele llevarse bien con otros animales y puede adaptarse bien a diferentes entornos, siempre que reciba la socialización adecuada.",
                 "aplicable": true
             }
         ],
@@ -75,28 +75,28 @@
         },
         "Temperamento": [
             {
-                "tipo": "Valiente",
-                "descripcion": "A pesar de su tamaño pequeño, es valiente y decidido.",
-                "aplicable": true
-            },
-            {
-                "tipo": "Inteligente",
-                "descripcion": "Es una raza inteligente y aprende rápidamente.",
-                "aplicable": true
-            },
-            {
                 "tipo": "Afectuoso",
-                "descripcion": "Tiene tendencia a ser muy cariñoso y afectuoso con su familia.",
+                "descripcion": "El Pug es conocido por ser un compañero cariñoso y afectuoso que tiende a formar fuertes vínculos con su familia humana.",
                 "aplicable": true
             },
             {
-                "tipo": "Energético",
-                "descripcion": "Tiene mucha energía y disfruta de actividades tanto en interiores como en exteriores.",
+                "tipo": "Sociable",
+                "descripcion": "Suele llevarse bien con otros perros y mascotas, así como con niños y extraños, lo que lo convierte en un excelente perro de compañía.",
                 "aplicable": true
             },
             {
-                "tipo": "Alerta",
-                "descripcion": "Es un perro alerta que puede ladrar para alertar de la presencia de extraños.",
+                "tipo": "Jugueton",
+                "descripcion": "A pesar de su pequeño tamaño, el Pug es bastante activo y disfruta de jugar y participar en actividades con su familia.",
+                "aplicable": true
+            },
+            {
+                "tipo": "Adaptable",
+                "descripcion": "Pueden vivir cómodamente en entornos tanto urbanos como rurales, siempre que reciban la atención y el ejercicio adecuados.",
+                "aplicable": true
+            },
+            {
+                "tipo": "Dulce",
+                "descripcion": "Son conocidos por su naturaleza dulce y su disposición a complacer a sus dueños.",
                 "aplicable": true
             }
         ],
@@ -134,27 +134,27 @@
         "Temperamento": [
             {
                 "tipo": "Valiente",
-                "descripcion": "A pesar de su tamaño pequeño, es valiente y decidido.",
+                "descripcion": "A pesar de su tamaño pequeño, el Yorkshire Terrier es valiente y decidido, y a menudo no tiene miedo de enfrentarse a perros más grandes si se siente amenazado.",
                 "aplicable": true
             },
             {
                 "tipo": "Inteligente",
-                "descripcion": "Es una raza inteligente y aprende rápidamente.",
+                "descripcion": "Es una raza inteligente y aprende rápidamente, lo que lo hace fácil de entrenar en trucos y obediencia básica.",
                 "aplicable": true
             },
             {
                 "tipo": "Afectuoso",
-                "descripcion": "Tiene tendencia a ser muy cariñoso y afectuoso con su familia.",
+                "descripcion": "Tiende a ser muy cariñoso y afectuoso con su familia, disfrutando pasar tiempo en el regazo de sus dueños.",
                 "aplicable": true
             },
             {
                 "tipo": "Energético",
-                "descripcion": "Tiene mucha energía y disfruta de actividades tanto en interiores como en exteriores.",
+                "descripcion": "A pesar de su pequeño tamaño, el Yorkshire Terrier tiene mucha energía y disfruta de juegos y actividades tanto en interiores como en exteriores.",
                 "aplicable": true
             },
             {
                 "tipo": "Alerta",
-                "descripcion": "Es un perro alerta que puede ladrar para alertar de la presencia de extraños.",
+                "descripcion": "Es un perro alerta que puede ladrar para alertar de la presencia de extraños, lo que lo convierte en un buen perro guardián.",
                 "aplicable": true
             }
         ],
@@ -190,28 +190,28 @@
         },
         "Temperamento": [
             {
-                "tipo": "Valiente",
-                "descripcion": "A pesar de su tamaño pequeño, es valiente y decidido.",
+                "tipo": "Amistoso",
+                "descripcion": "El Bóxer es conocido por ser un perro amistoso y juguetón que suele llevarse bien con las personas y otros animales.",
                 "aplicable": true
             },
             {
-                "tipo": "Inteligente",
-                "descripcion": "Es una raza inteligente y aprende rápidamente.",
-                "aplicable": true
-            },
-            {
-                "tipo": "Afectuoso",
-                "descripcion": "Tiene tendencia a ser muy cariñoso y afectuoso con su familia.",
+                "tipo": "Leal",
+                "descripcion": "Tiene tendencia a formar fuertes vínculos con su familia y puede ser un protector valiente cuando se siente amenazado.",
                 "aplicable": true
             },
             {
                 "tipo": "Energético",
-                "descripcion": "Tiene mucha energía y disfruta de actividades tanto en interiores como en exteriores.",
+                "descripcion": "Es una raza muy activa que necesita ejercicio regular para mantenerse feliz y saludable. Disfruta de actividades como correr, jugar y participar en deportes caninos.",
                 "aplicable": true
             },
             {
-                "tipo": "Alerta",
-                "descripcion": "Es un perro alerta que puede ladrar para alertar de la presencia de extraños.",
+                "tipo": "Inteligente",
+                "descripcion": "Es un perro inteligente que responde bien al entrenamiento, aunque puede mostrar cierta terquedad en ocasiones.",
+                "aplicable": true
+            },
+            {
+                "tipo": "Docil",
+                "descripcion": "A pesar de su aspecto imponente, el Bóxer es generalmente dócil y cariñoso con su familia.",
                 "aplicable": true
             }
         ],

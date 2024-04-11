@@ -145,20 +145,41 @@ export class PerfilPerroPage implements OnInit {
 
   getChipColor(tipo: string): string {
     switch (tipo.toLowerCase()) {
-      case 'valiente':
+      case 'amigable':
         return 'primary';
-      case 'inteligente':
+      case 'tranquilo':
         return 'secondary';
-      case 'afectuoso':
+      case 'dulce':
         return 'tertiary';
-      case 'energético':
+      case 'terco':
+        return 'quaternary';
+      case 'sociable':
         return 'success';
+      case 'afectuoso':
+        return 'warning';
+      case 'jueguetón':
+        return 'info';
+      case 'adaptable':
+        return 'dark';
+      case 'energético':
+        return 'light';
+      case 'valiente':
+        return 'danger';
+      case 'inteligente':
+        return 'primary';
       case 'alerta':
+        return 'secondary';
+      case 'dócil':
+        return 'success';
+      case 'amistoso':
+        return 'primary';
+      case 'leal':
         return 'warning';
       default:
-        return 'medium';
+        return 'medium'; // Color por defecto
     }
   }
+
 
   async openModal(imageUrl: string) {
     const modal = await this.modalController.create({

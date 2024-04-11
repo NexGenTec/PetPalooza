@@ -2,8 +2,8 @@
   <div class="background"></div>
 
   <ion-toolbar>
-    <div class="button-container">
-      PetPalooza
+    <div class="button-container" *ngFor="let gato of getGatoById(selectedGatoId)">
+      {{gato.Raza}}
     </div>
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/"></ion-back-button>

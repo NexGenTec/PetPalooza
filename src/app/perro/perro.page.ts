@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { ImgModalPage } from '../img-modal/img-modal.page';
 import * as infoPerro from '../../assets/data/InfoPerro.json';
+import { SearchModalPage } from '../search-modal/search-modal.page';
 
 @Component({
   selector: 'app-perro',
@@ -39,4 +40,16 @@ export class perroPage {
     spaceBetween: 10,
     navigation: true
   };
+
+
+  async openSearchModal() {
+    const modal = await this.modalController.create({
+      component: SearchModalPage,
+      componentProps: {
+        razas: this.infoPerro
+      }
+    });
+    return await modal.present();
+  }
+
 }
