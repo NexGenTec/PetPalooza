@@ -8,12 +8,18 @@
 </ion-header>
 
 <ion-content>
-  <ion-card *ngFor="let gato of gatos">
-    <ion-card-header>
-      <ion-card-title>{{ gato.Nombre }}</ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
-      <ion-label>Raza: {{ gato.Raza }}</ion-label>
+  <ion-card>
+    <ion-searchbar class="search-bar" placeholder="Buscar" (ionInput)="filterBreeds($event)"></ion-searchbar>
+    <ion-card-content >
+      <ion-list *ngFor="let raza of filteredRazas">
+        <ion-item>
+          <ion-thumbnail slot="start">
+            <ion-img class="small-image" [src]="raza.imgPerfil" alt="Imagen de {{ raza.Raza }}"></ion-img>
+          </ion-thumbnail>
+          <ion-label>Raza: {{ raza.Raza }}</ion-label>
+          <ion-icon name="arrow-forward-circle-outline" color="secondary"></ion-icon>
+        </ion-item>
+      </ion-list>
     </ion-card-content>
   </ion-card>
 </ion-content>

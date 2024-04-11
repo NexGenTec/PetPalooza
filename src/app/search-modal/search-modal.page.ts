@@ -8,15 +8,24 @@ import { ModalController } from '@ionic/angular';
 })
 export class SearchModalPage implements OnInit {
 
-  @Input() gatos!: any[];
+  @Input() razas!: any[];
+  filteredRazas: any[] = [];
 
   constructor(private modalController: ModalController) { }
 
   ngOnInit() {
+    this.filteredRazas = this.razas;
   }
 
   dismiss() {
     this.modalController.dismiss();
+  }
+
+  filterBreeds(event: any) {
+    const searchTerm = event.target.value.toLowerCase();
+    this.filteredRazas = this.razas.filter((raza: any) =>
+      raza.Raza.toLowerCase().includes(searchTerm)
+    );
   }
 
 
