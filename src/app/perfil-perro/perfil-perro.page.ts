@@ -11,7 +11,6 @@ import { ModalController } from '@ionic/angular';
   styleUrls: ['./perfil-perro.page.scss'],
 })
 export class PerfilPerroPage implements OnInit {
-
   selectedSegmentValue: string = 'origen';
   cardHeading: string = '';
   cardContent: string = '';
@@ -55,12 +54,12 @@ export class PerfilPerroPage implements OnInit {
       case 'origen':
         this.cardHeading = 'Origen';
         this.cardContent = this.infoPerro[0]['Origen e Historia'];
-        this.temperamentoChips = []; // Restablecer a un arreglo vacío
+        this.temperamentoChips = [];
         break;
       case 'caracteristicas':
         this.cardHeading = 'Características Físicas';
         this.cardContent = this.formatCaracteristicas(selectedPerro['Características Físicas']);
-        this.temperamentoChips = []; // Restablecer a un arreglo vacío
+        this.temperamentoChips = [];
         break;
       case 'temperamento':
         this.cardHeading = 'Temperamento';
@@ -70,13 +69,13 @@ export class PerfilPerroPage implements OnInit {
       case 'cuidado':
         this.cardHeading = 'Cuidado y Salud';
         this.cardContent = this.formatCuidado(selectedPerro['Cuidados y Salud'] as CuidadosYSalud);
-        this.temperamentoChips = []; // Restablecer a un arreglo vacío
+        this.temperamentoChips = [];
         break;
       default:
         this.selectedSegmentValue = 'origen';
         this.cardHeading = 'Origen';
         this.cardContent = this.infoPerro[0]['Origen e Historia'];
-        this.temperamentoChips = []; // Restablecer a un arreglo vacío
+        this.temperamentoChips = [];
         break;
     }
   }
@@ -146,39 +145,47 @@ export class PerfilPerroPage implements OnInit {
   getChipColor(tipo: string): string {
     switch (tipo.toLowerCase()) {
       case 'amigable':
-        return 'primary';
+        return '--ion-color-light'; // azul
       case 'tranquilo':
-        return 'secondary';
+        return 'secondary'; // gris
       case 'dulce':
-        return 'tertiary';
+        return 'tertiary'; // verde claro
       case 'terco':
-        return 'quaternary';
+        return 'danger'; // rojo oscuro
       case 'sociable':
-        return 'success';
+        return 'success'; // verde
       case 'afectuoso':
-        return 'warning';
-      case 'jueguetón':
-        return 'info';
+        return 'warning'; // amarillo
+      case 'juguetón':
+        return 'info'; // azul claro
       case 'adaptable':
-        return 'dark';
+        return 'dark'; // gris oscuro
       case 'energético':
-        return 'light';
+        return 'light'; // blanco
       case 'valiente':
-        return 'danger';
-      case 'inteligente':
-        return 'primary';
+        return '--ion-color-light'; // azul
       case 'alerta':
-        return 'secondary';
+        return 'danger'; // rojo oscuro
       case 'dócil':
-        return 'success';
+        return 'success'; // verde
       case 'amistoso':
-        return 'primary';
+        return '--ion-color-light'; // azul
       case 'leal':
-        return 'warning';
+        return 'warning'; // amarillo
+      case 'inteligente':
+        return '--ion-color-light'; // azul
+      case 'comunicativos':
+        return '--ion-color-light'; // azul
+      case 'activos':
+        return '--ion-color-light'; // azul
+      case 'leales':
+        return '--ion-color-light'; // azul
       default:
         return 'medium'; // Color por defecto
     }
   }
+
+
 
 
   async openModal(imageUrl: string) {

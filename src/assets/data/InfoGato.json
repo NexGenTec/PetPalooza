@@ -11,13 +11,33 @@
             "Cabeza": "Tienen una cabeza triangular y alargada, con orejas grandes y puntiagudas.",
             "Pelaje": "Su pelaje es corto, fino y pegado al cuerpo. Presenta un patrón de color punto, donde el cuerpo es de un color claro y las extremidades, la cola, las orejas y la cara son más oscuras."
         },
-        "Temperamento": {
-            "Inteligente": true,
-            "Sociable": true,
-            "Comunicativo": true,
-            "Activo": true,
-            "Leal": true
-        },
+        "Temperamento": [
+            {
+                "tipo": "Inteligente",
+                "descripcion": "Son gatos muy inteligentes y astutos que disfrutan de desafíos mentales y juegos interactivos.",
+                "aplicable": true
+            },
+            {
+                "tipo": "Sociable",
+                "descripcion": "Aman la compañía humana y son conocidos por formar fuertes vínculos con sus familias.",
+                "aplicable": true
+            },
+            {
+                "tipo": "Comunicativos",
+                "descripcion": "Son gatos muy vocales que no dudan en expresar sus necesidades y deseos a través de maullidos y otros sonidos.",
+                "aplicable": true
+            },
+            {
+                "tipo": "Activos",
+                "descripcion": "Les encanta jugar y necesitan estimulación física y mental regular para mantenerse felices y saludables.",
+                "aplicable": true
+            },
+            {
+                "tipo": "Leales",
+                "descripcion": "Son gatos leales y cariñosos que suelen seguir a sus dueños por la casa y disfrutar de estar en su compañía.",
+                "aplicable": true
+            }
+        ],
         "Cuidados y Salud": {
             "Cepillado": "Su pelaje corto no requiere mucho mantenimiento, pero un cepillado semanal puede ayudar a eliminar el pelo suelto y prevenir la formación de nudos.",
             "Alimentación": "Se recomienda una dieta equilibrada y de alta calidad para satisfacer sus necesidades nutricionales.",
@@ -44,13 +64,33 @@
             "Cabeza": "Tienen una cabeza redonda y ancha con una cara plana y nariz respingada.",
             "Pelaje": "Su rasgo más distintivo es su pelaje largo, denso y sedoso que requiere un cuidado regular."
         },
-        "Temperamento": {
-            "Tranquilo": true,
-            "Afectuoso": true,
-            "Adaptable": true,
-            "Independiente": true,
-            "No muy activo": true
-        },
+        "Temperamento": [
+            {
+                "tipo": "Tranquilo",
+                "descripcion": "Los gatos Persas son conocidos por ser tranquilos y relajados, disfrutando de largas siestas en lugares cómodos.",
+                "aplicable": true
+            },
+            {
+                "tipo": "Afectuoso",
+                "descripcion": "Son cariñosos y afectuosos con sus dueños, pero pueden ser reservados con extraños.",
+                "aplicable": true
+            },
+            {
+                "tipo": "Adaptable",
+                "descripcion": "Se adaptan bien a diferentes entornos y estilos de vida, incluyendo hogares con niños y otras mascotas.",
+                "aplicable": true
+            },
+            {
+                "tipo": "Independiente",
+                "descripcion": "Aunque disfrutan de la compañía humana, también son bastante independientes y pueden entretenerse solos.",
+                "aplicable": true
+            },
+            {
+                "tipo": "No muy activo",
+                "descripcion": "No son tan juguetones como algunas otras razas de gatos, prefiriendo pasar su tiempo descansando y observando su entorno.",
+                "aplicable": true
+            }
+        ],
         "Cuidados y Salud": {
             "Cepillado": "Su pelaje largo necesita cepillado regular para evitar enredos y nudos, especialmente en las áreas propensas como debajo de las axilas y en el cuello.",
             "Alimentación": "Se recomienda una dieta equilibrada y de alta calidad para satisfacer sus necesidades nutricionales.",
@@ -77,13 +117,33 @@
             "Piel arrugada": "A menudo tienen pliegues de piel en la cabeza, el cuello y otras áreas del cuerpo.",
             "Cuerpo musculoso": "Tienen un cuerpo musculoso y atlético, con una estructura ósea sólida."
         },
-        "Temperamento": {
-            "Cariñoso": true,
-            "Sociable": true,
-            "Juguetón": true,
-            "Curioso": true,
-            "Inteligente": true
-        },
+        "Temperamento": [
+            {
+                "tipo": "Carácter cariñoso",
+                "descripcion": "Son conocidos por ser gatos afectuosos y cariñosos que disfrutan de la compañía humana.",
+                "aplicable": true
+            },
+            {
+                "tipo": "Sociables",
+                "descripcion": "Suelen llevarse bien con otras mascotas y con los niños, siendo una buena opción para familias.",
+                "aplicable": true
+            },
+            {
+                "tipo": "Juguetones",
+                "descripcion": "Tienen un lado juguetón y disfrutan de juegos interactivos con sus dueños.",
+                "aplicable": true
+            },
+            {
+                "tipo": "Curiosos",
+                "descripcion": "Son gatos curiosos que disfrutan explorando su entorno y descubriendo nuevas cosas.",
+                "aplicable": true
+            },
+            {
+                "tipo": "Inteligentes",
+                "descripcion": "Son gatos inteligentes que pueden aprender trucos y disfrutar de juegos mentales.",
+                "aplicable": true
+            }
+        ],
         "Cuidados y Salud": {
             "Protección solar": "Debido a su falta de pelaje, los Sphynx son sensibles a la luz solar directa y pueden quemarse fácilmente.",
             "Baños regulares": "A pesar de su falta de pelaje, los Sphynx necesitan baños regulares para eliminar la acumulación de aceite en la piel y mantenerla limpia.",
@@ -112,13 +172,33 @@
             "Cabeza": "Tienen cabezas grandes y cuadradas, con orejas grandes y puntiagudas.",
             "Pelaje": "Su pelaje es denso, sedoso y resistente al agua, con una capa interna gruesa que los protege del frío."
         },
-        "Temperamento": {
-            "Sociable": true,
-            "Inteligente": true,
-            "Vocal": true,
-            "Adaptable": true,
-            "Juguetón": true
-        },
+        "Temperamento": [
+            {
+                "tipo": "Sociables",
+                "descripcion": "Son gatos amigables y sociables que suelen llevarse bien con otros animales y personas, incluyendo niños.",
+                "aplicable": true
+            },
+            {
+                "tipo": "Inteligentes",
+                "descripcion": "Son gatos inteligentes que disfrutan de juegos interactivos y pueden aprender trucos.",
+                "aplicable": true
+            },
+            {
+                "tipo": "Vocales",
+                "descripcion": "Aunque no son tan vocales como algunas otras razas, los Maine Coons pueden comunicarse con sus dueños a través de maullidos y otros sonidos.",
+                "aplicable": true
+            },
+            {
+                "tipo": "Adaptables",
+                "descripcion": "Se adaptan bien a diferentes entornos y estilos de vida, desde apartamentos urbanos hasta hogares rurales.",
+                "aplicable": true
+            },
+            {
+                "tipo": "Juguetones",
+                "descripcion": "Les encanta jugar y necesitan estimulación física y mental regular para mantenerse felices y saludables.",
+                "aplicable": true
+            }
+        ],
         "Cuidados y Salud": {
             "Cepillado": "Debido a su pelaje largo y denso, los Maine Coons necesitan cepillado regular para evitar la formación de nudos y enredos, especialmente durante las épocas de muda.",
             "Alimentación": "Se recomienda una dieta equilibrada y de alta calidad para satisfacer sus necesidades nutricionales y mantener su peso saludable.",
