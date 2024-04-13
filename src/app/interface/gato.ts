@@ -1,14 +1,16 @@
 export interface Cat {
     id: number;
-    Raza: string;
     imgPerfil: string;
-    img: ImagenesGato;
+    Raza: string;
     Origen: string;
     Año: string;
     'Origen e Historia': string;
     'Características Físicas': CaracterísticasFísicas;
-    Temperamento: Temperamento;
+    Temperamento: Temperamento[];
     'Cuidados y Salud': CuidadosYSalud;
+    Longevidad: string;
+    'Información Final'?: string;
+    img: ImagenesGato;
 }
 export interface CaracterísticasFísicas {
     'Tamaño': string;
@@ -19,12 +21,11 @@ export interface CaracterísticasFísicas {
 }
 
 export interface Temperamento {
-    Tranquilo: boolean;
-    Afectuoso: boolean;
-    Sociable: boolean;
-    Inteligente: boolean;
-    Vocal: boolean;
+    tipo: string;
+    descripcion: string;
+    aplicable: boolean;
 }
+
 
 export interface CuidadosYSalud {
     Cepillado: string;

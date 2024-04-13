@@ -39,8 +39,14 @@
     <ion-card-header>
       <h6>{{ cardHeading }}</h6>
     </ion-card-header>
-    <ion-card-content [innerHTML]="cardContent"></ion-card-content>
+    <ion-card-content [innerHTML]="cardContent">
+    </ion-card-content>
   </ion-card>
+  <ion-card-content class="ion-text-center">
+    <ion-chip *ngFor="let chip of temperamentoChips" [color]="getChipColor(chip.tipo)">
+      {{ chip.tipo }}
+    </ion-chip>
+  </ion-card-content>
   
   
 </ion-content>
