@@ -13,6 +13,7 @@ import { ModalController } from '@ionic/angular';
 export class PerfilPerroPage implements OnInit {
   selectedSegmentValue: string = 'origen';
   cardHeading: string = '';
+  cardSubtitle: string = '';
   cardContent: string = '';
 
   Perro: Dog[] = [];
@@ -53,27 +54,32 @@ export class PerfilPerroPage implements OnInit {
     switch (segmentValue) {
       case 'origen':
         this.cardHeading = 'Origen';
+        this.cardSubtitle = selectedPerro.Raza;
         this.cardContent = this.infoPerro[0]['Origen e Historia'];
         this.temperamentoChips = [];
         break;
       case 'caracteristicas':
         this.cardHeading = 'Características Físicas';
+        this.cardSubtitle = selectedPerro.Raza;
         this.cardContent = this.formatCaracteristicas(selectedPerro['Características Físicas']);
         this.temperamentoChips = [];
         break;
       case 'temperamento':
         this.cardHeading = 'Temperamento';
+        this.cardSubtitle = selectedPerro.Raza;
         this.cardContent = this.formatTemperamento(selectedPerro.Temperamento);
         this.temperamentoChips = this.getTemperamentoChips(selectedPerro.Temperamento);
         break;
       case 'cuidado':
         this.cardHeading = 'Cuidado y Salud';
+        this.cardSubtitle = selectedPerro.Raza;
         this.cardContent = this.formatCuidado(selectedPerro['Cuidados y Salud'] as CuidadosYSalud);
         this.temperamentoChips = [];
         break;
       default:
         this.selectedSegmentValue = 'origen';
         this.cardHeading = 'Origen';
+        this.cardSubtitle = selectedPerro.Raza;
         this.cardContent = this.infoPerro[0]['Origen e Historia'];
         this.temperamentoChips = [];
         break;
@@ -83,22 +89,22 @@ export class PerfilPerroPage implements OnInit {
 
 
   formatCaracteristicas(caracteristicas: any): string {
-    let formatted = '<ul>';
+    let formatted = '<div>';
     for (const key in caracteristicas) {
       if (caracteristicas.hasOwnProperty(key)) {
-        formatted += `<li><strong>${key}:</strong> ${caracteristicas[key]}</li>`;
+        formatted += `<p><strong>${key}:</strong> ${caracteristicas[key]}</p>`;
       }
     }
-    formatted += '</ul>';
+    formatted += '</div>';
     return formatted;
   }
 
   formatTemperamento(temperamento: any): string {
-    let formatted = '<ul>';
+    let formatted = '<div>';
     if (Array.isArray(temperamento)) {
       temperamento.forEach((item: any) => {
         if (item.aplicable) {
-          formatted += `<li><strong>${item.tipo}:</strong> ${item.descripcion}</li>`;
+          formatted += `<p><strong>${item.tipo}:</strong> ${item.descripcion}</p>`;
         }
       });
     } else {
@@ -106,33 +112,33 @@ export class PerfilPerroPage implements OnInit {
         if (temperamento.hasOwnProperty(key)) {
           const item = temperamento[key];
           if (item.aplicable) {
-            formatted += `<li><strong>${key}:</strong> ${item.descripcion}</li>`;
+            formatted += `<p><strong>${key}:</strong> ${item.descripcion}</p>`;
           }
         }
       }
     }
-    formatted += '</ul>';
+    formatted += '</div>';
     return formatted;
   }
 
 
 
   formatCuidado(cuidado: any): string {
-    let formatted = '<ul>';
+    let formatted = '<div>';
     for (const key in cuidado) {
       if (cuidado.hasOwnProperty(key)) {
         if (Array.isArray(cuidado[key])) {
-          formatted += `<li><strong>${key}:</strong> <ul>`;
+          formatted += `<p><strong>${key}:</strong> <div>`;
           cuidado[key].forEach((item: string) => { // Specify the type of 'item'
-            formatted += `<li>${item}</li>`;
+            formatted += `<p>${item}</p>`;
           });
-          formatted += '</ul></li>';
+          formatted += '</div></p>';
         } else {
-          formatted += `<li><strong>${key}:</strong> ${cuidado[key]}</li>`;
+          formatted += `<p><strong>${key}:</strong> ${cuidado[key]}</p>`;
         }
       }
     }
-    formatted += '</ul>';
+    formatted += '</div>';
     return formatted;
   }
 
@@ -141,47 +147,25 @@ export class PerfilPerroPage implements OnInit {
     return temperamento.filter(item => item.aplicable);
   }
 
+  getNameRaza(raza : Dog[]): Dog[]{
+    return raza.filter(item => item.Raza)
+  }
+
 
   getChipColor(tipo: string): string {
     switch (tipo.toLowerCase()) {
-      case 'amigable':
-        return '--ion-color-light'; // azul
-      case 'tranquilo':
-        return 'secondary'; // gris
-      case 'dulce':
-        return 'tertiary'; // verde claro
-      case 'terco':
-        return 'danger'; // rojo oscuro
-      case 'sociable':
-        return 'success'; // verde
-      case 'afectuoso':
-        return 'warning'; // amarillo
-      case 'juguetón':
-        return 'info'; // azul claro
-      case 'adaptable':
-        return 'dark'; // gris oscuro
-      case 'energético':
-        return 'light'; // blanco
       case 'valiente':
-        return '--ion-color-light'; // azul
-      case 'alerta':
-        return 'danger'; // rojo oscuro
-      case 'dócil':
-        return 'success'; // verde
-      case 'amistoso':
-        return '--ion-color-light'; // azul
-      case 'leal':
-        return 'warning'; // amarillo
+        return 'secondary';
       case 'inteligente':
-        return '--ion-color-light'; // azul
-      case 'comunicativos':
-        return '--ion-color-light'; // azul
-      case 'activos':
-        return '--ion-color-light'; // azul
-      case 'leales':
-        return '--ion-color-light'; // azul
+        return 'secondary';
+      case 'afectuoso':
+        return 'secondary';
+      case 'energético':
+        return 'secondary';
+      case 'alerta':
+        return 'secondary';
       default:
-        return 'medium'; // Color por defecto
+        return 'secondary';
     }
   }
 
