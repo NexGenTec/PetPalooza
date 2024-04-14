@@ -13,7 +13,7 @@
   <swiper-container navigation *ngFor="let perro of getPerroById(selectedPerroId)">
     <swiper-slide class="centered-slide" *ngFor="let img of getImagesArray(perro)">
       <ion-card mode="md" class="card">
-        <ion-img (click)="openModal(img)"  [src]="img" [alt]="'Imagen de ' + perro.Raza"></ion-img>
+        <ion-img (click)="openModal(img)"  [src]="img" [alt]="'Imagen de ' + perro.Raza" style="width: 360; height: 440;"></ion-img>
       </ion-card>
     </swiper-slide>
   </swiper-container>

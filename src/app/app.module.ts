@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { RouteReuseStrategy } from '@angular/router';
+import { RouteReuseStrategy, RouterModule, Routes } from '@angular/router';
 import { faCoffee } from '@fortawesome/free-solid-svg-icons';
 
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
@@ -23,11 +23,18 @@ import {
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
+
+const routes: Routes = [
+
+]
 
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [HttpClientModule, BrowserModule, IonicModule.forRoot(), AppRoutingModule, FontAwesomeModule],
+  imports: [HttpClientModule, BrowserModule, IonicModule.forRoot(), AppRoutingModule, FontAwesomeModule, FormsModule,
+    RouterModule.forRoot(routes, { useHash: true })
+  ],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],
 })
