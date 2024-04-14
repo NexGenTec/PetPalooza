@@ -61,6 +61,7 @@ export class homePage {
         this.combinedAnimals.push(this.infoPerro[i]);
       }
     }
+
   }
 
 }

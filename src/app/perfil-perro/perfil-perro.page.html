@@ -13,7 +13,7 @@
   <swiper-container navigation *ngFor="let perro of getPerroById(selectedPerroId)">
     <swiper-slide class="centered-slide" *ngFor="let img of getImagesArray(perro)">
       <ion-card mode="md" class="card">
-        <ion-img (click)="openModal(img)"  [src]="img" [alt]="'Imagen de ' + perro.Raza"></ion-img>
+        <ion-img (click)="openModal(img)"  [src]="img" [alt]="'Imagen de ' + perro.Raza" style="width: 360; height: 440;"></ion-img>
       </ion-card>
     </swiper-slide>
   </swiper-container>
@@ -40,6 +40,7 @@
   <ion-card style="margin-bottom: 5px; padding: 2px; text-align: center;">
     <ion-card-content>
       <h6>{{ cardHeading }}</h6>
+      <small>{{ cardSubtitle}}</small>
     </ion-card-content>
     <ion-chip *ngFor="let chip of temperamentoChips" [color]="getChipColor(chip.tipo)">
       {{ chip.tipo }}

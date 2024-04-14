@@ -11,9 +11,9 @@ import { ModalController } from '@ionic/angular';
   styleUrls: ['./perfil-perro.page.scss'],
 })
 export class PerfilPerroPage implements OnInit {
-
   selectedSegmentValue: string = 'origen';
   cardHeading: string = '';
+  cardSubtitle: string = '';
   cardContent: string = '';
 
   Perro: Dog[] = [];
@@ -54,29 +54,34 @@ export class PerfilPerroPage implements OnInit {
     switch (segmentValue) {
       case 'origen':
         this.cardHeading = 'Origen';
+        this.cardSubtitle = selectedPerro.Raza;
         this.cardContent = this.infoPerro[0]['Origen e Historia'];
-        this.temperamentoChips = []; // Restablecer a un arreglo vacío
+        this.temperamentoChips = [];
         break;
       case 'caracteristicas':
         this.cardHeading = 'Características Físicas';
+        this.cardSubtitle = selectedPerro.Raza;
         this.cardContent = this.formatCaracteristicas(selectedPerro['Características Físicas']);
-        this.temperamentoChips = []; // Restablecer a un arreglo vacío
+        this.temperamentoChips = [];
         break;
       case 'temperamento':
         this.cardHeading = 'Temperamento';
+        this.cardSubtitle = selectedPerro.Raza;
         this.cardContent = this.formatTemperamento(selectedPerro.Temperamento);
         this.temperamentoChips = this.getTemperamentoChips(selectedPerro.Temperamento);
         break;
       case 'cuidado':
         this.cardHeading = 'Cuidado y Salud';
+        this.cardSubtitle = selectedPerro.Raza;
         this.cardContent = this.formatCuidado(selectedPerro['Cuidados y Salud'] as CuidadosYSalud);
-        this.temperamentoChips = []; // Restablecer a un arreglo vacío
+        this.temperamentoChips = [];
         break;
       default:
         this.selectedSegmentValue = 'origen';
         this.cardHeading = 'Origen';
+        this.cardSubtitle = selectedPerro.Raza;
         this.cardContent = this.infoPerro[0]['Origen e Historia'];
-        this.temperamentoChips = []; // Restablecer a un arreglo vacío
+        this.temperamentoChips = [];
         break;
     }
   }
@@ -84,22 +89,22 @@ export class PerfilPerroPage implements OnInit {
 
 
   formatCaracteristicas(caracteristicas: any): string {
-    let formatted = '<ul>';
+    let formatted = '<div>';
     for (const key in caracteristicas) {
       if (caracteristicas.hasOwnProperty(key)) {
-        formatted += `<li><strong>${key}:</strong> ${caracteristicas[key]}</li>`;
+        formatted += `<p><strong>${key}:</strong> ${caracteristicas[key]}</p>`;
       }
     }
-    formatted += '</ul>';
+    formatted += '</div>';
     return formatted;
   }
 
   formatTemperamento(temperamento: any): string {
-    let formatted = '<ul>';
+    let formatted = '<div>';
     if (Array.isArray(temperamento)) {
       temperamento.forEach((item: any) => {
         if (item.aplicable) {
-          formatted += `<li><strong>${item.tipo}:</strong> ${item.descripcion}</li>`;
+          formatted += `<p><strong>${item.tipo}:</strong> ${item.descripcion}</p>`;
         }
       });
     } else {
@@ -107,39 +112,43 @@ export class PerfilPerroPage implements OnInit {
         if (temperamento.hasOwnProperty(key)) {
           const item = temperamento[key];
           if (item.aplicable) {
-            formatted += `<li><strong>${key}:</strong> ${item.descripcion}</li>`;
+            formatted += `<p><strong>${key}:</strong> ${item.descripcion}</p>`;
           }
         }
       }
     }
-    formatted += '</ul>';
+    formatted += '</div>';
     return formatted;
   }
 
 
 
   formatCuidado(cuidado: any): string {
-    let formatted = '<ul>';
+    let formatted = '<div>';
     for (const key in cuidado) {
       if (cuidado.hasOwnProperty(key)) {
         if (Array.isArray(cuidado[key])) {
-          formatted += `<li style="list-style: none"><strong>${key}:</strong> <ul style="list-style: none">`;
+          formatted += `<p><strong>${key}:</strong> <div>`;
           cuidado[key].forEach((item: string) => { // Specify the type of 'item'
-            formatted += `<li >${item}</li>`;
+            formatted += `<p>${item}</p>`;
           });
-          formatted += '</ul></li>';
+          formatted += '</div></p>';
         } else {
-          formatted += `<li><strong>${key}:</strong> ${cuidado[key]}</li>`;
+          formatted += `<p><strong>${key}:</strong> ${cuidado[key]}</p>`;
         }
       }
     }
-    formatted += '</ul>';
+    formatted += '</div>';
     return formatted;
   }
 
 
   getTemperamentoChips(temperamento: Temperamento[]): Temperamento[] {
     return temperamento.filter(item => item.aplicable);
+  }
+
+  getNameRaza(raza : Dog[]): Dog[]{
+    return raza.filter(item => item.Raza)
   }
 
 
@@ -159,6 +168,9 @@ export class PerfilPerroPage implements OnInit {
         return 'secondary';
     }
   }
+
+
+
 
   async openModal(imageUrl: string) {
     const modal = await this.modalController.create({

@@ -12,9 +12,7 @@ import { SearchModalPage } from '../search-modal/search-modal.page';
 export class gatoPage {
   infoGato: any = (infoGato as any).default;
   infoGatoChunks: any[][] = [];
-  searchTerm: string = '';
   filteredInfoGatoChunks: any[][] = [];
-
 
   constructor(private router: Router, private modalController: ModalController) {
     for (let i = 0; i < this.infoGato.length; i += 1) {
@@ -43,28 +41,14 @@ export class gatoPage {
     navigation: true
   };
 
-  async openSearchResultsModal(gatos: any[]) {
+  async openSearchModal() {
     const modal = await this.modalController.create({
       component: SearchModalPage,
       componentProps: {
-        gatos: gatos
+        razas: this.infoGato,
+        tipo: 'gato'
       }
     });
     return await modal.present();
   }
-
-  // onSearch() {
-  //   if (!this.searchTerm.trim()) {
-  //     this.filteredInfoGatoChunks = this.infoGatoChunks;
-  //   } else {
-  //     const filteredGatos = this.infoGato.reduce((acc: any[], gato: { Nombre: string; }) => {
-  //       if (gato.Nombre.toLowerCase().includes(this.searchTerm.toLowerCase())) {
-  //         acc.push(gato);
-  //       }
-  //       return acc;
-  //     }, []);
-  //     this.openSearchResultsModal(filteredGatos);
-  //   }
-  // }
-
 }
