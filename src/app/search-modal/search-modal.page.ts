@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 
 @Component({
@@ -10,8 +11,9 @@ export class SearchModalPage implements OnInit {
 
   @Input() razas!: any[];
   filteredRazas: any[] = [];
+  @Input() tipo!: string;
 
-  constructor(private modalController: ModalController) { }
+  constructor(private modalController: ModalController, private router: Router) { }
 
   ngOnInit() {
     this.filteredRazas = this.razas;
@@ -28,5 +30,15 @@ export class SearchModalPage implements OnInit {
     );
   }
 
-
+  navigateToProfile(id: string) {
+    if (this.tipo === 'perro') {
+      this.router.navigate(['/perfil-perro', id]).then(() => {
+        this.dismiss();
+      });
+    } else if (this.tipo === 'gato') {
+      this.router.navigate(['/perfil-gato', id]).then(() => {
+        this.dismiss();
+      });
+    }
+  }
 }

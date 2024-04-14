@@ -45,7 +45,8 @@ export class gatoPage {
     const modal = await this.modalController.create({
       component: SearchModalPage,
       componentProps: {
-        razas: this.infoGato
+        razas: this.infoGato,
+        tipo: 'gato'
       }
     });
     return await modal.present();

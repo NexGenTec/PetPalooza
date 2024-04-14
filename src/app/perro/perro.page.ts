@@ -46,7 +46,8 @@ export class perroPage {
     const modal = await this.modalController.create({
       component: SearchModalPage,
       componentProps: {
-        razas: this.infoPerro
+        razas: this.infoPerro,
+        tipo: 'perro'
       }
     });
     return await modal.present();
