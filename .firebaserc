@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "petpalooza-e50e0": {
+      "hosting": {
+        "app": [
+          "petpalooza"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "petpalooza-e50e0"
+  }
+}

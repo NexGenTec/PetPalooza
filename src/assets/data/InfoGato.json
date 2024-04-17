@@ -47,9 +47,10 @@
         },
         "Longevidad": "La esperanza de vida promedio de un gato Siamés es de alrededor de 12 a 15 años.",
         "img": {
-            "1": "assets/img/imgGato/siamese/siames2.jpg",
-            "2": "assets/img/imgGato/siamese/siames3.jpg",
-            "3": "assets/img/imgGato/siamese/siames4.jpg"
+            "1": "assets/img/imgGato/siamese/siames.jpg",
+            "2": "assets/img/imgGato/siamese/siames2.jpg",
+            "3": "assets/img/imgGato/siamese/siames3.jpg",
+            "4": "assets/img/imgGato/siamese/siames4.jpg"
         }
     },
     {
@@ -100,9 +101,10 @@
         },
         "Longevidad": "La esperanza de vida promedio de un gato Persa es de alrededor de 12 a 15 años.",
         "img": {
-            "1": "assets/img/imgGato/persa/persa2.jpg",
-            "2": "assets/img/imgGato/persa/persa3.jpg",
-            "3": "assets/img/imgGato/persa/persa4.jpg"
+            "1": "assets/img/imgGato/persa/persa.jpg",
+            "2": "assets/img/imgGato/persa/persa2.jpg",
+            "3": "assets/img/imgGato/persa/persa3.jpg",
+            "4": "assets/img/imgGato/persa/persa4.jpg"
         }
     },
     {
@@ -153,9 +155,10 @@
         },
         "Longevidad": "La esperanza de vida promedio de un Sphynx es de alrededor de 12 a 14 años.",
         "img": {
-            "1": "assets/img/imgGato/Sphynx/Sphynx2.jpg",
-            "2": "assets/img/imgGato/Sphynx/Sphynx3.jpg",
-            "3": "assets/img/imgGato/Sphynx/Sphynx4.jpg"
+            "1": "assets/img/imgGato/Sphynx/Sphynx.jpg",
+            "2": "assets/img/imgGato/Sphynx/Sphynx2.jpg",
+            "3": "assets/img/imgGato/Sphynx/Sphynx3.jpg",
+            "4": "assets/img/imgGato/Sphynx/Sphynx4.jpg"
         }
     },
     {
@@ -208,9 +211,10 @@
         },
         "Longevidad": "La esperanza de vida promedio de un Maine Coon es de alrededor de 12 a 15 años.",
         "img": {
-            "1": "assets/img/imgGato/Maine Coon/MaineCoon2.jpg",
-            "2": "assets/img/imgGato/Maine Coon//MaineCoon3.jpg",
-            "3": "assets/img/imgGato/Maine Coon/MaineCoon4.jpg"
+            "1": "assets/img/imgGato/Maine Coon/MaineCoon.jpg",
+            "2": "assets/img/imgGato/Maine Coon/MaineCoon2.jpg",
+            "3": "assets/img/imgGato/Maine Coon//MaineCoon3.jpg",
+            "4": "assets/img/imgGato/Maine Coon/MaineCoon4.jpg"
         }
     }
 ]
