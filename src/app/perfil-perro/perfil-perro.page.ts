@@ -55,7 +55,7 @@ export class PerfilPerroPage implements OnInit {
       case 'origen':
         this.cardHeading = 'Origen';
         this.cardSubtitle = selectedPerro.Raza;
-        this.cardContent = this.infoPerro[0]['Origen e Historia'];
+        this.cardContent = this.formOrigen(selectedPerro['Origen e Historia']);
         this.temperamentoChips = [];
         break;
       case 'caracteristicas':
@@ -80,10 +80,21 @@ export class PerfilPerroPage implements OnInit {
         this.selectedSegmentValue = 'origen';
         this.cardHeading = 'Origen';
         this.cardSubtitle = selectedPerro.Raza;
-        this.cardContent = this.infoPerro[0]['Origen e Historia'];
+        this.cardContent = this.formOrigen(selectedPerro['Origen e Historia']);
         this.temperamentoChips = [];
         break;
     }
+  }
+
+  formOrigen(origen: any): string {
+    let formatted = '<div>';
+    for (const key in origen) {
+      if (origen.hasOwnProperty(key)) {
+        formatted += `${origen[key]}`;
+      }
+    }
+    formatted += '</div>';
+    return formatted;
   }
 
 
@@ -147,7 +158,7 @@ export class PerfilPerroPage implements OnInit {
     return temperamento.filter(item => item.aplicable);
   }
 
-  getNameRaza(raza : Dog[]): Dog[]{
+  getNameRaza(raza: Dog[]): Dog[] {
     return raza.filter(item => item.Raza)
   }
 
