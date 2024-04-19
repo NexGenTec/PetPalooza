@@ -163,7 +163,7 @@
     },
     {
         "id": 4,
-        "imgPerfil": "assets/img/imgGato/Maine Coon/MaineCoon.jpg",
+        "imgPerfil": "assets/img/imgGato/MaineCoon/MaineCoon.jpg",
         "Raza": "Maine Coon",
         "Origen": "Estados Unidos",
         "Año": "siglo XIX",
@@ -211,10 +211,10 @@
         },
         "Longevidad": "La esperanza de vida promedio de un Maine Coon es de alrededor de 12 a 15 años.",
         "img": {
-            "1": "assets/img/imgGato/Maine Coon/MaineCoon.jpg",
-            "2": "assets/img/imgGato/Maine Coon/MaineCoon2.jpg",
-            "3": "assets/img/imgGato/Maine Coon//MaineCoon3.jpg",
-            "4": "assets/img/imgGato/Maine Coon/MaineCoon4.jpg"
+            "1": "assets/img/imgGato/MaineCoon/MaineCoon.jpg",
+            "2": "assets/img/imgGato/MaineCoon/MaineCoon2.jpg",
+            "3": "assets/img/imgGato/MaineCoon//MaineCoon3.jpg",
+            "4": "assets/img/imgGato/MaineCoon/MaineCoon4.jpg"
         }
     }
 ]
