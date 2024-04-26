@@ -3,6 +3,7 @@ import { ModalController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { ImgModalPage } from '../img-modal/img-modal.page';
 import * as infoPerro from '../../assets/data/InfoPerro.json';
+import { SearchModalPage } from '../search-modal/search-modal.page';
 import * as infoGato from '../../assets/data/InfoGato.json';
 
 @Component({
@@ -62,6 +63,16 @@ export class homePage {
       }
     }
 
+  }
+  async openSearchModal() {
+    const modal = await this.modalController.create({
+      component: SearchModalPage,
+      componentProps: {
+        razas: this.infoGato,
+        tipo: 'gato'
+      }
+    });
+    return await modal.present();
   }
 
 }
