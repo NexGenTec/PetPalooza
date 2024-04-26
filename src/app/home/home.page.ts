@@ -3,6 +3,7 @@ import { ModalController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { ImgModalPage } from '../img-modal/img-modal.page';
 import * as infoPerro from '../../assets/data/InfoPerro.json';
+import { SearchModalPage } from '../search-modal/search-modal.page';
 import * as infoGato from '../../assets/data/InfoGato.json';
 import { Storage } from '@ionic/storage';
 import { WelcomeModalPage } from '../welcome-modal/welcome-modal.page';
@@ -70,6 +71,16 @@ export class homePage {
     }
 
   }
+  async openSearchModal() {
+    const modal = await this.modalController.create({
+      component: SearchModalPage,
+      componentProps: {
+        razas: this.infoGato,
+        tipo: 'gato'
+      }
+    });
+    return await modal.present();
+  }
   async initStorage() {
     await this.storage.create(); // Crea la instancia de almacenamiento
     const isFirstTime = await this.storage.get('isFirstTime');
@@ -91,6 +102,5 @@ export class homePage {
     });
     return await modal.present();
   }
-
 
 }

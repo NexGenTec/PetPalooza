@@ -216,5 +216,225 @@
             "3": "assets/img/imgGato/MaineCoon//MaineCoon3.jpg",
             "4": "assets/img/imgGato/MaineCoon/MaineCoon4.jpg"
         }
+    },
+
+
+    {
+        "id": 5,
+        "imgPerfil": "assets/img/imgGato/siamese/siames.jpg",
+        "Raza": "Siamés",
+        "Origen": "Tailandia",
+        "Año": "siglo XIV",
+        "Origen e Historia": "Razas de gatos más antiguas y distintivas del mundo. Se cree que los primeros registros de esta raza datan del siglo XIV. Se les consideraba gatos sagrados y se les asociaba con la realeza tailandesa.",
+        "Características Físicas": {
+            "Cuerpo": "Son gatos de tamaño mediano, esbeltos y elegantes, con una musculatura bien desarrollada.",
+            "Cabeza": "Tienen una cabeza triangular y alargada, con orejas grandes y puntiagudas.",
+            "Pelaje": "Su pelaje es corto, fino y pegado al cuerpo. Presenta un patrón de color punto, donde el cuerpo es de un color claro y las extremidades, la cola, las orejas y la cara son más oscuras."
+        },
+        "Temperamento": [
+            {
+                "tipo": "Inteligente",
+                "descripcion": "Son gatos muy inteligentes y astutos que disfrutan de desafíos mentales y juegos interactivos.",
+                "aplicable": true
+            },
+            {
+                "tipo": "Sociable",
+                "descripcion": "Aman la compañía humana y son conocidos por formar fuertes vínculos con sus familias.",
+                "aplicable": true
+            },
+            {
+                "tipo": "Comunicativos",
+                "descripcion": "Son gatos muy vocales que no dudan en expresar sus necesidades y deseos a través de maullidos y otros sonidos.",
+                "aplicable": true
+            },
+            {
+                "tipo": "Activos",
+                "descripcion": "Les encanta jugar y necesitan estimulación física y mental regular para mantenerse felices y saludables.",
+                "aplicable": true
+            },
+            {
+                "tipo": "Leales",
+                "descripcion": "Son gatos leales y cariñosos que suelen seguir a sus dueños por la casa y disfrutar de estar en su compañía.",
+                "aplicable": true
+            }
+        ],
+        "Cuidados y Salud": {
+            "Cepillado": "Su pelaje corto no requiere mucho mantenimiento, pero un cepillado semanal puede ayudar a eliminar el pelo suelto y prevenir la formación de nudos.",
+            "Alimentación": "Se recomienda una dieta equilibrada y de alta calidad para satisfacer sus necesidades nutricionales.",
+            "Salud": [
+                "Son generalmente una raza saludable, pero pueden ser propensos a problemas de salud como la enfermedad renal y problemas dentales. Es importante realizar chequeos veterinarios regulares."
+            ]
+        },
+        "Longevidad": "La esperanza de vida promedio de un gato Siamés es de alrededor de 12 a 15 años.",
+        "img": {
+            "1": "assets/img/imgGato/siamese/siames.jpg",
+            "2": "assets/img/imgGato/siamese/siames2.jpg",
+            "3": "assets/img/imgGato/siamese/siames3.jpg",
+            "4": "assets/img/imgGato/siamese/siames4.jpg"
+        }
+    },
+    {
+        "id": 6,
+        "imgPerfil": "assets/img/imgGato/persa/persa.jpg",
+        "Raza": "Persa",
+        "Origen": "Gran Bretaña y Estados Unidos",
+        "Año": "siglo XVII",
+        "Origen e Historia": "Es una de las razas de gatos más antiguas y reconocibles del mundo. Fueron introducidos en Europa en el siglo XVII y rápidamente ganaron popularidad por su pelaje lujoso y su apariencia majestuosa.",
+        "Características Físicas": {
+            "Cuerpo": "Son gatos de tamaño mediano a grande, con cuerpos robustos y musculosos, pero elegantes y bien proporcionados.",
+            "Cabeza": "Tienen una cabeza redonda y ancha con una cara plana y nariz respingada.",
+            "Pelaje": "Su rasgo más distintivo es su pelaje largo, denso y sedoso que requiere un cuidado regular."
+        },
+        "Temperamento": [
+            {
+                "tipo": "Tranquilo",
+                "descripcion": "Los gatos Persas son conocidos por ser tranquilos y relajados, disfrutando de largas siestas en lugares cómodos.",
+                "aplicable": true
+            },
+            {
+                "tipo": "Afectuoso",
+                "descripcion": "Son cariñosos y afectuosos con sus dueños, pero pueden ser reservados con extraños.",
+                "aplicable": true
+            },
+            {
+                "tipo": "Adaptable",
+                "descripcion": "Se adaptan bien a diferentes entornos y estilos de vida, incluyendo hogares con niños y otras mascotas.",
+                "aplicable": true
+            },
+            {
+                "tipo": "Independiente",
+                "descripcion": "Aunque disfrutan de la compañía humana, también son bastante independientes y pueden entretenerse solos.",
+                "aplicable": true
+            },
+            {
+                "tipo": "No muy activo",
+                "descripcion": "No son tan juguetones como algunas otras razas de gatos, prefiriendo pasar su tiempo descansando y observando su entorno.",
+                "aplicable": true
+            }
+        ],
+        "Cuidados y Salud": {
+            "Cepillado": "Su pelaje largo necesita cepillado regular para evitar enredos y nudos, especialmente en las áreas propensas como debajo de las axilas y en el cuello.",
+            "Alimentación": "Se recomienda una dieta equilibrada y de alta calidad para satisfacer sus necesidades nutricionales.",
+            "Salud": [
+                "Son generalmente una raza saludable, pero pueden ser propensos a problemas como problemas respiratorios, enfermedades oculares y enfermedades dentales. Los chequeos veterinarios regulares son importantes."
+            ]
+        },
+        "Longevidad": "La esperanza de vida promedio de un gato Persa es de alrededor de 12 a 15 años.",
+        "img": {
+            "1": "assets/img/imgGato/persa/persa.jpg",
+            "2": "assets/img/imgGato/persa/persa2.jpg",
+            "3": "assets/img/imgGato/persa/persa3.jpg",
+            "4": "assets/img/imgGato/persa/persa4.jpg"
+        }
+    },
+    {
+        "id": 7,
+        "imgPerfil": "assets/img/imgGato/Sphynx/Sphynx.jpg",
+        "Raza": "Sphynx",
+        "Origen": "Canadá",
+        "Año": "-",
+        "Origen e Historia": "Aunque el Sphynx es conocido por su apariencia sin pelo, no es completamente calvo; tiene una capa de vello fino y corto que a menudo es descrito como una sensación de terciopelo. La raza Sphynx es el resultado de una mutación genética natural.",
+        "Características Físicas": {
+            "Ausencia de pelaje": "La característica más distintiva del Sphynx es su apariencia sin pelo, aunque pueden tener un poco de vello corto en ciertas partes del cuerpo.",
+            "Piel arrugada": "A menudo tienen pliegues de piel en la cabeza, el cuello y otras áreas del cuerpo.",
+            "Cuerpo musculoso": "Tienen un cuerpo musculoso y atlético, con una estructura ósea sólida."
+        },
+        "Temperamento": [
+            {
+                "tipo": "Carácter cariñoso",
+                "descripcion": "Son conocidos por ser gatos afectuosos y cariñosos que disfrutan de la compañía humana.",
+                "aplicable": true
+            },
+            {
+                "tipo": "Sociables",
+                "descripcion": "Suelen llevarse bien con otras mascotas y con los niños, siendo una buena opción para familias.",
+                "aplicable": true
+            },
+            {
+                "tipo": "Juguetones",
+                "descripcion": "Tienen un lado juguetón y disfrutan de juegos interactivos con sus dueños.",
+                "aplicable": true
+            },
+            {
+                "tipo": "Curiosos",
+                "descripcion": "Son gatos curiosos que disfrutan explorando su entorno y descubriendo nuevas cosas.",
+                "aplicable": true
+            },
+            {
+                "tipo": "Inteligentes",
+                "descripcion": "Son gatos inteligentes que pueden aprender trucos y disfrutar de juegos mentales.",
+                "aplicable": true
+            }
+        ],
+        "Cuidados y Salud": {
+            "Protección solar": "Debido a su falta de pelaje, los Sphynx son sensibles a la luz solar directa y pueden quemarse fácilmente.",
+            "Baños regulares": "A pesar de su falta de pelaje, los Sphynx necesitan baños regulares para eliminar la acumulación de aceite en la piel y mantenerla limpia.",
+            "Cuidado de la piel": "También es importante mantener la piel del Sphynx hidratada, ya que pueden ser propensos a la sequedad y la irritación.",
+            "Alimentación": "Se recomienda una dieta equilibrada y de alta calidad para satisfacer sus necesidades nutricionales y mantener su piel y pelaje saludables.",
+            "Visitas al veterinario": "Es importante llevar al Sphynx al veterinario regularmente para chequeos de salud y vacunas."
+        },
+        "Longevidad": "La esperanza de vida promedio de un Sphynx es de alrededor de 12 a 14 años.",
+        "img": {
+            "1": "assets/img/imgGato/Sphynx/Sphynx.jpg",
+            "2": "assets/img/imgGato/Sphynx/Sphynx2.jpg",
+            "3": "assets/img/imgGato/Sphynx/Sphynx3.jpg",
+            "4": "assets/img/imgGato/Sphynx/Sphynx4.jpg"
+        }
+    },
+    {
+        "id": 8,
+        "imgPerfil": "assets/img/imgGato/Maine Coon/MaineCoon.jpg",
+        "Raza": "Maine Coon",
+        "Origen": "Estados Unidos",
+        "Año": "siglo XIX",
+        "Origen e Historia": "Raza de gato originaria de Estados Unidos, específicamente del estado de Maine. Se cree que esta raza se desarrolló a partir de gatos europeos que llegaron a América del Norte en los barcos de colonos. Los Maine Coons se hicieron populares en el siglo XIX y fueron reconocidos como una raza oficial en la década de 1860.",
+        "Características Físicas": {
+            "Tamaño": "Son conocidos por ser una de las razas de gatos más grandes.",
+            "Peso": "machos que pueden pesar hasta 6-10 kilogramos y hembras de 4-7 kilogramos.",
+            "Cuerpo": "Tienen cuerpos musculosos, robustos y bien proporcionados, con patas largas y fuertes.",
+            "Cabeza": "Tienen cabezas grandes y cuadradas, con orejas grandes y puntiagudas.",
+            "Pelaje": "Su pelaje es denso, sedoso y resistente al agua, con una capa interna gruesa que los protege del frío."
+        },
+        "Temperamento": [
+            {
+                "tipo": "Sociables",
+                "descripcion": "Son gatos amigables y sociables que suelen llevarse bien con otros animales y personas, incluyendo niños.",
+                "aplicable": true
+            },
+            {
+                "tipo": "Inteligentes",
+                "descripcion": "Son gatos inteligentes que disfrutan de juegos interactivos y pueden aprender trucos.",
+                "aplicable": true
+            },
+            {
+                "tipo": "Vocales",
+                "descripcion": "Aunque no son tan vocales como algunas otras razas, los Maine Coons pueden comunicarse con sus dueños a través de maullidos y otros sonidos.",
+                "aplicable": true
+            },
+            {
+                "tipo": "Adaptables",
+                "descripcion": "Se adaptan bien a diferentes entornos y estilos de vida, desde apartamentos urbanos hasta hogares rurales.",
+                "aplicable": true
+            },
+            {
+                "tipo": "Juguetones",
+                "descripcion": "Les encanta jugar y necesitan estimulación física y mental regular para mantenerse felices y saludables.",
+                "aplicable": true
+            }
+        ],
+        "Cuidados y Salud": {
+            "Cepillado": "Debido a su pelaje largo y denso, los Maine Coons necesitan cepillado regular para evitar la formación de nudos y enredos, especialmente durante las épocas de muda.",
+            "Alimentación": "Se recomienda una dieta equilibrada y de alta calidad para satisfacer sus necesidades nutricionales y mantener su peso saludable.",
+            "Salud": [
+                "Son generalmente una raza saludable, pero pueden ser propensos a problemas como la enfermedad cardíaca y la displasia de cadera. Los chequeos veterinarios regulares son importantes."
+            ]
+        },
+        "Longevidad": "La esperanza de vida promedio de un Maine Coon es de alrededor de 12 a 15 años.",
+        "img": {
+            "1": "assets/img/imgGato/Maine Coon/MaineCoon.jpg",
+            "2": "assets/img/imgGato/Maine Coon/MaineCoon2.jpg",
+            "3": "assets/img/imgGato/Maine Coon//MaineCoon3.jpg",
+            "4": "assets/img/imgGato/Maine Coon/MaineCoon4.jpg"
+        }
     }
 ]
