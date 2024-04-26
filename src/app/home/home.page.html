@@ -1,7 +1,9 @@
+<ion-modal-controller></ion-modal-controller>
 <ion-content [fullscreen]="true">
   <div class="button-container">
     PetPalooza
   </div>
+  <ion-searchbar class="search-bar" placeholder="Buscar" (ionFocus)="openSearchModal()"></ion-searchbar>
   <swiper-container [options]="swiperOptions">
     <swiper-slide *ngFor="let animal of combinedAnimals">
       <ion-card class="large-card">
