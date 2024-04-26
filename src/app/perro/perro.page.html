@@ -1,5 +1,76 @@
+<ion-header class="bg-white shadow-none border-b border-gray-200">
+  <div class="flex gap-2 items-center mx-3">
+    <img 
+      class="max-h-14 mx-auto"
+      alt="logo PetPalooza" 
+      src="assets/img/logo/PetPalooza.png" 
+    />
+    <ion-searchbar class="custom my-3" placeholder="Buscar" (ionFocus)="openSearchModal()" mode="md"></ion-searchbar>
+  </div>
+</ion-header>
+
 <ion-content [fullscreen]="true">
-  <div class="button-container">
+
+  <div class="px-3 pt-5 bg-gray-50">
+    <!-- Dato Freak -->
+    <ion-accordion-group [value]="['first']" mode="ios" class="mb-6 mt-2 border border-stone shadow-lg rounded-lg overflow-hidden">
+      <ion-accordion value="first">
+        <ion-item slot="header">
+          <div class="flex items-center gap-4 py-3">
+            <span class="shrink-0 rounded-full bg-blue-400 p-2 text-white">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+                class="h-4 w-4"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M18 3a1 1 0 00-1.447-.894L8.763 6H5a3 3 0 000 6h.28l1.771 5.316A1 1 0 008 18h1a1 1 0 001-1v-4.382l6.553 3.276A1 1 0 0018 15V3z"
+                  clip-rule="evenodd"
+                ></path>
+              </svg>
+            </span>
+            <p class="font-medium sm:text-lg text-blue-600">Dato Freak!</p>
+          </div>
+        </ion-item>
+        <div class="px-3 py-2 bg-white" slot="content">
+          <p class="text-gray-600">
+            ¿Sabias que el Ronroneo gatos calma humanos? Reduce estrés, baja presión arterial y promueve relajación. Investigaciones confirman efecto terapéutico del ronroneo felino
+          </p>
+        </div>
+      </ion-accordion>
+    </ion-accordion-group>
+
+    <!-- Divider -->
+    <hr class="my-5 border-blue-500/30">
+
+    <!-- Gatos -->
+    <div class="w-full max-w-[570px] rounded-[20px] px-8 pt-4 text-center">
+      <h1 class="pb-2 text-3xl font-medium">Todos los Perros</h1>
+      <span class="bg-blue-400 mx-auto mb-4 inline-block h-1 w-[90px] rounded"></span>
+    </div>
+
+    <div class="grid grid-cols-2 gap-3 py-3 w-full">
+      <div *ngFor="let group of infoPerroChunks" class="h-max rounded-xl overflow-hidden border border-blue-300 shadow-lg">
+        <ion-card *ngFor="let perro of group" class="m-0 h-44 relative group" mode="md">
+          <img 
+            class="h-full w-full object-cover object-center absolute top-0 left-0 transition-all duration-300 group-hover:scale-110" 
+            alt="Imagen de {{ perro.Raza }}" 
+            [src]="perro.imgPerfil" 
+            (click)="openModal(perro.imgPerfil)"
+          />
+          <ion-card-header class="p-2 h-full w-full justify-end bg-gradient-to-b from-transparent from-40% via-black/50 to-black/80"  (click)="navigateToTargetPage('perfil-perro', perro.id)">
+            <ion-card-title class="text-white">{{ perro.Raza }}</ion-card-title>
+            <ion-card-subtitle class="text-gray-200">{{ perro.Origen }}</ion-card-subtitle>
+          </ion-card-header>
+        </ion-card>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- <div class="button-container">
     Perros
   </div>
   <ion-searchbar class="search-bar" placeholder="Buscar" (ionFocus)="openSearchModal()"></ion-searchbar>
@@ -42,5 +113,5 @@
         </ng-container>
       </ion-row>
     </swiper-slide>
-  </swiper-container>
+  </swiper-container> -->
 </ion-content>
