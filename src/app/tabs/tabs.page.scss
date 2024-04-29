@@ -30,6 +30,16 @@
     fill: var(--ion-color-primary);
 }
 
+
+.custom {
+    --color:rgb(110, 110, 110);
+    --color-selected:#2563eb;
+    --background:white;
+    --background-focused:red;
+    --background-focused-opacity:1;
+    --ripple-color:transparent;
+}
+
 svg {
     width: 20px;
     height: 20px;
