@@ -45,7 +45,7 @@ export class PerfilGatoPage implements OnInit {
 
   getGatoById(id: number): Cat[] {
     return this.infoGato.filter((gato: Cat) => gato.id === id);
-    
+
   }
 
   changeCardContent(segmentValue: string) {
@@ -58,7 +58,7 @@ export class PerfilGatoPage implements OnInit {
       case 'origen':
         this.cardHeading = 'Origen';
         this.cardSubtitle = selectedGato.Raza;
-        this.cardContent = this.infoGato[0]['Origen e Historia'];
+        this.cardContent = this.formOrigen(selectedGato['Origen e Historia']);
         this.temperamentoChips = [];
         break;
       case 'caracteristicas':
@@ -84,10 +84,21 @@ export class PerfilGatoPage implements OnInit {
         this.selectedSegmentValue = 'origen'
         this.cardHeading = 'Origen';
         this.cardSubtitle = selectedGato.Raza;
-        this.cardContent = this.infoGato[0]['Origen e Historia'];
+        this.cardContent = this.formOrigen(selectedGato['Origen e Historia']);
         this.temperamentoChips = [];
         break;
     }
+  }
+
+
+  formOrigen(origen: any): string {
+    let formatted = '';
+    for (const key in origen) {
+      if (origen.hasOwnProperty(key)) {
+        formatted += `${origen[key]}`;
+      }
+    }
+    return formatted;
   }
 
   formatCaracteristicas(caracteristicas: any): string {
@@ -148,7 +159,7 @@ export class PerfilGatoPage implements OnInit {
     return temperamento.filter(item => item.aplicable);
   }
 
-  getNameRaza(raza : Cat[]): Cat[]{
+  getNameRaza(raza: Cat[]): Cat[] {
     return raza.filter(item => item.Raza)
   }
 

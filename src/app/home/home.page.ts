@@ -5,6 +5,8 @@ import { ImgModalPage } from '../img-modal/img-modal.page';
 import * as infoPerro from '../../assets/data/InfoPerro.json';
 import { SearchModalPage } from '../search-modal/search-modal.page';
 import * as infoGato from '../../assets/data/InfoGato.json';
+import { Storage } from '@ionic/storage';
+import { WelcomeModalPage } from '../welcome-modal/welcome-modal.page';
 
 @Component({
   selector: 'app-home',
@@ -17,9 +19,12 @@ export class homePage {
   infoPerroChunks: any[][] = [];
   infoGatoChunks: any[][] = [];
   combinedAnimals: any[] = [];
+  showImage: boolean;
 
 
-  constructor(private router: Router, private modalController: ModalController) {
+  constructor(private router: Router, private modalController: ModalController,
+    private storage: Storage
+  ) {
     for (let i = 0; i < this.infoPerro.length; i += 1) {
       this.infoPerroChunks.push(this.infoPerro.slice(i, i + 1));
     }
@@ -27,6 +32,8 @@ export class homePage {
       this.infoGatoChunks.push(this.infoGato.slice(i, i + 1));
     }
     this.combineAnimals();
+    this.showImage = false;
+    this.initStorage();
   }
 
   navigateToTargetPage(segment: string, gatoId: number) {
@@ -71,6 +78,27 @@ export class homePage {
         razas: this.infoGato,
         tipo: 'gato'
       }
+    });
+    return await modal.present();
+  }
+  async initStorage() {
+    await this.storage.create(); // Crea la instancia de almacenamiento
+    const isFirstTime = await this.storage.get('isFirstTime');
+    if (!isFirstTime) {
+      console.log('Es la primera vez que se inicia la aplicación');
+      await this.storage.set('isFirstTime', true);
+      this.presentWelcomeModal();
+      this.showImage = true;
+    } else {
+      console.log('La aplicación ya se ha iniciado antes');
+      this.showImage = false;
+    }
+  }
+
+  async presentWelcomeModal() {
+    const modal = await this.modalController.create({
+      component: WelcomeModalPage,
+      backdropDismiss: false
     });
     return await modal.present();
   }
