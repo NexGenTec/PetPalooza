@@ -25,6 +25,10 @@ const routes: Routes = [
     path: 'welcome-modal',
     loadChildren: () => import('./welcome-modal/welcome-modal.module').then( m => m.WelcomeModalPageModule)
   },
+  {
+    path: 'favoritos',
+    loadChildren: () => import('./favoritos/favoritos.module').then( m => m.FavoritosPageModule)
+  },
 
 ];
 @NgModule({
