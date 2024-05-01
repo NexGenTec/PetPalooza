@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { ModalController, ToastController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { ImgModalPage } from '../img-modal/img-modal.page';
 import * as infoPerro from '../../assets/data/InfoPerro.json';
@@ -19,11 +19,12 @@ export class homePage {
   infoPerroChunks: any[][] = [];
   infoGatoChunks: any[][] = [];
   combinedAnimals: any[] = [];
+  mascotas:any[] = [];
   showImage: boolean;
 
 
   constructor(private router: Router, private modalController: ModalController,
-    private storage: Storage
+    private storage: Storage,private toastController: ToastController
   ) {
     for (let i = 0; i < this.infoPerro.length; i += 1) {
       this.infoPerroChunks.push(this.infoPerro.slice(i, i + 1));
@@ -81,16 +82,26 @@ export class homePage {
     });
     return await modal.present();
   }
+
+  // async openSearchModal2() {
+  //   const modal = await this.modalController.create({
+  //     component: SearchModalPage,
+  //     componentProps: {
+  //       razas: this.infoGato,
+  //       tipo: 'perro'
+  //     }
+  //   });
+  //   return await modal.present();
+  // }
+
   async initStorage() {
     await this.storage.create(); // Crea la instancia de almacenamiento
     const isFirstTime = await this.storage.get('isFirstTime');
     if (!isFirstTime) {
-      console.log('Es la primera vez que se inicia la aplicación');
       await this.storage.set('isFirstTime', true);
       this.presentWelcomeModal();
       this.showImage = true;
     } else {
-      console.log('La aplicación ya se ha iniciado antes');
       this.showImage = false;
     }
   }
@@ -101,6 +112,40 @@ export class homePage {
       backdropDismiss: false
     });
     return await modal.present();
+  }
+
+  // Función para guardar los favoritos
+  async guardarGatoFavorito(gato: any) {
+    let gatosFavoritos = await this.storage.get('gatosFavoritos');
+    if (!gatosFavoritos) {
+      gatosFavoritos = [];
+    }
+    gatosFavoritos.push(gato);
+    await this.storage.set('gatosFavoritos', gatosFavoritos);
+    this.presentToast('Se ha agregado a favoritos');
+  }
+
+  async guardarPerroFavorito(perro: any) {
+    let perrosFavoritos = await this.storage.get('perrosFavoritos');
+    if (!perrosFavoritos) {
+      perrosFavoritos = [];
+    }
+    perrosFavoritos.push(perro);
+    await this.storage.set('perrosFavoritos', perrosFavoritos);
+    this.presentToast('Se ha agregado a favoritos');
+  }
+
+  async presentToast(message: string) {
+    const toast = await this.toastController.create({
+      message: message,
+      duration: 2000, // Duración del toast en milisegundos
+      position: 'bottom' // Posición del toast (arriba, abajo, centro)
+    });
+    toast.present();
+  }
+
+  navigateToFavorites() {
+    this.router.navigate(['/favoritos']);
   }
 
 }

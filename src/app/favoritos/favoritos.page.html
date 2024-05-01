@@ -1,0 +1,17 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Favoritos</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <!-- Aquí puedes iterar sobre la lista de animales favoritos y mostrarlos -->
+    <ion-item *ngFor="let animal of favoriteAnimals">
+      <ion-label>{{ animal.name }}</ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>
