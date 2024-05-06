@@ -11,14 +11,21 @@ import { ModalController } from '@ionic/angular';
   styleUrls: ['./perfil-perro.page.scss'],
 })
 export class PerfilPerroPage implements OnInit {
-  selectedSegmentValue: string = 'origen';
+  selectedSegmentValue: string = 'caracteristicas';
   cardHeading: string = '';
   cardSubtitle: string = '';
   cardContent: string = '';
 
+  infoName: string = '';
+  infoOrigin: string = '';
+  infoHistory: string = '';
+  infoImage: string = '';
+
   Perro: Dog[] = [];
   selectedPerroId!: number;
   temperamentoChips: Temperamento[] = [];
+
+  showImagesContainer: boolean = false;
 
   infoPerro: any = (infoPerro as any).default;
 
@@ -57,31 +64,50 @@ export class PerfilPerroPage implements OnInit {
         this.cardSubtitle = selectedPerro.Raza;
         this.cardContent = this.formOrigen(selectedPerro['Origen e Historia']);
         this.temperamentoChips = [];
+        this.showImagesContainer = false;
         break;
       case 'caracteristicas':
         this.cardHeading = 'Características Físicas';
         this.cardSubtitle = selectedPerro.Raza;
         this.cardContent = this.formatCaracteristicas(selectedPerro['Características Físicas']);
         this.temperamentoChips = [];
+        this.showImagesContainer = false;
         break;
       case 'temperamento':
         this.cardHeading = 'Temperamento';
         this.cardSubtitle = selectedPerro.Raza;
         this.cardContent = this.formatTemperamento(selectedPerro.Temperamento);
         this.temperamentoChips = this.getTemperamentoChips(selectedPerro.Temperamento);
+        this.showImagesContainer = false;
         break;
       case 'cuidado':
         this.cardHeading = 'Cuidado y Salud';
         this.cardSubtitle = selectedPerro.Raza;
         this.cardContent = this.formatCuidado(selectedPerro['Cuidados y Salud'] as CuidadosYSalud);
         this.temperamentoChips = [];
+        this.showImagesContainer = false;
+        break;
+
+      case 'images':
+        this.cardHeading = 'Imágenes';
+        this.cardSubtitle = '';
+        this.cardContent = '';
+        this.temperamentoChips = [];
+        this.showImagesContainer = true;
         break;
       default:
-        this.selectedSegmentValue = 'origen';
-        this.cardHeading = 'Origen';
+        this.selectedSegmentValue = 'caracteristicas';
+        this.cardHeading = 'Características Físicas';
         this.cardSubtitle = selectedPerro.Raza;
-        this.cardContent = this.formOrigen(selectedPerro['Origen e Historia']);
+        this.cardContent = this.formatCaracteristicas(selectedPerro['Características Físicas']);
         this.temperamentoChips = [];
+
+        this.infoName = selectedPerro.Raza;
+        this.infoOrigin = selectedPerro.Origen;
+        this.infoImage = selectedPerro.imgPerfil;
+        this.infoHistory = selectedPerro['Origen e Historia'];
+
+        this.showImagesContainer = false;
         break;
     }
   }
@@ -100,13 +126,12 @@ export class PerfilPerroPage implements OnInit {
 
 
   formatCaracteristicas(caracteristicas: any): string {
-    let formatted = '<div>';
+    let formatted = '';
     for (const key in caracteristicas) {
       if (caracteristicas.hasOwnProperty(key)) {
-        formatted += `<p><strong>${key}:</strong> ${caracteristicas[key]}</p>`;
+        formatted += `<p><strong>${key}:</strong> ${caracteristicas[key]}</p><hr class='pb-2 mt-2'>`;
       }
     }
-    formatted += '</div>';
     return formatted;
   }
 
@@ -115,7 +140,7 @@ export class PerfilPerroPage implements OnInit {
     if (Array.isArray(temperamento)) {
       temperamento.forEach((item: any) => {
         if (item.aplicable) {
-          formatted += `<p><strong>${item.tipo}:</strong> ${item.descripcion}</p>`;
+          formatted += `<p><strong>${item.tipo}:</strong> ${item.descripcion}</p><hr class='pb-2 mt-2'>`;
         }
       });
     } else {
@@ -123,7 +148,7 @@ export class PerfilPerroPage implements OnInit {
         if (temperamento.hasOwnProperty(key)) {
           const item = temperamento[key];
           if (item.aplicable) {
-            formatted += `<p><strong>${key}:</strong> ${item.descripcion}</p>`;
+            formatted += `<p><strong>${key}:</strong> ${item.descripcion}</p><hr class='pb-2 mt-2'>`;
           }
         }
       }
@@ -143,9 +168,9 @@ export class PerfilPerroPage implements OnInit {
           cuidado[key].forEach((item: string) => { // Specify the type of 'item'
             formatted += `<p>${item}</p>`;
           });
-          formatted += '</div></p>';
+          formatted += '</div></p><hr class="pb-2 mt-2">';
         } else {
-          formatted += `<p><strong>${key}:</strong> ${cuidado[key]}</p>`;
+          formatted += `<p><strong>${key}:</strong> ${cuidado[key]}</p><hr class='pb-2 mt-2'>`;
         }
       }
     }

@@ -12,14 +12,21 @@ import { ImgModalPage } from '../img-modal/img-modal.page';
 })
 export class PerfilGatoPage implements OnInit {
 
-  selectedSegmentValue: string = 'origen';
+  selectedSegmentValue: string = 'caracteristicas';
   cardHeading: string = '';
   cardSubtitle: string = '';
   cardContent: string = '';
 
+  infoName: string = '';
+  infoOrigin: string = '';
+  infoHistory: string = '';
+  infoImage: string = '';
+
   Gato: Cat[] = [];
   selectedGatoId!: number;
   temperamentoChips: Temperamento[] = [];
+
+  showImagesContainer: boolean = false;
 
   infoGato: any = (infoGato as any).default;
   constructor(private route: ActivatedRoute, private modalController: ModalController) {
@@ -45,7 +52,6 @@ export class PerfilGatoPage implements OnInit {
 
   getGatoById(id: number): Cat[] {
     return this.infoGato.filter((gato: Cat) => gato.id === id);
-
   }
 
   changeCardContent(segmentValue: string) {
@@ -55,37 +61,58 @@ export class PerfilGatoPage implements OnInit {
       return;
     }
     switch (segmentValue) {
-      case 'origen':
+      /* case 'origen':
         this.cardHeading = 'Origen';
         this.cardSubtitle = selectedGato.Raza;
         this.cardContent = this.formOrigen(selectedGato['Origen e Historia']);
         this.temperamentoChips = [];
-        break;
+        this.showImagesContainer = false;
+        break; */
       case 'caracteristicas':
         this.cardHeading = 'Características Físicas';
         this.cardSubtitle = selectedGato.Raza;
         this.cardContent = this.formatCaracteristicas(selectedGato['Características Físicas']);
         this.temperamentoChips = [];
-
+        this.showImagesContainer = false;
         break;
       case 'temperamento':
         this.cardHeading = 'Temperamento';
         this.cardSubtitle = selectedGato.Raza;
         this.cardContent = this.formatTemperamento(selectedGato.Temperamento);
         this.temperamentoChips = this.getTemperamentoChips(selectedGato.Temperamento);
+        this.showImagesContainer = false;
         break;
       case 'cuidado':
         this.cardHeading = 'Cuidado y Salud';
         this.cardSubtitle = selectedGato.Raza;
         this.cardContent = this.formatCuidado(selectedGato['Cuidados y Salud']);
         this.temperamentoChips = [];
+        this.showImagesContainer = false;
         break;
-      default:
-        this.selectedSegmentValue = 'origen'
-        this.cardHeading = 'Origen';
-        this.cardSubtitle = selectedGato.Raza;
-        this.cardContent = this.formOrigen(selectedGato['Origen e Historia']);
+
+      case 'images':
+        this.cardHeading = 'Imágenes';
+        this.cardSubtitle = '';
+        this.cardContent = '';
         this.temperamentoChips = [];
+        this.showImagesContainer = true;
+        break;
+
+      default:
+        this.selectedSegmentValue = 'caracteristicas';
+
+        this.cardHeading = 'Características Físicas';
+        this.cardSubtitle = selectedGato.Raza;
+        this.cardContent = this.formatCaracteristicas(selectedGato['Características Físicas']);
+        this.temperamentoChips = [];
+
+        this.infoName = selectedGato.Raza;
+        this.infoOrigin = selectedGato.Origen;
+        this.infoImage = selectedGato.imgPerfil;
+        this.infoHistory = selectedGato['Origen e Historia'];
+
+        this.showImagesContainer = false;
+
         break;
     }
   }
@@ -105,7 +132,7 @@ export class PerfilGatoPage implements OnInit {
     let formatted = '';
     for (const key in caracteristicas) {
       if (caracteristicas.hasOwnProperty(key)) {
-        formatted += `<strong>${key}:</strong> ${caracteristicas[key]}<br>`;
+        formatted += `<p><strong>${key}:</strong> ${caracteristicas[key]}</p><hr class='pb-2 mt-2'>`;
       }
     }
     return formatted;
@@ -116,7 +143,7 @@ export class PerfilGatoPage implements OnInit {
     if (Array.isArray(temperamento)) {
       temperamento.forEach((item: any) => {
         if (item.aplicable) {
-          formatted += `<p><strong>${item.tipo}:</strong> ${item.descripcion}</p>`;
+          formatted += `<p><strong>${item.tipo}:</strong> ${item.descripcion}</p><hr class='pb-2 mt-2'>`;
         }
       });
     } else {
@@ -124,7 +151,7 @@ export class PerfilGatoPage implements OnInit {
         if (temperamento.hasOwnProperty(key)) {
           const item = temperamento[key];
           if (item.aplicable) {
-            formatted += `<li><strong>${key}:</strong> ${item.descripcion}</li>`;
+            formatted += `<li><strong>${key}:</strong> ${item.descripcion}</li><hr class='pb-2 mt-2'>`;
           }
         }
       }
@@ -137,7 +164,7 @@ export class PerfilGatoPage implements OnInit {
     let formatted = '';
     for (const key in cuidado) {
       if (cuidado.hasOwnProperty(key)) {
-        formatted += `<strong>${key}:</strong> ${cuidado[key]}<br>`;
+        formatted += `<strong>${key}:</strong> ${cuidado[key]}<hr class='pb-2 mt-2'>`;
       }
     }
     return formatted;
