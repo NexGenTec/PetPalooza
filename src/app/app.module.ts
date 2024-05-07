@@ -32,7 +32,7 @@ import { getDatabase, provideDatabase } from '@angular/fire/database';
 import { getMessaging, provideMessaging } from '@angular/fire/messaging';
 import { getStorage, provideStorage } from '@angular/fire/storage';
 import { environment } from '../environments/environment.prod';
-import { IonicStorageModule } from '@ionic/storage-angular';
+/* import { IonicStorageModule } from '@ionic/storage-angular'; */
 
 const routes: Routes = [
 
@@ -41,7 +41,7 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [HttpClientModule, BrowserModule, IonicStorageModule.forRoot(), IonicModule.forRoot(), AppRoutingModule, FontAwesomeModule, FormsModule,
+  imports: [HttpClientModule, BrowserModule/* , IonicStorageModule.forRoot() */, IonicModule.forRoot(), AppRoutingModule, FontAwesomeModule, FormsModule,
     RouterModule.forRoot(routes, { useHash: true }),
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAnalytics(() => getAnalytics()),

@@ -33,3 +33,22 @@ h6 {
     font-size: larger;
     font-weight: 700;
 }
+
+
+
+ion-segment {
+    --background: #fff;
+}
+
+ion-segment-button {
+    --indicator-color: #60a5fa;
+}
+
+/* iOS styles */
+ion-segment-button.ios {
+    --color: #60a5fa;
+    --color-checked: #fff;
+    --border-radius: 20px;
+    --padding-top:5px;
+    --padding-bottom:5px;
+}
