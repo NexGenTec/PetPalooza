@@ -5,19 +5,16 @@
       alt="logo PetPalooza" 
       src="assets/img/logo/PetPalooza.png" 
     />
-    <ion-searchbar class="custom my-3" placeholder="Buscar" (ionFocus)="openSearchModal()" mode="md"></ion-searchbar>
+    <ion-searchbar class="custom my-3" placeholder="Buscar"  mode="md"></ion-searchbar>
   </div>
 </ion-header>
 <ion-modal-controller></ion-modal-controller>
 <ion-content [fullscreen]="true">
 
   <div class="py-5 px-3 bg-gray-50 grid grid-cols-1 gap-y-8">
-
-
     <div
       id="interesting-data"
-      class="bg-gradient-to-r from-blue-400 to-indigo-400 rounded-lg overflow-hidden shadow-xl max-w-sm"
-    >
+      class="bg-gradient-to-r from-blue-400 to-indigo-400 rounded-lg overflow-hidden shadow-xl max-w-sm">
       <div class="p-4 text-white">
         <h2 class="text-lg font-semibold mb-2 tracking-wide">Dato Freak</h2>
         <p class="text-sm mb-4">
@@ -25,7 +22,6 @@
         </p>
       </div>
     </div>
-
 
     <div id="registered-animals">
       <div class="w-full max-w-[570px] rounded-[20px] px-3 pt-4 text-start">
@@ -51,8 +47,7 @@
           </svg>
         </div>
         <div
-          class="group w-full text-white rounded-lg bg-[rgb(41,49,79)] p-5 transition relative duration-300 cursor-pointer hover:translate-y-[3px] hover:shadow-[0_-8px_0px_0px_rgb(244,67,54)]"
-        >
+          class="group w-full text-white rounded-lg bg-[rgb(41,49,79)] p-5 transition relative duration-300 cursor-pointer hover:translate-y-[3px] hover:shadow-[0_-8px_0px_0px_rgb(244,67,54)]">
           <p class="text-2xl">+100</p>
           <p class="text-sm">Perros</p>
           <svg 
@@ -61,8 +56,7 @@
             height="36"
             width="36" 
             fill="currentColor"
-            class="group-hover:opacity-100 absolute right-[10%] top-[50%] translate-y-[-50%] opacity-20 transition group-hover:scale-110 duration-300"
-          >
+            class="group-hover:opacity-100 absolute right-[10%] top-[50%] translate-y-[-50%] opacity-20 transition group-hover:scale-110 duration-300">
             <path d="M309.6 158.5L332.7 19.8C334.6 8.4 344.5 0 356.1 0c7.5 0 14.5 3.5 19 9.5L392 32h52.1c12.7 0 24.9 5.1 33.9 14.1L496 64h56c13.3 0 24 10.7 24 24v24c0 44.2-35.8 80-80 80H464 448 426.7l-5.1 30.5-112-64zM416 256.1L416 480c0 17.7-14.3 32-32 32H352c-17.7 0-32-14.3-32-32V364.8c-24 12.3-51.2 19.2-80 19.2s-56-6.9-80-19.2V480c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V249.8c-28.8-10.9-51.4-35.3-59.2-66.5L1 167.8c-4.3-17.1 6.1-34.5 23.3-38.8s34.5 6.1 38.8 23.3l3.9 15.5C70.5 182 83.3 192 98 192h30 16H303.8L416 256.1zM464 80a16 16 0 1 0 -32 0 16 16 0 1 0 32 0z"/>
           </svg>
         </div>
@@ -79,21 +73,21 @@
           <ion-label>Favoritos</ion-label>
         </ion-segment-button>
       </ion-segment>
-
+      
       <div class="w-full max-w-md px-4 bg-white border border-gray-200 rounded-lg shadow mt-3">
         <div class="flow-root">
           <ul role="list" class="divide-y divide-gray-200">
-            <li class="py-3" *ngFor="let animal of combinedAnimals">
+            <li class="py-3">
               <div class="flex items-center">
                 <div class="flex-shrink-0">
-                  <img class="w-16 h-16 rounded-full object-cover"  [src]="animal.imgPerfil" (click)="openModal(animal.imgPerfil)">
+                  <img class="w-16 h-16 rounded-full object-cover" >
                 </div>
                 <div class="flex-1 min-w-0 ms-4">
                   <p class="text-sm font-medium text-gray-900 truncate">
-                    {{animal.Origen}}
+                    Origen
                   </p>
                   <p class="text-sm text-gray-500 truncate">
-                    {{animal.Raza}}
+                    Raza
                   </p>
                 </div>
                 <a class="text-sm font-medium text-blue-400 hover:underline" >
@@ -113,16 +107,16 @@
         <span class="bg-blue-400 mx-auto mb-4 inline-block h-1 w-[90px] rounded"></span>
       </div>
 
-      <swiper-container [slidesPerView]="1.3" [loop]="false" class="">
-        <swiper-slide *ngFor="let group of infoGatoChunks" class="">
-          <ng-container *ngFor="let gato of group">
-            <div class="px-3">
+      <swiper-container [slidesPerView]="1.3" [loop]="false" >
+        <swiper-slide>
+          <ng-container>
+            <div class="px-3" *ngFor="let gato of gatos">
               <div class="w-full h-96 bg-white rounded-3xl p-4 flex flex-col items-start justify-between gap-3 border border-gray-200">
                 <div class="w-full">
                   <div class="w-full h-52 rounded-2xl overflow-hidden relative">
-                    <ion-img class="w-full h-full object-cover" (click)="navigateToTargetPage('perfil-gato', gato.id)" [src]="gato.imgPerfil" alt="Imagen de {{ gato.Raza }}"></ion-img>
+                    <ion-img class="w-full h-full object-cover" alt="Imagen de Raza" [src]="gato.imgPerfil"></ion-img>
                     <div class="absolute top-3 right-3 w-10 h-10 rounded-full bg-white flex justify-center items-center text-red-400">
-                      <button (click)="guardarGatoFavorito(gato)" type="button">
+                      <button type="button">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-7 h-7">
                           <path d="m11.645 20.91-.007-.003-.022-.012a15.247 15.247 0 0 1-.383-.218 25.18 25.18 0 0 1-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0 1 12 5.052 5.5 5.5 0 0 1 16.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 0 1-4.244 3.17 15.247 15.247 0 0 1-.383.219l-.022.012-.007.004-.003.001a.752.752 0 0 1-.704 0l-.003-.001Z" />
                         </svg>
@@ -130,11 +124,11 @@
                     </div>
                   </div>
                   <div class="mt-3">
-                    <p class="text-black font-extrabold">{{ gato.Raza }}</p>
-                    <p class="text-gray-400">{{ gato.Origen }}</p>
+                    <p class="text-black font-extrabold"> {{gato.Raza}} </p>
+                    <p class="text-gray-400">{{gato.Origen}}</p>
                   </div>
                 </div>
-                <ion-button fill="clear" class="text-white px-1 rounded-xl bg-blue-400 hover:bg-blue-500 transition-colors" (click)="navigateToTargetPage('perfil-gato', gato.id)">Ver más</ion-button>
+                <ion-button fill="clear" class="text-white px-1 rounded-xl bg-blue-400 hover:bg-blue-500 transition-colors" >Ver más</ion-button>
               </div>
             </div>
           </ng-container>
@@ -148,16 +142,16 @@
         <span class="bg-blue-400 mx-auto mb-4 inline-block h-1 w-[90px] rounded"></span>
       </div>
 
-      <swiper-container [slidesPerView]="1.3" [loop]="false" class="">
-        <swiper-slide *ngFor="let group of infoPerroChunks" class="">
-            <ng-container *ngFor="let perro of group">
-              <div class="px-3">
+      <swiper-container [slidesPerView]="1.3" [loop]="false" >
+        <swiper-slide >
+            <ng-container>
+              <div class="px-3" *ngFor="let perro of perros">
                 <div class="w-full h-96 bg-white rounded-3xl p-4 flex flex-col items-start justify-between gap-3 border border-gray-200">
                   <div class="w-full">
                     <div class="w-full h-52 rounded-2xl overflow-hidden relative">
-                      <ion-img class="w-full h-full object-cover" (click)="navigateToTargetPage2('perfil-perro', perro.id)" [src]="perro.imgPerfil" alt="Imagen de {{ perro.Raza }}"></ion-img>
+                      <ion-img class="w-full h-full object-cover" [src]="perro.imgPerfil" alt="Imagen de Raza"></ion-img>
                       <div class="absolute top-3 right-3 w-10 h-10 rounded-full bg-white flex justify-center items-center text-red-400">
-                        <button (click)="guardarGatoFavorito(perro)" type="button">
+                        <button type="button">
                           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-7 h-7">
                             <path d="m11.645 20.91-.007-.003-.022-.012a15.247 15.247 0 0 1-.383-.218 25.18 25.18 0 0 1-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0 1 12 5.052 5.5 5.5 0 0 1 16.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 0 1-4.244 3.17 15.247 15.247 0 0 1-.383.219l-.022.012-.007.004-.003.001a.752.752 0 0 1-.704 0l-.003-.001Z" />
                           </svg>
@@ -165,12 +159,11 @@
                       </div>
                     </div>
                     <div class="mt-3">
-                      <p class="text-black font-extrabold">{{ perro.Raza }}</p>
-                      <p class="text-gray-400">{{ perro.Origen }}</p>
-                      <p class="text-gray-300">- Mediano</p>
+                      <p class="text-black font-extrabold"> {{perro.Raza}} </p>
+                      <p class="text-gray-400">{{perro.Origen}}</p>
                     </div>
                   </div>
-                  <ion-button fill="clear" class="text-white px-1 rounded-xl bg-blue-400 hover:bg-blue-500 transition-colors" (click)="navigateToTargetPage2('perfil-perro', perro.id)">Ver más</ion-button>
+                  <ion-button fill="clear" class="text-white px-1 rounded-xl bg-blue-400 hover:bg-blue-500 transition-colors" >Ver más</ion-button>
                 </div>
               </div>
             </ng-container>
@@ -182,7 +175,7 @@
         <div class="w-full h-96 bg-white rounded-3xl p-4 flex flex-col items-start justify-between gap-3 border border-gray-200">
           <div class="w-full h-full bg-white rounded-2xl flex justify-center items-center">
               <div class="bg-blue-300 hover:bg-blue-400 rounded-xl">
-                <ion-tab-button class="text-white text-base redirect" (click)="navigateToFavorites()">
+                <ion-tab-button class="text-white text-base redirect">
                   <ion-label>Favoritos</ion-label>
                 </ion-tab-button>
               </div>
@@ -191,5 +184,4 @@
       </div>
     </ng-container>
   </div>
-
 </ion-content>

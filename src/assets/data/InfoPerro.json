@@ -15,8 +15,7 @@
             "Ojos": "Grandes y redondos, generalmente oscuros",
             "Orejas": "Pequeñas y caídas hacia adelante"
         },
-
-        "Category":"Mediano",
+        "Category": "Mediano",
         "Temperamento": [
             {
                 "tipo": "Amigable",
@@ -114,11 +113,10 @@
         "Longevidad": "La esperanza de vida promedio es de 12 a 15 años, aunque esto puede variar según la salud individual de cada perro y los cuidados que reciba.",
         "Consideraciones Finales": "El Pug es una mascota encantadora y adaptable que se adapta bien a una variedad de entornos y estilos de vida. Requiere cuidados regulares, incluido el control de su salud y peso, así como la atención a su bienestar emocional. Con el amor y la atención adecuados, el Pug puede ser un compañero fiel y cariñoso durante muchos años.",
         "img": {
-            "1":"assets/img/imgPerro/Pug/Pug.jpg",
+            "1": "assets/img/imgPerro/Pug/Pug.jpg",
             "2": "assets/img/imgPerro/Pug/Pug2.jpg",
             "3": "assets/img/imgPerro/Pug/Pug3.jpg",
             "4": "assets/img/imgPerro/Pug/Pug4.jpg"
-            
         }
     },
     {
@@ -238,10 +236,6 @@
             "4": "assets/img/imgPerro/Bóxer/Boxer4.jpg"
         }
     },
-
-
-
-
     {
         "id": 5,
         "imgPerfil": "assets/img/imgPerro/Bulldog Inglés/BulldogIngles.jpg",
@@ -355,11 +349,10 @@
         "Longevidad": "La esperanza de vida promedio es de 12 a 15 años, aunque esto puede variar según la salud individual de cada perro y los cuidados que reciba.",
         "Consideraciones Finales": "El Pug es una mascota encantadora y adaptable que se adapta bien a una variedad de entornos y estilos de vida. Requiere cuidados regulares, incluido el control de su salud y peso, así como la atención a su bienestar emocional. Con el amor y la atención adecuados, el Pug puede ser un compañero fiel y cariñoso durante muchos años.",
         "img": {
-            "1":"assets/img/imgPerro/Pug/Pug.jpg",
+            "1": "assets/img/imgPerro/Pug/Pug.jpg",
             "2": "assets/img/imgPerro/Pug/Pug2.jpg",
             "3": "assets/img/imgPerro/Pug/Pug3.jpg",
             "4": "assets/img/imgPerro/Pug/Pug4.jpg"
-            
         }
     },
     {

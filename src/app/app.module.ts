@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { importProvidersFrom, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy, RouterModule, Routes } from '@angular/router';
 import { faCoffee } from '@fortawesome/free-solid-svg-icons';
@@ -6,7 +6,6 @@ import { faCoffee } from '@fortawesome/free-solid-svg-icons';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 
 import {
-  FontAwesomeModule,
   FaIconLibrary,
 } from '@fortawesome/angular-fontawesome';
 import { faSquare, faCheckSquare } from '@fortawesome/free-solid-svg-icons';
@@ -15,42 +14,52 @@ import {
   faCheckSquare as farCheckSquare,
 } from '@fortawesome/free-regular-svg-icons';
 
-import { AppRoutingModule } from './app-routing.module';
+
 import { AppComponent } from './app.component';
-import { HttpClientModule } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
+import { AppRoutingModule } from './app-routing.module';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
-import { getAnalytics, provideAnalytics, ScreenTrackingService } from '@angular/fire/analytics';
+import { getAuth, provideAuth } from '@angular/fire/auth';
+import { getAnalytics, provideAnalytics, ScreenTrackingService, UserTrackingService } from '@angular/fire/analytics';
 import { initializeAppCheck, ReCaptchaEnterpriseProvider, provideAppCheck } from '@angular/fire/app-check';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { getDatabase, provideDatabase } from '@angular/fire/database';
 import { getMessaging, provideMessaging } from '@angular/fire/messaging';
 import { getStorage, provideStorage } from '@angular/fire/storage';
-import { environment } from '../environments/environment.prod';
+import { environment } from 'src/environments/environment';
 import { IonicStorageModule } from '@ionic/storage-angular';
+if (!environment.production) { (self as any).FIREBASE_APPCHECK_DEBUG_TOKEN = false; }
 
 const routes: Routes = [
 
 ]
 
 
+
 @NgModule({
   declarations: [AppComponent],
-  imports: [HttpClientModule, BrowserModule, IonicStorageModule.forRoot(), IonicModule.forRoot(), AppRoutingModule, FontAwesomeModule, FormsModule,
+  imports: [BrowserModule, IonicModule.forRoot(), IonicStorageModule.forRoot(),
+    AppRoutingModule,
     RouterModule.forRoot(routes, { useHash: true }),
     provideFirebaseApp(() => initializeApp(environment.firebase)),
-    provideAnalytics(() => getAnalytics()),
-    provideAppCheck(() => {
-      // TODO get a reCAPTCHA Enterprise here https://console.cloud.google.com/security/recaptcha?project=_
-      const provider = new ReCaptchaEnterpriseProvider('6LdiFLopAAAAAOh3uyVWi17fjeWE1xgVcIDI7hl7');
+    provideAuth(() => getAuth()), provideAnalytics(() => getAnalytics()), provideAppCheck(() => {
+      const provider = new ReCaptchaEnterpriseProvider('6LdQltIpAAAAAG9MsF4NCcj7HL7d9pN-ed6uxDyI');
       return initializeAppCheck(undefined, { provider, isTokenAutoRefreshEnabled: true });
-    }),
-    provideFirestore(() => getFirestore()),
-    provideDatabase(() => getDatabase()),
-    provideMessaging(() => getMessaging()),
-    provideStorage(() => getStorage()),
+    }), provideFirestore(() => getFirestore()), provideDatabase(() => getDatabase()), provideStorage(() => getStorage()),
+
   ],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, ScreenTrackingService,],
+  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, ScreenTrackingService, UserTrackingService,
+  importProvidersFrom(provideFirebaseApp(() => initializeApp(environment.firebase))),
+  importProvidersFrom(provideAuth(() => getAuth())),
+  importProvidersFrom(provideAnalytics(() => getAnalytics())),
+  importProvidersFrom(provideAppCheck(() => {
+    const provider = new ReCaptchaEnterpriseProvider('6LdQltIpAAAAAG9MsF4NCcj7HL7d9pN-ed6uxDyI');
+    return initializeAppCheck(undefined, { provider, isTokenAutoRefreshEnabled: true });
+  })),
+  importProvidersFrom(provideFirestore(() => getFirestore())),
+  importProvidersFrom(provideDatabase(() => getDatabase())),
+  importProvidersFrom(provideMessaging(() => getMessaging())),
+  importProvidersFrom(provideStorage(() => getStorage()))
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {
