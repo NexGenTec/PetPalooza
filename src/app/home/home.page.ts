@@ -1,5 +1,5 @@
 
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ModalController, ToastController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { ImgModalPage } from '../img-modal/img-modal.page';
@@ -22,12 +22,12 @@ export class homePage implements OnInit {
   infoPerroChunks: any[][] = [];
   infoGatoChunks: any[][] = [];
   combinedAnimals: any[] = [];
-  mascotas:any[] = [];
+  mascotas: any[] = [];
   showImage: boolean;
 
 
   constructor(private router: Router, private modalController: ModalController,
-    private firebaseService: FirebaseDatabaseService
+    private firebaseService: FirebaseDatabaseService,
     private storage: Storage,
     private toastController: ToastController
   ) {
@@ -37,9 +37,7 @@ export class homePage implements OnInit {
     for (let i = 0; i < this.infoGato.length; i += 1) {
       this.infoGatoChunks.push(this.infoGato.slice(i, i + 1));
     }
-    // this.combineAnimals();
     this.showImage = false;
-    /* this.initStorage(); */
   }
 
   ngOnInit() {
