@@ -19,30 +19,10 @@
       class="bg-gradient-to-r from-blue-400 to-indigo-400 rounded-lg overflow-hidden shadow-xl max-w-sm"
     >
       <div class="p-4 text-white">
-        <!-- <div class="flex items-center gap-4 pb-3">
-          <span class="shrink-0 rounded-full bg-white p-2 text-blue-400">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-              class="h-4 w-4"
-            >
-              <path
-                fill-rule="evenodd"
-                d="M18 3a1 1 0 00-1.447-.894L8.763 6H5a3 3 0 000 6h.28l1.771 5.316A1 1 0 008 18h1a1 1 0 001-1v-4.382l6.553 3.276A1 1 0 0018 15V3z"
-                clip-rule="evenodd"
-              ></path>
-            </svg>
-          </span>
-          <h2 class="text-lg font-semibold">Dato Freak!</h2>
-        </div> -->
         <h2 class="text-lg font-semibold mb-2 tracking-wide">Dato Freak</h2>
         <p class="text-sm mb-4">
           ¿Sabias que el Ronroneo gatos calma humanos? Reduce estrés, baja presión arterial y promueve relajación. Investigaciones confirman efecto terapéutico del ronroneo felino
         </p>
-        <!-- <p class="text-xs mb-4 text-gray-200">
-          - Información proporcionada por: Nicolás
-        </p> -->
       </div>
     </div>
 
@@ -103,74 +83,20 @@
       <div class="w-full max-w-md px-4 bg-white border border-gray-200 rounded-lg shadow mt-3">
         <div class="flow-root">
           <ul role="list" class="divide-y divide-gray-200">
-            <li class="py-3">
+            <li class="py-3" *ngFor="let animal of combinedAnimals">
               <div class="flex items-center">
                 <div class="flex-shrink-0">
-                  <img class="w-16 h-16 rounded-full object-cover" src="assets/img/imgPerro/Bulldog Inglés/BulldogIngles.jpg" alt="Neil image">
+                  <img class="w-16 h-16 rounded-full object-cover"  [src]="animal.imgPerfil" (click)="openModal(animal.imgPerfil)">
                 </div>
                 <div class="flex-1 min-w-0 ms-4">
                   <p class="text-sm font-medium text-gray-900 truncate">
-                    Bulldog Ingles
+                    {{animal.Origen}}
                   </p>
                   <p class="text-sm text-gray-500 truncate">
-                    Perros
+                    {{animal.Raza}}
                   </p>
                 </div>
-                <a href="#" class="text-sm font-medium text-blue-400 hover:underline">
-                  Ver Perfil
-                </a>
-              </div>
-            </li>
-            <li class="py-3">
-              <div class="flex items-center">
-                <div class="flex-shrink-0">
-                  <img class="w-16 h-16 rounded-full object-cover" src="assets/img/imgGato/Sphynx/Sphynx.jpg" alt="Neil image">
-                </div>
-                <div class="flex-1 min-w-0 ms-4">
-                  <p class="text-sm font-medium text-gray-900 truncate">
-                    Sphynx
-                  </p>
-                  <p class="text-sm text-gray-500 truncate">
-                    Gatos
-                  </p>
-                </div>
-                <a href="#" class="text-sm font-medium text-blue-400 hover:underline">
-                  Ver Perfil
-                </a>
-              </div>
-            </li>
-            <li class="py-3">
-              <div class="flex items-center">
-                <div class="flex-shrink-0">
-                  <img class="w-16 h-16 rounded-full object-cover" src="assets/img/imgGato/siamese/siames.jpg" alt="Neil image">
-                </div>
-                <div class="flex-1 min-w-0 ms-4">
-                  <p class="text-sm font-medium text-gray-900 truncate">
-                    Siamés
-                  </p>
-                  <p class="text-sm text-gray-500 truncate">
-                    Gatos
-                  </p>
-                </div>
-                <a href="#" class="text-sm font-medium text-blue-400 hover:underline">
-                  Ver Perfil
-                </a>
-              </div>
-            </li>
-            <li class="py-3">
-              <div class="flex items-center">
-                <div class="flex-shrink-0">
-                  <img class="w-16 h-16 rounded-full object-cover" src="assets/img/imgPerro/Yorkshire/Yorkshire.jpg" alt="Neil image">
-                </div>
-                <div class="flex-1 min-w-0 ms-4">
-                  <p class="text-sm font-medium text-gray-900 truncate">
-                    Yorkshire Terrier
-                  </p>
-                  <p class="text-sm text-gray-500 truncate">
-                    Perros
-                  </p>
-                </div>
-                <a href="#" class="text-sm font-medium text-blue-400 hover:underline">
+                <a class="text-sm font-medium text-blue-400 hover:underline" >
                   Ver Perfil
                 </a>
               </div>
@@ -196,9 +122,11 @@
                   <div class="w-full h-52 rounded-2xl overflow-hidden relative">
                     <ion-img class="w-full h-full object-cover" (click)="navigateToTargetPage('perfil-gato', gato.id)" [src]="gato.imgPerfil" alt="Imagen de {{ gato.Raza }}"></ion-img>
                     <div class="absolute top-3 right-3 w-10 h-10 rounded-full bg-white flex justify-center items-center text-red-400">
-                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-7 h-7">
-                        <path d="m11.645 20.91-.007-.003-.022-.012a15.247 15.247 0 0 1-.383-.218 25.18 25.18 0 0 1-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0 1 12 5.052 5.5 5.5 0 0 1 16.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 0 1-4.244 3.17 15.247 15.247 0 0 1-.383.219l-.022.012-.007.004-.003.001a.752.752 0 0 1-.704 0l-.003-.001Z" />
-                      </svg>
+                      <button (click)="guardarGatoFavorito(gato)" type="button">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-7 h-7">
+                          <path d="m11.645 20.91-.007-.003-.022-.012a15.247 15.247 0 0 1-.383-.218 25.18 25.18 0 0 1-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0 1 12 5.052 5.5 5.5 0 0 1 16.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 0 1-4.244 3.17 15.247 15.247 0 0 1-.383.219l-.022.012-.007.004-.003.001a.752.752 0 0 1-.704 0l-.003-.001Z" />
+                        </svg>
+                      </button>
                     </div>
                   </div>
                   <div class="mt-3">
@@ -211,23 +139,6 @@
             </div>
           </ng-container>
         </swiper-slide>
-
-        <swiper-slide>
-          <ng-container >
-            <div class="px-3">
-              <div class="w-full h-96 bg-white rounded-3xl p-4 flex flex-col items-start justify-between gap-3 border border-gray-200">
-                <div class="w-full h-full bg-white rounded-2xl flex justify-center items-center">
-                    <div class="bg-blue-300 hover:bg-blue-400 rounded-xl">
-                      <ion-tab-button class="text-white text-base redirect" tab="gato" href="/tabs/gato">
-                        <ion-label>Ver Más</ion-label>
-                      </ion-tab-button>
-                    </div>
-                </div>
-              </div>
-            </div>
-          </ng-container>
-        </swiper-slide>
-
       </swiper-container>
     </div>
 
@@ -246,9 +157,11 @@
                     <div class="w-full h-52 rounded-2xl overflow-hidden relative">
                       <ion-img class="w-full h-full object-cover" (click)="navigateToTargetPage2('perfil-perro', perro.id)" [src]="perro.imgPerfil" alt="Imagen de {{ perro.Raza }}"></ion-img>
                       <div class="absolute top-3 right-3 w-10 h-10 rounded-full bg-white flex justify-center items-center text-red-400">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-7 h-7">
-                          <path d="m11.645 20.91-.007-.003-.022-.012a15.247 15.247 0 0 1-.383-.218 25.18 25.18 0 0 1-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0 1 12 5.052 5.5 5.5 0 0 1 16.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 0 1-4.244 3.17 15.247 15.247 0 0 1-.383.219l-.022.012-.007.004-.003.001a.752.752 0 0 1-.704 0l-.003-.001Z" />
-                        </svg>
+                        <button (click)="guardarGatoFavorito(perro)" type="button">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-7 h-7">
+                            <path d="m11.645 20.91-.007-.003-.022-.012a15.247 15.247 0 0 1-.383-.218 25.18 25.18 0 0 1-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0 1 12 5.052 5.5 5.5 0 0 1 16.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 0 1-4.244 3.17 15.247 15.247 0 0 1-.383.219l-.022.012-.007.004-.003.001a.752.752 0 0 1-.704 0l-.003-.001Z" />
+                          </svg>
+                        </button>
                       </div>
                     </div>
                     <div class="mt-3">
@@ -261,103 +174,22 @@
                 </div>
               </div>
             </ng-container>
-        </swiper-slide>
-
-        <swiper-slide>
-          <ng-container >
-            <div class="px-3">
-              <div class="w-full h-96 bg-white rounded-3xl p-4 flex flex-col items-start justify-between gap-3 border border-gray-200">
-                <div class="w-full h-full bg-white rounded-2xl flex justify-center items-center">
-                    <div class="bg-blue-300 hover:bg-blue-400 rounded-xl">
-                      <ion-tab-button class="text-white text-base redirect" tab="perro" href="/tabs/perro">
-                        <ion-label>Ver Más</ion-label>
-                      </ion-tab-button>
-                    </div>
-                </div>
-              </div>
-            </div>
-          </ng-container>
-        </swiper-slide>
-        
+        </swiper-slide> 
       </swiper-container>
     </div>
-
+    <ng-container >
+      <div class="px-3">
+        <div class="w-full h-96 bg-white rounded-3xl p-4 flex flex-col items-start justify-between gap-3 border border-gray-200">
+          <div class="w-full h-full bg-white rounded-2xl flex justify-center items-center">
+              <div class="bg-blue-300 hover:bg-blue-400 rounded-xl">
+                <ion-tab-button class="text-white text-base redirect" (click)="navigateToFavorites()">
+                  <ion-label>Favoritos</ion-label>
+                </ion-tab-button>
+              </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
   </div>
 
-  
-
-
-
-  <!-- <div class="button-container">
-    PetPalooza
-  </div>
-  <ion-searchbar class="search-bar" placeholder="Buscar" (ionFocus)="openSearchModal()"></ion-searchbar>
-  <swiper-container [options]="swiperOptions">
-    <swiper-slide *ngFor="let animal of combinedAnimals">
-      <ion-card class="large-card">
-        <ion-row>
-          <ion-col size="5">
-            <div class="image-container">
-              <ion-img (click)="openModal(animal.imgPerfil)" [src]="animal.imgPerfil" [alt]="'Imagen de ' + animal.Raza"></ion-img>
-            </div>
-          </ion-col>
-          <ion-col size="7">
-            <ion-card-header class="text-container">
-              <ion-card-title>{{ animal.Raza }}</ion-card-title>
-              <ion-card-subtitle>{{ animal.Origen }}</ion-card-subtitle>
-            </ion-card-header>
-            <ion-card-content>
-              <p>Año: {{ animal['Año'] }}</p>
-            </ion-card-content>
-          </ion-col>
-        </ion-row>
-      </ion-card>
-    </swiper-slide>
-  </swiper-container> 
-  <ion-list >
-    <h6>Gatos</h6>  
-      <ion-item-divider>
-        <swiper-container class="card-container">
-          <swiper-slide *ngFor="let group of infoGatoChunks">
-            <ion-row>
-              <ng-container *ngFor="let gato of group">
-                <ion-col size-md="4" size-sm="6" size-xs="12">
-                  <ion-card class="small-card">
-                    <ion-img class="small-image" (click)="openModal(gato.imgPerfil)" [src]="gato.imgPerfil" alt="Imagen de {{ gato.Raza }}"></ion-img>
-                    <ion-card-content>
-                      <ion-card-title>{{ gato.Raza }}</ion-card-title>
-                      <ion-card-subtitle>{{ gato.Origen }}</ion-card-subtitle>
-                    </ion-card-content>
-                    <ion-button fill="clear" class="ver-mas-button" (click)="navigateToTargetPage('perfil-gato', gato.id)">Ver más</ion-button>
-                  </ion-card>
-                </ion-col>
-              </ng-container>
-            </ion-row>
-          </swiper-slide>
-        </swiper-container>
-      </ion-item-divider>
-      <h6>Perros</h6> 
-      <ion-item-divider>
-        <swiper-container class="card-container">
-          <swiper-slide *ngFor="let group of infoPerroChunks">
-            <ion-row>
-              <ng-container *ngFor="let perro of group">
-                <ion-col size-md="4" size-sm="6" size-xs="12">
-                  <ion-card class="small-card">
-                    <ion-img class="small-image" (click)="openModal(perro.imgPerfil)" [src]="perro.imgPerfil" alt="Imagen de {{ perro.Raza }}"></ion-img>
-                    <ion-card-content>
-                      <ion-card-title>{{ perro.Raza }}</ion-card-title>
-                      <ion-card-subtitle>{{ perro.Origen }}</ion-card-subtitle>
-                    </ion-card-content>
-                    <ion-button fill="clear" class="ver-mas-button" (click)="navigateToTargetPage2('perfil-perro', perro.id)">Ver más</ion-button>
-                  </ion-card>
-                </ion-col>
-              </ng-container>
-            </ion-row>
-          </swiper-slide>
-        </swiper-container>
-      </ion-item-divider>
-  </ion-list> -->
-
-  
 </ion-content>

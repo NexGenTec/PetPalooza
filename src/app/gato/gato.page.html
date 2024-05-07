@@ -69,46 +69,4 @@
     </div>
 
   </div>
-
-  
-
-
-
-  <!-- CARD 1 -->
-  <!-- <div class="grid grid-cols-3 gap-3 py-3 w-full min-h-[50vh] px-3">
-    <div *ngFor="let group of filteredInfoGatoChunks">
-      <ion-card *ngFor="let gato of group" class="m-0 h-full bg-stone-50 rounded-xl shadow-none" mode="md">
-        <img 
-          class="h-28 w-full object-cover object-center border border-blue-300 rounded-xl shadow-lg" 
-          alt="Imagen de {{ gato.Raza }}" 
-          [src]="gato.imgPerfil" 
-          (click)="openModal(gato.imgPerfil)"
-        />
-        <ion-card-header class="p-2 h-full" (click)="navigateToTargetPage('perfil-gato', gato.id)">
-          <ion-card-title>{{ gato.Raza }}</ion-card-title>
-          <ion-card-subtitle>{{ gato.Origen }}</ion-card-subtitle>
-        </ion-card-header>
-      </ion-card>
-    </div>
-  </div> -->
-
-  <!-- Card SLIDER -->
-  <!-- <swiper-container class="card-container">
-    <swiper-slide *ngFor="let group of filteredInfoGatoChunks">
-      <ion-row>
-        <ng-container *ngFor="let gato of group">
-          <ion-col size-md="4" size-sm="6" size-xs="12">
-            <ion-card class="small-card">
-              <ion-img class="small-image" (click)="openModal(gato.imgPerfil)" [src]="gato.imgPerfil" alt="Imagen de {{ gato.Raza }}"></ion-img>
-              <ion-card-content>
-                <ion-card-title>{{ gato.Raza }}</ion-card-title>
-                <ion-card-subtitle>{{ gato.Origen }}</ion-card-subtitle>
-              </ion-card-content>
-              <ion-button fill="clear" class="ver-mas-button" (click)="navigateToTargetPage('perfil-gato', gato.id)">Ver más</ion-button>
-            </ion-card>
-          </ion-col>
-        </ng-container>
-      </ion-row>
-    </swiper-slide>
-  </swiper-container> -->
 </ion-content>
