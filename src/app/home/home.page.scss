@@ -84,35 +84,12 @@
     border-radius: 0.75rem;
 }
 
-.redirect{
+.redirect {
     --padding-bottom: 0.75rem;
     --padding-end: 2.5rem;
     --padding-start: 2.5rem;
     --padding-top: 0.75rem;
 }
-/* .card-container {
-    width: 100%;
-} */
-
-
-  /* .card-container::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(255, 255, 255, 0.5);
-  } */
-
-/* .swiper-slide {
-    width: 100%;
-} */
-
-/* .swiper-container {
-    width: 100%;
-} */
-
 
 h6 {
     font-size: 1.2em;
@@ -128,7 +105,7 @@ ion-searchbar.custom {
     --color: #2563eb;
     --placeholder-color: #2563eb;
     --icon-color: #2563eb;
-  
+
     --border-radius: 0.5rem;
     /* --box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1); */
 
@@ -145,4 +122,34 @@ ion-segment-button.ios {
     --border-radius: 20px;
 }
 
-  
+.heart-icon {
+    width: 3rem;
+    height: 3rem;
+}
+
+.heart-button {
+    position: relative;
+    animation: pulse 1s infinite alternate;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+
+    100% {
+        transform: scale(1.1);
+    }
+}
+
+@keyframes explode {
+    0% {
+        opacity: 1;
+        transform: translateY(0) rotate(0);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateY(-100px) rotate(720deg);
+    }
+}

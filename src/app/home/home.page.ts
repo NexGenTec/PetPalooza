@@ -1,11 +1,10 @@
 
 import { Component, OnInit } from '@angular/core';
-import { ModalController, ToastController } from '@ionic/angular';
 import { Router } from '@angular/router';
-import { Storage } from '@ionic/storage';
 import { FirestoreService } from '../service/firestore.service';
 import { InfoGato } from '../interface/InfoGato.models';
 import { InfoPerro } from '../interface/InfoPerro.models';
+import { QuirkyFacts } from '../interface/QuirkyFacts.models';
 
 
 @Component({
@@ -17,37 +16,28 @@ export class homePage implements OnInit {
 
   gatos: InfoGato[] = [];
   perros: InfoPerro[] = [];
-  // infoGato: any = (infoGato as any).default;
-  // infoPerro: any = (infoPerro as any).default;
-  // infoPerroChunks: any[][] = [];
-  // infoGatoChunks: any[][] = [];
-  // combinedAnimals: any[] = [];
-  // mascotas: any[] = [];
-  // showImage: boolean;
+
+  DatosFreak: QuirkyFacts[] = [];
+  currentDatoIndex: number = 0;
+
+  currentView: string = 'Últimos';
+
 
 
   constructor(
     private router: Router,
-    private modalController: ModalController,
     private firestores: FirestoreService,
-    private storage: Storage,
-    private toastController: ToastController
   ) {
     this.loadData();
-    // for (let i = 0; i < this.infoPerro.length; i += 1) {
-    //   this.infoPerroChunks.push(this.infoPerro.slice(i, i + 1));
-    // }
-    // for (let i = 0; i < this.infoGato.length; i += 1) {
-    //   this.infoGatoChunks.push(this.infoGato.slice(i, i + 1));
-    // }
-    // this.showImage = false;
   }
 
-  ngOnInit() {
-
-
-
+  ngOnInit(): void {
+    this.getQuirkyFacts();
+    setInterval(() => {
+      this.showRandomQuirkyFact();
+    }, 10000);
   }
+
   loadData() {
     this.firestores.getCollectionChanges<InfoGato>('InfoGato').subscribe(gato => {
       if (gato) {
@@ -61,93 +51,48 @@ export class homePage implements OnInit {
     })
   }
 
+  toggleView(view: string) {
+    this.currentView = view;
+  }
 
-  // chunkArray(array: any[], size: number): any[][] {
-  //   return array.reduce((chunks, item, index) => {
-  //     if (index % size === 0) {
-  //       chunks.push([item]);
-  //     } else {
-  //       chunks[chunks.length - 1].push(item);
-  //     }
-  //     return chunks;
-  //   }, []);
-  // }
+  getQuirkyFacts() {
+    this.firestores.getCollectionChanges<QuirkyFacts>('QuirkyFacts').subscribe(dato => {
+      if (dato) {
+        this.DatosFreak = dato;
+        this.showRandomQuirkyFact();
+      }
+    });
+  }
+
+  showRandomQuirkyFact() {
+    const randomIndex = Math.floor(Math.random() * this.DatosFreak.length);
+    // console.log("Dato Freak actual:", this.DatosFreak[randomIndex]?.id);
+    this.currentDatoIndex = randomIndex;
+  }
+
+  navigateToCat() {
+    this.router.navigate(['/tabs/gato']);
+  }
 
 
-  // navigateToTargetPage(segment: string, gatoId: number) {
-  //   this.router.navigate([segment, gatoId]);
-  // }
-  // navigateToTargetPage2(segment: string, perroId: number) {
-  //   this.router.navigate([segment, perroId]);
-  // }
-
-  // async openModal(imageUrl: string) {
-  //   const modal = await this.modalController.create({
-  //     component: ImgModalPage,
-  //     componentProps: {
-  //       imageUrl: imageUrl
-  //     }
-  //   });
-  //   return await modal.present();
-  // }
-
-  // swiperOptions = {
-  //   slidesPerView: 3,
-  //   spaceBetween: 10,
-  //   navigation: true
-  // };
-
-  // async openSearchModal() {
-  //   const modal = await this.modalController.create({
-  //     component: SearchModalPage,
-  //     componentProps: {
-  //       razas: this.infoGato,
-  //       tipo: 'gato'
-  //     }
-  //   });
-  //   return await modal.present();
-  // }
-
-  // async presentWelcomeModal() {
-  //   const modal = await this.modalController.create({
-  //     component: WelcomeModalPage,
-  //     backdropDismiss: false
-  //   });
-  //   return await modal.present();
-  // }
-
-  // // Función para guardar los favoritos
-  // async guardarGatoFavorito(gato: any) {
-  //   let gatosFavoritos = await this.storage.get('gatosFavoritos');
-  //   if (!gatosFavoritos) {
-  //     gatosFavoritos = [];
-  //   }
-  //   gatosFavoritos.push(gato);
-  //   await this.storage.set('gatosFavoritos', gatosFavoritos);
-  //   this.presentToast('Se ha agregado a favoritos');
-  // }
-
-  // async guardarPerroFavorito(perro: any) {
-  //   let perrosFavoritos = await this.storage.get('perrosFavoritos');
-  //   if (!perrosFavoritos) {
-  //     perrosFavoritos = [];
-  //   }
-  //   perrosFavoritos.push(perro);
-  //   await this.storage.set('perrosFavoritos', perrosFavoritos);
-  //   this.presentToast('Se ha agregado a favoritos');
-  // }
-
-  // async presentToast(message: string) {
-  //   const toast = await this.toastController.create({
-  //     message: message,
-  //     duration: 2000, // Duración del toast en milisegundos
-  //     position: 'bottom' // Posición del toast (arriba, abajo, centro)
-  //   });
-  //   toast.present();
-  // }
+  navigateToDog() {
+    this.router.navigate(['/tabs/perro']);
+  }
 
   navigateToFavorites() {
     this.router.navigate(['/favoritos']);
   }
 
+
+  animateHearts() {
+    const hearts = document.querySelectorAll('.heart-icon');
+    hearts.forEach((heart, index) => {
+      setTimeout(() => {
+        heart.classList.add('exploding-heart');
+        setTimeout(() => {
+          heart.classList.remove('exploding-heart');
+        }, 1000);
+      }, index * 1000);
+    });
+  }
 }

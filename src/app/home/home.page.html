@@ -12,17 +12,44 @@
 <ion-content [fullscreen]="true">
 
   <div class="py-5 px-3 bg-gray-50 grid grid-cols-1 gap-y-8">
-    <div
-      id="interesting-data"
-      class="bg-gradient-to-r from-blue-400 to-indigo-400 rounded-lg overflow-hidden shadow-xl max-w-sm">
+
+     <!-- Dato Freak -->
+     <ion-accordion-group [value]="['first']" mode="ios" class="mb-6 mt-2 border border-stone shadow-lg rounded-lg overflow-hidden">
+      <ion-accordion value="first">
+        <ion-item slot="header">
+          <div class="flex items-center gap-4 py-3">
+            <span class="shrink-0 rounded-full bg-blue-400 p-2 text-white">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+                class="h-4 w-4"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M18 3a1 1 0 00-1.447-.894L8.763 6H5a3 3 0 000 6h.28l1.771 5.316A1 1 0 008 18h1a1 1 0 001-1v-4.382l6.553 3.276A1 1 0 0018 15V3z"
+                  clip-rule="evenodd"
+                ></path>
+              </svg>
+            </span>
+            <p class="font-medium sm:text-lg text-blue-600">Dato Freak!</p>
+          </div>
+        </ion-item>
+        <div class="px-3 py-2 bg-white" slot="content">
+          <p class="text-gray-600">
+            {{DatosFreak[currentDatoIndex]?.description}}
+          </p>
+        </div>
+      </ion-accordion>
+    </ion-accordion-group>
+    <!-- <div id="interesting-data" class="bg-gradient-to-r from-blue-400 to-indigo-400 rounded-lg overflow-hidden shadow-xl max-w-sm">
       <div class="p-4 text-white">
         <h2 class="text-lg font-semibold mb-2 tracking-wide">Dato Freak</h2>
         <p class="text-sm mb-4">
-          ¿Sabias que el Ronroneo gatos calma humanos? Reduce estrés, baja presión arterial y promueve relajación. Investigaciones confirman efecto terapéutico del ronroneo felino
+          {{DatosFreak[currentDatoIndex]?.description}}
         </p>
       </div>
-    </div>
-
+    </div> -->
     <div id="registered-animals">
       <div class="w-full max-w-[570px] rounded-[20px] px-3 pt-4 text-start">
         <h1 class="pb-2 text-2xl font-medium">Animales Registrados</h1>
@@ -30,9 +57,8 @@
       </div>
   
       <div class="grid grid-cols-2 w-full gap-2">
-        <div
-          class="group w-full text-white rounded-lg bg-[#673ab7] p-5 transition relative duration-300 cursor-pointer hover:translate-y-[3px] hover:shadow-[0_-8px_0px_0px_#2196f3]"
-        >
+        <div (click)="navigateToCat()"
+          class="group w-full text-white rounded-lg bg-[#673ab7] p-5 transition relative duration-300 cursor-pointer hover:translate-y-[3px] hover:shadow-[0_-8px_0px_0px_#2196f3]" >
           <p class="text-2xl">+200</p>
           <p class="text-sm">Gatos</p>
           <svg 
@@ -41,12 +67,12 @@
             height="36"
             width="36" 
             fill="currentColor"
-            class="group-hover:opacity-100 absolute right-[10%] top-[50%] translate-y-[-50%] opacity-20 transition group-hover:scale-110 duration-300"
-          >
+            class="group-hover:opacity-100 absolute right-[10%] top-[50%] translate-y-[-50%] opacity-20 transition group-hover:scale-110 duration-300">
             <path d="M320 192h17.1c22.1 38.3 63.5 64 110.9 64c11 0 21.8-1.4 32-4v4 32V480c0 17.7-14.3 32-32 32s-32-14.3-32-32V339.2L280 448h56c17.7 0 32 14.3 32 32s-14.3 32-32 32H192c-53 0-96-43-96-96V192.5c0-16.1-12-29.8-28-31.8l-7.9-1c-17.5-2.2-30-18.2-27.8-35.7s18.2-30 35.7-27.8l7.9 1c48 6 84.1 46.8 84.1 95.3v85.3c34.4-51.7 93.2-85.8 160-85.8zm160 26.5v0c-10 3.5-20.8 5.5-32 5.5c-28.4 0-54-12.4-71.6-32h0c-3.7-4.1-7-8.5-9.9-13.2C357.3 164 352 146.6 352 128v0V32 12 10.7C352 4.8 356.7 .1 362.6 0h.2c3.3 0 6.4 1.6 8.4 4.2l0 .1L384 21.3l27.2 36.3L416 64h64l4.8-6.4L512 21.3 524.8 4.3l0-.1c2-2.6 5.1-4.2 8.4-4.2h.2C539.3 .1 544 4.8 544 10.7V12 32v96c0 17.3-4.6 33.6-12.6 47.6c-11.3 19.8-29.6 35.2-51.4 42.9zM432 128a16 16 0 1 0 -32 0 16 16 0 1 0 32 0zm48 16a16 16 0 1 0 0-32 16 16 0 1 0 0 32z"/>
           </svg>
         </div>
         <div
+          (click)="navigateToDog()"
           class="group w-full text-white rounded-lg bg-[rgb(41,49,79)] p-5 transition relative duration-300 cursor-pointer hover:translate-y-[3px] hover:shadow-[0_-8px_0px_0px_rgb(244,67,54)]">
           <p class="text-2xl">+100</p>
           <p class="text-sm">Perros</p>
@@ -61,33 +87,56 @@
           </svg>
         </div>
       </div>
-
     </div>
 
     <div id="animal-filter">
-      <ion-segment value="lastAnimals" mode="ios">
-        <ion-segment-button value="lastAnimals">
+      <ion-segment  mode="ios" [(ngModel)]="currentView">
+        <ion-segment-button value="Últimos">
           <ion-label>Últimos</ion-label>
         </ion-segment-button>
-        <ion-segment-button value="popularAnimals">
+        <ion-segment-button value="Favoritos">
           <ion-label>Favoritos</ion-label>
         </ion-segment-button>
       </ion-segment>
       
-      <div class="w-full max-w-md px-4 bg-white border border-gray-200 rounded-lg shadow mt-3">
+      <div class="w-full max-w-md px-4 bg-white border border-gray-200 rounded-lg shadow mt-3" *ngIf="currentView === 'Últimos'">
         <div class="flow-root">
           <ul role="list" class="divide-y divide-gray-200">
-            <li class="py-3">
-              <div class="flex items-center">
+            <li class="py-3" *ngFor="let gato of gatos">
+              <div class="flex items-center" >
                 <div class="flex-shrink-0">
-                  <img class="w-16 h-16 rounded-full object-cover" >
+                  <img class="w-16 h-16 rounded-full object-cover" [src]="gato.imgPerfil" >
                 </div>
                 <div class="flex-1 min-w-0 ms-4">
                   <p class="text-sm font-medium text-gray-900 truncate">
-                    Origen
+                    {{gato.origen}}
                   </p>
                   <p class="text-sm text-gray-500 truncate">
-                    Raza
+                    {{gato.Raza}}
+                  </p>
+                </div>
+                <a class="text-sm font-medium text-blue-400 hover:underline" >
+                  Ver Perfil
+                </a>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="w-full max-w-md px-4 bg-white border border-gray-200 rounded-lg shadow mt-3" *ngIf="currentView === 'Favoritos'">
+        <div class="flow-root">
+          <ul role="list" class="divide-y divide-gray-200">
+            <li class="py-3" *ngFor="let perro of perros">
+              <div class="flex items-center" >
+                <div class="flex-shrink-0">
+                  <img class="w-16 h-16 rounded-full object-cover" [src]="perro.imgPerfil" >
+                </div>
+                <div class="flex-1 min-w-0 ms-4">
+                  <p class="text-sm font-medium text-gray-900 truncate">
+                    {{perro.Origen}}
+                  </p>
+                  <p class="text-sm text-gray-500 truncate">
+                    {{perro.Raza}}
                   </p>
                 </div>
                 <a class="text-sm font-medium text-blue-400 hover:underline" >
@@ -116,8 +165,8 @@
                   <div class="w-full h-52 rounded-2xl overflow-hidden relative">
                     <ion-img class="w-full h-full object-cover" alt="Imagen de Raza" [src]="gato.imgPerfil"></ion-img>
                     <div class="absolute top-3 right-3 w-10 h-10 rounded-full bg-white flex justify-center items-center text-red-400">
-                      <button type="button">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-7 h-7">
+                      <button type="button" class="heart-button" (click)="animateHearts()">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="heart-icon" viewBox="0 0 24 24" fill="currentColor" class="w-7 h-7">
                           <path d="m11.645 20.91-.007-.003-.022-.012a15.247 15.247 0 0 1-.383-.218 25.18 25.18 0 0 1-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0 1 12 5.052 5.5 5.5 0 0 1 16.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 0 1-4.244 3.17 15.247 15.247 0 0 1-.383.219l-.022.012-.007.004-.003.001a.752.752 0 0 1-.704 0l-.003-.001Z" />
                         </svg>
                       </button>
@@ -125,7 +174,7 @@
                   </div>
                   <div class="mt-3">
                     <p class="text-black font-extrabold"> {{gato.Raza}} </p>
-                    <p class="text-gray-400">{{gato.Origen}}</p>
+                    <p class="text-gray-400">{{gato.origen}}</p>
                   </div>
                 </div>
                 <ion-button fill="clear" class="text-white px-1 rounded-xl bg-blue-400 hover:bg-blue-500 transition-colors" >Ver más</ion-button>
@@ -151,8 +200,8 @@
                     <div class="w-full h-52 rounded-2xl overflow-hidden relative">
                       <ion-img class="w-full h-full object-cover" [src]="perro.imgPerfil" alt="Imagen de Raza"></ion-img>
                       <div class="absolute top-3 right-3 w-10 h-10 rounded-full bg-white flex justify-center items-center text-red-400">
-                        <button type="button">
-                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-7 h-7">
+                        <button type="button" class="heart-button" (click)="animateHearts()">
+                          <svg xmlns="http://www.w3.org/2000/svg" class="heart-icon" viewBox="0 0 24 24" fill="currentColor" class="w-7 h-7">
                             <path d="m11.645 20.91-.007-.003-.022-.012a15.247 15.247 0 0 1-.383-.218 25.18 25.18 0 0 1-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0 1 12 5.052 5.5 5.5 0 0 1 16.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 0 1-4.244 3.17 15.247 15.247 0 0 1-.383.219l-.022.012-.007.004-.003.001a.752.752 0 0 1-.704 0l-.003-.001Z" />
                           </svg>
                         </button>
@@ -175,7 +224,7 @@
         <div class="w-full h-96 bg-white rounded-3xl p-4 flex flex-col items-start justify-between gap-3 border border-gray-200">
           <div class="w-full h-full bg-white rounded-2xl flex justify-center items-center">
               <div class="bg-blue-300 hover:bg-blue-400 rounded-xl">
-                <ion-tab-button class="text-white text-base redirect">
+                <ion-tab-button class="text-white text-base redirect" (click)="navigateToFavorites()">
                   <ion-label>Favoritos</ion-label>
                 </ion-tab-button>
               </div>

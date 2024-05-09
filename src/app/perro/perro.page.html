@@ -5,7 +5,7 @@
       alt="logo PetPalooza" 
       src="assets/img/logo/PetPalooza.png" 
     />
-    <ion-searchbar class="custom my-3" placeholder="Buscar" (ionFocus)="openSearchModal()" mode="md"></ion-searchbar>
+    <ion-searchbar class="custom my-3" placeholder="Buscar" mode="md"></ion-searchbar>
   </div>
 </ion-header>
 
@@ -36,7 +36,7 @@
         </ion-item>
         <div class="px-3 py-2 bg-white" slot="content">
           <p class="text-gray-600">
-            ¿Sabias que el Ronroneo gatos calma humanos? Reduce estrés, baja presión arterial y promueve relajación. Investigaciones confirman efecto terapéutico del ronroneo felino
+            {{DatosFreak[currentDatoIndex]?.description}}
           </p>
         </div>
       </ion-accordion>
@@ -52,15 +52,14 @@
     </div>
 
     <div class="grid grid-cols-2 gap-3 py-3 w-full">
-      <div *ngFor="let group of infoPerroChunks" class="h-max rounded-xl overflow-hidden border border-blue-300 shadow-lg">
-        <ion-card *ngFor="let perro of group" class="m-0 h-44 relative group" mode="md">
+      <div class="h-max rounded-xl overflow-hidden border border-blue-300 shadow-lg">
+        <ion-card class="m-0 h-44 relative group" mode="md" *ngFor="let perro of perros">
           <img 
             class="h-full w-full object-cover object-center absolute top-0 left-0 transition-all duration-300 group-hover:scale-110" 
             alt="Imagen de {{ perro.Raza }}" 
             [src]="perro.imgPerfil" 
-            (click)="openModal(perro.imgPerfil)"
           />
-          <ion-card-header class="p-2 h-full w-full justify-end bg-gradient-to-b from-transparent from-40% via-black/50 to-black/80"  (click)="navigateToTargetPage('perfil-perro', perro.id)">
+          <ion-card-header class="p-2 h-full w-full justify-end bg-gradient-to-b from-transparent from-40% via-black/50 to-black/80">
             <ion-card-title class="text-white">{{ perro.Raza }}</ion-card-title>
             <ion-card-subtitle class="text-gray-200">{{ perro.Origen }}</ion-card-subtitle>
           </ion-card-header>
