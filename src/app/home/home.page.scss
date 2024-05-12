@@ -127,29 +127,34 @@ ion-segment-button.ios {
     height: 3rem;
 }
 
-.heart-button {
-    position: relative;
-    animation: pulse 1s infinite alternate;
+/* Estilo para la sombra */
+ion-card.shadow {
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    /* ajusta según tu preferencia */
 }
 
-@keyframes pulse {
-    0% {
-        transform: scale(1);
-    }
-
-    100% {
-        transform: scale(1.1);
-    }
+/* Estilo para el degradado */
+ion-card.bg-gradient-to-r {
+    background: linear-gradient(to right, #60a5fa, #60a5fa);
+    /* ajusta los colores según sea necesario */
 }
 
-@keyframes explode {
-    0% {
-        opacity: 1;
-        transform: translateY(0) rotate(0);
-    }
+/* Estilo para el texto dentro del card */
+ion-card-content {
+    padding: 1.25rem;
+    /* ajusta según sea necesario */
+}
 
-    100% {
-        opacity: 0;
-        transform: translateY(-100px) rotate(720deg);
-    }
+/* Estilos para el esqueleto */
+.skeleton-text {
+    width: 100%;
+}
+
+.skeleton-line {
+    width: 80%;
+    /* Ajusta el ancho de las líneas según sea necesario */
+    height: 12px;
+    /* Ajusta la altura de las líneas según sea necesario */
+    margin-bottom: 12px;
+    /* Espacio entre líneas */
 }

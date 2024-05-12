@@ -2,6 +2,9 @@ import { Component } from '@angular/core';
 import { InfoPerro } from '../interface/InfoPerro.models';
 import { QuirkyFacts } from '../interface/QuirkyFacts.models';
 import { FirestoreService } from '../service/firestore.service';
+import { ModalController } from '@ionic/angular';
+import { Router } from '@angular/router';
+import { ImgModalPage } from '../img-modal/img-modal.page';
 
 @Component({
   selector: 'app-perro',
@@ -12,10 +15,14 @@ export class perroPage {
   perros: InfoPerro[] = [];
   DatosFreak: QuirkyFacts[] = [];
   currentDatoIndex: number = 0;
+  infoPerroChunks: InfoPerro[][] = [];
 
 
-  constructor(private firestores: FirestoreService) {
-    this.loadData()
+
+  constructor(
+    private firestores: FirestoreService,
+    private router: Router, private modalController: ModalController) {
+    this.loadData();
   }
 
 
@@ -24,6 +31,7 @@ export class perroPage {
     setInterval(() => {
       this.showRandomQuirkyFact();
     }, 10000);
+    this.loadData();
   }
 
   loadData() {
@@ -42,6 +50,23 @@ export class perroPage {
       }
     });
   }
+
+  async openModal(imageUrl: string) {
+    const modal = await this.modalController.create({
+      component: ImgModalPage,
+      componentProps: {
+        imageUrl: imageUrl
+      }
+    });
+    return await modal.present();
+  }
+
+  swiperOptions = {
+    slidesPerView: 3,
+    spaceBetween: 10,
+    navigation: true
+  };
+
 
   showRandomQuirkyFact() {
     const randomIndex = Math.floor(Math.random() * this.DatosFreak.length);

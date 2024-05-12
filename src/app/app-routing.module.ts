@@ -21,13 +21,14 @@ const routes: Routes = [
   {
     path: 'perfil-perro/:id',
     loadChildren: () => import('./perfil-perro/perfil-perro.module').then(m => m.PerfilPerroPageModule)
-  },  {
+  },
+  {
     path: 'welcome-modal',
-    loadChildren: () => import('./welcome-modal/welcome-modal.module').then( m => m.WelcomeModalPageModule)
+    loadChildren: () => import('./welcome-modal/welcome-modal.module').then(m => m.WelcomeModalPageModule)
   },
   {
     path: 'favoritos',
-    loadChildren: () => import('./favoritos/favoritos.module').then( m => m.FavoritosPageModule)
+    loadChildren: () => import('./favoritos/favoritos.module').then(m => m.FavoritosPageModule)
   },
 
 ];

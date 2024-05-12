@@ -15,7 +15,7 @@ export class gatoPage implements OnInit {
 
 
   constructor(private firestores: FirestoreService) {
-    this.loadData()
+    this.loadData();
   }
 
 
@@ -24,6 +24,7 @@ export class gatoPage implements OnInit {
     setInterval(() => {
       this.showRandomQuirkyFact();
     }, 10000);
+    this.loadData();
   }
 
   loadData() {

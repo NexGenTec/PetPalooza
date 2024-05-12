@@ -45,15 +45,15 @@
     <!-- Divider -->
     <hr class="my-5 border-blue-500/30">
 
-    <!-- Gatos -->
+    <!-- Perros -->
     <div class="w-full max-w-[570px] rounded-[20px] px-8 pt-4 text-center">
       <h1 class="pb-2 text-3xl font-medium">Todos los Perros</h1>
       <span class="bg-blue-400 mx-auto mb-4 inline-block h-1 w-[90px] rounded"></span>
     </div>
 
     <div class="grid grid-cols-2 gap-3 py-3 w-full">
-      <div class="h-max rounded-xl overflow-hidden border border-blue-300 shadow-lg">
-        <ion-card class="m-0 h-44 relative group" mode="md" *ngFor="let perro of perros">
+      <div class="h-max rounded-xl overflow-hidden border border-blue-300 shadow-lg" *ngFor="let perro of perros">
+        <ion-card class="m-0 h-44 relative group" mode="md">
           <img 
             class="h-full w-full object-cover object-center absolute top-0 left-0 transition-all duration-300 group-hover:scale-110" 
             alt="Imagen de {{ perro.Raza }}" 
@@ -68,49 +68,4 @@
     </div>
 
   </div>
-
-  <!-- <div class="button-container">
-    Perros
-  </div>
-  <ion-searchbar class="search-bar" placeholder="Buscar" (ionFocus)="openSearchModal()"></ion-searchbar>
-  <swiper-container>
-    <swiper-slide *ngFor="let perro of infoPerro">
-      <ion-card class="large-card">
-        <ion-row>
-          <ion-col size="5">
-            <div class="image-container">
-              <ion-img (click)="openModal(perro.imgPerfil)" [src]="perro.imgPerfil" alt="Imagen de {{ perro.Raza }}"></ion-img>
-            </div>
-          </ion-col>
-          <ion-col size="7">
-            <ion-card-header class="text-container">
-              <ion-card-title>{{ perro.Raza }}</ion-card-title>
-              <ion-card-subtitle>{{ perro.Origen }}</ion-card-subtitle>
-            </ion-card-header>
-            <ion-card-content>
-              <p>Año: {{ perro['Año'] }}</p>
-            </ion-card-content>
-          </ion-col>
-        </ion-row>
-      </ion-card>
-    </swiper-slide>
-  </swiper-container>
-  <swiper-container class="card-container">
-    <swiper-slide *ngFor="let group of infoPerroChunks">
-      <ion-row>
-        <ng-container *ngFor="let perro of group">
-          <ion-col size-md="4" size-sm="6" size-xs="12">
-            <ion-card class="small-card">
-              <ion-img class="small-image" (click)="openModal(perro.imgPerfil)" [src]="perro.imgPerfil" alt="Imagen de {{ perro.Raza }}"></ion-img>
-              <ion-card-content>
-                <ion-card-title>{{ perro.Raza }}</ion-card-title>
-                <ion-card-subtitle>{{ perro.Origen }}</ion-card-subtitle>
-              </ion-card-content>
-              <ion-button fill="clear" class="ver-mas-button" (click)="navigateToTargetPage('perfil-perro', perro.id)">Ver más</ion-button>
-            </ion-card>
-          </ion-col>
-        </ng-container>
-      </ion-row>
-    </swiper-slide>
-  </swiper-container> -->
 </ion-content>

@@ -46,7 +46,7 @@ export class AppComponent {
           handler: () => { App.exitApp(); }
         }
       ],
-      mode: 'ios' // Establecer el modo iOS para el alert
+      mode: 'ios'
     });
     await alert.present();
   }

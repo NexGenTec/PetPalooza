@@ -52,8 +52,8 @@
     </div>
 
     <div class="grid grid-cols-2 gap-3 py-3 w-full">
-      <div class="h-max rounded-xl overflow-hidden border border-blue-300 shadow-lg">
-        <ion-card class="m-0 h-44 relative group" mode="md" *ngFor="let gato of gatos">
+      <div class="h-max rounded-xl overflow-hidden border border-blue-300 shadow-lg" *ngFor="let gato of gatos">
+        <ion-card class="m-0 h-44 relative group" mode="md">
           <img 
             class="h-full w-full object-cover object-center absolute top-0 left-0 transition-all duration-300 group-hover:scale-110" 
             alt="Imagen de {{ gato.Raza }}" 

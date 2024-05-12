@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "587700782700",
+    "firebase_url": "https://petpalooza-63384-default-rtdb.firebaseio.com",
+    "project_id": "petpalooza-63384",
+    "storage_bucket": "petpalooza-63384.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:587700782700:android:198ff3a79ab6a2f1b13a49",
+        "android_client_info": {
+          "package_name": "com.nexgentech.petpaloozaa"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAChLeTyI9Bx2Fm39iADbZ-u2mAO9IQQoE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
