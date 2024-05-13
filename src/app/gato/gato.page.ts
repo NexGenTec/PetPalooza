@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { InfoGato } from '../interface/InfoGato.models';
 import { QuirkyFacts } from '../interface/QuirkyFacts.models';
 import { FirestoreService } from '../service/firestore.service';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-gato',
   templateUrl: 'gato.page.html',
@@ -14,7 +15,9 @@ export class gatoPage implements OnInit {
   currentDatoIndex: number = 0;
 
 
-  constructor(private firestores: FirestoreService) {
+  constructor(private firestores: FirestoreService,
+    private router: Router,
+  ) {
     this.loadData();
   }
 
@@ -45,8 +48,21 @@ export class gatoPage implements OnInit {
   }
 
   showRandomQuirkyFact() {
-    const randomIndex = Math.floor(Math.random() * this.DatosFreak.length);
-    this.currentDatoIndex = randomIndex;
+    const gatoIndices = this.DatosFreak.map((fact, index) => {
+      return fact.categoria === 'gato' ? index : null;
+    }).filter(index => index !== null);
+
+    if (gatoIndices.length > 0) {
+      const randomIndex = gatoIndices[Math.floor(Math.random() * gatoIndices.length)];
+      this.currentDatoIndex = randomIndex;
+    } else {
+      console.log("No hay datos disponibles con la categoría Gato");
+    }
   }
+
+  navigateToTargetPage(segment: string, gato: InfoGato) {
+    this.router.navigate([segment, gato.id], { state: { data: gato } });
+  }
+
 
 }

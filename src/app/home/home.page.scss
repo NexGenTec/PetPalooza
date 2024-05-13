@@ -127,34 +127,20 @@ ion-segment-button.ios {
     height: 3rem;
 }
 
-/* Estilo para la sombra */
-ion-card.shadow {
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-    /* ajusta según tu preferencia */
+.ion-content-scroll-host::before,
+.ion-content-scroll-host::after {
+    position: absolute;
+
+    width: 1px;
+    height: 1px;
+
+    content: "";
 }
 
-/* Estilo para el degradado */
-ion-card.bg-gradient-to-r {
-    background: linear-gradient(to right, #60a5fa, #60a5fa);
-    /* ajusta los colores según sea necesario */
+.ion-content-scroll-host::before {
+    bottom: -1px;
 }
 
-/* Estilo para el texto dentro del card */
-ion-card-content {
-    padding: 1.25rem;
-    /* ajusta según sea necesario */
-}
-
-/* Estilos para el esqueleto */
-.skeleton-text {
-    width: 100%;
-}
-
-.skeleton-line {
-    width: 80%;
-    /* Ajusta el ancho de las líneas según sea necesario */
-    height: 12px;
-    /* Ajusta la altura de las líneas según sea necesario */
-    margin-bottom: 12px;
-    /* Espacio entre líneas */
+.ion-content-scroll-host::after {
+    top: -1px;
 }

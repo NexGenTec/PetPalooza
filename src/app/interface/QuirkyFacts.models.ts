@@ -1,4 +1,6 @@
 export interface QuirkyFacts {
     id: number;
-    description: string;
+    categoria: string
+    Titulo: string;
+    descripcion: string;
 }

@@ -16,4 +16,12 @@ export class FavoritosPage implements OnInit {
       this.favoriteAnimals = JSON.parse(favoritesString);
     }
   }
+
+  removeFromFavorites(animal: InfoPerro) {
+    const index = this.favoriteAnimals.findIndex(a => a === animal);
+    if (index !== -1) {
+      this.favoriteAnimals.splice(index, 1);
+      localStorage.setItem('favorites', JSON.stringify(this.favoriteAnimals));
+    }
+  }
 }

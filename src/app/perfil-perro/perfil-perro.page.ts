@@ -38,9 +38,9 @@ export class PerfilPerroPage implements OnInit {
     const perro = history.state.data;
     console.log(perro)
     this.infoName = perro.Raza;
-    this.infoOrigin = perro.Origen;
+    this.infoOrigin = perro.origen;
     this.infoImage = perro.imgPerfil;
-    this.infoHistory = perro['Origen e Historia'];
+    this.infoHistory = perro.historia;
     this.changeCardContent(this.selectedSegmentValue);
     this.perro = [perro];
   }
@@ -69,7 +69,7 @@ export class PerfilPerroPage implements OnInit {
       case 'caracteristicas':
         this.cardHeading = 'Características Físicas';
         this.cardSubtitle = perro.Raza;
-        this.cardContent = Object.keys(perro['Características Físicas']).map(key => `${key}: ${perro['Características Físicas'][key]}`).join('<br>');
+        this.cardContent = Object.keys(perro.CaractFisicas).map(key => `${key}: ${perro.CaractFisicas[key]}`).join('<br>');
         this.temperamentoChips = [];
         this.showImagesContainer = false;
         break;
@@ -83,7 +83,7 @@ export class PerfilPerroPage implements OnInit {
       case 'cuidado':
         this.cardHeading = 'Cuidado y Salud';
         this.cardSubtitle = perro.Raza;
-        this.cardContent = Object.keys(perro['Cuidados y Salud']).map(key => `${key}: ${perro['Cuidados y Salud'][key]}`).join('<br>');
+        this.cardContent = Object.keys(perro.cuidados).map(key => `${key}: ${perro.cuidados[key]}`).join('<br>');
         this.temperamentoChips = [];
         this.showImagesContainer = false;
         break;

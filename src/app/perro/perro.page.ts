@@ -69,7 +69,20 @@ export class perroPage {
 
 
   showRandomQuirkyFact() {
-    const randomIndex = Math.floor(Math.random() * this.DatosFreak.length);
-    this.currentDatoIndex = randomIndex;
+    const perroIndices = this.DatosFreak.map((fact, index) => {
+      return fact.categoria === 'perro' ? index : null;
+    }).filter(index => index !== null);
+
+    if (perroIndices.length > 0) {
+      const randomIndex = perroIndices[Math.floor(Math.random() * perroIndices.length)];
+      this.currentDatoIndex = randomIndex;
+    } else {
+      console.log("No hay datos disponibles con la categoría Gato");
+    }
   }
+
+  navigateToTargetPage(segment: string, perro: InfoPerro) {
+    this.router.navigate([segment, perro.id], { state: { data: perro } });
+  }
+
 }

@@ -14,7 +14,7 @@
   <div class="px-3 pt-5 bg-gray-50">
     <!-- Dato Freak -->
     <ion-accordion-group [value]="['first']" mode="ios" class="mb-6 mt-2 border border-stone shadow-lg rounded-lg overflow-hidden">
-      <ion-accordion value="first">
+      <ion-accordion value="first" *ngIf="DatosFreak[currentDatoIndex]?.categoria === 'gato'">
         <ion-item slot="header">
           <div class="flex items-center gap-4 py-3">
             <span class="shrink-0 rounded-full bg-blue-400 p-2 text-white">
@@ -31,12 +31,12 @@
                 ></path>
               </svg>
             </span>
-            <p class="font-medium sm:text-lg text-blue-600">Dato Freak!</p>
+            <p class="font-medium sm:text-lg text-blue-600">{{DatosFreak[currentDatoIndex]?.Titulo}}</p>
           </div>
         </ion-item>
         <div class="px-3 py-2 bg-white" slot="content">
           <p class="text-gray-600">
-            {{DatosFreak[currentDatoIndex]?.description}}
+            {{DatosFreak[currentDatoIndex]?.descripcion}}
           </p>
         </div>
       </ion-accordion>
@@ -53,7 +53,7 @@
 
     <div class="grid grid-cols-2 gap-3 py-3 w-full">
       <div class="h-max rounded-xl overflow-hidden border border-blue-300 shadow-lg" *ngFor="let gato of gatos">
-        <ion-card class="m-0 h-44 relative group" mode="md">
+        <ion-card class="m-0 h-44 relative group" mode="md"  (click)="navigateToTargetPage('perfil-gato', gato)">
           <img 
             class="h-full w-full object-cover object-center absolute top-0 left-0 transition-all duration-300 group-hover:scale-110" 
             alt="Imagen de {{ gato.Raza }}" 

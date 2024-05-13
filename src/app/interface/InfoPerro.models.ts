@@ -1,38 +1,42 @@
 export interface InfoPerro {
-    Origen: string;
-    Raza: string;
-    Img: { [key: string]: string };
-    Category: string;
+    origen: string;
+    fechaCreacion: FechaCreacion;
     Longevidad: string;
-    "Características Físicas": CaracterísticasFísicas;
-    imgPerfil: string;
-    "Origen e Historia": string;
-    id: number;
-    "Cuidados y Salud": CuidadosYSalud;
     Temperamento: Temperamento[];
     Año: string;
-    "Información Final": string;
+    historia: string;
+    CaractFisicas: CaractFisicas;
+    Img: { [key: string]: string };
+    id: number;
+    Raza: string;
+    imgPerfil: string;
+    cuidados: Cuidados;
 }
 
-export interface CaracterísticasFísicas {
+export interface CaractFisicas {
+    Peso: string;
+    Cuerpo: string;
     Tamaño: string;
     Pelaje: string;
-    Cara: string;
-    Peso: string;
     Ojos: string;
+    Cara: string;
     Orejas: string;
-    Cuerpo: string;
-}
-
-export interface CuidadosYSalud {
-    "Visitas al veterinario\"": string;
-    "Problemas de Salud": string;
-    "Cuidado del Pelo": string;
-    Ejercicio: string;
 }
 
 export interface Temperamento {
     descripcion: string;
-    aplicable: boolean;
     tipo: string;
+    aplicable: boolean;
+}
+
+export interface Cuidados {
+    "Visitas al veterinario": string;
+    "Problemas de Salud": string;
+    Cepillado: string;
+    Ejercicio: string;
+}
+
+export interface FechaCreacion {
+    seconds: number;
+    nanoseconds: number;
 }

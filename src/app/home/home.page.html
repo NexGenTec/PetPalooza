@@ -9,18 +9,41 @@
   </div>
 </ion-header>
 <ion-modal-controller></ion-modal-controller>
-<ion-content [fullscreen]="true">
 
+<ion-content [fullscreen]="true">
+  <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
   <div class="py-5 px-3 bg-gray-50 grid grid-cols-1 gap-y-8">
      <!-- Dato Freak -->
-     <ion-card class="bg-gradient-to-r from-blue-400 to-indigo-400 rounded-lg shadow">
-      <ion-card-content class="p-4 text-white">
-        <ion-card-title class="text-lg font-semibold mb-2 tracking-wide">Dato Freak</ion-card-title>
-        <p class="text-sm mb-4">
-          {{DatosFreak[currentDatoIndex]?.description}}
-        </p>
-      </ion-card-content>
-    </ion-card>    
+     <ion-accordion-group [value]="['first']" mode="ios" class="mb-6 mt-2 border border-stone shadow-lg rounded-lg overflow-hidden">
+      <ion-accordion value="first">
+        <ion-item slot="header">
+          <div class="flex items-center gap-4 py-3">
+            <span class="shrink-0 rounded-full bg-blue-400 p-2 text-white">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+                class="h-4 w-4"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M18 3a1 1 0 00-1.447-.894L8.763 6H5a3 3 0 000 6h.28l1.771 5.316A1 1 0 008 18h1a1 1 0 001-1v-4.382l6.553 3.276A1 1 0 0018 15V3z"
+                  clip-rule="evenodd"
+                ></path>
+              </svg>
+            </span>
+            <p class="font-medium sm:text-lg text-blue-600"> {{DatosFreak[currentDatoIndex]?.Titulo}}</p>
+          </div>
+        </ion-item>
+        <div class="px-3 py-2 bg-white" slot="content">
+          <p class="text-gray-600">
+            {{DatosFreak[currentDatoIndex]?.descripcion}}
+          </p>
+        </div>
+      </ion-accordion>
+    </ion-accordion-group>
     <div id="registered-animals">
       <div class="w-full max-w-[570px] rounded-[20px] px-3 pt-4 text-start">
         <h1 class="pb-2 text-2xl font-medium">Animales Registrados</h1>
@@ -30,7 +53,7 @@
       <div class="grid grid-cols-2 w-full gap-2">
         <div (click)="navigateToCat()"
           class="group w-full text-white rounded-lg bg-[#673ab7] p-5 transition relative duration-300 cursor-pointer hover:translate-y-[3px] hover:shadow-[0_-8px_0px_0px_#2196f3]" >
-          <p class="text-2xl">+200</p>
+          <p class="text-2xl">+{{ originalGatos.length }}</p>
           <p class="text-sm">Gatos</p>
           <svg 
             xmlns="http://www.w3.org/2000/svg" 
@@ -45,7 +68,7 @@
         <div
           (click)="navigateToDog()"
           class="group w-full text-white rounded-lg bg-[rgb(41,49,79)] p-5 transition relative duration-300 cursor-pointer hover:translate-y-[3px] hover:shadow-[0_-8px_0px_0px_rgb(244,67,54)]">
-          <p class="text-2xl">+100</p>
+          <p class="text-2xl">+{{originalPerros.length}} </p>
           <p class="text-sm">Perros</p>
           <svg
             xmlns="http://www.w3.org/2000/svg" 
@@ -61,7 +84,7 @@
     </div>
 
     <div id="animal-filter">
-      <ion-segment  mode="ios" [(ngModel)]="currentView">
+      <ion-segment mode="ios" [(ngModel)]="currentView">
         <ion-segment-button value="Últimos">
           <ion-label>Últimos</ion-label>
         </ion-segment-button>
@@ -69,27 +92,29 @@
           <ion-label>Favoritos</ion-label>
         </ion-segment-button>
       </ion-segment>
-      
+    
       <div class="w-full max-w-md px-4 bg-white border border-gray-200 rounded-lg shadow mt-3" *ngIf="currentView === 'Últimos'">
         <div class="flow-root">
           <ul role="list" class="divide-y divide-gray-200">
-            <li class="py-3" *ngFor="let gato of gatos">
-              <div class="flex items-center" >
-                <div class="flex-shrink-0">
-                  <img class="w-16 h-16 rounded-full object-cover" [src]="gato.imgPerfil" >
+            <ng-container *ngFor="let animal of intercalate(gatos, perros); let i = index">
+              <li class="py-3">
+                <div class="flex items-center">
+                  <div class="flex-shrink-0">
+                    <img class="w-16 h-16 rounded-full object-cover" [src]="animal.imgPerfil" alt="{{ animal.type }} Image">
+                  </div>
+                  <div class="flex-1 min-w-0 ms-4">
+                    <p class="text-sm font-medium text-gray-900 truncate">{{ animal.Raza }}</p>
+                    <p class="text-sm text-gray-500 truncate">{{ animal.origen }}</p>
+                  </div>
+                  <a class="text-sm font-medium text-blue-400 hover:underline" [attr.data-index]="i" (click)="navigateToTargetPage(animal.type === 'gato' ? 'perfil-gato' : 'perfil-perro', animal)">
+                    Ver Perfil
+                  </a>
                 </div>
-                <div class="flex-1 min-w-0 ms-4">
-                  <p class="text-sm font-medium text-gray-900 truncate">
-                    {{gato.Raza}}
-                  </p>
-                  <p class="text-sm text-gray-500 truncate">
-                    {{gato.origen}}
-                  </p>
-                </div>
-                <a class="text-sm font-medium text-blue-400 hover:underline" >
-                  Ver Perfil
-                </a>
-              </div>
+              </li>
+            </ng-container>
+            <!-- If there are no animals, display a message -->
+            <li class="py-3" *ngIf="gatos.length === 0 && perros.length === 0">
+              No hay animales disponibles actualmente.
             </li>
           </ul>
         </div>
@@ -97,28 +122,29 @@
       <div class="w-full max-w-md px-4 bg-white border border-gray-200 rounded-lg shadow mt-3" *ngIf="currentView === 'Favoritos'">
         <div class="flow-root">
           <ul role="list" class="divide-y divide-gray-200">
-            <li class="py-3" *ngFor="let perro of perros">
-              <div class="flex items-center" >
+            <li class="py-3" *ngFor="let favorite of favorites">
+              <div class="flex items-center">
                 <div class="flex-shrink-0">
-                  <img class="w-16 h-16 rounded-full object-cover" [src]="perro.imgPerfil" >
+                  <img class="w-16 h-16 rounded-full object-cover" [src]="favorite.imgPerfil" alt="Favorite Image">
                 </div>
                 <div class="flex-1 min-w-0 ms-4">
-                  <p class="text-sm font-medium text-gray-900 truncate">
-                    {{perro.Raza}}
-                  </p>
-                  <p class="text-sm text-gray-500 truncate">
-                    {{perro.Origen}}
-                  </p>
+                  <p class="text-sm font-medium text-gray-900 truncate">{{ favorite.Raza }}</p>
+                  <p class="text-sm text-gray-500 truncate">{{ favorite.origen }}</p>
                 </div>
-                <button class="text-sm font-medium text-blue-400 hover:underline" (click)="navigateToTargetPage2('perfil-perro', perro)" >
+                <a class="text-sm font-medium text-blue-400 hover:underline" (click)="navigateToFavorites()">
                   Ver Perfil
-                </button>
+                </a>
               </div>
+            </li>
+            <!-- Si no hay favoritos, mostrar un mensaje -->
+            <li class="py-3" *ngIf="favorites.length === 0">
+              Aún no hay favoritos.
             </li>
           </ul>
         </div>
-      </div>
+      </div>         
     </div>
+    
 
 
     <div id="slider-cat">
@@ -136,7 +162,7 @@
                   <div class="w-full h-52 rounded-2xl overflow-hidden relative">
                     <ion-img class="w-full h-full object-cover" alt="Imagen de Raza" [src]="gato.imgPerfil"></ion-img>
                     <div class="absolute top-3 right-3 w-10 h-10 rounded-full bg-white flex justify-center items-center text-red-400 ">
-                      <button type="button" class="animate-pulse">
+                      <button type="button" class="animate-pulse" (click)="addToFavorites(gato)">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-7 h-7">
                           <path d="m11.645 20.91-.007-.003-.022-.012a15.247 15.247 0 0 1-.383-.218 25.18 25.18 0 0 1-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0 1 12 5.052 5.5 5.5 0 0 1 16.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 0 1-4.244 3.17 15.247 15.247 0 0 1-.383.219l-.022.012-.007.004-.003.001a.752.752 0 0 1-.704 0l-.003-.001Z" />
                         </svg>
@@ -148,7 +174,7 @@
                     <p class="text-gray-400">{{gato.origen}}</p>
                   </div>
                 </div>
-                <ion-button fill="clear" class="text-white px-1 rounded-xl bg-blue-400 hover:bg-blue-500 transition-colors" >Ver más</ion-button>
+                <ion-button fill="clear" class="text-white px-1 rounded-xl bg-blue-400 hover:bg-blue-500 transition-colors" (click)="navigateToTargetPage('perfil-gato', gato)" >Ver más</ion-button>
               </div>
             </div>
           </ng-container>
@@ -180,7 +206,7 @@
                     </div>
                     <div class="mt-3">
                       <p class="text-black font-extrabold"> {{perro.Raza}} </p>
-                      <p class="text-gray-400">{{perro.Origen}}</p>
+                      <p class="text-gray-400">{{perro.origen}}</p>
                     </div>
                   </div>
                   <ion-button fill="clear" class="text-white px-1 rounded-xl bg-blue-400 hover:bg-blue-500 transition-colors" (click)="navigateToTargetPage2('perfil-perro', perro)" >Ver más</ion-button>

@@ -26,8 +26,9 @@ export class homePage implements OnInit {
   currentView: string = 'Últimos';
   showImage: boolean;
   isLoadingData: boolean = false;
-
-
+  favorites: any[] = [];
+  originalGatos: InfoGato[] = [];
+  originalPerros: InfoPerro[] = [];
 
 
   constructor(
@@ -40,28 +41,51 @@ export class homePage implements OnInit {
     this.loadData();
     this.showImage = false;
     this.initStorage();
+
   }
 
   ngOnInit(): void {
     this.getQuirkyFacts();
     setInterval(() => {
       this.showRandomQuirkyFact();
-    }, 10000);
+    }, 30000);
     this.loadData();
   }
 
-  loadData() {
-    this.firestores.getCollectionChanges<InfoGato>('InfoGato').subscribe(gato => {
-      if (gato) {
-        this.gatos = gato
-      }
-    })
-    this.firestores.getCollectionChanges<InfoPerro>('InfoPerro').subscribe(perro => {
-      if (perro) {
-        this.perros = perro
-      }
-    })
+
+  handleRefresh(event) {
+    setTimeout(() => {
+      this.getQuirkyFacts();
+      setInterval(() => {
+        this.showRandomQuirkyFact();
+      }, 10000);
+      this.loadData();
+      event.target.complete();
+    }, 2000);
   }
+
+  async loadData() {
+    this.firestores.getCollectionChanges<InfoGato>('InfoGato').subscribe(gatos => {
+      if (gatos) {
+        this.originalGatos = gatos;
+        this.gatos = gatos
+          .filter(gato => gato.fechaCreacion && gato.fechaCreacion.seconds)
+          .sort((a, b) => b.fechaCreacion.seconds - a.fechaCreacion.seconds)
+          .slice(0, 4);
+      }
+    });
+
+    this.firestores.getCollectionChanges<InfoPerro>('InfoPerro').subscribe(perros => {
+      if (perros) {
+        this.originalPerros = perros;
+        this.perros = perros
+          .filter(perro => perro.fechaCreacion && perro.fechaCreacion.seconds)
+          .sort((a, b) => b.fechaCreacion.seconds - a.fechaCreacion.seconds)
+          .slice(0, 4);
+      }
+    });
+  }
+
 
   toggleView(view: string) {
     this.currentView = view;
@@ -78,11 +102,8 @@ export class homePage implements OnInit {
 
   showRandomQuirkyFact() {
     const randomIndex = Math.floor(Math.random() * this.DatosFreak.length);
-    console.log("Dato Freak actual:", this.DatosFreak[randomIndex]?.id);
     this.currentDatoIndex = randomIndex;
   }
-
-
 
   async addToFavorites(perro: any) {
     let favorites: any[] = JSON.parse(localStorage.getItem('favorites')) || [];
@@ -107,6 +128,33 @@ export class homePage implements OnInit {
       toast.present();
     }
     localStorage.setItem('favorites', JSON.stringify(favorites));
+    this.favorites = favorites;
+  }
+
+  async addToFavorites2(gato: any) {
+    let favorites: any[] = JSON.parse(localStorage.getItem('favorites')) || [];
+    const index = favorites.findIndex(favorite => favorite.id === gato.id);
+    if (index !== -1) {
+      favorites.splice(index, 1);
+      const toast = await this.toastController.create({
+        message: 'Eliminado de favoritos',
+        duration: 2000,
+        position: 'top',
+        color: 'danger'
+      });
+      toast.present();
+    } else {
+      favorites.push(gato);
+      const toast = await this.toastController.create({
+        message: 'Agregado a favoritos',
+        duration: 2000,
+        position: 'top',
+        color: 'success'
+      });
+      toast.present();
+    }
+    localStorage.setItem('favorites', JSON.stringify(favorites));
+    this.favorites = favorites;
   }
 
 
@@ -123,8 +171,8 @@ export class homePage implements OnInit {
     this.router.navigate(['/favoritos']);
   }
 
-  navigateToTargetPage(segment: string, gatoId: string) {
-    this.router.navigate([segment, gatoId]);
+  navigateToTargetPage(segment: string, gato: InfoGato) {
+    this.router.navigate([segment, gato.id], { state: { data: gato } });
   }
 
   navigateToTargetPage2(segment: string, perro: InfoPerro) {
@@ -135,12 +183,10 @@ export class homePage implements OnInit {
     await this.storage.create();
     const isFirstTime = await this.storage.get('isFirstTime');
     if (!isFirstTime) {
-      console.log('Es la primera vez que se inicia la aplicación');
       await this.storage.set('isFirstTime', true);
       this.presentWelcomeModal();
       this.showImage = true;
     } else {
-      console.log('La aplicación ya se ha iniciado antes');
       this.showImage = false;
     }
   }
@@ -151,6 +197,25 @@ export class homePage implements OnInit {
       backdropDismiss: false
     });
     return await modal.present();
+  }
+
+
+  intercalate(gatos: any[], perros: any[]): any[] {
+    const result = [];
+    const maxLength = Math.max(gatos.length, perros.length);
+
+    for (let i = 0; i < maxLength; i++) {
+      if (gatos[i]) {
+        gatos[i].type = 'gato';
+        result.push(gatos[i]);
+      }
+      if (perros[i]) {
+        perros[i].type = 'perro';
+        result.push(perros[i]);
+      }
+    }
+
+    return result;
   }
 
 

@@ -46,7 +46,7 @@
             </div>
         </div>
         <div class="border-b border-gray-200 pb-2 bg-white mx-3">
-          <ion-segment mode="ios" >
+          <ion-segment mode="ios"  [(ngModel)]="selectedSegmentValue"  (ionChange)="changeCardContent(selectedSegmentValue)">
             <ion-segment-button value="caracteristicas" [checked]="selectedSegmentValue === 'caracteristicas'">
                 <ion-icon name="paw-outline"></ion-icon>
             </ion-segment-button>
@@ -68,28 +68,24 @@
             <small>{{ cardSubtitle}}</small>
           </ion-card-content>
           <div class="flex justify-center">
-            <ion-chip >
-             
+            <ion-chip *ngFor="let chip of temperamentoChips" color="secondary">
+              {{ chip.tipo }}
             </ion-chip>
           </div>
-          
           <ion-card-content class="ion-text-start" [innerHTML]="cardContent" >
-          
           </ion-card-content>
-
         </ion-card>
-
-        <ng-container *ngIf="showImagesContainer">
+        <ng-container *ngIf="showImagesContainer && gato && gato.length ">
           <div class="container mx-auto p-4">
-            <div class="grid grid-cols-2 md:grid-cols-3 gap-4 max-w-xl mx-auto">
-              <ng-container >
+            <div class="grid grid-cols-2 md:grid-cols-2 gap-4 max-w-xl mx-auto">
+              <div *ngFor="let imgUrl of getImagesArray(gato[0])">
                 <div class="max-w-full rounded-lg overflow-hidden">
-                  <ion-img class="h-full object-cover max-h-[370px]" ></ion-img>
+                  <ion-img class="h-full object-cover max-h-[300px]" [src]="imgUrl" alt="Imagen de {{ gato[0].Raza }}"></ion-img>
                 </div>
-              </ng-container>
+              </div>
             </div>
           </div>
-        </ng-container>
+        </ng-container>    
 
       </div>
     </div>
