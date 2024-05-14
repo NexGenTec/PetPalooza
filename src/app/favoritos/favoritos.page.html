@@ -8,7 +8,7 @@
 </ion-header>
 
 <ion-content>
-  <div class="grid grid-cols-1 gap-3 py-3 w-full">
+  <div class="grid grid-cols-2 gap-3 py-3 w-full">
     <ng-container *ngIf="favoriteAnimals.length > 0; else noFavorites">
       <div class="h-max rounded-xl overflow-hidden border border-blue-300 shadow-lg" *ngFor="let animal of favoriteAnimals">
         <ion-card class="m-0 h-44 relative group" mode="md">

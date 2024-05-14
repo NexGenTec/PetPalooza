@@ -29,7 +29,11 @@ export class homePage implements OnInit {
   favorites: any[] = [];
   originalGatos: InfoGato[] = [];
   originalPerros: InfoPerro[] = [];
-
+  loaded: boolean = false;
+  showSkeletonUltimos: boolean = true;
+  navigateToCatshowSkeleton: boolean = true;
+  datoFreakshowSkeleton: boolean = true;
+  texto1showSkeleton: boolean = true;
 
   constructor(
     private router: Router,
@@ -38,22 +42,33 @@ export class homePage implements OnInit {
     private modalController: ModalController,
     private toastController: ToastController
   ) {
-    this.loadData();
-    this.showImage = false;
-    this.initStorage();
-
   }
 
   ngOnInit(): void {
     this.getQuirkyFacts();
+    this.loadFavorites();
+    this.loadData();
+    this.showImage = false;
+    this.initStorage();
     setInterval(() => {
       this.showRandomQuirkyFact();
     }, 30000);
     this.loadData();
+    setTimeout(() => {
+      this.loadFavorites();
+      this.loaded = true;
+    }, 3000);
+    setTimeout(() => {
+      this.showSkeletonUltimos = false;
+      this.navigateToCatshowSkeleton = false;
+      this.datoFreakshowSkeleton = false;
+      this.texto1showSkeleton = false;
+    }, 4000);
   }
 
 
   handleRefresh(event) {
+    this.loadData();
     setTimeout(() => {
       this.getQuirkyFacts();
       setInterval(() => {
@@ -64,6 +79,9 @@ export class homePage implements OnInit {
     }, 2000);
   }
 
+  /*/
+  Se llama la data de Perros y Gatos
+  */
   async loadData() {
     this.firestores.getCollectionChanges<InfoGato>('InfoGato').subscribe(gatos => {
       if (gatos) {
@@ -71,7 +89,8 @@ export class homePage implements OnInit {
         this.gatos = gatos
           .filter(gato => gato.fechaCreacion && gato.fechaCreacion.seconds)
           .sort((a, b) => b.fechaCreacion.seconds - a.fechaCreacion.seconds)
-          .slice(0, 4);
+          //Cantida de Gatos en ultimos
+          .slice(0, 2);
       }
     });
 
@@ -81,7 +100,8 @@ export class homePage implements OnInit {
         this.perros = perros
           .filter(perro => perro.fechaCreacion && perro.fechaCreacion.seconds)
           .sort((a, b) => b.fechaCreacion.seconds - a.fechaCreacion.seconds)
-          .slice(0, 4);
+          //Cantida de Perros en ultimos
+          .slice(0, 2);
       }
     });
   }
@@ -100,14 +120,22 @@ export class homePage implements OnInit {
     });
   }
 
+  loadFavorites() {
+    const storedFavorites = localStorage.getItem('favorites');
+    if (storedFavorites) {
+      this.favorites = JSON.parse(storedFavorites);
+    }
+  }
+
+
   showRandomQuirkyFact() {
     const randomIndex = Math.floor(Math.random() * this.DatosFreak.length);
     this.currentDatoIndex = randomIndex;
   }
 
-  async addToFavorites(perro: any) {
+  async addToFavorites(animal: any, type: string) {
     let favorites: any[] = JSON.parse(localStorage.getItem('favorites')) || [];
-    const index = favorites.findIndex(favorite => favorite.id === perro.id);
+    const index = favorites.findIndex(favorite => favorite.id === animal.id && favorite.type === type);
     if (index !== -1) {
       favorites.splice(index, 1);
       const toast = await this.toastController.create({
@@ -118,7 +146,8 @@ export class homePage implements OnInit {
       });
       toast.present();
     } else {
-      favorites.push(perro);
+      animal.type = type; // Agregar el tipo de animal (perro o gato)
+      favorites.push(animal);
       const toast = await this.toastController.create({
         message: 'Agregado a favoritos',
         duration: 2000,
@@ -131,31 +160,6 @@ export class homePage implements OnInit {
     this.favorites = favorites;
   }
 
-  async addToFavorites2(gato: any) {
-    let favorites: any[] = JSON.parse(localStorage.getItem('favorites')) || [];
-    const index = favorites.findIndex(favorite => favorite.id === gato.id);
-    if (index !== -1) {
-      favorites.splice(index, 1);
-      const toast = await this.toastController.create({
-        message: 'Eliminado de favoritos',
-        duration: 2000,
-        position: 'top',
-        color: 'danger'
-      });
-      toast.present();
-    } else {
-      favorites.push(gato);
-      const toast = await this.toastController.create({
-        message: 'Agregado a favoritos',
-        duration: 2000,
-        position: 'top',
-        color: 'success'
-      });
-      toast.present();
-    }
-    localStorage.setItem('favorites', JSON.stringify(favorites));
-    this.favorites = favorites;
-  }
 
 
   navigateToCat() {
@@ -214,9 +218,7 @@ export class homePage implements OnInit {
         result.push(perros[i]);
       }
     }
-
     return result;
   }
-
 
 }
