@@ -69,21 +69,21 @@ export class PerfilPerroPage implements OnInit {
       case 'caracteristicas':
         this.cardHeading = 'Características Físicas';
         this.cardSubtitle = perro.Raza;
-        this.cardContent = Object.keys(perro.CaractFisicas).map(key => `${key}: ${perro.CaractFisicas[key]}`).join('<br>');
+        this.cardContent = Object.keys(perro.CaractFisicas).map(key => `<p><span class="font-bold">${key}:</span> ${perro.CaractFisicas[key]}</p>`).join('<hr class="my-3">');
         this.temperamentoChips = [];
         this.showImagesContainer = false;
         break;
       case 'temperamento':
         this.cardHeading = 'Temperamento';
         this.cardSubtitle = '';
-        this.cardContent = perro.Temperamento.map((temp: { descripcion: any; }) => temp.descripcion).join('<br>');
+        this.cardContent = perro.Temperamento.map((temp: { descripcion: any; }) => `<p>${temp.descripcion}</p>`).join('<hr class="my-3">');
         this.temperamentoChips = this.getTemperamentoChips(perro.Temperamento);
         this.showImagesContainer = false;
         break;
       case 'cuidado':
         this.cardHeading = 'Cuidado y Salud';
         this.cardSubtitle = perro.Raza;
-        this.cardContent = Object.keys(perro.cuidados).map(key => `${key}: ${perro.cuidados[key]}`).join('<br>');
+        this.cardContent = Object.keys(perro.cuidados).map(key => `<p><span class="font-bold">${key}:</span> ${perro.cuidados[key]}</p>`).join('<hr class="my-3">');
         this.temperamentoChips = [];
         this.showImagesContainer = false;
         break;

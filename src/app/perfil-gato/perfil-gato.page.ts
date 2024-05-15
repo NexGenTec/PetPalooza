@@ -69,21 +69,27 @@ export class PerfilGatoPage implements OnInit {
       case 'caracteristicas':
         this.cardHeading = 'Características Físicas';
         this.cardSubtitle = gato.Raza;
-        this.cardContent = Object.keys(gato.CaractFisicas).map(key => `${key}: ${gato.CaractFisicas[key]}`).join('<br>');
+        this.cardContent = Object.keys(gato.CaractFisicas).map(key => `<p><span class="font-bold">${key}:</span> ${gato.CaractFisicas[key]}</p>`).join('<hr class="my-3">');
         this.temperamentoChips = [];
         this.showImagesContainer = false;
         break;
       case 'temperamento':
         this.cardHeading = 'Temperamento';
         this.cardSubtitle = '';
-        this.cardContent = gato.Temperamento.map((temp: { descripcion: any; }) => temp.descripcion).join('<br>');
+        /* this.cardContent = gato.Temperamento.map((temp: { descripcion: any; }) => `<p>${temp.descripcion}</p>`).join('<hr class="my-3">'); */
+        this.cardContent = gato.Temperamento
+          .filter(temp => temp.descripcion !== '')
+          .map(temp => `<p>${temp.descripcion}</p>`)
+          .join('<hr class="my-3">');
+
         this.temperamentoChips = this.getTemperamentoChips(gato.Temperamento);
         this.showImagesContainer = false;
         break;
       case 'cuidado':
         this.cardHeading = 'Cuidado y Salud';
         this.cardSubtitle = gato.Raza;
-        this.cardContent = Object.keys(gato.cuidados).map(key => `${key}: ${gato.cuidados[key]}`).join('<br>');
+        this.cardContent = Object.keys(gato.cuidados).map(key => `<p><span class="font-bold">${key}:</span> ${gato.cuidados[key]}</p>`).join('<hr class="my-3">');
+      
         this.temperamentoChips = [];
         this.showImagesContainer = false;
         break;
