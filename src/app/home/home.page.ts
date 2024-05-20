@@ -34,7 +34,8 @@ export class homePage implements OnInit {
   navigateToCatshowSkeleton: boolean = true;
   datoFreakshowSkeleton: boolean = true;
   texto1showSkeleton: boolean = true;
-
+  showSkeletonGatos: boolean = true;
+  showSkeletonPerros: boolean = true;
   constructor(
     private router: Router,
     private firestores: FirestoreService,
@@ -63,7 +64,9 @@ export class homePage implements OnInit {
       this.navigateToCatshowSkeleton = false;
       this.datoFreakshowSkeleton = false;
       this.texto1showSkeleton = false;
-    }, 4000);
+      this.showSkeletonGatos = false;
+      this.showSkeletonPerros = false;
+    }, 60000);
   }
 
 
@@ -76,7 +79,7 @@ export class homePage implements OnInit {
       }, 10000);
       this.loadData();
       event.target.complete();
-    }, 2000);
+    }, 6000);
   }
 
   /*/

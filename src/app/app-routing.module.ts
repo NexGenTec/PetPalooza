@@ -11,10 +11,6 @@ const routes: Routes = [
     loadChildren: () => import('./img-modal/img-modal.module').then(m => m.ImgModalPageModule)
   },
   {
-    path: 'search-modal',
-    loadChildren: () => import('./search-modal/search-modal.module').then(m => m.SearchModalPageModule)
-  },
-  {
     path: 'perfil-gato/:id',
     loadChildren: () => import('./perfil-gato/perfil-gato.module').then(m => m.PerfilGatoPageModule)
   },
