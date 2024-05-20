@@ -16,6 +16,8 @@ export class perroPage {
   DatosFreak: QuirkyFacts[] = [];
   currentDatoIndex: number = 0;
   infoPerroChunks: InfoPerro[][] = [];
+  filteredPerros: InfoPerro[] = [];
+  searchTerm: string = '';
 
 
 
@@ -38,6 +40,7 @@ export class perroPage {
     this.firestores.getCollectionChanges<InfoPerro>('InfoPerro').subscribe(perro => {
       if (perro) {
         this.perros = perro
+        this.filteredPerros = [...this.perros];
       }
     })
   }
@@ -83,6 +86,14 @@ export class perroPage {
 
   navigateToTargetPage(segment: string, perro: InfoPerro) {
     this.router.navigate([segment, perro.id], { state: { data: perro } });
+  }
+
+  filterPerros() {
+    console.log('Search term:', this.searchTerm);
+    this.filteredPerros = this.perros.filter(gato =>
+      gato.Raza.toLowerCase().includes(this.searchTerm.toLowerCase())
+    );
+    console.log('Filtered gatos:', this.filteredPerros);
   }
 
 }

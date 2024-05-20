@@ -66,7 +66,7 @@ export class homePage implements OnInit {
       this.texto1showSkeleton = false;
       this.showSkeletonGatos = false;
       this.showSkeletonPerros = false;
-    }, 60000);
+    }, 3000);
   }
 
 
@@ -136,6 +136,11 @@ export class homePage implements OnInit {
     this.currentDatoIndex = randomIndex;
   }
 
+  isInFavorites(animal: any, type: string): boolean {
+    const favorites: any[] = JSON.parse(localStorage.getItem('favorites')) || [];
+    return favorites.some(favorite => favorite.id === animal.id && favorite.type === type);
+  }
+
   async addToFavorites(animal: any, type: string) {
     let favorites: any[] = JSON.parse(localStorage.getItem('favorites')) || [];
     const index = favorites.findIndex(favorite => favorite.id === animal.id && favorite.type === type);
@@ -162,8 +167,6 @@ export class homePage implements OnInit {
     localStorage.setItem('favorites', JSON.stringify(favorites));
     this.favorites = favorites;
   }
-
-
 
   navigateToCat() {
     this.router.navigate(['/tabs/gato']);
