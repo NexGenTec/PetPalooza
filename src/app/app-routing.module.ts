@@ -25,7 +25,11 @@ const routes: Routes = [
   {
     path: 'favoritos',
     loadChildren: () => import('./favoritos/favoritos.module').then(m => m.FavoritosPageModule)
+  },  {
+    path: 'data-collection',
+    loadChildren: () => import('./data-collection/data-collection.module').then( m => m.DataCollectionPageModule)
   },
+
 
 ];
 @NgModule({
