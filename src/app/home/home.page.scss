@@ -144,3 +144,8 @@ ion-segment-button.ios {
 .ion-content-scroll-host::after {
     top: -1px;
 }
+
+ion-tab-button{
+    --padding-start:0.25rem;
+    --padding-end:0.25rem;
+}

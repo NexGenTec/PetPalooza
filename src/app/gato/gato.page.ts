@@ -3,6 +3,8 @@ import { InfoGato } from '../interface/InfoGato.models';
 import { QuirkyFacts } from '../interface/QuirkyFacts.models';
 import { FirestoreService } from '../service/firestore.service';
 import { Router } from '@angular/router';
+import { ModalController, ToastController } from '@ionic/angular';
+
 @Component({
   selector: 'app-gato',
   templateUrl: 'gato.page.html',
@@ -13,12 +15,14 @@ export class gatoPage implements OnInit {
   gatos: InfoGato[] = [];
   DatosFreak: QuirkyFacts[] = [];
   filteredGatos: InfoGato[] = [];
+  favorites: any[] = [];
   currentDatoIndex: number = 0;
   searchTerm: string = '';
 
 
   constructor(private firestores: FirestoreService,
     private router: Router,
+    private toastController: ToastController
   ) {
     this.loadData();
   }
@@ -73,5 +77,37 @@ export class gatoPage implements OnInit {
       gato.Raza.toLowerCase().includes(this.searchTerm.toLowerCase())
     );
     console.log('Filtered gatos:', this.filteredGatos);
+  }
+
+  isInFavorites(animal: any, type: string): boolean {
+    const favorites: any[] = JSON.parse(localStorage.getItem('favorites')) || [];
+    return favorites.some(favorite => favorite.id === animal.id && favorite.type === type);
+  }
+
+  async addToFavorites(animal: any, type: string) {
+    let favorites: any[] = JSON.parse(localStorage.getItem('favorites')) || [];
+    const index = favorites.findIndex(favorite => favorite.id === animal.id && favorite.type === type);
+    if (index !== -1) {
+      favorites.splice(index, 1);
+      const toast = await this.toastController.create({
+        message: 'Eliminado de favoritos',
+        duration: 2000,
+        position: 'top',
+        color: 'danger'
+      });
+      toast.present();
+    } else {
+      animal.type = type; // Agregar el tipo de animal (perro o gato)
+      favorites.push(animal);
+      const toast = await this.toastController.create({
+        message: 'Agregado a favoritos',
+        duration: 2000,
+        position: 'top',
+        color: 'success'
+      });
+      toast.present();
+    }
+    localStorage.setItem('favorites', JSON.stringify(favorites));
+    this.favorites = favorites;
   }
 }
