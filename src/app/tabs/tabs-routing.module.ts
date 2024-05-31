@@ -20,6 +20,14 @@ const routes: Routes = [
         loadChildren: () => import('../perro/perro.module').then(m => m.perroPageModule)
       },
       {
+        path: 'adoptame',
+        loadChildren: () => import('../adoptame/adoptame.module').then(m => m.AdoptamePageModule)
+      },
+      {
+        path: 'cuidados',
+        loadChildren: () => import('../cuidados/cuidados.module').then(m => m.CuidadosPageModule)
+      },
+      {
         path: '',
         redirectTo: '/tabs/home',
         pathMatch: 'full'
