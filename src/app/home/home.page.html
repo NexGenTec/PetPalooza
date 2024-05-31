@@ -11,9 +11,6 @@
 <ion-modal-controller></ion-modal-controller>
 
 <ion-content [fullscreen]="true">
-  <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
-    <ion-refresher-content></ion-refresher-content>
-  </ion-refresher>
   <div class="py-5 px-3 bg-gray-50 grid grid-cols-1 gap-y-8">
      <!-- Dato Freak -->
      <ng-container *ngIf="datoFreakshowSkeleton; else contenidoReal">

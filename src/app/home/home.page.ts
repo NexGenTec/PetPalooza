@@ -77,20 +77,6 @@ export class homePage implements OnInit {
       this.showSkeletonPerros = false;
     }, 3000);
   }
-
-
-  handleRefresh(event) {
-    this.loadData();
-    setTimeout(() => {
-      this.getQuirkyFacts();
-      setInterval(() => {
-        this.showRandomQuirkyFact();
-      }, 10000);
-      this.loadData();
-      event.target.complete();
-    }, 6000);
-  }
-
   /*/
   Se llama la data de Perros y Gatos
   */

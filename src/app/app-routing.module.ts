@@ -25,7 +25,15 @@ const routes: Routes = [
   {
     path: 'favoritos',
     loadChildren: () => import('./favoritos/favoritos.module').then(m => m.FavoritosPageModule)
+  },  {
+    path: 'adoptame',
+    loadChildren: () => import('./adoptame/adoptame.module').then( m => m.AdoptamePageModule)
   },
+  {
+    path: 'cuidados',
+    loadChildren: () => import('./cuidados/cuidados.module').then( m => m.CuidadosPageModule)
+  },
+
 
 ];
 @NgModule({
