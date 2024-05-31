@@ -7,11 +7,11 @@ const routes: Routes = [
   {
     path: '',
     component: FavoritosPage
-  }
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class FavoritosPageRoutingModule {}
+export class FavoritosPageRoutingModule { }
