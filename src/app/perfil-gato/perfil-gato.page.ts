@@ -89,7 +89,7 @@ export class PerfilGatoPage implements OnInit {
         this.cardHeading = 'Cuidado y Salud';
         this.cardSubtitle = gato.Raza;
         this.cardContent = Object.keys(gato.cuidados).map(key => `<p><span class="font-bold">${key}:</span> ${gato.cuidados[key]}</p>`).join('<hr class="my-3">');
-      
+
         this.temperamentoChips = [];
         this.showImagesContainer = false;
         break;
@@ -116,6 +116,17 @@ export class PerfilGatoPage implements OnInit {
 
   getNameRaza(raza: InfoGato[]): InfoGato[] {
     return raza.filter(item => item.Raza)
+  }
+
+
+  async openModal(imageUrl: string) {
+    const modal = await this.modalController.create({
+      component: ImgModalPage,
+      componentProps: {
+        imageUrl: imageUrl
+      }
+    });
+    return await modal.present();
   }
 
 }
