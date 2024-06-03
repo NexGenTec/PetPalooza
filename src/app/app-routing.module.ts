@@ -25,7 +25,8 @@ const routes: Routes = [
   {
     path: 'favoritos',
     loadChildren: () => import('./favoritos/favoritos.module').then(m => m.FavoritosPageModule)
-  },  {
+  },
+  {
     path: 'adoptame',
     loadChildren: () => import('./adoptame/adoptame.module').then( m => m.AdoptamePageModule)
   },
@@ -33,6 +34,10 @@ const routes: Routes = [
     path: 'cuidados',
     loadChildren: () => import('./cuidados/cuidados.module').then( m => m.CuidadosPageModule)
   },
+  // {
+  //   path: 'vetshop',
+  //   loadChildren: () => import('./cuidados/vets&shop.module').then( m => m.CuidadosPageModule)
+  // },
 
 
 ];
