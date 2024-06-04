@@ -1,16 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ImgModalPage } from '../img-modal/img-modal.page';
 import { ModalController } from '@ionic/angular';
-import { InfoPerro, Temperamento } from '../interface/InfoPerro.models';
-import { FirestoreService } from '../service/firestore.service';
+import { ImgModalPage } from '../../../components/img-modal/img-modal.page';
+import { InfoGato, Temperamento, CaractFisicas } from '../../../interface/InfoGato.models';
+import { FirestoreService } from '../../../service/firestore.service';
 
 @Component({
-  selector: 'app-perfil-perro',
-  templateUrl: './perfil-perro.page.html',
-  styleUrls: ['./perfil-perro.page.scss'],
+  selector: 'app-perfil-gato',
+  templateUrl: './perfil-gato.page.html',
+  styleUrls: ['./perfil-gato.page.scss'],
 })
-export class PerfilPerroPage implements OnInit {
+export class PerfilGatoPage implements OnInit {
+
   selectedSegmentValue: string = 'caracteristicas';
   cardHeading: string = '';
   cardSubtitle: string = '';
@@ -21,75 +22,80 @@ export class PerfilPerroPage implements OnInit {
   infoOrigin!: string;
   infoHistory!: string;
 
-  perro: InfoPerro[] = [];
+  gato: InfoGato[] = [];
   selectedPerroId!: number;
   showImagesContainer: boolean = false;
   temperamentoChips: Temperamento[] = [];
 
-  infoPerro: any = (this.perro as any).default;
+  infoGato: any = (this.gato as any).default;
 
   constructor(private route: ActivatedRoute, private modalController: ModalController,
     private firestores: FirestoreService,
   ) {
     this.changeCardContent(this.selectedSegmentValue);
   }
-
   ngOnInit() {
-    const perro = history.state.data;
-    console.log(perro)
-    this.infoName = perro.Raza;
-    this.infoOrigin = perro.origen;
-    this.infoImage = perro.imgPerfil;
-    this.infoHistory = perro.historia;
+    const gato = history.state.data;
+    console.log(gato)
+    this.infoName = gato.Raza;
+    this.infoOrigin = gato.origen;
+    this.infoImage = gato.imgPerfil;
+    this.infoHistory = gato.historia;
     this.changeCardContent(this.selectedSegmentValue);
-    this.perro = [perro];
+    this.gato = [gato];
   }
 
-  getImagesArray(perro: InfoPerro): string[] {
+  getImagesArray(gato: InfoGato): string[] {
     const imagesArray: string[] = [];
-    for (const key in perro.Img) {
-      if (perro.Img.hasOwnProperty(key)) {
-        imagesArray.push(perro.Img[key]);
+    for (const key in gato.img) {
+      if (gato.img.hasOwnProperty(key)) {
+        imagesArray.push(gato.img[key]);
       }
     }
     console.log(imagesArray);
-    return Object.values(perro.Img);
+    return Object.values(gato.img);
   }
 
-  getPerroById(id: number): InfoPerro[] {
-    return this.infoPerro.filter((perro: InfoPerro) => perro.id === id);
+  getPerroById(id: number): InfoGato[] {
+    return this.infoGato.filter((gato: InfoGato) => gato.id === id);
   }
 
   changeCardContent(segmentValue: string) {
-    const perro = history.state.data;
-    if (!perro) {
+    const gato = history.state.data;
+    if (!gato) {
       return;
     }
     switch (segmentValue) {
       case 'caracteristicas':
         this.cardHeading = 'Características Físicas';
-        this.cardSubtitle = perro.Raza;
-        this.cardContent = Object.keys(perro.CaractFisicas).map(key => `<p><span class="font-bold">${key}:</span> ${perro.CaractFisicas[key]}</p>`).join('<hr class="my-3">');
+        this.cardSubtitle = gato.Raza;
+        this.cardContent = Object.keys(gato.CaractFisicas).map(key => `<p><span class="font-bold">${key}:</span> ${gato.CaractFisicas[key]}</p>`).join('<hr class="my-3">');
         this.temperamentoChips = [];
         this.showImagesContainer = false;
         break;
       case 'temperamento':
         this.cardHeading = 'Temperamento';
         this.cardSubtitle = '';
-        this.cardContent = perro.Temperamento.map((temp: { descripcion: any; }) => `<p>${temp.descripcion}</p>`).join('<hr class="my-3">');
-        this.temperamentoChips = this.getTemperamentoChips(perro.Temperamento);
+        /* this.cardContent = gato.Temperamento.map((temp: { descripcion: any; }) => `<p>${temp.descripcion}</p>`).join('<hr class="my-3">'); */
+        this.cardContent = gato.Temperamento
+          .filter(temp => temp.descripcion !== '')
+          .map(temp => `<p>${temp.descripcion}</p>`)
+          .join('<hr class="my-3">');
+
+        this.temperamentoChips = this.getTemperamentoChips(gato.Temperamento);
         this.showImagesContainer = false;
         break;
       case 'cuidado':
         this.cardHeading = 'Cuidado y Salud';
-        this.cardSubtitle = perro.Raza;
-        this.cardContent = Object.keys(perro.cuidados).map(key => `<p><span class="font-bold">${key}:</span> ${perro.cuidados[key]}</p>`).join('<hr class="my-3">');
+        this.cardSubtitle = gato.Raza;
+        this.cardContent = Object.keys(gato.cuidados).map(key => `<p><span class="font-bold">${key}:</span> ${gato.cuidados[key]}</p>`).join('<hr class="my-3">');
+
         this.temperamentoChips = [];
         this.showImagesContainer = false;
         break;
       case 'images':
         this.cardHeading = 'Imágenes';
-        this.cardSubtitle = perro.Raza;
+        this.cardSubtitle = gato.Raza;
         this.cardContent = '';
         this.temperamentoChips = [];
         this.showImagesContainer = true;
@@ -97,21 +103,21 @@ export class PerfilPerroPage implements OnInit {
       default:
         this.selectedSegmentValue = 'caracteristicas';
         this.cardHeading = 'Características Físicas';
-        this.cardSubtitle = perro.Raza;
+        this.cardSubtitle = gato.Raza;
         this.temperamentoChips = [];
         this.showImagesContainer = false;
         break;
     }
   }
 
-
   getTemperamentoChips(temperamento: Temperamento[]): Temperamento[] {
     return temperamento.filter(item => item.aplicable);
   }
 
-  getNameRaza(raza: InfoPerro[]): InfoPerro[] {
+  getNameRaza(raza: InfoGato[]): InfoGato[] {
     return raza.filter(item => item.Raza)
   }
+
 
   async openModal(imageUrl: string) {
     const modal = await this.modalController.create({

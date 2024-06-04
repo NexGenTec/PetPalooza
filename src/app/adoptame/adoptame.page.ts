@@ -1,44 +1,30 @@
 import { Component, OnInit } from '@angular/core';
-import { InfoGato } from '../interface/InfoGato.models';
 import { QuirkyFacts } from '../interface/QuirkyFacts.models';
 import { FirestoreService } from '../service/firestore.service';
 import { Router } from '@angular/router';
+import { ModalController, ToastController } from '@ionic/angular';
+
 @Component({
-  selector: 'app-gato',
-  templateUrl: 'gato.page.html',
-  styleUrls: ['gato.page.scss']
+  selector: 'app-adoptame',
+  templateUrl: './adoptame.page.html',
+  styleUrls: ['./adoptame.page.scss'],
 })
-export class gatoPage implements OnInit {
+export class AdoptamePage implements OnInit {
 
-  gatos: InfoGato[] = [];
   DatosFreak: QuirkyFacts[] = [];
-  filteredGatos: InfoGato[] = [];
   currentDatoIndex: number = 0;
-  searchTerm: string = '';
-
 
   constructor(private firestores: FirestoreService,
     private router: Router,
+    private toastController: ToastController
   ) {
-    this.loadData();
   }
-
 
   ngOnInit(): void {
     this.getQuirkyFacts();
     setInterval(() => {
       this.showRandomQuirkyFact();
     }, 10000);
-    this.loadData();
-  }
-
-  loadData() {
-    this.firestores.getCollectionChanges<InfoGato>('InfoGato').subscribe(gato => {
-      if (gato) {
-        this.gatos = gato
-        this.filteredGatos = [...this.gatos];
-      }
-    })
   }
 
   getQuirkyFacts() {
@@ -63,15 +49,4 @@ export class gatoPage implements OnInit {
     }
   }
 
-  navigateToTargetPage(segment: string, gato: InfoGato) {
-    this.router.navigate([segment, gato.id], { state: { data: gato } });
-  }
-
-  filterGatos() {
-    console.log('Search term:', this.searchTerm);
-    this.filteredGatos = this.gatos.filter(gato =>
-      gato.Raza.toLowerCase().includes(this.searchTerm.toLowerCase())
-    );
-    console.log('Filtered gatos:', this.filteredGatos);
-  }
 }

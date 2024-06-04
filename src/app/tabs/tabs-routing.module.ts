@@ -9,7 +9,7 @@ const routes: Routes = [
     children: [
       {
         path: 'gato',
-        loadChildren: () => import('../gato/gato.module').then(m => m.gatoPageModule)
+        loadChildren: () => import('../mascota-page/gato/gato.module').then(m => m.gatoPageModule)
       },
       {
         path: 'home',
@@ -17,7 +17,15 @@ const routes: Routes = [
       },
       {
         path: 'perro',
-        loadChildren: () => import('../perro/perro.module').then(m => m.perroPageModule)
+        loadChildren: () => import('../mascota-page/perro/perro.module').then(m => m.perroPageModule)
+      },
+      {
+        path: 'adoptame',
+        loadChildren: () => import('../adoptame/adoptame.module').then(m => m.AdoptamePageModule)
+      },
+      {
+        path: 'cuidados',
+        loadChildren: () => import('../cuidados/cuidados.module').then(m => m.CuidadosPageModule)
       },
       {
         path: '',
