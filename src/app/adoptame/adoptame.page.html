@@ -19,11 +19,11 @@
       <!-- Refugios Card -->
       <section class="grid grid-cols-1 gap-y-6">
 
-        <article class="w-full bg-[#FFEBE5] rounded-3xl p-5 relative">
+        <article class="w-full bg-[#FFEBE5] rounded-3xl p-5 relative" *ngFor="let patrocinador of Patrocinadores">
           <header class="">
-            <h2 class="text-2xl text-gray-600 font-bold mb-2 max-w-[78%]">Refugio Vida Nueva</h2>
+            <h2 class="text-2xl text-gray-600 font-bold mb-2 max-w-[78%]"> {{patrocinador.titulo}} </h2>
             <p class="text-gray-400 text-base max-w-[78%] sm:max-w-[85%]">
-              Refugio dedicado a rescatar, rehabilitar y reubicar animales necesitados.
+              {{patrocinador.subtitulo}}
             </p>
             <div class="flex items-center text-blue-400 mt-4">
               <svg  
@@ -43,7 +43,7 @@
                 <path d="M17.657 16.657l-4.243 4.243a2 2 0 0 1 -2.827 0l-4.244 -4.243a8 8 0 1 1 11.314 0z" />
               </svg>
               <span class="pt-1">
-                Ciudad de los Sueños, 56789
+                {{patrocinador.ubicacion}}
               </span>
               
             </div>
@@ -69,7 +69,7 @@
                 <path d="M12 7v5" />
               </svg>
               <span>
-                4:30 PM - 5:45 PM
+                {{patrocinador.hora}}
               </span>
 
             </div>
@@ -128,7 +128,6 @@
               </path>
             </svg>
           </section>
-          
         </article>
       </section>
     </section>
