@@ -8,31 +8,31 @@ const routes: Routes = [
   },
   {
     path: 'img-modal',
-    loadChildren: () => import('./img-modal/img-modal.module').then(m => m.ImgModalPageModule)
+    loadChildren: () => import('./components/img-modal/img-modal.module').then(m => m.ImgModalPageModule)
   },
   {
     path: 'perfil-gato/:id',
-    loadChildren: () => import('./perfil-gato/perfil-gato.module').then(m => m.PerfilGatoPageModule)
+    loadChildren: () => import('./mascota-page/gato/perfil-gato/perfil-gato.module').then(m => m.PerfilGatoPageModule)
   },
   {
     path: 'perfil-perro/:id',
-    loadChildren: () => import('./perfil-perro/perfil-perro.module').then(m => m.PerfilPerroPageModule)
+    loadChildren: () => import('./mascota-page/perro/perfil-perro/perfil-perro.module').then(m => m.PerfilPerroPageModule)
   },
   {
     path: 'welcome-modal',
-    loadChildren: () => import('./welcome-modal/welcome-modal.module').then(m => m.WelcomeModalPageModule)
+    loadChildren: () => import('./components/welcome-modal/welcome-modal.module').then(m => m.WelcomeModalPageModule)
   },
   {
     path: 'favoritos',
-    loadChildren: () => import('./favoritos/favoritos.module').then(m => m.FavoritosPageModule)
+    loadChildren: () => import('./components/favoritos/favoritos.module').then(m => m.FavoritosPageModule)
   },
   {
     path: 'adoptame',
-    loadChildren: () => import('./adoptame/adoptame.module').then( m => m.AdoptamePageModule)
+    loadChildren: () => import('./adoptame/adoptame.module').then(m => m.AdoptamePageModule)
   },
   {
     path: 'cuidados',
-    loadChildren: () => import('./cuidados/cuidados.module').then( m => m.CuidadosPageModule)
+    loadChildren: () => import('./cuidados/cuidados.module').then(m => m.CuidadosPageModule)
   },
   // {
   //   path: 'vetshop',

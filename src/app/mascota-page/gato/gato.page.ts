@@ -1,31 +1,29 @@
-import { Component } from '@angular/core';
-import { InfoPerro } from '../interface/InfoPerro.models';
-import { QuirkyFacts } from '../interface/QuirkyFacts.models';
-import { FirestoreService } from '../service/firestore.service';
+import { Component, OnInit } from '@angular/core';
+import { InfoGato } from '../../interface/InfoGato.models';
+import { QuirkyFacts } from '../../interface/QuirkyFacts.models';
+import { FirestoreService } from '../../service/firestore.service';
 import { Router } from '@angular/router';
-import { ImgModalPage } from '../img-modal/img-modal.page';
 import { ModalController, ToastController } from '@ionic/angular';
 
 @Component({
-  selector: 'app-perro',
-  templateUrl: 'perro.page.html',
-  styleUrls: ['perro.page.scss']
+  selector: 'app-gato',
+  templateUrl: 'gato.page.html',
+  styleUrls: ['gato.page.scss']
 })
-export class perroPage {
-  perros: InfoPerro[] = [];
+export class gatoPage implements OnInit {
+
+  gatos: InfoGato[] = [];
   DatosFreak: QuirkyFacts[] = [];
-  currentDatoIndex: number = 0;
-  infoPerroChunks: InfoPerro[][] = [];
-  filteredPerros: InfoPerro[] = [];
+  filteredGatos: InfoGato[] = [];
   favorites: any[] = [];
+  currentDatoIndex: number = 0;
   searchTerm: string = '';
 
 
-
-  constructor(
-    private firestores: FirestoreService,
-    private toastController: ToastController,
-    private router: Router, private modalController: ModalController) {
+  constructor(private firestores: FirestoreService,
+    private router: Router,
+    private toastController: ToastController
+  ) {
     this.loadData();
   }
 
@@ -39,10 +37,10 @@ export class perroPage {
   }
 
   loadData() {
-    this.firestores.getCollectionChanges<InfoPerro>('InfoPerro').subscribe(perro => {
-      if (perro) {
-        this.perros = perro
-        this.filteredPerros = [...this.perros];
+    this.firestores.getCollectionChanges<InfoGato>('InfoGato').subscribe(gato => {
+      if (gato) {
+        this.gatos = gato
+        this.filteredGatos = [...this.gatos];
       }
     })
   }
@@ -56,46 +54,29 @@ export class perroPage {
     });
   }
 
-  async openModal(imageUrl: string) {
-    const modal = await this.modalController.create({
-      component: ImgModalPage,
-      componentProps: {
-        imageUrl: imageUrl
-      }
-    });
-    return await modal.present();
-  }
-
-  swiperOptions = {
-    slidesPerView: 3,
-    spaceBetween: 10,
-    navigation: true
-  };
-
-
   showRandomQuirkyFact() {
-    const perroIndices = this.DatosFreak.map((fact, index) => {
-      return fact.categoria === 'perro' ? index : null;
+    const gatoIndices = this.DatosFreak.map((fact, index) => {
+      return fact.categoria === 'gato' ? index : null;
     }).filter(index => index !== null);
 
-    if (perroIndices.length > 0) {
-      const randomIndex = perroIndices[Math.floor(Math.random() * perroIndices.length)];
+    if (gatoIndices.length > 0) {
+      const randomIndex = gatoIndices[Math.floor(Math.random() * gatoIndices.length)];
       this.currentDatoIndex = randomIndex;
     } else {
       console.log("No hay datos disponibles con la categoría Gato");
     }
   }
 
-  navigateToTargetPage(segment: string, perro: InfoPerro) {
-    this.router.navigate([segment, perro.id], { state: { data: perro } });
+  navigateToTargetPage(segment: string, gato: InfoGato) {
+    this.router.navigate([segment, gato.id], { state: { data: gato } });
   }
 
-  filterPerros() {
+  filterGatos() {
     console.log('Search term:', this.searchTerm);
-    this.filteredPerros = this.perros.filter(gato =>
+    this.filteredGatos = this.gatos.filter(gato =>
       gato.Raza.toLowerCase().includes(this.searchTerm.toLowerCase())
     );
-    console.log('Filtered gatos:', this.filteredPerros);
+    console.log('Filtered gatos:', this.filteredGatos);
   }
 
   isInFavorites(animal: any, type: string): boolean {
@@ -129,5 +110,4 @@ export class perroPage {
     localStorage.setItem('favorites', JSON.stringify(favorites));
     this.favorites = favorites;
   }
-
 }

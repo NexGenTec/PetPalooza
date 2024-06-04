@@ -1,29 +1,31 @@
-import { Component, OnInit } from '@angular/core';
-import { InfoGato } from '../interface/InfoGato.models';
-import { QuirkyFacts } from '../interface/QuirkyFacts.models';
-import { FirestoreService } from '../service/firestore.service';
+import { Component } from '@angular/core';
+import { InfoPerro } from '../../interface/InfoPerro.models';
+import { QuirkyFacts } from '../../interface/QuirkyFacts.models';
+import { FirestoreService } from '../../service/firestore.service';
 import { Router } from '@angular/router';
+import { ImgModalPage } from '../../components/img-modal/img-modal.page';
 import { ModalController, ToastController } from '@ionic/angular';
 
 @Component({
-  selector: 'app-gato',
-  templateUrl: 'gato.page.html',
-  styleUrls: ['gato.page.scss']
+  selector: 'app-perro',
+  templateUrl: 'perro.page.html',
+  styleUrls: ['perro.page.scss']
 })
-export class gatoPage implements OnInit {
-
-  gatos: InfoGato[] = [];
+export class perroPage {
+  perros: InfoPerro[] = [];
   DatosFreak: QuirkyFacts[] = [];
-  filteredGatos: InfoGato[] = [];
-  favorites: any[] = [];
   currentDatoIndex: number = 0;
+  infoPerroChunks: InfoPerro[][] = [];
+  filteredPerros: InfoPerro[] = [];
+  favorites: any[] = [];
   searchTerm: string = '';
 
 
-  constructor(private firestores: FirestoreService,
-    private router: Router,
-    private toastController: ToastController
-  ) {
+
+  constructor(
+    private firestores: FirestoreService,
+    private toastController: ToastController,
+    private router: Router, private modalController: ModalController) {
     this.loadData();
   }
 
@@ -37,10 +39,10 @@ export class gatoPage implements OnInit {
   }
 
   loadData() {
-    this.firestores.getCollectionChanges<InfoGato>('InfoGato').subscribe(gato => {
-      if (gato) {
-        this.gatos = gato
-        this.filteredGatos = [...this.gatos];
+    this.firestores.getCollectionChanges<InfoPerro>('InfoPerro').subscribe(perro => {
+      if (perro) {
+        this.perros = perro
+        this.filteredPerros = [...this.perros];
       }
     })
   }
@@ -54,29 +56,46 @@ export class gatoPage implements OnInit {
     });
   }
 
+  async openModal(imageUrl: string) {
+    const modal = await this.modalController.create({
+      component: ImgModalPage,
+      componentProps: {
+        imageUrl: imageUrl
+      }
+    });
+    return await modal.present();
+  }
+
+  swiperOptions = {
+    slidesPerView: 3,
+    spaceBetween: 10,
+    navigation: true
+  };
+
+
   showRandomQuirkyFact() {
-    const gatoIndices = this.DatosFreak.map((fact, index) => {
-      return fact.categoria === 'gato' ? index : null;
+    const perroIndices = this.DatosFreak.map((fact, index) => {
+      return fact.categoria === 'perro' ? index : null;
     }).filter(index => index !== null);
 
-    if (gatoIndices.length > 0) {
-      const randomIndex = gatoIndices[Math.floor(Math.random() * gatoIndices.length)];
+    if (perroIndices.length > 0) {
+      const randomIndex = perroIndices[Math.floor(Math.random() * perroIndices.length)];
       this.currentDatoIndex = randomIndex;
     } else {
       console.log("No hay datos disponibles con la categoría Gato");
     }
   }
 
-  navigateToTargetPage(segment: string, gato: InfoGato) {
-    this.router.navigate([segment, gato.id], { state: { data: gato } });
+  navigateToTargetPage(segment: string, perro: InfoPerro) {
+    this.router.navigate([segment, perro.id], { state: { data: perro } });
   }
 
-  filterGatos() {
+  filterPerros() {
     console.log('Search term:', this.searchTerm);
-    this.filteredGatos = this.gatos.filter(gato =>
+    this.filteredPerros = this.perros.filter(gato =>
       gato.Raza.toLowerCase().includes(this.searchTerm.toLowerCase())
     );
-    console.log('Filtered gatos:', this.filteredGatos);
+    console.log('Filtered gatos:', this.filteredPerros);
   }
 
   isInFavorites(animal: any, type: string): boolean {
@@ -110,4 +129,5 @@ export class gatoPage implements OnInit {
     localStorage.setItem('favorites', JSON.stringify(favorites));
     this.favorites = favorites;
   }
+
 }
