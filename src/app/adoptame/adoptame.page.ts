@@ -14,6 +14,12 @@ export class AdoptamePage implements OnInit {
   Patrocinadores: Patrocinadores[] = [];
   currentDatoIndex: number = 0;
 
+  colorsCards = [
+    { id: 1, bg: '#FFEBE5', text: '#7e402d' },
+    { id: 2, bg: '#FDF1DB', text: '#6e5628' },
+    { id: 3, bg: '#CFECFF', text: '#215a80' }
+  ];
+
   constructor(private firestores: FirestoreService,
     private router: Router,
     private toastController: ToastController

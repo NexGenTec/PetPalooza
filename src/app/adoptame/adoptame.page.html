@@ -9,7 +9,6 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-
   <div class="px-3 py-5 bg-gray-50">
     <section class="max-w-md w-full mx-auto">
       <div class="w-full max-w-[570px] rounded-[20px] px-8 pt-4 text-center">
@@ -18,14 +17,16 @@
       </div>
       <!-- Refugios Card -->
       <section class="grid grid-cols-1 gap-y-6">
-
-        <article class="w-full bg-[#FFEBE5] rounded-3xl p-5 relative" *ngFor="let patrocinador of Patrocinadores">
+        <article 
+          *ngFor="let patrocinador of Patrocinadores; let i = index"
+          class="w-full rounded-3xl p-5 relative"
+          [ngStyle]="{'background-color': colorsCards[i % colorsCards.length].bg}">
           <header class="">
             <h2 class="text-2xl text-gray-600 font-bold mb-2 max-w-[78%]"> {{patrocinador.titulo}} </h2>
             <p class="text-gray-400 text-base max-w-[78%] sm:max-w-[85%]">
               {{patrocinador.subtitulo}}
             </p>
-            <div class="flex items-center text-blue-400 mt-4">
+            <div class="flex items-center mt-4" [ngStyle]="{'color': colorsCards[i % colorsCards.length].text}">
               <svg  
                 xmlns="http://www.w3.org/2000/svg"  
                 width="24"  
@@ -45,12 +46,11 @@
               <span class="pt-1">
                 {{patrocinador.ubicacion}}
               </span>
-              
             </div>
           </header>
           <hr class="border-gray-300 my-5"/>
-          <footer class="flex justify-center min-[338px]:justify-between items-center text-gray-600 flex-wrap gap-y-1">
-            <div class="flex">
+          <footer class="flex justify-center min-[338px]:justify-between items-center flex-wrap gap-y-1">
+            <div class="flex text-gray-600">
               <svg  
                 xmlns="http://www.w3.org/2000/svg"  
                 width="24"  
@@ -71,9 +71,8 @@
               <span>
                 {{patrocinador.hora}}
               </span>
-
             </div>
-            <div class="flex items-center text-blue-400 gap-1">
+            <div class="flex items-center gap-1" [ngStyle]="{'color': colorsCards[i % colorsCards.length].text}">
               <svg  
                 xmlns="http://www.w3.org/2000/svg" 
                 width="24"  
@@ -117,7 +116,7 @@
                 stroke-linejoin="round"  
                 class="h-6 w-6 flex-shrink-0 mr-1">
                 <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                <path d="M7 10v4h3v7h4v-7h3l1 -4h-4v-2a1 1 0 0 1 1 -1h3v-4h-3a5 5 0 0 0 -5 5v2h-3" />
+              <path d="M7 10v4h3v7h4v-7h3l1 -4h-4v-2a1 1 0 0 1 1 -1h3v-4h-3a5 5 0 0 0 -5 5v2h-3" />
               </svg>
             </div>
           </footer>
