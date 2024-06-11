@@ -3,21 +3,23 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
-
-import { AdoptamePageRoutingModule } from './adoptame-routing.module';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { AdoptamePage } from './adoptame.page';
+
+import { ImgModalSwiperPageRoutingModule } from './img-modal-swiper-routing.module';
+
+import { ImgModalSwiperPage } from './img-modal-swiper.page';
 import { register } from 'swiper/element/bundle';
 register();
+
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    AdoptamePageRoutingModule
+    ImgModalSwiperPageRoutingModule
   ],
-  declarations: [AdoptamePage],
+  declarations: [ImgModalSwiperPage],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
-export class AdoptamePageModule { }
+export class ImgModalSwiperPageModule { }

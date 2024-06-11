@@ -4,6 +4,7 @@ import { ImgModalPage } from '../../../components/img-modal/img-modal.page';
 import { ModalController } from '@ionic/angular';
 import { InfoPerro, Temperamento } from '../../../interface/InfoPerro.models';
 import { FirestoreService } from '../../../service/firestore.service';
+import { ImgModalSwiperPage } from './img-modal-swiper/img-modal-swiper.page';
 
 @Component({
   selector: 'app-perfil-perro',
@@ -21,10 +22,25 @@ export class PerfilPerroPage implements OnInit {
   infoOrigin!: string;
   infoHistory!: string;
 
-  perro: InfoPerro[] = [];
+  perro: InfoPerro[] = [{
+    Img: { img1: 'url1', img2: 'url2', img3: 'url3' },
+    origen: '',
+    fechaCreacion: undefined,
+    Longevidad: '',
+    Temperamento: [],
+    Año: '',
+    historia: '',
+    CaractFisicas: undefined,
+    id: 0,
+    Raza: '',
+    imgPerfil: '',
+    cuidados: undefined
+  }];
   selectedPerroId!: number;
   showImagesContainer: boolean = false;
   temperamentoChips: Temperamento[] = [];
+
+
 
   infoPerro: any = (this.perro as any).default;
 
@@ -119,6 +135,14 @@ export class PerfilPerroPage implements OnInit {
       componentProps: {
         imageUrl: imageUrl
       }
+    });
+    return await modal.present();
+  }
+
+  async openModalSwiper(images: string[]) {
+    const modal = await this.modalController.create({
+      component: ImgModalSwiperPage,
+      componentProps: { images }
     });
     return await modal.present();
   }

@@ -7,7 +7,11 @@ const routes: Routes = [
   {
     path: '',
     component: PerfilPerroPage
+  },  {
+    path: 'img-modal-swiper',
+    loadChildren: () => import('./img-modal-swiper/img-modal-swiper.module').then( m => m.ImgModalSwiperPageModule)
   },
+
 ];
 
 @NgModule({
