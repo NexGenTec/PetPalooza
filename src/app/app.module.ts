@@ -14,7 +14,6 @@ import {
   faCheckSquare as farCheckSquare,
 } from '@fortawesome/free-regular-svg-icons';
 
-
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
@@ -23,6 +22,7 @@ import { getAnalytics, provideAnalytics, ScreenTrackingService, UserTrackingServ
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { getDatabase, provideDatabase } from '@angular/fire/database';
 import { getStorage, provideStorage } from '@angular/fire/storage';
+import { HttpClientModule } from '@angular/common/http';
 import { AngularFireModule } from '@angular/fire/compat';
 import { environment } from 'src/environments/environment';
 import { IonicStorageModule } from '@ionic/storage-angular';
@@ -32,15 +32,13 @@ const routes: Routes = [
 
 ]
 
-
-
-
 @NgModule({
   declarations: [AppComponent],
   imports: [BrowserModule, IonicModule.forRoot(),
     AngularFireModule.initializeApp(environment.firebase),
     IonicStorageModule.forRoot(),
     AppRoutingModule,
+    HttpClientModule,
     RouterModule.forRoot(routes, { useHash: true }),
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()), provideAnalytics(() => getAnalytics()), provideFirestore(() => getFirestore()), provideDatabase(() => getDatabase()), provideStorage(() => getStorage()),
