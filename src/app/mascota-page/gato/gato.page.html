@@ -1,12 +1,12 @@
 <ion-header class="bg-white shadow-none border-b border-gray-200">
-  <div class="flex gap-2 items-center mx-3">
-    <img 
-      class="max-h-14 mx-auto"
-      alt="logo PetPalooza" 
-      src="assets/img/logo/PetPalooza.png" 
-    />
-    <ion-searchbar class="custom my-3" placeholder="Buscar" mode="md" [(ngModel)]="searchTerm" (ionChange)="filterGatos()"></ion-searchbar>
-  </div>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title class="mx-auto">
+      <ion-searchbar class="custom my-3" placeholder="Buscar" mode="md" [(ngModel)]="searchTerm" (ionChange)="filterGatos()"></ion-searchbar>
+    </ion-title>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
