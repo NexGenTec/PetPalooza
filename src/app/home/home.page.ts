@@ -7,6 +7,7 @@ import { QuirkyFacts } from '../interface/QuirkyFacts.models';
 import { Storage } from '@ionic/storage';
 import { WelcomeModalPage } from '../components/welcome-modal/welcome-modal.page';
 import { ModalController, ToastController } from '@ionic/angular';
+import { NotificationsService } from '../service/notifications.service';
 
 
 @Component({
@@ -50,11 +51,13 @@ export class homePage implements OnInit {
     private firestores: FirestoreService,
     private storage: Storage,
     private modalController: ModalController,
-    private toastController: ToastController
+    private toastController: ToastController,
+    private pushNotificationService: NotificationsService
   ) {
   }
 
   ngOnInit(): void {
+    this.pushNotificationService.initPushNotifications();
     this.getQuirkyFacts();
     this.loadFavorites();
     this.loadData();
