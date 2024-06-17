@@ -1,49 +1,17 @@
 <ion-header class="bg-white shadow-none border-b border-gray-200">
-  <div class="flex gap-2 items-center mx-3">
-    <img 
-      class="max-h-14 mx-auto"
-      alt="logo PetPalooza" 
-      src="assets/img/logo/PetPalooza.png" 
-    />
-    <ion-searchbar class="custom my-3" placeholder="Buscar" mode="md"></ion-searchbar>
-  </div>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title class="mx-auto">
+      <ion-searchbar class="custom my-3" placeholder="Buscar" mode="md"></ion-searchbar>
+    </ion-title>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
   <div class="px-3 pt-5 bg-gray-50">
     <section class="max-w-md w-full mx-auto">
-
-
-      <!-- Dato Freak -->
-    <ion-accordion-group [value]="['first']" mode="ios" class="mb-6 mt-2 border border-stone shadow-lg rounded-lg overflow-hidden">
-      <ion-accordion value="first" *ngIf="DatosFreak[currentDatoIndex]?.categoria === 'perro'">
-        <ion-item slot="header">
-          <div class="flex items-center gap-4 py-3">
-            <span class="shrink-0 rounded-full bg-blue-400 p-2 text-white">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-                class="h-4 w-4"
-              >
-                <path
-                  fill-rule="evenodd"
-                  d="M18 3a1 1 0 00-1.447-.894L8.763 6H5a3 3 0 000 6h.28l1.771 5.316A1 1 0 008 18h1a1 1 0 001-1v-4.382l6.553 3.276A1 1 0 0018 15V3z"
-                  clip-rule="evenodd"
-                ></path>
-              </svg>
-            </span>
-            <p class="font-medium sm:text-lg text-blue-600">{{DatosFreak[currentDatoIndex]?.Titulo}}</p>
-          </div>
-        </ion-item>
-        <div class="px-3 py-2 bg-white" slot="content">
-          <p class="text-gray-600">
-            {{DatosFreak[currentDatoIndex]?.descripcion}}
-          </p>
-        </div>
-      </ion-accordion>
-    </ion-accordion-group>
-
 
      <!-- Divider -->
     <hr class="my-5 border-gray-500/30">
@@ -52,60 +20,6 @@
       <h1 class="pb-2 text-3xl font-medium">Todas las Aves</h1>
       <span class="bg-blue-400 mx-auto mb-4 inline-block h-1 w-[90px] rounded"></span>
     </div>
-
-
-
-    
-
-    <!-- <span
-      class="inline-block whitespace-nowrap rounded-full bg-[#F7E3BC] text-gray-600 px-4 pb-[0.25em] pt-[0.35em] text-center align-baseline text-[0.75em] font-bold leading-none">
-      Primary
-    </span> -->
-
-    <!-- <section class="flex justify-start gap-3"> 
-
-      <article class="bg-[#F7E3BC] text-gray-600 rounded-full flex justify-start items-center text-sm">
-        <section class="flex justify-center items-center w-10 h-10 rounded-full shadow-md bg-[#E2D4B7]">
-          <svg viewBox="0 0 15 15" class="w-6 fill-gray-700">
-            <path d="M7.5 0.875C5.49797 0.875 3.875 2.49797 3.875 4.5C3.875 6.15288 4.98124 7.54738 6.49373 7.98351C5.2997 8.12901 4.27557 8.55134 3.50407 9.31167C2.52216 10.2794 2.02502 11.72 2.02502 13.5999C2.02502 13.8623 2.23769 14.0749 2.50002 14.0749C2.76236 14.0749 2.97502 13.8623 2.97502 13.5999C2.97502 11.8799 3.42786 10.7206 4.17091 9.9883C4.91536 9.25463 6.02674 8.87499 7.49995 8.87499C8.97317 8.87499 10.0846 9.25463 10.8291 9.98831C11.5721 10.7206 12.025 11.8799 12.025 13.5999C12.025 13.8623 12.2376 14.0749 12.5 14.0749C12.7623 14.075 12.975 13.8623 12.975 13.6C12.975 11.72 12.4778 10.2794 11.4959 9.31166C10.7244 8.55135 9.70025 8.12903 8.50625 7.98352C10.0187 7.5474 11.125 6.15289 11.125 4.5C11.125 2.49797 9.50203 0.875 7.5 0.875ZM4.825 4.5C4.825 3.02264 6.02264 1.825 7.5 1.825C8.97736 1.825 10.175 3.02264 10.175 4.5C10.175 5.97736 8.97736 7.175 7.5 7.175C6.02264 7.175 4.825 5.97736 4.825 4.5Z">
-            </path>
-          </svg>
-        </section>
-        <p class="pl-2 pr-4 flex-grow text-center">Cacatúas</p>
-      </article>
-
-      <article class="bg-[#DCECE3] text-gray-600 rounded-full flex justify-start items-center text-sm">
-        <section class="flex justify-center items-center w-10 h-10 rounded-full shadow-md bg-[#D1E3D9]">
-          <svg viewBox="0 0 15 15" class="w-6 fill-gray-700">
-            <path d="M7.5 0.875C5.49797 0.875 3.875 2.49797 3.875 4.5C3.875 6.15288 4.98124 7.54738 6.49373 7.98351C5.2997 8.12901 4.27557 8.55134 3.50407 9.31167C2.52216 10.2794 2.02502 11.72 2.02502 13.5999C2.02502 13.8623 2.23769 14.0749 2.50002 14.0749C2.76236 14.0749 2.97502 13.8623 2.97502 13.5999C2.97502 11.8799 3.42786 10.7206 4.17091 9.9883C4.91536 9.25463 6.02674 8.87499 7.49995 8.87499C8.97317 8.87499 10.0846 9.25463 10.8291 9.98831C11.5721 10.7206 12.025 11.8799 12.025 13.5999C12.025 13.8623 12.2376 14.0749 12.5 14.0749C12.7623 14.075 12.975 13.8623 12.975 13.6C12.975 11.72 12.4778 10.2794 11.4959 9.31166C10.7244 8.55135 9.70025 8.12903 8.50625 7.98352C10.0187 7.5474 11.125 6.15289 11.125 4.5C11.125 2.49797 9.50203 0.875 7.5 0.875ZM4.825 4.5C4.825 3.02264 6.02264 1.825 7.5 1.825C8.97736 1.825 10.175 3.02264 10.175 4.5C10.175 5.97736 8.97736 7.175 7.5 7.175C6.02264 7.175 4.825 5.97736 4.825 4.5Z">
-            </path>
-          </svg>
-        </section>
-        <p class="pl-2 pr-4 flex-grow text-center">Cacatúas</p>
-      </article>
-
-      <article class="bg-[#C6E8F0] text-gray-600 rounded-full flex justify-start items-center text-sm">
-        <section class="flex justify-center items-center w-10 h-10 rounded-full shadow-md bg-[#A7E0EE]">
-          <svg viewBox="0 0 15 15" class="w-6 fill-gray-700">
-            <path d="M7.5 0.875C5.49797 0.875 3.875 2.49797 3.875 4.5C3.875 6.15288 4.98124 7.54738 6.49373 7.98351C5.2997 8.12901 4.27557 8.55134 3.50407 9.31167C2.52216 10.2794 2.02502 11.72 2.02502 13.5999C2.02502 13.8623 2.23769 14.0749 2.50002 14.0749C2.76236 14.0749 2.97502 13.8623 2.97502 13.5999C2.97502 11.8799 3.42786 10.7206 4.17091 9.9883C4.91536 9.25463 6.02674 8.87499 7.49995 8.87499C8.97317 8.87499 10.0846 9.25463 10.8291 9.98831C11.5721 10.7206 12.025 11.8799 12.025 13.5999C12.025 13.8623 12.2376 14.0749 12.5 14.0749C12.7623 14.075 12.975 13.8623 12.975 13.6C12.975 11.72 12.4778 10.2794 11.4959 9.31166C10.7244 8.55135 9.70025 8.12903 8.50625 7.98352C10.0187 7.5474 11.125 6.15289 11.125 4.5C11.125 2.49797 9.50203 0.875 7.5 0.875ZM4.825 4.5C4.825 3.02264 6.02264 1.825 7.5 1.825C8.97736 1.825 10.175 3.02264 10.175 4.5C10.175 5.97736 8.97736 7.175 7.5 7.175C6.02264 7.175 4.825 5.97736 4.825 4.5Z">
-            </path>
-          </svg>
-        </section>
-        <p class="pl-2 pr-4 flex-grow text-center">Cacatúas</p>
-      </article>
-
-      <article class="bg-[#F1DED4] text-gray-600 rounded-full flex justify-start items-center text-sm">
-        <section class="flex justify-center items-center w-10 h-10 rounded-full shadow-md bg-[#E7D4CA]">
-          <svg viewBox="0 0 15 15" class="w-6 fill-gray-700">
-            <path d="M7.5 0.875C5.49797 0.875 3.875 2.49797 3.875 4.5C3.875 6.15288 4.98124 7.54738 6.49373 7.98351C5.2997 8.12901 4.27557 8.55134 3.50407 9.31167C2.52216 10.2794 2.02502 11.72 2.02502 13.5999C2.02502 13.8623 2.23769 14.0749 2.50002 14.0749C2.76236 14.0749 2.97502 13.8623 2.97502 13.5999C2.97502 11.8799 3.42786 10.7206 4.17091 9.9883C4.91536 9.25463 6.02674 8.87499 7.49995 8.87499C8.97317 8.87499 10.0846 9.25463 10.8291 9.98831C11.5721 10.7206 12.025 11.8799 12.025 13.5999C12.025 13.8623 12.2376 14.0749 12.5 14.0749C12.7623 14.075 12.975 13.8623 12.975 13.6C12.975 11.72 12.4778 10.2794 11.4959 9.31166C10.7244 8.55135 9.70025 8.12903 8.50625 7.98352C10.0187 7.5474 11.125 6.15289 11.125 4.5C11.125 2.49797 9.50203 0.875 7.5 0.875ZM4.825 4.5C4.825 3.02264 6.02264 1.825 7.5 1.825C8.97736 1.825 10.175 3.02264 10.175 4.5C10.175 5.97736 8.97736 7.175 7.5 7.175C6.02264 7.175 4.825 5.97736 4.825 4.5Z">
-            </path>
-          </svg>
-        </section>
-        <p class="pl-2 pr-4 flex-grow text-center">Cacatúas</p>
-      </article>
-
-    </section> -->
-
     <!-- Categoria 1 -->
     <section id="Exhibition">
 
@@ -114,254 +28,51 @@
       </div>
   
       <swiper-container [loop]="false" class="py-5" [breakpoints]="breakpointsRegisteredAnimals">
-        <swiper-slide>
-          <ion-tab-button tab="gato" href="/tabs/gato">
-            <ng-container>
-              <article class="bg-[#F7E3BC] text-gray-600 rounded-full flex justify-start items-center text-sm w-full">
-                <section class="flex flex-shrink-0 justify-center items-center w-10 h-10 rounded-full shadow-md bg-[#E2D4B7]">
-                  <svg viewBox="0 0 15 15" class="w-6 fill-gray-700">
-                    <path d="M7.5 0.875C5.49797 0.875 3.875 2.49797 3.875 4.5C3.875 6.15288 4.98124 7.54738 6.49373 7.98351C5.2997 8.12901 4.27557 8.55134 3.50407 9.31167C2.52216 10.2794 2.02502 11.72 2.02502 13.5999C2.02502 13.8623 2.23769 14.0749 2.50002 14.0749C2.76236 14.0749 2.97502 13.8623 2.97502 13.5999C2.97502 11.8799 3.42786 10.7206 4.17091 9.9883C4.91536 9.25463 6.02674 8.87499 7.49995 8.87499C8.97317 8.87499 10.0846 9.25463 10.8291 9.98831C11.5721 10.7206 12.025 11.8799 12.025 13.5999C12.025 13.8623 12.2376 14.0749 12.5 14.0749C12.7623 14.075 12.975 13.8623 12.975 13.6C12.975 11.72 12.4778 10.2794 11.4959 9.31166C10.7244 8.55135 9.70025 8.12903 8.50625 7.98352C10.0187 7.5474 11.125 6.15289 11.125 4.5C11.125 2.49797 9.50203 0.875 7.5 0.875ZM4.825 4.5C4.825 3.02264 6.02264 1.825 7.5 1.825C8.97736 1.825 10.175 3.02264 10.175 4.5C10.175 5.97736 8.97736 7.175 7.5 7.175C6.02264 7.175 4.825 5.97736 4.825 4.5Z">
-                    </path>
-                  </svg>
-                </section>
-                <p class="flex-grow text-start pl-2 line-clamp-2">Cacatúas</p>
-              </article>
-            </ng-container>
-          </ion-tab-button>
-        </swiper-slide>
-  
-        <swiper-slide>
-          <ion-tab-button tab="perro" href="/tabs/perro">
-            <ng-container>
-              <article class="bg-[#DCECE3] text-gray-600 rounded-full flex justify-start items-center text-sm w-full">
-                <section class="flex flex-shrink-0 justify-center items-center w-10 h-10 rounded-full shadow-md bg-[#D1E3D9]">
-                  <svg viewBox="0 0 15 15" class="w-6 fill-gray-700">
-                    <path d="M7.5 0.875C5.49797 0.875 3.875 2.49797 3.875 4.5C3.875 6.15288 4.98124 7.54738 6.49373 7.98351C5.2997 8.12901 4.27557 8.55134 3.50407 9.31167C2.52216 10.2794 2.02502 11.72 2.02502 13.5999C2.02502 13.8623 2.23769 14.0749 2.50002 14.0749C2.76236 14.0749 2.97502 13.8623 2.97502 13.5999C2.97502 11.8799 3.42786 10.7206 4.17091 9.9883C4.91536 9.25463 6.02674 8.87499 7.49995 8.87499C8.97317 8.87499 10.0846 9.25463 10.8291 9.98831C11.5721 10.7206 12.025 11.8799 12.025 13.5999C12.025 13.8623 12.2376 14.0749 12.5 14.0749C12.7623 14.075 12.975 13.8623 12.975 13.6C12.975 11.72 12.4778 10.2794 11.4959 9.31166C10.7244 8.55135 9.70025 8.12903 8.50625 7.98352C10.0187 7.5474 11.125 6.15289 11.125 4.5C11.125 2.49797 9.50203 0.875 7.5 0.875ZM4.825 4.5C4.825 3.02264 6.02264 1.825 7.5 1.825C8.97736 1.825 10.175 3.02264 10.175 4.5C10.175 5.97736 8.97736 7.175 7.5 7.175C6.02264 7.175 4.825 5.97736 4.825 4.5Z">
-                    </path>
-                  </svg>
-                </section>
-                <p class="flex-grow text-start pl-2 line-clamp-2">Agapornis</p>
-              </article>
-            </ng-container>
-          </ion-tab-button>
-        </swiper-slide>
-  
-        <swiper-slide>
-          <ion-tab-button tab="perro" href="/tabs/perro">
-            <ng-container>
-              <article class="bg-[#C6E8F0] text-gray-600 rounded-full flex justify-start items-center text-sm w-full">
-                <section class="flex flex-shrink-0 justify-center items-center w-10 h-10 rounded-full shadow-md bg-[#A7E0EE]">
-                  <svg viewBox="0 0 15 15" class="w-6 fill-gray-700">
-                    <path d="M7.5 0.875C5.49797 0.875 3.875 2.49797 3.875 4.5C3.875 6.15288 4.98124 7.54738 6.49373 7.98351C5.2997 8.12901 4.27557 8.55134 3.50407 9.31167C2.52216 10.2794 2.02502 11.72 2.02502 13.5999C2.02502 13.8623 2.23769 14.0749 2.50002 14.0749C2.76236 14.0749 2.97502 13.8623 2.97502 13.5999C2.97502 11.8799 3.42786 10.7206 4.17091 9.9883C4.91536 9.25463 6.02674 8.87499 7.49995 8.87499C8.97317 8.87499 10.0846 9.25463 10.8291 9.98831C11.5721 10.7206 12.025 11.8799 12.025 13.5999C12.025 13.8623 12.2376 14.0749 12.5 14.0749C12.7623 14.075 12.975 13.8623 12.975 13.6C12.975 11.72 12.4778 10.2794 11.4959 9.31166C10.7244 8.55135 9.70025 8.12903 8.50625 7.98352C10.0187 7.5474 11.125 6.15289 11.125 4.5C11.125 2.49797 9.50203 0.875 7.5 0.875ZM4.825 4.5C4.825 3.02264 6.02264 1.825 7.5 1.825C8.97736 1.825 10.175 3.02264 10.175 4.5C10.175 5.97736 8.97736 7.175 7.5 7.175C6.02264 7.175 4.825 5.97736 4.825 4.5Z">
-                    </path>
-                  </svg>
-                </section>
-                <p class="flex-grow text-start pl-2 line-clamp-2">Loros grises africanos</p>
-              </article>
-            </ng-container>
-          </ion-tab-button>
-        </swiper-slide>
-  
-        <swiper-slide>
-          <ion-tab-button tab="perro" href="/tabs/perro">
-            <ng-container>
-              <article class="bg-[#F1DED4] text-gray-600 rounded-full flex justify-start items-center text-sm w-full">
-                <section class="flex flex-shrink-0 justify-center items-center w-10 h-10 rounded-full shadow-md bg-[#E7D4CA]">
-                  <svg viewBox="0 0 15 15" class="w-6 fill-gray-700">
-                    <path d="M7.5 0.875C5.49797 0.875 3.875 2.49797 3.875 4.5C3.875 6.15288 4.98124 7.54738 6.49373 7.98351C5.2997 8.12901 4.27557 8.55134 3.50407 9.31167C2.52216 10.2794 2.02502 11.72 2.02502 13.5999C2.02502 13.8623 2.23769 14.0749 2.50002 14.0749C2.76236 14.0749 2.97502 13.8623 2.97502 13.5999C2.97502 11.8799 3.42786 10.7206 4.17091 9.9883C4.91536 9.25463 6.02674 8.87499 7.49995 8.87499C8.97317 8.87499 10.0846 9.25463 10.8291 9.98831C11.5721 10.7206 12.025 11.8799 12.025 13.5999C12.025 13.8623 12.2376 14.0749 12.5 14.0749C12.7623 14.075 12.975 13.8623 12.975 13.6C12.975 11.72 12.4778 10.2794 11.4959 9.31166C10.7244 8.55135 9.70025 8.12903 8.50625 7.98352C10.0187 7.5474 11.125 6.15289 11.125 4.5C11.125 2.49797 9.50203 0.875 7.5 0.875ZM4.825 4.5C4.825 3.02264 6.02264 1.825 7.5 1.825C8.97736 1.825 10.175 3.02264 10.175 4.5C10.175 5.97736 8.97736 7.175 7.5 7.175C6.02264 7.175 4.825 5.97736 4.825 4.5Z">
-                    </path>
-                  </svg>
-                </section>
-                <p class="flex-grow text-start pl-2 line-clamp-2">Periquitos australianos</p>
-              </article>
-            </ng-container>
-          </ion-tab-button>
-        </swiper-slide>
-  
-        <swiper-slide>
-          <ion-tab-button tab="perro" href="/tabs/perro">
-            <ng-container>
-              <article class="bg-[#F7E3BC] text-gray-600 rounded-full flex justify-start items-center text-sm w-full">
-                <section class="flex flex-shrink-0 justify-center items-center w-10 h-10 rounded-full shadow-md bg-[#E2D4B7]">
-                  <svg viewBox="0 0 15 15" class="w-6 fill-gray-700">
-                    <path d="M7.5 0.875C5.49797 0.875 3.875 2.49797 3.875 4.5C3.875 6.15288 4.98124 7.54738 6.49373 7.98351C5.2997 8.12901 4.27557 8.55134 3.50407 9.31167C2.52216 10.2794 2.02502 11.72 2.02502 13.5999C2.02502 13.8623 2.23769 14.0749 2.50002 14.0749C2.76236 14.0749 2.97502 13.8623 2.97502 13.5999C2.97502 11.8799 3.42786 10.7206 4.17091 9.9883C4.91536 9.25463 6.02674 8.87499 7.49995 8.87499C8.97317 8.87499 10.0846 9.25463 10.8291 9.98831C11.5721 10.7206 12.025 11.8799 12.025 13.5999C12.025 13.8623 12.2376 14.0749 12.5 14.0749C12.7623 14.075 12.975 13.8623 12.975 13.6C12.975 11.72 12.4778 10.2794 11.4959 9.31166C10.7244 8.55135 9.70025 8.12903 8.50625 7.98352C10.0187 7.5474 11.125 6.15289 11.125 4.5C11.125 2.49797 9.50203 0.875 7.5 0.875ZM4.825 4.5C4.825 3.02264 6.02264 1.825 7.5 1.825C8.97736 1.825 10.175 3.02264 10.175 4.5C10.175 5.97736 8.97736 7.175 7.5 7.175C6.02264 7.175 4.825 5.97736 4.825 4.5Z">
-                    </path>
-                  </svg>
-                </section>
-                <p class="flex-grow text-start pl-2 line-clamp-2">Rosellas</p>
-              </article>
-            </ng-container>
-          </ion-tab-button>
-        </swiper-slide>
-  
-        <swiper-slide>
-          <ion-tab-button tab="perro" href="/tabs/perro">
-            <ng-container>
-              <article class="bg-[#DCECE3] text-gray-600 rounded-full flex justify-start items-center text-sm w-full">
-                <section class="flex flex-shrink-0 justify-center items-center w-10 h-10 rounded-full shadow-md bg-[#D1E3D9]">
-                  <svg viewBox="0 0 15 15" class="w-6 fill-gray-700">
-                    <path d="M7.5 0.875C5.49797 0.875 3.875 2.49797 3.875 4.5C3.875 6.15288 4.98124 7.54738 6.49373 7.98351C5.2997 8.12901 4.27557 8.55134 3.50407 9.31167C2.52216 10.2794 2.02502 11.72 2.02502 13.5999C2.02502 13.8623 2.23769 14.0749 2.50002 14.0749C2.76236 14.0749 2.97502 13.8623 2.97502 13.5999C2.97502 11.8799 3.42786 10.7206 4.17091 9.9883C4.91536 9.25463 6.02674 8.87499 7.49995 8.87499C8.97317 8.87499 10.0846 9.25463 10.8291 9.98831C11.5721 10.7206 12.025 11.8799 12.025 13.5999C12.025 13.8623 12.2376 14.0749 12.5 14.0749C12.7623 14.075 12.975 13.8623 12.975 13.6C12.975 11.72 12.4778 10.2794 11.4959 9.31166C10.7244 8.55135 9.70025 8.12903 8.50625 7.98352C10.0187 7.5474 11.125 6.15289 11.125 4.5C11.125 2.49797 9.50203 0.875 7.5 0.875ZM4.825 4.5C4.825 3.02264 6.02264 1.825 7.5 1.825C8.97736 1.825 10.175 3.02264 10.175 4.5C10.175 5.97736 8.97736 7.175 7.5 7.175C6.02264 7.175 4.825 5.97736 4.825 4.5Z">
-                    </path>
-                  </svg>
-                </section>
-                <p class="flex-grow text-start pl-2 line-clamp-2">Pinzones</p>
-              </article>
-            </ng-container>
-          </ion-tab-button>
-        </swiper-slide>
-  
-        <swiper-slide>
-          <ion-tab-button tab="perro" href="/tabs/perro">
-            <ng-container>
-              <article class="bg-[#C6E8F0] text-gray-600 rounded-full flex justify-start items-center text-sm w-full">
-                <section class="flex flex-shrink-0 justify-center items-center w-10 h-10 rounded-full shadow-md bg-[#A7E0EE]">
-                  <svg viewBox="0 0 15 15" class="w-6 fill-gray-700">
-                    <path d="M7.5 0.875C5.49797 0.875 3.875 2.49797 3.875 4.5C3.875 6.15288 4.98124 7.54738 6.49373 7.98351C5.2997 8.12901 4.27557 8.55134 3.50407 9.31167C2.52216 10.2794 2.02502 11.72 2.02502 13.5999C2.02502 13.8623 2.23769 14.0749 2.50002 14.0749C2.76236 14.0749 2.97502 13.8623 2.97502 13.5999C2.97502 11.8799 3.42786 10.7206 4.17091 9.9883C4.91536 9.25463 6.02674 8.87499 7.49995 8.87499C8.97317 8.87499 10.0846 9.25463 10.8291 9.98831C11.5721 10.7206 12.025 11.8799 12.025 13.5999C12.025 13.8623 12.2376 14.0749 12.5 14.0749C12.7623 14.075 12.975 13.8623 12.975 13.6C12.975 11.72 12.4778 10.2794 11.4959 9.31166C10.7244 8.55135 9.70025 8.12903 8.50625 7.98352C10.0187 7.5474 11.125 6.15289 11.125 4.5C11.125 2.49797 9.50203 0.875 7.5 0.875ZM4.825 4.5C4.825 3.02264 6.02264 1.825 7.5 1.825C8.97736 1.825 10.175 3.02264 10.175 4.5C10.175 5.97736 8.97736 7.175 7.5 7.175C6.02264 7.175 4.825 5.97736 4.825 4.5Z">
-                    </path>
-                  </svg>
-                </section>
-                <p class="flex-grow text-start pl-2 line-clamp-2">Diamante mandarín</p>
-              </article>
-            </ng-container>
-          </ion-tab-button>
-        </swiper-slide>
-  
-        <swiper-slide>
-          <ion-tab-button tab="perro" href="/tabs/perro">
-            <ng-container>
-              <article class="bg-[#F1DED4] text-gray-600 rounded-full flex justify-start items-center text-sm w-full">
-                <section class="flex flex-shrink-0 justify-center items-center w-10 h-10 rounded-full shadow-md bg-[#E7D4CA]">
-                  <svg viewBox="0 0 15 15" class="w-6 fill-gray-700">
-                    <path d="M7.5 0.875C5.49797 0.875 3.875 2.49797 3.875 4.5C3.875 6.15288 4.98124 7.54738 6.49373 7.98351C5.2997 8.12901 4.27557 8.55134 3.50407 9.31167C2.52216 10.2794 2.02502 11.72 2.02502 13.5999C2.02502 13.8623 2.23769 14.0749 2.50002 14.0749C2.76236 14.0749 2.97502 13.8623 2.97502 13.5999C2.97502 11.8799 3.42786 10.7206 4.17091 9.9883C4.91536 9.25463 6.02674 8.87499 7.49995 8.87499C8.97317 8.87499 10.0846 9.25463 10.8291 9.98831C11.5721 10.7206 12.025 11.8799 12.025 13.5999C12.025 13.8623 12.2376 14.0749 12.5 14.0749C12.7623 14.075 12.975 13.8623 12.975 13.6C12.975 11.72 12.4778 10.2794 11.4959 9.31166C10.7244 8.55135 9.70025 8.12903 8.50625 7.98352C10.0187 7.5474 11.125 6.15289 11.125 4.5C11.125 2.49797 9.50203 0.875 7.5 0.875ZM4.825 4.5C4.825 3.02264 6.02264 1.825 7.5 1.825C8.97736 1.825 10.175 3.02264 10.175 4.5C10.175 5.97736 8.97736 7.175 7.5 7.175C6.02264 7.175 4.825 5.97736 4.825 4.5Z">
-                    </path>
-                  </svg>
-                </section>
-                <p class="flex-grow text-start pl-2 line-clamp-2">Pájaros del paraíso</p>
-              </article>
-            </ng-container>
-          </ion-tab-button>
-        </swiper-slide>
-  
-        <swiper-slide>
-          <ion-tab-button tab="perro" href="/tabs/perro">
-            <ng-container>
-              <article class="bg-[#F7E3BC] text-gray-600 rounded-full flex justify-start items-center text-sm w-full">
-                <section class="flex flex-shrink-0 justify-center items-center w-10 h-10 rounded-full shadow-md bg-[#E2D4B7]">
-                  <svg viewBox="0 0 15 15" class="w-6 fill-gray-700 flex-shrink-0">
-                    <path d="M7.5 0.875C5.49797 0.875 3.875 2.49797 3.875 4.5C3.875 6.15288 4.98124 7.54738 6.49373 7.98351C5.2997 8.12901 4.27557 8.55134 3.50407 9.31167C2.52216 10.2794 2.02502 11.72 2.02502 13.5999C2.02502 13.8623 2.23769 14.0749 2.50002 14.0749C2.76236 14.0749 2.97502 13.8623 2.97502 13.5999C2.97502 11.8799 3.42786 10.7206 4.17091 9.9883C4.91536 9.25463 6.02674 8.87499 7.49995 8.87499C8.97317 8.87499 10.0846 9.25463 10.8291 9.98831C11.5721 10.7206 12.025 11.8799 12.025 13.5999C12.025 13.8623 12.2376 14.0749 12.5 14.0749C12.7623 14.075 12.975 13.8623 12.975 13.6C12.975 11.72 12.4778 10.2794 11.4959 9.31166C10.7244 8.55135 9.70025 8.12903 8.50625 7.98352C10.0187 7.5474 11.125 6.15289 11.125 4.5C11.125 2.49797 9.50203 0.875 7.5 0.875ZM4.825 4.5C4.825 3.02264 6.02264 1.825 7.5 1.825C8.97736 1.825 10.175 3.02264 10.175 4.5C10.175 5.97736 8.97736 7.175 7.5 7.175C6.02264 7.175 4.825 5.97736 4.825 4.5Z">
-                    </path>
-                  </svg>
-                </section>
-                <p class="flex-grow text-start pl-2 line-clamp-2">Canarios de canto</p>
-              </article>
-            </ng-container>
-          </ion-tab-button>
-        </swiper-slide>
-  
+        <swiper-slide >
+          <ng-container >
+            <article class="bg-[#F7E3BC] text-gray-600 rounded-full flex justify-start items-center text-sm w-full">
+              <section class="flex flex-shrink-0 justify-center items-center w-10 h-10 rounded-full shadow-md bg-[#E2D4B7]">
+                <svg viewBox="0 0 15 15" class="w-6 fill-gray-700">
+                  <path d="M7.5 0.875C5.49797 0.875 3.875 2.49797 3.875 4.5C3.875 6.15288 4.98124 7.54738 6.49373 7.98351C5.2997 8.12901 4.27557 8.55134 3.50407 9.31167C2.52216 10.2794 2.02502 11.72 2.02502 13.5999C2.02502 13.8623 2.23769 14.0749 2.50002 14.0749C2.76236 14.0749 2.97502 13.8623 2.97502 13.5999C2.97502 11.8799 3.42786 10.7206 4.17091 9.9883C4.91536 9.25463 6.02674 8.87499 7.49995 8.87499C8.97317 8.87499 10.0846 9.25463 10.8291 9.98831C11.5721 10.7206 12.025 11.8799 12.025 13.5999C12.025 13.8623 12.2376 14.0749 12.5 14.0749C12.7623 14.075 12.975 13.8623 12.975 13.6C12.975 11.72 12.4778 10.2794 11.4959 9.31166C10.7244 8.55135 9.70025 8.12903 8.50625 7.98352C10.0187 7.5474 11.125 6.15289 11.125 4.5C11.125 2.49797 9.50203 0.875 7.5 0.875ZM4.825 4.5C4.825 3.02264 6.02264 1.825 7.5 1.825C8.97736 1.825 10.175 3.02264 10.175 4.5C10.175 5.97736 8.97736 7.175 7.5 7.175C6.02264 7.175 4.825 5.97736 4.825 4.5Z">
+                  </path>
+                </svg>
+              </section>
+              <p class="flex-grow text-start pl-2 line-clamp-2">Cacatúas</p>
+            </article>
+          </ng-container>
+        </swiper-slide> 
       </swiper-container>
   
       <swiper-container [loop]="false" class="py-5" [breakpoints]="breakpointsRegisteredAnimals">
-  
         <swiper-slide>
-          <ion-tab-button tab="perro" href="/tabs/perro">
-            <ng-container>
-              
-              <article class="max-w-sm bg-[#F7E3BC] border border-gray-200 rounded-2xl">
-                <header>
-                    <img class="rounded-2xl bg-[#F8C704]" src="../../../assets/img/ejemplo/ejemplo.png" alt="" />
-                </header>
-                <footer class="py-5 px-2 flex flex-col items-center">
-                    <h2 class="mb-2 text-2xl font-thin tracking-tight text-gray-900">Cacatúas</h2>
-                    <a href="#" class="inline-flex items-center px-3 pt-2 text-sm font-light text-center text-gray-900 rounded-lg">
-                      Ver Más
-                      <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-                          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
-                      </svg>
-                    </a>
-                </footer>
-              </article>
-  
-            </ng-container>
-          </ion-tab-button>
+          <ng-container>
+            <article class="max-w-sm bg-[#F7E3BC] border border-gray-200 rounded-2xl">
+              <header>
+                  <img class="rounded-2xl bg-[#F8C704]" src="../../../assets/img/ejemplo/ejemplo.png" alt="" />
+              </header>
+              <footer class="py-5 px-2 flex flex-col items-center">
+                  <h2 class="mb-2 text-2xl font-thin tracking-tight text-gray-900">Cacatúas</h2>
+                  <a href="#" class="inline-flex items-center px-3 pt-2 text-sm font-light text-center text-gray-900 rounded-lg">
+                    Ver Más
+                    <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
+                    </svg>
+                  </a>
+              </footer>
+            </article>
+          </ng-container>
         </swiper-slide>
-  
-        <swiper-slide>
-          <ion-tab-button tab="perro" href="/tabs/perro">
-            <ng-container>
-              <article class="max-w-sm bg-[#EFEBE9] border border-gray-200 rounded-2xl">
-                <header>
-                    <img class="rounded-2xl bg-[#CFD0D2]" src="../../../assets/img/ejemplo/ejemplo.png" alt="" />
-                </header>
-                <footer class="py-5 px-2 flex flex-col items-center">
-                    <h2 class="mb-2 text-2xl font-thin tracking-tight text-gray-900">Agapornis</h2>
-                    <a href="#" class="inline-flex items-center px-3 pt-2 text-sm font-light text-center text-gray-900 rounded-lg">
-                      Ver Más
-                      <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-                          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
-                      </svg>
-                    </a>
-                </footer>
-              </article>
-            </ng-container>
-          </ion-tab-button>
-        </swiper-slide>
-  
-        <swiper-slide>
-          <ion-tab-button tab="perro" href="/tabs/perro">
-            <ng-container>
-              <article class="max-w-sm bg-[#E3EDEF] border border-gray-200 rounded-2xl">
-                <header>
-                    <img class="rounded-2xl bg-[#D3EBF2]" src="../../../assets/img/ejemplo/ejemplo.png" alt="" />
-                </header>
-                <footer class="py-5 px-2 flex flex-col items-center">
-                    <h2 class="mb-2 text-2xl font-thin tracking-tight text-gray-900">Rosellas</h2>
-                    <a href="#" class="inline-flex items-center px-3 pt-2 text-sm font-light text-center text-gray-900 rounded-lg">
-                      Ver Más
-                      <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-                          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
-                      </svg>
-                    </a>
-                </footer>
-              </article>
-            </ng-container>
-          </ion-tab-button>
-        </swiper-slide>
-  
-        <swiper-slide>
-          <ion-tab-button tab="perro" href="/tabs/perro">
-            <ng-container>
-              <article class="max-w-sm bg-[#F7E3BC] border border-gray-200 rounded-2xl">
-                <header>
-                    <img class="rounded-2xl bg-[#F8C704]" src="../../../assets/img/ejemplo/ejemplo.png" alt="" />
-                </header>
-                <footer class="py-5 px-2 flex flex-col items-center">
-                    <h2 class="mb-2 text-2xl font-thin tracking-tight text-gray-900">Pinzones</h2>
-                    <a href="#" class="inline-flex items-center px-3 pt-2 text-sm font-light text-center text-gray-900 rounded-lg">
-                      Ver Más
-                      <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-                          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
-                      </svg>
-                    </a>
-                </footer>
-              </article>
-            </ng-container>
-          </ion-tab-button>
-        </swiper-slide>
-  
       </swiper-container>
-
     </section>
 
     <!-- Categoria 2 -->
     <section id="Production">
-
       <div class="w-full max-w-[570px] rounded-[20px] pt-7 pl-1 text-start">
         <h1 class="text-xl font-medium">Producción</h1>
       </div>
-  
       <swiper-container [loop]="false" class="py-5" [breakpoints]="breakpointsRegisteredAnimals">
         <swiper-slide>
-          <ion-tab-button tab="gato" href="/tabs/gato">
+          <ion-tab-button tab="ave" href="/tabs/ave">
             <ng-container>
               <article class="bg-[#F7E3BC] text-gray-600 rounded-full flex justify-start items-center text-sm w-full">
                 <section class="flex flex-shrink-0 justify-center items-center w-10 h-10 rounded-full shadow-md bg-[#E2D4B7]">
@@ -375,296 +86,71 @@
             </ng-container>
           </ion-tab-button>
         </swiper-slide>
-  
-        <swiper-slide>
-          <ion-tab-button tab="perro" href="/tabs/perro">
-            <ng-container>
-              <article class="bg-[#DCECE3] text-gray-600 rounded-full flex justify-start items-center text-sm w-full">
-                <section class="flex flex-shrink-0 justify-center items-center w-10 h-10 rounded-full shadow-md bg-[#D1E3D9]">
-                  <svg viewBox="0 0 15 15" class="w-6 fill-gray-700">
-                    <path d="M7.5 0.875C5.49797 0.875 3.875 2.49797 3.875 4.5C3.875 6.15288 4.98124 7.54738 6.49373 7.98351C5.2997 8.12901 4.27557 8.55134 3.50407 9.31167C2.52216 10.2794 2.02502 11.72 2.02502 13.5999C2.02502 13.8623 2.23769 14.0749 2.50002 14.0749C2.76236 14.0749 2.97502 13.8623 2.97502 13.5999C2.97502 11.8799 3.42786 10.7206 4.17091 9.9883C4.91536 9.25463 6.02674 8.87499 7.49995 8.87499C8.97317 8.87499 10.0846 9.25463 10.8291 9.98831C11.5721 10.7206 12.025 11.8799 12.025 13.5999C12.025 13.8623 12.2376 14.0749 12.5 14.0749C12.7623 14.075 12.975 13.8623 12.975 13.6C12.975 11.72 12.4778 10.2794 11.4959 9.31166C10.7244 8.55135 9.70025 8.12903 8.50625 7.98352C10.0187 7.5474 11.125 6.15289 11.125 4.5C11.125 2.49797 9.50203 0.875 7.5 0.875ZM4.825 4.5C4.825 3.02264 6.02264 1.825 7.5 1.825C8.97736 1.825 10.175 3.02264 10.175 4.5C10.175 5.97736 8.97736 7.175 7.5 7.175C6.02264 7.175 4.825 5.97736 4.825 4.5Z">
-                    </path>
-                  </svg>
-                </section>
-                <p class="flex-grow text-start pl-2 line-clamp-2">Faisanes</p>
-              </article>
-            </ng-container>
-          </ion-tab-button>
-        </swiper-slide>
-  
-        <swiper-slide>
-          <ion-tab-button tab="perro" href="/tabs/perro">
-            <ng-container>
-              <article class="bg-[#C6E8F0] text-gray-600 rounded-full flex justify-start items-center text-sm w-full">
-                <section class="flex flex-shrink-0 justify-center items-center w-10 h-10 rounded-full shadow-md bg-[#A7E0EE]">
-                  <svg viewBox="0 0 15 15" class="w-6 fill-gray-700">
-                    <path d="M7.5 0.875C5.49797 0.875 3.875 2.49797 3.875 4.5C3.875 6.15288 4.98124 7.54738 6.49373 7.98351C5.2997 8.12901 4.27557 8.55134 3.50407 9.31167C2.52216 10.2794 2.02502 11.72 2.02502 13.5999C2.02502 13.8623 2.23769 14.0749 2.50002 14.0749C2.76236 14.0749 2.97502 13.8623 2.97502 13.5999C2.97502 11.8799 3.42786 10.7206 4.17091 9.9883C4.91536 9.25463 6.02674 8.87499 7.49995 8.87499C8.97317 8.87499 10.0846 9.25463 10.8291 9.98831C11.5721 10.7206 12.025 11.8799 12.025 13.5999C12.025 13.8623 12.2376 14.0749 12.5 14.0749C12.7623 14.075 12.975 13.8623 12.975 13.6C12.975 11.72 12.4778 10.2794 11.4959 9.31166C10.7244 8.55135 9.70025 8.12903 8.50625 7.98352C10.0187 7.5474 11.125 6.15289 11.125 4.5C11.125 2.49797 9.50203 0.875 7.5 0.875ZM4.825 4.5C4.825 3.02264 6.02264 1.825 7.5 1.825C8.97736 1.825 10.175 3.02264 10.175 4.5C10.175 5.97736 8.97736 7.175 7.5 7.175C6.02264 7.175 4.825 5.97736 4.825 4.5Z">
-                    </path>
-                  </svg>
-                </section>
-                <p class="flex-grow text-start pl-2 line-clamp-2">Pavos Reales</p>
-              </article>
-            </ng-container>
-          </ion-tab-button>
-        </swiper-slide>
-  
-        <swiper-slide>
-          <ion-tab-button tab="perro" href="/tabs/perro">
-            <ng-container>
-              <article class="bg-[#F1DED4] text-gray-600 rounded-full flex justify-start items-center text-sm w-full">
-                <section class="flex flex-shrink-0 justify-center items-center w-10 h-10 rounded-full shadow-md bg-[#E7D4CA]">
-                  <svg viewBox="0 0 15 15" class="w-6 fill-gray-700">
-                    <path d="M7.5 0.875C5.49797 0.875 3.875 2.49797 3.875 4.5C3.875 6.15288 4.98124 7.54738 6.49373 7.98351C5.2997 8.12901 4.27557 8.55134 3.50407 9.31167C2.52216 10.2794 2.02502 11.72 2.02502 13.5999C2.02502 13.8623 2.23769 14.0749 2.50002 14.0749C2.76236 14.0749 2.97502 13.8623 2.97502 13.5999C2.97502 11.8799 3.42786 10.7206 4.17091 9.9883C4.91536 9.25463 6.02674 8.87499 7.49995 8.87499C8.97317 8.87499 10.0846 9.25463 10.8291 9.98831C11.5721 10.7206 12.025 11.8799 12.025 13.5999C12.025 13.8623 12.2376 14.0749 12.5 14.0749C12.7623 14.075 12.975 13.8623 12.975 13.6C12.975 11.72 12.4778 10.2794 11.4959 9.31166C10.7244 8.55135 9.70025 8.12903 8.50625 7.98352C10.0187 7.5474 11.125 6.15289 11.125 4.5C11.125 2.49797 9.50203 0.875 7.5 0.875ZM4.825 4.5C4.825 3.02264 6.02264 1.825 7.5 1.825C8.97736 1.825 10.175 3.02264 10.175 4.5C10.175 5.97736 8.97736 7.175 7.5 7.175C6.02264 7.175 4.825 5.97736 4.825 4.5Z">
-                    </path>
-                  </svg>
-                </section>
-                <p class="flex-grow text-start pl-2 line-clamp-2">Emús</p>
-              </article>
-            </ng-container>
-          </ion-tab-button>
-        </swiper-slide>
-  
-        <swiper-slide>
-          <ion-tab-button tab="perro" href="/tabs/perro">
-            <ng-container>
-              <article class="bg-[#F7E3BC] text-gray-600 rounded-full flex justify-start items-center text-sm w-full">
-                <section class="flex flex-shrink-0 justify-center items-center w-10 h-10 rounded-full shadow-md bg-[#E2D4B7]">
-                  <svg viewBox="0 0 15 15" class="w-6 fill-gray-700">
-                    <path d="M7.5 0.875C5.49797 0.875 3.875 2.49797 3.875 4.5C3.875 6.15288 4.98124 7.54738 6.49373 7.98351C5.2997 8.12901 4.27557 8.55134 3.50407 9.31167C2.52216 10.2794 2.02502 11.72 2.02502 13.5999C2.02502 13.8623 2.23769 14.0749 2.50002 14.0749C2.76236 14.0749 2.97502 13.8623 2.97502 13.5999C2.97502 11.8799 3.42786 10.7206 4.17091 9.9883C4.91536 9.25463 6.02674 8.87499 7.49995 8.87499C8.97317 8.87499 10.0846 9.25463 10.8291 9.98831C11.5721 10.7206 12.025 11.8799 12.025 13.5999C12.025 13.8623 12.2376 14.0749 12.5 14.0749C12.7623 14.075 12.975 13.8623 12.975 13.6C12.975 11.72 12.4778 10.2794 11.4959 9.31166C10.7244 8.55135 9.70025 8.12903 8.50625 7.98352C10.0187 7.5474 11.125 6.15289 11.125 4.5C11.125 2.49797 9.50203 0.875 7.5 0.875ZM4.825 4.5C4.825 3.02264 6.02264 1.825 7.5 1.825C8.97736 1.825 10.175 3.02264 10.175 4.5C10.175 5.97736 8.97736 7.175 7.5 7.175C6.02264 7.175 4.825 5.97736 4.825 4.5Z">
-                    </path>
-                  </svg>
-                </section>
-                <p class="flex-grow text-start pl-2 line-clamp-2">Avestruz</p>
-              </article>
-            </ng-container>
-          </ion-tab-button>
-        </swiper-slide>
-  
       </swiper-container>
   
       <swiper-container [loop]="false" class="py-5" [breakpoints]="breakpointsRegisteredAnimals">
-  
         <swiper-slide>
-          <ion-tab-button tab="perro" href="/tabs/perro">
-            <ng-container>
-              
-              <article class="max-w-sm bg-[#F7E3BC] border border-gray-200 rounded-2xl">
-                <header>
-                    <img class="rounded-2xl bg-[#F8C704]" src="../../../assets/img/ejemplo/ejemplo.png" alt="" />
-                </header>
-                <footer class="py-5 px-2 flex flex-col items-center">
-                    <h2 class="mb-2 text-2xl font-thin tracking-tight text-gray-900">Avestruz </h2>
-                    <a href="#" class="inline-flex items-center px-3 pt-2 text-sm font-light text-center text-gray-900 rounded-lg">
-                      Ver Más
-                      <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-                          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
-                      </svg>
-                    </a>
-                </footer>
-              </article>
-  
-            </ng-container>
-          </ion-tab-button>
+          <ng-container>
+            <article class="max-w-sm bg-[#F7E3BC] border border-gray-200 rounded-2xl">
+              <header>
+                  <img class="rounded-2xl bg-[#F8C704]" src="../../../assets/img/ejemplo/ejemplo.png" alt="" />
+              </header>
+              <footer class="py-5 px-2 flex flex-col items-center">
+                  <h2 class="mb-2 text-2xl font-thin tracking-tight text-gray-900">Avestruz </h2>
+                  <a href="#" class="inline-flex items-center px-3 pt-2 text-sm font-light text-center text-gray-900 rounded-lg">
+                    Ver Más
+                    <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
+                    </svg>
+                  </a>
+              </footer>
+            </article>
+          </ng-container>
         </swiper-slide>
-  
-        <swiper-slide>
-          <ion-tab-button tab="perro" href="/tabs/perro">
-            <ng-container>
-              <article class="max-w-sm bg-[#EFEBE9] border border-gray-200 rounded-2xl">
-                <header>
-                    <img class="rounded-2xl bg-[#CFD0D2]" src="../../../assets/img/ejemplo/ejemplo.png" alt="" />
-                </header>
-                <footer class="py-5 px-2 flex flex-col items-center">
-                    <h2 class="mb-2 text-2xl font-thin tracking-tight text-gray-900">Faisanes </h2>
-                    <a href="#" class="inline-flex items-center px-3 pt-2 text-sm font-light text-center text-gray-900 rounded-lg">
-                      Ver Más
-                      <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-                          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
-                      </svg>
-                    </a>
-                </footer>
-              </article>
-            </ng-container>
-          </ion-tab-button>
-        </swiper-slide>
-  
-        <swiper-slide>
-          <ion-tab-button tab="perro" href="/tabs/perro">
-            <ng-container>
-              <article class="max-w-sm bg-[#E3EDEF] border border-gray-200 rounded-2xl">
-                <header>
-                    <img class="rounded-2xl bg-[#D3EBF2]" src="../../../assets/img/ejemplo/ejemplo.png" alt="" />
-                </header>
-                <footer class="py-5 px-2 flex flex-col items-center">
-                    <h2 class="mb-2 text-2xl font-thin tracking-tight text-gray-900">Pavos Reales</h2>
-                    <a href="#" class="inline-flex items-center px-3 pt-2 text-sm font-light text-center text-gray-900 rounded-lg">
-                      Ver Más
-                      <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-                          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
-                      </svg>
-                    </a>
-                </footer>
-              </article>
-            </ng-container>
-          </ion-tab-button>
-        </swiper-slide>
-  
-        <swiper-slide>
-          <ion-tab-button tab="perro" href="/tabs/perro">
-            <ng-container>
-              <article class="max-w-sm bg-[#F7E3BC] border border-gray-200 rounded-2xl">
-                <header>
-                    <img class="rounded-2xl bg-[#F8C704]" src="../../../assets/img/ejemplo/ejemplo.png" alt="" />
-                </header>
-                <footer class="py-5 px-2 flex flex-col items-center">
-                    <h2 class="mb-2 text-2xl font-thin tracking-tight text-gray-900">Emús</h2>
-                    <a href="#" class="inline-flex items-center px-3 pt-2 text-sm font-light text-center text-gray-900 rounded-lg">
-                      Ver Más
-                      <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-                          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
-                      </svg>
-                    </a>
-                </footer>
-              </article>
-            </ng-container>
-          </ion-tab-button>
-        </swiper-slide>
-  
       </swiper-container>
-
     </section>
-    
     <!-- Categoria 3 -->
     <section id="Other">
-
       <div class="w-full max-w-[570px] rounded-[20px] pt-7 pl-1 text-start">
         <h1 class="text-xl font-medium">Otros Usos</h1>
       </div>
-  
-      <swiper-container [loop]="false" class="py-5" [breakpoints]="breakpointsRegisteredAnimals">
-        <swiper-slide>
-          <ion-tab-button tab="gato" href="/tabs/gato">
-            <ng-container>
-              <article class="bg-[#F7E3BC] text-gray-600 rounded-full flex justify-start items-center text-sm w-full">
-                <section class="flex flex-shrink-0 justify-center items-center w-10 h-10 rounded-full shadow-md bg-[#E2D4B7]">
-                  <svg viewBox="0 0 15 15" class="w-6 fill-gray-700">
-                    <path d="M7.5 0.875C5.49797 0.875 3.875 2.49797 3.875 4.5C3.875 6.15288 4.98124 7.54738 6.49373 7.98351C5.2997 8.12901 4.27557 8.55134 3.50407 9.31167C2.52216 10.2794 2.02502 11.72 2.02502 13.5999C2.02502 13.8623 2.23769 14.0749 2.50002 14.0749C2.76236 14.0749 2.97502 13.8623 2.97502 13.5999C2.97502 11.8799 3.42786 10.7206 4.17091 9.9883C4.91536 9.25463 6.02674 8.87499 7.49995 8.87499C8.97317 8.87499 10.0846 9.25463 10.8291 9.98831C11.5721 10.7206 12.025 11.8799 12.025 13.5999C12.025 13.8623 12.2376 14.0749 12.5 14.0749C12.7623 14.075 12.975 13.8623 12.975 13.6C12.975 11.72 12.4778 10.2794 11.4959 9.31166C10.7244 8.55135 9.70025 8.12903 8.50625 7.98352C10.0187 7.5474 11.125 6.15289 11.125 4.5C11.125 2.49797 9.50203 0.875 7.5 0.875ZM4.825 4.5C4.825 3.02264 6.02264 1.825 7.5 1.825C8.97736 1.825 10.175 3.02264 10.175 4.5C10.175 5.97736 8.97736 7.175 7.5 7.175C6.02264 7.175 4.825 5.97736 4.825 4.5Z">
-                    </path>
-                  </svg>
-                </section>
-                <p class="flex-grow text-start pl-2 line-clamp-2">Halcones</p>
-              </article>
-            </ng-container>
-          </ion-tab-button>
+      <swiper-container [loop]="false" class="py-5" [breakpoints]="breakpointsRegisteredAnimals" *ngFor="let ave of filteredAves">
+        <swiper-slide (click)="navigateToTargetPage('perfil-ave', ave)">
+          <ng-container>
+            <article class="bg-[#F7E3BC] text-gray-600 rounded-full flex justify-start items-center text-sm w-full">
+              <section class="flex flex-shrink-0 justify-center items-center w-10 h-10 rounded-full shadow-md bg-[#E2D4B7]">
+                <svg viewBox="0 0 15 15" class="w-6 fill-gray-700">
+                  <path d="M7.5 0.875C5.49797 0.875 3.875 2.49797 3.875 4.5C3.875 6.15288 4.98124 7.54738 6.49373 7.98351C5.2997 8.12901 4.27557 8.55134 3.50407 9.31167C2.52216 10.2794 2.02502 11.72 2.02502 13.5999C2.02502 13.8623 2.23769 14.0749 2.50002 14.0749C2.76236 14.0749 2.97502 13.8623 2.97502 13.5999C2.97502 11.8799 3.42786 10.7206 4.17091 9.9883C4.91536 9.25463 6.02674 8.87499 7.49995 8.87499C8.97317 8.87499 10.0846 9.25463 10.8291 9.98831C11.5721 10.7206 12.025 11.8799 12.025 13.5999C12.025 13.8623 12.2376 14.0749 12.5 14.0749C12.7623 14.075 12.975 13.8623 12.975 13.6C12.975 11.72 12.4778 10.2794 11.4959 9.31166C10.7244 8.55135 9.70025 8.12903 8.50625 7.98352C10.0187 7.5474 11.125 6.15289 11.125 4.5C11.125 2.49797 9.50203 0.875 7.5 0.875ZM4.825 4.5C4.825 3.02264 6.02264 1.825 7.5 1.825C8.97736 1.825 10.175 3.02264 10.175 4.5C10.175 5.97736 8.97736 7.175 7.5 7.175C6.02264 7.175 4.825 5.97736 4.825 4.5Z">
+                  </path>
+                </svg>
+              </section>
+              <p class="flex-grow text-start pl-2 line-clamp-2">Halcones</p>
+            </article>
+          </ng-container>
         </swiper-slide>
-  
-        <swiper-slide>
-          <ion-tab-button tab="perro" href="/tabs/perro">
-            <ng-container>
-              <article class="bg-[#DCECE3] text-gray-600 rounded-full flex justify-start items-center text-sm w-full">
-                <section class="flex flex-shrink-0 justify-center items-center w-10 h-10 rounded-full shadow-md bg-[#D1E3D9]">
-                  <svg viewBox="0 0 15 15" class="w-6 fill-gray-700">
-                    <path d="M7.5 0.875C5.49797 0.875 3.875 2.49797 3.875 4.5C3.875 6.15288 4.98124 7.54738 6.49373 7.98351C5.2997 8.12901 4.27557 8.55134 3.50407 9.31167C2.52216 10.2794 2.02502 11.72 2.02502 13.5999C2.02502 13.8623 2.23769 14.0749 2.50002 14.0749C2.76236 14.0749 2.97502 13.8623 2.97502 13.5999C2.97502 11.8799 3.42786 10.7206 4.17091 9.9883C4.91536 9.25463 6.02674 8.87499 7.49995 8.87499C8.97317 8.87499 10.0846 9.25463 10.8291 9.98831C11.5721 10.7206 12.025 11.8799 12.025 13.5999C12.025 13.8623 12.2376 14.0749 12.5 14.0749C12.7623 14.075 12.975 13.8623 12.975 13.6C12.975 11.72 12.4778 10.2794 11.4959 9.31166C10.7244 8.55135 9.70025 8.12903 8.50625 7.98352C10.0187 7.5474 11.125 6.15289 11.125 4.5C11.125 2.49797 9.50203 0.875 7.5 0.875ZM4.825 4.5C4.825 3.02264 6.02264 1.825 7.5 1.825C8.97736 1.825 10.175 3.02264 10.175 4.5C10.175 5.97736 8.97736 7.175 7.5 7.175C6.02264 7.175 4.825 5.97736 4.825 4.5Z">
-                    </path>
-                  </svg>
-                </section>
-                <p class="flex-grow text-start pl-2 line-clamp-2">Águilas </p>
-              </article>
-            </ng-container>
-          </ion-tab-button>
-        </swiper-slide>
-  
-        <swiper-slide>
-          <ion-tab-button tab="perro" href="/tabs/perro">
-            <ng-container>
-              <article class="bg-[#C6E8F0] text-gray-600 rounded-full flex justify-start items-center text-sm w-full">
-                <section class="flex flex-shrink-0 justify-center items-center w-10 h-10 rounded-full shadow-md bg-[#A7E0EE]">
-                  <svg viewBox="0 0 15 15" class="w-6 fill-gray-700">
-                    <path d="M7.5 0.875C5.49797 0.875 3.875 2.49797 3.875 4.5C3.875 6.15288 4.98124 7.54738 6.49373 7.98351C5.2997 8.12901 4.27557 8.55134 3.50407 9.31167C2.52216 10.2794 2.02502 11.72 2.02502 13.5999C2.02502 13.8623 2.23769 14.0749 2.50002 14.0749C2.76236 14.0749 2.97502 13.8623 2.97502 13.5999C2.97502 11.8799 3.42786 10.7206 4.17091 9.9883C4.91536 9.25463 6.02674 8.87499 7.49995 8.87499C8.97317 8.87499 10.0846 9.25463 10.8291 9.98831C11.5721 10.7206 12.025 11.8799 12.025 13.5999C12.025 13.8623 12.2376 14.0749 12.5 14.0749C12.7623 14.075 12.975 13.8623 12.975 13.6C12.975 11.72 12.4778 10.2794 11.4959 9.31166C10.7244 8.55135 9.70025 8.12903 8.50625 7.98352C10.0187 7.5474 11.125 6.15289 11.125 4.5C11.125 2.49797 9.50203 0.875 7.5 0.875ZM4.825 4.5C4.825 3.02264 6.02264 1.825 7.5 1.825C8.97736 1.825 10.175 3.02264 10.175 4.5C10.175 5.97736 8.97736 7.175 7.5 7.175C6.02264 7.175 4.825 5.97736 4.825 4.5Z">
-                    </path>
-                  </svg>
-                </section>
-                <p class="flex-grow text-start pl-2 line-clamp-2">Cisnes </p>
-              </article>
-            </ng-container>
-          </ion-tab-button>
-        </swiper-slide>
-  
       </swiper-container>
   
       <swiper-container [loop]="false" class="py-5" [breakpoints]="breakpointsRegisteredAnimals">
-  
         <swiper-slide>
-          <ion-tab-button tab="perro" href="/tabs/perro">
-            <ng-container>
-              
-              <article class="max-w-sm bg-[#F7E3BC] border border-gray-200 rounded-2xl">
-                <header>
-                    <img class="rounded-2xl bg-[#F8C704]" src="../../../assets/img/ejemplo/ejemplo.png" alt="" />
-                </header>
-                <footer class="py-5 px-2 flex flex-col items-center">
-                    <h2 class="mb-2 text-2xl font-thin tracking-tight text-gray-900">Halcones </h2>
-                    <a href="#" class="inline-flex items-center px-3 pt-2 text-sm font-light text-center text-gray-900 rounded-lg">
-                      Ver Más
-                      <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-                          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
-                      </svg>
-                    </a>
-                </footer>
-              </article>
-  
-            </ng-container>
-          </ion-tab-button>
+          <ng-container>
+            <article class="max-w-sm bg-[#F7E3BC] border border-gray-200 rounded-2xl">
+              <header>
+                  <img class="rounded-2xl bg-[#F8C704]" src="../../../assets/img/ejemplo/ejemplo.png" alt="" />
+              </header>
+              <footer class="py-5 px-2 flex flex-col items-center">
+                  <h2 class="mb-2 text-2xl font-thin tracking-tight text-gray-900">Halcones </h2>
+                  <a href="#" class="inline-flex items-center px-3 pt-2 text-sm font-light text-center text-gray-900 rounded-lg">
+                    Ver Más
+                    <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
+                    </svg>
+                  </a>
+              </footer>
+            </article>
+          </ng-container>
         </swiper-slide>
-  
-        <swiper-slide>
-          <ion-tab-button tab="perro" href="/tabs/perro">
-            <ng-container>
-              <article class="max-w-sm bg-[#EFEBE9] border border-gray-200 rounded-2xl">
-                <header>
-                    <img class="rounded-2xl bg-[#CFD0D2]" src="../../../assets/img/ejemplo/ejemplo.png" alt="" />
-                </header>
-                <footer class="py-5 px-2 flex flex-col items-center">
-                    <h2 class="mb-2 text-2xl font-thin tracking-tight text-gray-900">Águilas </h2>
-                    <a href="#" class="inline-flex items-center px-3 pt-2 text-sm font-light text-center text-gray-900 rounded-lg">
-                      Ver Más
-                      <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-                          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
-                      </svg>
-                    </a>
-                </footer>
-              </article>
-            </ng-container>
-          </ion-tab-button>
-        </swiper-slide>
-  
-        <swiper-slide>
-          <ion-tab-button tab="perro" href="/tabs/perro">
-            <ng-container>
-              <article class="max-w-sm bg-[#E3EDEF] border border-gray-200 rounded-2xl">
-                <header>
-                    <img class="rounded-2xl bg-[#D3EBF2]" src="../../../assets/img/ejemplo/ejemplo.png" alt="" />
-                </header>
-                <footer class="py-5 px-2 flex flex-col items-center">
-                    <h2 class="mb-2 text-2xl font-thin tracking-tight text-gray-900">Cisnes </h2>
-                    <a href="#" class="inline-flex items-center px-3 pt-2 text-sm font-light text-center text-gray-900 rounded-lg">
-                      Ver Más
-                      <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-                          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
-                      </svg>
-                    </a>
-                </footer>
-              </article>
-            </ng-container>
-          </ion-tab-button>
-        </swiper-slide>
-  
       </swiper-container>
-
     </section>
-
-
-
 
     <!-- No Borrar -->
     <!-- <div class="w-full max-w-[570px] rounded-[20px] px-3 pt-4 text-center">
@@ -801,10 +287,6 @@
         </div>
       </div>
     </div> -->
-
-
-
-
     </section>
   </div>
 </ion-content>

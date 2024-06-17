@@ -6,7 +6,11 @@ const routes: Routes = [
   {
     path: '',
     component: AvesPage
+  },  {
+    path: 'page-ave',
+    loadChildren: () => import('./page-ave/page-ave.module').then( m => m.PageAvePageModule)
   },
+
 ];
 
 @NgModule({

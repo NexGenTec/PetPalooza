@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { QuirkyFacts } from '../../interface/QuirkyFacts.models';
-import { FirestoreService } from '../../service/firestore.service';
+import { InfoAve } from 'src/app/interface/InfoAve.models';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-aves',
@@ -9,8 +9,8 @@ import { FirestoreService } from '../../service/firestore.service';
 })
 export class AvesPage implements OnInit {
 
-  DatosFreak: QuirkyFacts[] = [];
-  currentDatoIndex: number = 0;
+  aves: InfoAve[] = [];
+  filteredAves: InfoAve[] = [];
 
   breakpointsRegisteredAnimals = {
     0: { slidesPerView: 1.15 },
@@ -21,36 +21,14 @@ export class AvesPage implements OnInit {
   };
 
   constructor(
-    private firestores: FirestoreService,
+    private router: Router,
   ) { }
 
   ngOnInit() {
-    this.getQuirkyFacts();
-    setInterval(() => {
-      this.showRandomQuirkyFact();
-    }, 10000);
+
   }
 
-  getQuirkyFacts() {
-    this.firestores.getCollectionChanges<QuirkyFacts>('QuirkyFacts').subscribe(dato => {
-      if (dato) {
-        this.DatosFreak = dato;
-        this.showRandomQuirkyFact();
-      }
-    });
+  navigateToTargetPage(segment: string, ave: InfoAve) {
+    this.router.navigate([segment, ave.id], { state: { data: ave } });
   }
-
-  showRandomQuirkyFact() {
-    const perroIndices = this.DatosFreak.map((fact, index) => {
-      return fact.categoria === 'perro' ? index : null;
-    }).filter(index => index !== null);
-
-    if (perroIndices.length > 0) {
-      const randomIndex = perroIndices[Math.floor(Math.random() * perroIndices.length)];
-      this.currentDatoIndex = randomIndex;
-    } else {
-      console.log("No hay datos disponibles con la categoría Gato");
-    }
-  }
-
 }
