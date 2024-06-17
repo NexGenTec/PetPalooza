@@ -71,7 +71,6 @@ export class NotificationsService {
       title: notification.title,
       body: notification.body,
       id: typeof notification.id === 'string' ? parseInt(notification.id, 10) : notification.id || 1,
-      // Puedes añadir más configuraciones según sea necesario, como sonido, etc.
     };
 
     LocalNotifications.schedule({
