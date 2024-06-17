@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { InfoAve } from 'src/app/interface/InfoAve.models';
 import { Router } from '@angular/router';
+import { FirestoreService } from 'src/app/service/firestore.service';
 
 @Component({
   selector: 'app-aves',
@@ -10,7 +11,7 @@ import { Router } from '@angular/router';
 export class AvesPage implements OnInit {
 
   aves: InfoAve[] = [];
-  filteredAves: InfoAve[] = [];
+  filteredAves: { [key: string]: InfoAve[] } = {};
 
   breakpointsRegisteredAnimals = {
     0: { slidesPerView: 1.15 },
@@ -22,13 +23,26 @@ export class AvesPage implements OnInit {
 
   constructor(
     private router: Router,
+    private firestores: FirestoreService,
   ) { }
 
   ngOnInit() {
-
+    this.loadData();
   }
 
-  navigateToTargetPage(segment: string, ave: InfoAve) {
-    this.router.navigate([segment, ave.id], { state: { data: ave } });
+  loadData() {
+    this.firestores.getCollectionChanges<InfoAve>('InfoAve').subscribe(aves => {
+      if (aves) {
+        this.aves = aves;
+        // Filtrar aves por categoría
+        this.aves.forEach(ave => {
+          if (!this.filteredAves[ave.categoria]) {
+            this.filteredAves[ave.categoria] = [];
+          }
+          this.filteredAves[ave.categoria].push(ave);
+        });
+        console.log(this.filteredAves);
+      }
+    });
   }
 }

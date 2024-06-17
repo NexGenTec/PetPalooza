@@ -20,7 +20,8 @@ export class gatoPage implements OnInit {
   searchTerm: string = '';
 
 
-  constructor(private firestores: FirestoreService,
+  constructor(
+    private firestores: FirestoreService,
     private router: Router,
     private toastController: ToastController
   ) {
