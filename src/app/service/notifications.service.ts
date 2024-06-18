@@ -6,8 +6,9 @@ import {
   PushNotifications,
   Token,
 } from '@capacitor/push-notifications';
-import { TokendeNotificaccion } from '../interface/TokendeNotificaccion.models';
+import { Notificaccion, Tokens } from '../interface/TokendeNotificaccion.models';
 import { LocalNotifications, LocalNotificationSchema } from '@capacitor/local-notifications';
+import { idToken } from '@angular/fire/auth';
 
 @Injectable({
   providedIn: 'root'
@@ -30,13 +31,14 @@ export class NotificationsService {
     PushNotifications.addListener('registration', (token: Token) => {
       console.log('Push registration success, token: ' + token.value);
       // Guardar el token en Firestore
-      this.saveTokenAndNotificationToFirestore(token.value, null); // null indica que no hay notificación asociada
+      this.saveToken(token.value);
+      // null indica que no hay notificación asociada
     });
 
     PushNotifications.addListener('pushNotificationReceived', (notification: PushNotificationSchema) => {
       console.log('Push received: ' + JSON.stringify(notification));
       // Guardar la notificación en Firestore
-      this.saveTokenAndNotificationToFirestore(null, notification);
+      this.notificationToFirestore(notification);
       // Mostrar la notificación local
       this.showLocalNotification(notification);
     });
@@ -46,11 +48,26 @@ export class NotificationsService {
     });
   }
 
-  private saveTokenAndNotificationToFirestore(token: string | null, notification: PushNotificationSchema | null) {
+  private saveToken(token: string | null) {
+    const tokens = this.afs.collection('Token');
+    // Datos comunes a guardar
+    const data: any = {
+      Tokens: token,
+    };
+
+    tokens.add(data)
+      .then(docRef => {
+        console.log('Datos guardados en Firestore con ID: ', docRef.id);
+      })
+      .catch(error => {
+        console.error('Error al guardar en Firestore: ', error);
+      });
+  }
+
+  private notificationToFirestore(notification: PushNotificationSchema | null) {
     const notificacionesCollection = this.afs.collection('Notificaciones');
     // Datos comunes a guardar
-    const data: TokendeNotificaccion = {
-      tokens: token ? [token] : [],
+    const data: Notificaccion = {
       id: notification?.id || '',
       data: notification?.data || {},
       title: notification?.title || '', // Título de la notificación

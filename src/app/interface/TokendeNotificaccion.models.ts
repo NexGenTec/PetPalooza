@@ -1,5 +1,4 @@
-export interface TokendeNotificaccion {
-    tokens: {},
+export interface Notificaccion {
     id: string;
     data: Data;
     title: string;
@@ -8,3 +7,8 @@ export interface TokendeNotificaccion {
 
 export interface Data {
 }
+
+export interface Tokens {
+    token: string,
+}
+
