@@ -1,8 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { QuirkyFacts } from '../../../interface/QuirkyFacts.models';
-import { FirestoreService } from '../../../service/firestore.service';
-import { Router } from '@angular/router';
-import { ToastController } from '@ionic/angular';
+import { ActivatedRoute } from '@angular/router';
 import { InfoAve } from 'src/app/interface/InfoAve.models';
 @Component({
   selector: 'app-page-ave',
@@ -10,103 +7,22 @@ import { InfoAve } from 'src/app/interface/InfoAve.models';
   styleUrls: ['./page-ave.page.scss'],
 })
 export class PageAvePage implements OnInit {
-
-  aves: InfoAve[] = [];
-  DatosFreak: QuirkyFacts[] = [];
-  filteredAves: InfoAve[] = [];
+  categoria: string;
+  infoAve: InfoAve;
   favorites: any[] = [];
   currentDatoIndex: number = 0;
   searchTerm: string = '';
 
-
-  constructor(private firestores: FirestoreService,
-    private router: Router,
-    private toastController: ToastController
-  ) {
-    this.loadData();
-  }
-
+  constructor(
+    private route: ActivatedRoute,
+  ) { }
 
   ngOnInit(): void {
-    this.getQuirkyFacts();
-    setInterval(() => {
-      this.showRandomQuirkyFact();
-    }, 10000);
-    this.loadData();
-  }
-
-  loadData() {
-    this.firestores.getCollectionChanges<InfoAve>('InfoAve').subscribe(ave => {
-      if (ave) {
-        this.aves = ave
-        this.filteredAves = [...this.aves];
-      }
-    })
-  }
-
-  getQuirkyFacts() {
-    this.firestores.getCollectionChanges<QuirkyFacts>('QuirkyFacts').subscribe(dato => {
-      if (dato) {
-        this.DatosFreak = dato;
-        this.showRandomQuirkyFact();
-      }
+    this.route.params.subscribe(params => {
+      this.categoria = params['categoria'];
+      this.infoAve = JSON.parse(params['info']);
+      console.log('Categoría recibida:', this.categoria);
+      console.log('Info del ave:', this.infoAve);
     });
-  }
-
-  showRandomQuirkyFact() {
-    const aveIndices = this.DatosFreak.map((fact, index) => {
-      return fact.categoria === 'ave' ? index : null;
-    }).filter(index => index !== null);
-
-    if (aveIndices.length > 0) {
-      const randomIndex = aveIndices[Math.floor(Math.random() * aveIndices.length)];
-      this.currentDatoIndex = randomIndex;
-    } else {
-      console.log("No hay datos disponibles con la categoría Aves");
-    }
-  }
-
-  navigateToTargetPage(segment: string, ave: InfoAve) {
-    this.router.navigate([segment, ave.id], { state: { data: ave } });
-  }
-
-  filterAve() {
-    console.log('Search term:', this.searchTerm);
-    this.filteredAves = this.aves.filter(ave =>
-      ave.Raza.toLowerCase().includes(this.searchTerm.toLowerCase())
-    );
-    console.log('Filtered aves:', this.filteredAves);
-  }
-
-  isInFavorites(animal: any, type: string): boolean {
-    const favorites: any[] = JSON.parse(localStorage.getItem('favorites')) || [];
-    return favorites.some(favorite => favorite.id === animal.id && favorite.type === type);
-  }
-
-  async addToFavorites(animal: any, type: string) {
-    let favorites: any[] = JSON.parse(localStorage.getItem('favorites')) || [];
-    const index = favorites.findIndex(favorite => favorite.id === animal.id && favorite.type === type);
-    if (index !== -1) {
-      favorites.splice(index, 1);
-      const toast = await this.toastController.create({
-        message: 'Eliminado de favoritos',
-        duration: 2000,
-        position: 'top',
-        color: 'danger'
-      });
-      toast.present();
-    } else {
-      animal.type = type; // Agregar el tipo de animal
-      favorites.push(animal);
-      const toast = await this.toastController.create({
-        message: 'Agregado a favoritos',
-        duration: 2000,
-        position: 'top',
-        color: 'success'
-      });
-      toast.present();
-    }
-    localStorage.setItem('favorites', JSON.stringify(favorites));
-    this.favorites = favorites;
   }
 }

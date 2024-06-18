@@ -42,7 +42,13 @@ export class AvesPage implements OnInit {
           this.filteredAves[ave.categoria].push(ave);
         });
         console.log(this.filteredAves);
+        console.log(this.filteredAves['Exhibicion']);
+        console.log(this.filteredAves['Otros-Usos']);
+        console.log(this.filteredAves['Produccion']);
       }
     });
+  }
+  navigateToPageAve(ave: InfoAve) {
+    this.router.navigate(['page-ave', ave.categoria, { info: JSON.stringify(ave) }]);
   }
 }
