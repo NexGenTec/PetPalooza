@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { QuirkyFacts } from '../../interface/QuirkyFacts.models';
-import { FirestoreService } from '../../service/firestore.service';
+import { InfoAve } from 'src/app/interface/InfoAve.models';
+import { Router } from '@angular/router';
+import { FirestoreService } from 'src/app/service/firestore.service';
 
 @Component({
   selector: 'app-aves',
@@ -9,8 +10,8 @@ import { FirestoreService } from '../../service/firestore.service';
 })
 export class AvesPage implements OnInit {
 
-  DatosFreak: QuirkyFacts[] = [];
-  currentDatoIndex: number = 0;
+  aves: InfoAve[] = [];
+  filteredAves: { [key: string]: InfoAve[] } = {};
 
   breakpointsRegisteredAnimals = {
     0: { slidesPerView: 1.15 },
@@ -21,36 +22,33 @@ export class AvesPage implements OnInit {
   };
 
   constructor(
+    private router: Router,
     private firestores: FirestoreService,
   ) { }
 
   ngOnInit() {
-    this.getQuirkyFacts();
-    setInterval(() => {
-      this.showRandomQuirkyFact();
-    }, 10000);
+    this.loadData();
   }
 
-  getQuirkyFacts() {
-    this.firestores.getCollectionChanges<QuirkyFacts>('QuirkyFacts').subscribe(dato => {
-      if (dato) {
-        this.DatosFreak = dato;
-        this.showRandomQuirkyFact();
+  loadData() {
+    this.firestores.getCollectionChanges<InfoAve>('InfoAve').subscribe(aves => {
+      if (aves) {
+        this.aves = aves;
+        // Filtrar aves por categoría
+        this.aves.forEach(ave => {
+          if (!this.filteredAves[ave.categoria]) {
+            this.filteredAves[ave.categoria] = [];
+          }
+          this.filteredAves[ave.categoria].push(ave);
+        });
+        console.log(this.filteredAves);
+        console.log(this.filteredAves['Exhibicion']);
+        console.log(this.filteredAves['Otros-Usos']);
+        console.log(this.filteredAves['Produccion']);
       }
     });
   }
-
-  showRandomQuirkyFact() {
-    const perroIndices = this.DatosFreak.map((fact, index) => {
-      return fact.categoria === 'perro' ? index : null;
-    }).filter(index => index !== null);
-
-    if (perroIndices.length > 0) {
-      const randomIndex = perroIndices[Math.floor(Math.random() * perroIndices.length)];
-      this.currentDatoIndex = randomIndex;
-    } else {
-      console.log("No hay datos disponibles con la categoría Gato");
-    }
+  navigateToPageAve(ave: InfoAve) {
+    this.router.navigate(['page-ave', ave.categoria, { info: JSON.stringify(ave) }]);
   }
-
 }

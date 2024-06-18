@@ -7,6 +7,7 @@ import { QuirkyFacts } from '../interface/QuirkyFacts.models';
 import { Storage } from '@ionic/storage';
 import { WelcomeModalPage } from '../components/welcome-modal/welcome-modal.page';
 import { ModalController, ToastController } from '@ionic/angular';
+import { InfoAve } from '../interface/InfoAve.models';
 
 
 @Component({
@@ -18,6 +19,7 @@ export class homePage implements OnInit {
 
   gatos: InfoGato[] = [];
   perros: InfoPerro[] = [];
+  aves: InfoAve[] = [];
   infoPerro: any = (this.perros as any).default;
   infoPerroChunks: any[][] = [];
 
@@ -29,6 +31,7 @@ export class homePage implements OnInit {
   favorites: any[] = [];
   originalGatos: InfoGato[] = [];
   originalPerros: InfoPerro[] = [];
+  originalAves: InfoAve[] = [];
   loaded: boolean = false;
   showSkeletonUltimos: boolean = true;
   navigateToCatshowSkeleton: boolean = true;
@@ -97,6 +100,17 @@ export class homePage implements OnInit {
         this.originalPerros = perros;
         this.perros = perros
           .filter(perro => perro.fechaCreacion && perro.fechaCreacion.seconds)
+          .sort((a, b) => b.fechaCreacion.seconds - a.fechaCreacion.seconds)
+          //Cantida de Perros en ultimos
+          .slice(0, 2);
+      }
+    });
+
+    this.firestores.getCollectionChanges<InfoAve>('InfoAve').subscribe(aves => {
+      if (aves) {
+        this.originalAves = aves;
+        this.aves = aves
+          .filter(ave => ave.fechaCreacion && ave.fechaCreacion.seconds)
           .sort((a, b) => b.fechaCreacion.seconds - a.fechaCreacion.seconds)
           //Cantida de Perros en ultimos
           .slice(0, 2);
