@@ -49,20 +49,22 @@ export class AdoptamePage implements OnInit {
     });
   }
   getHuachitos() {
-    this.huachitoService.getAnimales().subscribe(
-      (data) => {
+    this.huachitoService.getAnimales().subscribe({
+      next: (data) => {
         if (data && data.data) {
+          console.log(data)
           this.huachito = data.data;
           this.texto1showSkeleton = false;
+          this.mostrarError500 = false;
         }
       },
-      (error) => {
+      error: (error) => {
         console.error('Error al cargar los datos de huachitos:', error);
         if (error.status === 500) {
           this.mostrarError500 = true;
         }
       }
-    );
+    });
   }
   adoptar(url: string) {
     window.open(url, '_blank'); // Abre la URL en una nueva pestaña
