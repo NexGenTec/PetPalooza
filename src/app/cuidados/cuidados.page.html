@@ -16,20 +16,6 @@
         <span class="bg-blue-400 mx-auto mb-4 inline-block h-1 w-[90px] rounded"></span>
       </div>
     </section>
-    <!-- <section>
-      <ion-segment value="all" class="gap-2 active:border-none" >
-        <ion-segment-button class="bg-blue-200 rounded-md" value="all">
-          <ion-label>Todo</ion-label>
-        </ion-segment-button>
-        <ion-segment-button class="bg-blue-200 rounded-md" value="dog">
-          <ion-label>Perros</ion-label>
-        </ion-segment-button>
-        <ion-segment-button class="bg-blue-200 rounded-md" value="cat">
-          <ion-label>Gatos</ion-label>
-        </ion-segment-button>
-      </ion-segment>
-    </section> -->
-
     <section>
       <div class="mt-4 mx-8 flex flex-col md:flex-row h-72 gap-3">
         <article class="flex flex-row shadow-lg rounded-2xl hover:shadow-2xl hover:scale-105 duration-150 backdrop-brightness-200 bg-[rgb(41,49,79)] h-24  px-3 group">
@@ -59,19 +45,25 @@
 
     <section>
       <div class="border-b border-gray-200 pb-2 bg-white mx-3">
-        <ion-segment mode="ios" value="control">
-          <ion-segment-button value="control">
-            <ion-icon name="today-outline"></ion-icon>
+        <ion-segment mode="ios" [(ngModel)]="selectedSegment" (ionChange)="changeCardContent(selectedSegment)">
+          <ion-segment-button value="Controles" [checked]="selectedSegment === 'Controles'">
+              <ion-icon name="today-outline"></ion-icon>
           </ion-segment-button>
-          <ion-segment-button value="heal">
+          <ion-segment-button value="Enfermedades" [checked]="selectedSegment === 'Enfermedades'">
             <ion-icon name="thermometer-outline"></ion-icon>
           </ion-segment-button>
-          <ion-segment-button value="diet">
+          <ion-segment-button value="Dieta" [checked]="selectedSegment === 'Dieta'">
             <ion-icon name="fast-food-outline"></ion-icon>
           </ion-segment-button>
         </ion-segment>
+        <ion-card *ngIf="cardHeading || cardSubtitle || cardContent">
+          <ion-card-header>
+            <ion-card-title>{{ cardHeading }}</ion-card-title>
+            <ion-card-subtitle *ngIf="cardSubtitle">{{ cardSubtitle }}</ion-card-subtitle>
+          </ion-card-header>
+          <ion-card-content [innerHTML]="cardContent"></ion-card-content>
+        </ion-card>
       </div>
-
     </section>
   </div>
 </ion-content>

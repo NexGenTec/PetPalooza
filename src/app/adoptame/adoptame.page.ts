@@ -16,6 +16,7 @@ export class AdoptamePage implements OnInit {
   currentDatoIndex: number = 0;
   texto1showSkeleton: boolean = true;
   showSkeletonPerros: boolean = true;
+  mostrarError500: boolean = true;
 
   colorsCards = [
     { id: 1, bg: '#FFEBE5', text: '#7e402d' },
@@ -48,12 +49,20 @@ export class AdoptamePage implements OnInit {
     });
   }
   getHuachitos() {
-    this.huachitoService.getAnimales().subscribe(data => {
-      if (data && data.data) {
-        this.huachito = data.data; // Suponiendo que los datos que necesitas están en la propiedad 'data' del objeto
-        console.log(this.huachito);
+    this.huachitoService.getAnimales().subscribe(
+      (data) => {
+        if (data && data.data) {
+          this.huachito = data.data;
+          this.texto1showSkeleton = false;
+        }
+      },
+      (error) => {
+        console.error('Error al cargar los datos de huachitos:', error);
+        if (error.status === 500) {
+          this.mostrarError500 = true;
+        }
       }
-    });
+    );
   }
   adoptar(url: string) {
     window.open(url, '_blank'); // Abre la URL en una nueva pestaña
