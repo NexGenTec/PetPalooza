@@ -44,7 +44,7 @@ export class AdoptamePage implements OnInit {
     this.firestores.getCollectionChanges<Patrocinadores>('Patrocinadores').subscribe(dato => {
       if (dato) {
         this.Patrocinadores = dato;
-        console.log(this.Patrocinadores)
+        // console.log(this.Patrocinadores)
       }
     });
   }
@@ -66,7 +66,12 @@ export class AdoptamePage implements OnInit {
       }
     });
   }
+
+  webUrl = 'https://huachitos.cl/'
   adoptar(url: string) {
     window.open(url, '_blank'); // Abre la URL en una nueva pestaña
+  }
+  verWeb(webUrl: string) {
+    window.open(webUrl, '_blank'); // Abre la URL en una nueva pestaña
   }
 }
