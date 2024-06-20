@@ -1,0 +1,19 @@
+.search-bar {
+  --border-radius: 25px !important;
+}
+
+ion-searchbar.custom {
+  --background: #fff;
+  --color: #2563eb;
+  --placeholder-color: #2563eb;
+  --icon-color: #2563eb;
+
+  --border-radius: 0.5rem;
+  /* --box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1); */
+
+}
+
+ion-tab-button{
+  --padding-start:0.30rem;
+  --padding-end:0.30rem;
+}

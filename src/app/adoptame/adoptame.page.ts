@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Patrocinadores } from '../interface/Patrocinadores.models';
+import { fundaciones } from '../interface/Fundaciones.model';
 import { FirestoreService } from '../service/firestore.service';
 import { HuachitoService } from '../service/huachito.service';
 import { Huachitos } from '../interface/Huachitos.models';
@@ -11,12 +11,18 @@ import { Huachitos } from '../interface/Huachitos.models';
 })
 export class AdoptamePage implements OnInit {
 
-  Patrocinadores: Patrocinadores[] = [];
+  fundaciones: fundaciones[] = [];
   huachito: Huachitos[] = [];
   currentDatoIndex: number = 0;
   texto1showSkeleton: boolean = true;
   showSkeletonPerros: boolean = true;
+  mostrarError500: boolean = true;
 
+  colorsCards = [
+    { id: 1, bg: '#FFEBE5', text: '#7e402d' },
+    { id: 2, bg: '#FDF1DB', text: '#6e5628' },
+    { id: 3, bg: '#CFECFF', text: '#215a80' }
+  ];
 
   constructor(
     private firestores: FirestoreService,
@@ -35,22 +41,41 @@ export class AdoptamePage implements OnInit {
   }
 
   getQuirkyFacts() {
-    this.firestores.getCollectionChanges<Patrocinadores>('Patrocinadores').subscribe(dato => {
+    this.firestores.getCollectionChanges<fundaciones>('fundaciones').subscribe(dato => {
       if (dato) {
-        this.Patrocinadores = dato;
-        console.log(this.Patrocinadores)
+        this.fundaciones = dato;
+        console.log(dato)
       }
     });
+  }
+  refugio(url: string) {
+    window.open(url, '_blank'); // Abre la URL en una nueva pestaña
   }
   getHuachitos() {
-    this.huachitoService.getAnimales().subscribe(data => {
-      if (data && data.data) {
-        this.huachito = data.data; // Suponiendo que los datos que necesitas están en la propiedad 'data' del objeto
-        console.log(this.huachito);
+    this.huachitoService.getAnimales().subscribe({
+      next: (data) => {
+        if (data && data.data) {
+          console.log(data)
+          this.huachito = data.data;
+          this.texto1showSkeleton = false;
+          this.mostrarError500 = false;
+        }
+      },
+      error: (error) => {
+        console.error('Error al cargar los datos de huachitos:', error);
+        if (error.status === 500) {
+          this.mostrarError500 = true;
+        }
       }
     });
   }
+
+  webUrl = 'https://huachitos.cl/'
+
   adoptar(url: string) {
     window.open(url, '_blank'); // Abre la URL en una nueva pestaña
+  }
+  verWeb(webUrl: string) {
+    window.open(webUrl, '_blank'); // Abre la URL en una nueva pestaña
   }
 }

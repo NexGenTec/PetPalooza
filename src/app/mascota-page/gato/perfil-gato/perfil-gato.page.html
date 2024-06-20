@@ -75,18 +75,18 @@
           <ion-card-content *ngIf="!showImagesContainer" class="ion-text-start" [innerHTML]="cardContent" >
           </ion-card-content>
         </ion-card>
-        <ng-container *ngIf="showImagesContainer && gato && gato.length ">
+        <ng-container *ngIf="showImagesContainer && gato && gato.length">
           <div class="container mx-auto p-4">
             <div class="grid grid-cols-2 md:grid-cols-2 gap-4 max-w-xl mx-auto">
               <div *ngFor="let imgUrl of getImagesArray(gato[0])">
                 <div class="max-w-full rounded-lg overflow-hidden">
-                  <ion-img class="h-full object-cover max-h-[300px]" [src]="imgUrl" alt="Imagen de {{ gato[0].Raza }}"></ion-img>
+                  <ion-img [src]="imgUrl" alt="Imagen de {{ gato[0].Raza }}" (click)="openModalSwiper(gato[0])">
+                  </ion-img>
                 </div>
               </div>
             </div>
           </div>
-        </ng-container>    
-
+        </ng-container>
       </div>
     </div>
   </div>

@@ -7,7 +7,7 @@ export interface Huachitos {
     estado: Estado;
     genero: Genero;
     descFisica: string;
-    descPersonalidad: string;
+    desc_personalidad: string;
     descAdicional: string;
     esterilizado: number;
     vacunas: number;

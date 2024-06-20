@@ -1,13 +1,160 @@
-<ion-header [translucent]="true">
+<ion-header class="bg-white shadow-none border-b border-gray-200">
   <ion-toolbar>
-    <ion-title>aves</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <div class="flex gap-2 items-center mx-3">
+      <img 
+        class="max-h-14 mx-auto"
+        alt="logo PetPalooza" 
+        src="assets/img/logo/PetPalooza.png" 
+      />
+    </div>
+    <!-- <ion-title class="mx-auto">
+      <ion-searchbar class="custom my-3" placeholder="Buscar" mode="md"></ion-searchbar>
+    </ion-title> -->
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">aves</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <div class="px-3 pt-5 bg-gray-50">
+    <section class="max-w-md w-full mx-auto">
+     <!-- Divider -->
+    <hr class="my-5 border-gray-500/30">
+    <!-- Aves -->
+    <div class="w-full max-w-[570px] rounded-[20px] px-8 pt-4 text-center">
+      <h1 class="pb-2 text-3xl font-medium">Todas las Aves</h1>
+      <span class="bg-blue-400 mx-auto mb-4 inline-block h-1 w-[90px] rounded"></span>
+    </div>
+    <!-- Categoria 1 -->
+      <section id="Exhibicion">
+        <div class="w-full max-w-[570px] rounded-[20px] pt-4 pl-1 text-start">
+          <h1 class="text-xl font-medium">Exhibición</h1>
+        </div>
+        <swiper-container [loop]="false" class="py-5" [breakpoints]="breakpointsRegisteredAnimals">
+          <swiper-slide *ngFor="let ave of filteredAves['Exhibicion']" (click)="navigateToPageAve(ave)">
+            <ng-container>
+              <article class="bg-[#F7E3BC] text-gray-600 rounded-full flex justify-start items-center text-sm w-full">
+                <section class="flex flex-shrink-0 justify-center items-center w-10 h-10 rounded-full shadow-md bg-[#E2D4B7]">
+                  <svg viewBox="0 0 15 15" class="w-6 fill-gray-700">
+                    <path d="M7.5 0.875C5.49797 0.875 3.875 2.49797 3.875 4.5C3.875 6.15288 4.98124 7.54738 6.49373 7.98351C5.2997 8.12901 4.27557 8.55134 3.50407 9.31167C2.52216 10.2794 2.02502 11.72 2.02502 13.5999C2.02502 13.8623 2.23769 14.0749 2.50002 14.0749C2.76236 14.0749 2.97502 13.8623 2.97502 13.5999C2.97502 11.8799 3.42786 10.7206 4.17091 9.9883C4.91536 9.25463 6.02674 8.87499 7.49995 8.87499C8.97317 8.87499 10.0846 9.25463 10.8291 9.98831C11.5721 10.7206 12.025 11.8799 12.025 13.5999C12.025 13.8623 12.2376 14.0749 12.5 14.0749C12.7623 14.075 12.975 13.8623 12.975 13.6C12.975 11.72 12.4778 10.2794 11.4959 9.31166C10.7244 8.55135 9.70025 8.12903 8.50625 7.98352C10.0187 7.5474 11.125 6.15289 11.125 4.5C11.125 2.49797 9.50203 0.875 7.5 0.875ZM4.825 4.5C4.825 3.02264 6.02264 1.825 7.5 1.825C8.97736 1.825 10.175 3.02264 10.175 4.5C10.175 5.97736 8.97736 7.175 7.5 7.175C6.02264 7.175 4.825 5.97736 4.825 4.5Z">
+                    </path>
+                  </svg>
+                </section>
+                <p class="flex-grow text-start pl-2 line-clamp-2"> {{ave.Raza}} </p>
+              </article>
+            </ng-container>
+          </swiper-slide> 
+        </swiper-container>
+        <swiper-container [loop]="false" class="py-5" [breakpoints]="breakpointsRegisteredAnimals">
+          <swiper-slide *ngFor="let ave of filteredAves['Exhibicion']">
+            <ng-container>
+              <article class="max-w-sm bg-[#F7E3BC] border border-gray-200 rounded-2xl">
+                <header>
+                  <img class="rounded-2xl bg-[#F8C704]" [src]="ave.imgPerfil" alt="" />
+                </header>
+                <footer class="py-5 px-2 flex flex-col items-center">
+                  <h2 class="mb-2 text-2xl font-thin tracking-tight text-gray-900">{{ ave.Raza }}</h2>
+                  <a class="inline-flex items-center px-3 pt-2 text-sm font-light text-center text-gray-900 rounded-lg" (click)="navigateToPageAve(ave)">
+                    Ver Más
+                    <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                      viewBox="0 0 14 10">
+                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M1 5h12m0 0L9 1m4 4L9 9" />
+                    </svg>
+                  </a>
+                </footer>
+              </article>
+            </ng-container>
+          </swiper-slide>
+        </swiper-container>
+      </section>
+    <!-- Categoria 2 -->
+      <section id="Production">
+        <div class="w-full max-w-[570px] rounded-[20px] pt-7 pl-1 text-start">
+          <h1 class="text-xl font-medium">Producción</h1>
+        </div>
+        <swiper-container [loop]="false" class="py-5" [breakpoints]="breakpointsRegisteredAnimals">
+          <swiper-slide *ngFor="let ave of filteredAves['Produccion']" (click)="navigateToPageAve(ave)" >
+            <ng-container>
+              <article class="bg-[#F7E3BC] text-gray-600 rounded-full flex justify-start items-center text-sm w-full">
+                <section class="flex flex-shrink-0 justify-center items-center w-10 h-10 rounded-full shadow-md bg-[#E2D4B7]">
+                  <svg viewBox="0 0 15 15" class="w-6 fill-gray-700">
+                    <path d="M7.5 0.875C5.49797 0.875 3.875 2.49797 3.875 4.5C3.875 6.15288 4.98124 7.54738 6.49373 7.98351C5.2997 8.12901 4.27557 8.55134 3.50407 9.31167C2.52216 10.2794 2.02502 11.72 2.02502 13.5999C2.02502 13.8623 2.23769 14.0749 2.50002 14.0749C2.76236 14.0749 2.97502 13.8623 2.97502 13.5999C2.97502 11.8799 3.42786 10.7206 4.17091 9.9883C4.91536 9.25463 6.02674 8.87499 7.49995 8.87499C8.97317 8.87499 10.0846 9.25463 10.8291 9.98831C11.5721 10.7206 12.025 11.8799 12.025 13.5999C12.025 13.8623 12.2376 14.0749 12.5 14.0749C12.7623 14.075 12.975 13.8623 12.975 13.6C12.975 11.72 12.4778 10.2794 11.4959 9.31166C10.7244 8.55135 9.70025 8.12903 8.50625 7.98352C10.0187 7.5474 11.125 6.15289 11.125 4.5C11.125 2.49797 9.50203 0.875 7.5 0.875ZM4.825 4.5C4.825 3.02264 6.02264 1.825 7.5 1.825C8.97736 1.825 10.175 3.02264 10.175 4.5C10.175 5.97736 8.97736 7.175 7.5 7.175C6.02264 7.175 4.825 5.97736 4.825 4.5Z">
+                    </path>
+                  </svg>
+                </section>
+                <p class="flex-grow text-start pl-2 line-clamp-2"> {{ave.Raza}} </p>
+              </article>
+            </ng-container>
+          </swiper-slide> 
+        </swiper-container>
+        <swiper-container [loop]="false" class="py-5" [breakpoints]="breakpointsRegisteredAnimals">
+          <swiper-slide *ngFor="let ave of filteredAves['Produccion']">
+            <ng-container>
+              <article class="max-w-sm bg-[#F7E3BC] border border-gray-200 rounded-2xl">
+                <header>
+                  <img class="rounded-2xl bg-[#F8C704]" [src]="ave.imgPerfil" alt="" />
+                </header>
+                <footer class="py-5 px-2 flex flex-col items-center">
+                  <h2 class="mb-2 text-2xl font-thin tracking-tight text-gray-900">{{ ave.Raza }}</h2>
+                  <a class="inline-flex items-center px-3 pt-2 text-sm font-light text-center text-gray-900 rounded-lg" (click)="navigateToPageAve(ave)">
+                    Ver Más
+                    <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                      viewBox="0 0 14 10">
+                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M1 5h12m0 0L9 1m4 4L9 9" />
+                    </svg>
+                  </a>
+                </footer>
+              </article>
+            </ng-container>
+          </swiper-slide>
+        </swiper-container>
+      </section>
+    <!-- Categoria 3 -->
+      <section id="Other">
+        <div class="w-full max-w-[570px] rounded-[20px] pt-7 pl-1 text-start">
+          <h1 class="text-xl font-medium">Otros Usos</h1>
+        </div>
+        <swiper-container [loop]="false" class="py-5" [breakpoints]="breakpointsRegisteredAnimals">
+          <swiper-slide *ngFor="let ave of filteredAves['Otros-Usos']"  (click)="navigateToPageAve(ave)" >
+            <ng-container>
+              <article class="bg-[#F7E3BC] text-gray-600 rounded-full flex justify-start items-center text-sm w-full">
+                <section class="flex flex-shrink-0 justify-center items-center w-10 h-10 rounded-full shadow-md bg-[#E2D4B7]">
+                  <svg viewBox="0 0 15 15" class="w-6 fill-gray-700">
+                    <path d="M7.5 0.875C5.49797 0.875 3.875 2.49797 3.875 4.5C3.875 6.15288 4.98124 7.54738 6.49373 7.98351C5.2997 8.12901 4.27557 8.55134 3.50407 9.31167C2.52216 10.2794 2.02502 11.72 2.02502 13.5999C2.02502 13.8623 2.23769 14.0749 2.50002 14.0749C2.76236 14.0749 2.97502 13.8623 2.97502 13.5999C2.97502 11.8799 3.42786 10.7206 4.17091 9.9883C4.91536 9.25463 6.02674 8.87499 7.49995 8.87499C8.97317 8.87499 10.0846 9.25463 10.8291 9.98831C11.5721 10.7206 12.025 11.8799 12.025 13.5999C12.025 13.8623 12.2376 14.0749 12.5 14.0749C12.7623 14.075 12.975 13.8623 12.975 13.6C12.975 11.72 12.4778 10.2794 11.4959 9.31166C10.7244 8.55135 9.70025 8.12903 8.50625 7.98352C10.0187 7.5474 11.125 6.15289 11.125 4.5C11.125 2.49797 9.50203 0.875 7.5 0.875ZM4.825 4.5C4.825 3.02264 6.02264 1.825 7.5 1.825C8.97736 1.825 10.175 3.02264 10.175 4.5C10.175 5.97736 8.97736 7.175 7.5 7.175C6.02264 7.175 4.825 5.97736 4.825 4.5Z">
+                    </path>
+                  </svg>
+                </section>
+                <p class="flex-grow text-start pl-2 line-clamp-2"> {{ave.Raza}} </p>
+              </article>
+            </ng-container>
+          </swiper-slide> 
+        </swiper-container>
+        <swiper-container [loop]="false" class="py-5" [breakpoints]="breakpointsRegisteredAnimals">
+          <swiper-slide *ngFor="let ave of filteredAves['Otros-Usos']">
+            <ng-container>
+              <article class="max-w-sm bg-[#F7E3BC] border border-gray-200 rounded-2xl">
+                <header>
+                  <img class="rounded-2xl bg-[#F8C704]" [src]="ave.imgPerfil" alt="" />
+                </header>
+                <footer class="py-5 px-2 flex flex-col items-center">
+                  <h2 class="mb-2 text-2xl font-thin tracking-tight text-gray-900">{{ ave.Raza }}</h2>
+                  <a class="inline-flex items-center px-3 pt-2 text-sm font-light text-center text-gray-900 rounded-lg" (click)="navigateToPageAve(ave)">
+                    Ver Más
+                    <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                      viewBox="0 0 14 10">
+                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M1 5h12m0 0L9 1m4 4L9 9" />
+                    </svg>
+                  </a>
+                </footer>
+              </article>
+            </ng-container>
+          </swiper-slide>
+        </swiper-container>
+      </section>
+    </section>
+  </div>
 </ion-content>
