@@ -4,6 +4,7 @@ import { ModalController } from '@ionic/angular';
 import { ImgModalPage } from '../../../components/img-modal/img-modal.page';
 import { InfoGato, Temperamento, CaractFisicas } from '../../../interface/InfoGato.models';
 import { FirestoreService } from '../../../service/firestore.service';
+import { ModalSwiperPage } from 'src/app/components/modal-swiper/modal-swiper.page';
 
 @Component({
   selector: 'app-perfil-gato',
@@ -29,8 +30,8 @@ export class PerfilGatoPage implements OnInit {
 
   infoGato: any = (this.gato as any).default;
 
-  constructor(private route: ActivatedRoute, private modalController: ModalController,
-    private firestores: FirestoreService,
+  constructor(
+    private modalController: ModalController,
   ) {
     this.changeCardContent(this.selectedSegmentValue);
   }
@@ -129,4 +130,14 @@ export class PerfilGatoPage implements OnInit {
     return await modal.present();
   }
 
+  async openModalSwiper(gato: InfoGato) {
+    const modal = await this.modalController.create({
+      component: ModalSwiperPage,
+      componentProps: {
+        images: this.getImagesArray(gato),
+        initialSlide: 0
+      }
+    });
+    return await modal.present();
+  }
 }

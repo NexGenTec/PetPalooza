@@ -41,7 +41,11 @@ const routes: Routes = [
   {
     path: 'cuidados',
     loadChildren: () => import('./cuidados/cuidados.module').then(m => m.CuidadosPageModule)
+  },  {
+    path: 'modal-swiper',
+    loadChildren: () => import('./components/modal-swiper/modal-swiper.module').then( m => m.ModalSwiperPageModule)
   },
+
 ];
 @NgModule({
   imports: [
