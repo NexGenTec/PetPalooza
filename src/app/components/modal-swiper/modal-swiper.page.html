@@ -1,14 +1,7 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-buttons slot="end">
-      <ion-button (click)="dismiss()">
-        <ion-icon slot="icon-only" name="close"></ion-icon>
-      </ion-button>
-    </ion-buttons>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content>
+<ion-content class="relative">
+  <button class="absolute top-2 right-0 w-12 text-gray-700 z-50" (click)="dismiss()">
+    <ion-icon class="bg-gray-50 text-gray-700 rounded-full text-xl" slot="icon-only" name="close"></ion-icon>
+  </button>
   <swiper-container class="swiper-container" [slidesPerView]="1" [spaceBetween]="10" [navigation]="true" [pagination]="{ clickable: true }">
     <swiper-slide class="swiper-slide" *ngFor="let imageUrl of images">
       <ion-img [src]="imageUrl" class="swiper-img"></ion-img>

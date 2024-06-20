@@ -16,7 +16,7 @@
         <span class="bg-blue-400 mx-auto mb-4 inline-block h-1 w-[90px] rounded"></span>
       </div>
       <!-- Refugios Card -->
-      <section class="grid grid-cols-1 gap-y-6">
+      <section class="grid grid-cols-1 gap-y-6 mb-6">
         <article 
           *ngFor="let fundacion of fundaciones; let i = index"
           class="w-full rounded-3xl p-5 relative"
@@ -118,6 +118,31 @@
           </section>
         </article>
       </section>
+
+    <!--ads local--> 
+    <div id="myAds" class="grid grid-cols-3 gap-3 h-36">
+      <article class="bg-gray-200 w-full h-full rounded-lg overflow-hidden">
+        <img 
+          src="https://www.estudioperpendicular.com/wp-content/uploads/2020/11/Por-que%CC%81-buscas-paisajes-bonitos_-scaled.jpg" 
+          alt="ad1"
+          class="object-cover w-full h-full"
+        />
+      </article>
+      <article class="bg-gray-200 w-full h-full rounded-lg overflow-hidden">
+        <img 
+          src="https://101lugaresincreibles.com/wp-content/uploads/2009/05/paisajes-hermosos.jpg" 
+          alt="ad2"
+          class="object-cover w-full h-full"
+        />
+      </article>
+      <article class="bg-gray-200 w-full h-full rounded-lg overflow-hidden">
+        <img 
+          src="https://sg-res.9appsdownloading.com/sg/res/jpg/d1/a9/51597599ce48c2d216ecb33d2c0a-kdgb.jpg?x-oss-process=style/hq" 
+          alt="ad3"
+          class="object-cover w-full h-full"
+        />
+      </article>
+    </div>
       <div  class="mt-10">
         <div class="w-full max-w-[570px] rounded-[20px] px-3 pt-4 text-start">
           <ng-container *ngIf="texto1showSkeleton; else contenidoPerro">
@@ -204,7 +229,7 @@
           </ng-container>
         </swiper-slide>
       </div>
-      <small class="flex justify-center text-xs mx-1 text-center">Agradecimiento a <a (click)="verWeb(webUrl)" class="text-green-500 ml-1"> Huachitos.cl</a></small>
+      <small class="flex justify-center text-xs mx-1 mt-2 sm:mt-5 md:mt-6 text-center">Agradecimiento a <a (click)="verWeb(webUrl)" class="text-green-500 ml-1"> Huachitos.cl</a></small>
     </section>
   </div>
 </ion-content>

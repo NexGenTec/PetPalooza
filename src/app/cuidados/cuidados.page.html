@@ -16,8 +16,8 @@
         <span class="bg-blue-400 mx-auto mb-4 inline-block h-1 w-[90px] rounded"></span>
       </div>
     </section>
-    <section>
-      <div class="mt-4 mx-8 flex flex-col md:flex-row h-72 gap-3">
+    <!-- <section>
+      <div class="mt-4 mx-8 flex flex-col md:flex-row h-60 gap-3">
         <article class="flex flex-row shadow-lg rounded-2xl hover:shadow-2xl hover:scale-105 duration-150 backdrop-brightness-200 bg-[rgb(41,49,79)] h-24  px-3 group">
           <div class="flex flex-row overflow-hidden">
             <div class="flex flex-col justify-end text-start mb-3">
@@ -41,11 +41,35 @@
           </div>
         </article>     
       </div>
-    </section>
+    </section> -->
+        <!--ads local--> 
+        <div id="myAds" class="grid grid-cols-3 gap-3 h-36 my-3 mb-8">
+          <article class="bg-gray-200 w-full h-full rounded-lg overflow-hidden">
+            <img 
+              src="https://www.estudioperpendicular.com/wp-content/uploads/2020/11/Por-que%CC%81-buscas-paisajes-bonitos_-scaled.jpg" 
+              alt="ad1"
+              class="object-cover w-full h-full"
+            />
+          </article>
+          <article class="bg-gray-200 w-full h-full rounded-lg overflow-hidden">
+            <img 
+              src="https://101lugaresincreibles.com/wp-content/uploads/2009/05/paisajes-hermosos.jpg" 
+              alt="ad2"
+              class="object-cover w-full h-full"
+            />
+          </article>
+          <article class="bg-gray-200 w-full h-full rounded-lg overflow-hidden">
+            <img 
+              src="https://sg-res.9appsdownloading.com/sg/res/jpg/d1/a9/51597599ce48c2d216ecb33d2c0a-kdgb.jpg?x-oss-process=style/hq" 
+              alt="ad3"
+              class="object-cover w-full h-full"
+            />
+          </article>
+        </div>
 
     <section>
       <div class="border-b border-gray-200 pb-2 bg-white mx-3">
-        <ion-segment mode="ios" [(ngModel)]="selectedSegment" (ionChange)="changeCardContent(selectedSegment)">
+        <ion-segment mode="ios" [(ngModel)]="selectedSegment" (ionChange)="changeCardContent(selectedSegment)" class="rounded-lg mb-3">
           <ion-segment-button value="Controles" [checked]="selectedSegment === 'Controles'">
               <ion-icon name="today-outline"></ion-icon>
           </ion-segment-button>
@@ -56,13 +80,14 @@
             <ion-icon name="fast-food-outline"></ion-icon>
           </ion-segment-button>
         </ion-segment>
-        <ion-card *ngIf="cardHeading || cardSubtitle || cardContent">
-          <ion-card-header>
-            <ion-card-title>{{ cardHeading }}</ion-card-title>
-            <ion-card-subtitle *ngIf="cardSubtitle">{{ cardSubtitle }}</ion-card-subtitle>
-          </ion-card-header>
-          <ion-card-content [innerHTML]="cardContent"></ion-card-content>
-        </ion-card>
+        <article class="p-2 px-3" *ngIf="cardHeading || cardSubtitle || cardContent">
+          <div>
+            <h4 class="font-bold text-xl mt-3 text-gray-700 text-center">{{ cardHeading }}</h4>
+            <small class="text-gray-600 text-sm" *ngIf="cardSubtitle">{{ cardSubtitle }}</small>
+          </div>
+          
+          <p [innerHTML]="cardContent" class="text-gray-500 text-sm"></p>
+        </article>
       </div>
     </section>
   </div>
