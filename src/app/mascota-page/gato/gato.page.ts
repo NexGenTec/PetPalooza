@@ -98,7 +98,7 @@ export class gatoPage implements OnInit {
       });
       toast.present();
     } else {
-      animal.type = type; // Agregar el tipo de animal (perro o gato)
+      animal.type = type;
       favorites.push(animal);
       const toast = await this.toastController.create({
         message: 'Agregado a favoritos',
