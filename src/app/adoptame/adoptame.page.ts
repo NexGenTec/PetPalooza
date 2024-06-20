@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Patrocinadores } from '../interface/Patrocinadores.models';
+import { fundaciones } from '../interface/Fundaciones.model';
 import { FirestoreService } from '../service/firestore.service';
 import { HuachitoService } from '../service/huachito.service';
 import { Huachitos } from '../interface/Huachitos.models';
@@ -11,7 +11,7 @@ import { Huachitos } from '../interface/Huachitos.models';
 })
 export class AdoptamePage implements OnInit {
 
-  Patrocinadores: Patrocinadores[] = [];
+  fundaciones: fundaciones[] = [];
   huachito: Huachitos[] = [];
   currentDatoIndex: number = 0;
   texto1showSkeleton: boolean = true;
@@ -41,12 +41,15 @@ export class AdoptamePage implements OnInit {
   }
 
   getQuirkyFacts() {
-    this.firestores.getCollectionChanges<Patrocinadores>('Patrocinadores').subscribe(dato => {
+    this.firestores.getCollectionChanges<fundaciones>('fundaciones').subscribe(dato => {
       if (dato) {
-        this.Patrocinadores = dato;
-        // console.log(this.Patrocinadores)
+        this.fundaciones = dato;
+        console.log(dato)
       }
     });
+  }
+  refugio(url: string) {
+    window.open(url, '_blank'); // Abre la URL en una nueva pestaña
   }
   getHuachitos() {
     this.huachitoService.getAnimales().subscribe({
@@ -68,6 +71,7 @@ export class AdoptamePage implements OnInit {
   }
 
   webUrl = 'https://huachitos.cl/'
+
   adoptar(url: string) {
     window.open(url, '_blank'); // Abre la URL en una nueva pestaña
   }
