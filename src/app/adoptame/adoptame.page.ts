@@ -5,6 +5,7 @@ import { HuachitoService } from '../service/huachito.service';
 import { Huachitos } from '../interface/Huachitos.models';
 import { ModalController } from '@ionic/angular';
 import { ImgModalPage } from '../components/img-modal/img-modal.page';
+import { InfoImage } from '../interface/InfoImage.module';
 
 @Component({
   selector: 'app-adoptame',
@@ -19,6 +20,8 @@ export class AdoptamePage implements OnInit {
   texto1showSkeleton: boolean = true;
   showSkeletonPerros: boolean = true;
   mostrarError500: boolean = true;
+  originalImg: InfoImage[] = [];
+  img: InfoImage[] = [];
 
   colorsCards = [
     { id: 1, bg: '#FFEBE5', text: '#7e402d' },
@@ -48,6 +51,12 @@ export class AdoptamePage implements OnInit {
       if (dato) {
         this.fundaciones = dato;
         console.log(dato)
+      }
+    });
+    this.firestores.getCollectionChanges<InfoImage>('InfoImage').subscribe(img => {
+      if (img) {
+        this.originalImg = img;
+        this.img = img
       }
     });
   }

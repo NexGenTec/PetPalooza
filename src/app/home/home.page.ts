@@ -9,6 +9,7 @@ import { WelcomeModalPage } from '../components/welcome-modal/welcome-modal.page
 import { ModalController, ToastController } from '@ionic/angular';
 import { InfoAve } from '../interface/InfoAve.models';
 import { ImgModalPage } from '../components/img-modal/img-modal.page';
+import { InfoImage } from '../interface/InfoImage.module';
 
 
 @Component({
@@ -21,6 +22,7 @@ export class homePage implements OnInit {
   gatos: InfoGato[] = [];
   perros: InfoPerro[] = [];
   aves: InfoAve[] = [];
+  img: InfoImage[] = [];
   infoPerro: any = (this.perros as any).default;
   infoPerroChunks: any[][] = [];
 
@@ -33,6 +35,7 @@ export class homePage implements OnInit {
   originalGatos: InfoGato[] = [];
   originalPerros: InfoPerro[] = [];
   originalAves: InfoAve[] = [];
+  originalImg: InfoImage[] = [];
   loaded: boolean = false;
   showSkeletonUltimos: boolean = true;
   navigateToCatshowSkeleton: boolean = true;
@@ -115,6 +118,12 @@ export class homePage implements OnInit {
           .sort((a, b) => b.fechaCreacion.seconds - a.fechaCreacion.seconds)
           //Cantida de Perros en ultimos
           .slice(0, 2);
+      }
+    });
+    this.firestores.getCollectionChanges<InfoImage>('InfoImage').subscribe(img => {
+      if (img) {
+        this.originalImg = img;
+        this.img = img
       }
     });
   }
