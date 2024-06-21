@@ -9,8 +9,7 @@ import { WelcomeModalPage } from '../components/welcome-modal/welcome-modal.page
 import { ModalController, ToastController } from '@ionic/angular';
 import { InfoAve } from '../interface/InfoAve.models';
 import { ImgModalPage } from '../components/img-modal/img-modal.page';
-
-
+import { AdmobAds, BannerAdOptions, BannerPosition, BannerSize } from 'capacitor-admob-ads';
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
@@ -245,6 +244,34 @@ export class homePage implements OnInit {
       }
     });
     return await modal.present();
+  }
+
+  async showBanner() {
+    try {
+      await AdmobAds.showBannerAd({
+        adId: 'ca-app-pub-6309294666517022/5497837595', // ID de tu anuncio de AdMob
+        isTesting: true, // Configuración de prueba
+        adSize: BannerSize.BANNER, // Tamaño del banner
+        adPosition: BannerPosition.BOTTOM // Posición del banner
+      });
+      console.log('Banner mostrado correctamente');
+    } catch (error) {
+      console.error('Error al mostrar el banner', error);
+    }
+  }
+
+  async showAdaptiveBanner() {
+    try {
+      await AdmobAds.showBannerAd({
+        adId: 'ca-app-pub-6309294666517022/5497837595', // ID de tu anuncio de AdMob
+        isTesting: true, // Configuración de prueba
+        adSize: BannerSize.MEDIUM_RECTANGLE, // Tamaño de banner adaptable
+        adPosition: BannerPosition.BOTTOM // Posición del banner
+      });
+      console.log('Banner adaptable mostrado correctamente');
+    } catch (error) {
+      console.error('Error al mostrar el banner adaptable', error);
+    }
   }
 
 }
