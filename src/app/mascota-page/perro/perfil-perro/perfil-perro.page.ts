@@ -1,10 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { ImgModalPage } from '../../../components/img-modal/img-modal.page';
 import { ModalController } from '@ionic/angular';
 import { InfoPerro, Temperamento } from '../../../interface/InfoPerro.models';
-import { FirestoreService } from '../../../service/firestore.service';
-import { ImgModalSwiperPage } from './img-modal-swiper/img-modal-swiper.page';
 import { ModalSwiperPage } from 'src/app/components/modal-swiper/modal-swiper.page';
 
 @Component({
@@ -45,8 +42,8 @@ export class PerfilPerroPage implements OnInit {
 
   infoPerro: any = (this.perro as any).default;
 
-  constructor(private route: ActivatedRoute, private modalController: ModalController,
-    private firestores: FirestoreService,
+  constructor(
+    private modalController: ModalController,
   ) {
     this.changeCardContent(this.selectedSegmentValue);
   }

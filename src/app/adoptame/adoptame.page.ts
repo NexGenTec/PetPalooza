@@ -3,6 +3,8 @@ import { fundaciones } from '../interface/Fundaciones.model';
 import { FirestoreService } from '../service/firestore.service';
 import { HuachitoService } from '../service/huachito.service';
 import { Huachitos } from '../interface/Huachitos.models';
+import { ModalController } from '@ionic/angular';
+import { ImgModalPage } from '../components/img-modal/img-modal.page';
 
 @Component({
   selector: 'app-adoptame',
@@ -27,6 +29,7 @@ export class AdoptamePage implements OnInit {
   constructor(
     private firestores: FirestoreService,
     private huachitoService: HuachitoService,
+    private modalController: ModalController,
   ) {
   }
   ngOnInit(): void {
@@ -78,4 +81,15 @@ export class AdoptamePage implements OnInit {
   verWeb(webUrl: string) {
     window.open(webUrl, '_blank'); // Abre la URL en una nueva pestaña
   }
+
+  async openModal(imageUrl: string) {
+    const modal = await this.modalController.create({
+      component: ImgModalPage,
+      componentProps: {
+        imageUrl: imageUrl
+      }
+    });
+    return await modal.present();
+  }
+
 }

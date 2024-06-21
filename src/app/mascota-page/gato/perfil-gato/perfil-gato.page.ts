@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { ImgModalPage } from '../../../components/img-modal/img-modal.page';
-import { InfoGato, Temperamento, CaractFisicas } from '../../../interface/InfoGato.models';
-import { FirestoreService } from '../../../service/firestore.service';
+import { InfoGato, Temperamento } from '../../../interface/InfoGato.models';
 import { ModalSwiperPage } from 'src/app/components/modal-swiper/modal-swiper.page';
 
 @Component({
@@ -77,7 +75,6 @@ export class PerfilGatoPage implements OnInit {
       case 'temperamento':
         this.cardHeading = 'Temperamento';
         this.cardSubtitle = '';
-        /* this.cardContent = gato.Temperamento.map((temp: { descripcion: any; }) => `<p>${temp.descripcion}</p>`).join('<hr class="my-3">'); */
         this.cardContent = gato.Temperamento
           .filter(temp => temp.descripcion !== '')
           .map(temp => `<p>${temp.descripcion}</p>`)

@@ -8,6 +8,7 @@ import { Storage } from '@ionic/storage';
 import { WelcomeModalPage } from '../components/welcome-modal/welcome-modal.page';
 import { ModalController, ToastController } from '@ionic/angular';
 import { InfoAve } from '../interface/InfoAve.models';
+import { ImgModalPage } from '../components/img-modal/img-modal.page';
 
 
 @Component({
@@ -234,6 +235,16 @@ export class homePage implements OnInit {
       }
     }
     return result;
+  }
+
+  async openModal(imageUrl: string) {
+    const modal = await this.modalController.create({
+      component: ImgModalPage,
+      componentProps: {
+        imageUrl: imageUrl
+      }
+    });
+    return await modal.present();
   }
 
 }

@@ -280,7 +280,7 @@
               <div class="w-full h-96 bg-white rounded-3xl p-4 flex flex-col items-start justify-between gap-3 border border-gray-200">
                 <div class="w-full">
                   <div class="w-full h-52 rounded-2xl overflow-hidden relative">
-                    <ion-img class="w-full h-full object-cover" alt="Imagen de Raza" [src]="gato.imgPerfil"></ion-img>
+                    <ion-img class="w-full h-full object-cover" alt="Imagen de Raza" [src]="gato.imgPerfil" (click)="openModal(gato.imgPerfil)"></ion-img>
                     <div class="absolute top-3 right-3 w-10 h-10 rounded-full bg-white flex justify-center items-center text-red-400 ">
                       <button type="button" [class.animate]="isInFavorites(gato, 'gato')" [class.animate-pulse]="!isInFavorites(gato, 'gato')" (click)="addToFavorites(gato, 'gato')">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-7 h-7">
@@ -338,7 +338,7 @@
               <div class="w-full h-96 bg-white rounded-3xl p-4 flex flex-col items-start justify-between gap-3 border border-gray-200">
                 <div class="w-full">
                   <div class="w-full h-52 rounded-2xl overflow-hidden relative">
-                    <ion-img class="w-full h-full object-cover" [src]="perro.imgPerfil" alt="Imagen de Raza"></ion-img>
+                    <ion-img class="w-full h-full object-cover" [src]="perro.imgPerfil" alt="Imagen de Raza" (click)="openModal(perro.imgPerfil)"></ion-img>
                     <div class="absolute top-3 right-3 w-10 h-10 rounded-full bg-white flex justify-center items-center text-red-400">
                       <button type="button" [class.animate]="isInFavorites(perro, 'gato')" [class.animate-pulse]="!isInFavorites(perro, 'gato')" (click)="addToFavorites(perro, 'gato')">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-7 h-7">
