@@ -9,7 +9,7 @@ import { WelcomeModalPage } from '../components/welcome-modal/welcome-modal.page
 import { ModalController, ToastController } from '@ionic/angular';
 import { InfoAve } from '../interface/InfoAve.models';
 import { ImgModalPage } from '../components/img-modal/img-modal.page';
-import { AdmobAds, BannerAdOptions, BannerPosition, BannerSize } from 'capacitor-admob-ads';
+import { AdmobAds, BannerAdOptions, BannerPosition, BannerSize, InterstitialAdOptions } from 'capacitor-admob-ads';
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
@@ -39,6 +39,7 @@ export class homePage implements OnInit {
   texto1showSkeleton: boolean = true;
   showSkeletonGatos: boolean = true;
   showSkeletonPerros: boolean = true;
+  ads: Array<any> = [];
 
   breakpointsRegisteredAnimals = {
     0: { slidesPerView: 1.15 },
@@ -53,7 +54,7 @@ export class homePage implements OnInit {
     private firestores: FirestoreService,
     private storage: Storage,
     private modalController: ModalController,
-    private toastController: ToastController
+    private toastController: ToastController,
   ) {
   }
 
@@ -79,6 +80,12 @@ export class homePage implements OnInit {
       this.showSkeletonGatos = false;
       this.showSkeletonPerros = false;
     }, 3000);
+    // this.showAdaptiveBanner();
+    // this.showAdaptiveBanner1();
+    // this.showAdaptiveBanner2();
+    // this.showAdaptiveBanner3();
+    // this.showAdaptiveBanner4();
+    this.showAdaptive();
   }
   /*/
   Se llama la data de Perros y Gatos
@@ -242,31 +249,124 @@ export class homePage implements OnInit {
       componentProps: {
         imageUrl: imageUrl
       }
-    });
+    })
     return await modal.present();
   }
 
-  async showBanner() {
+  async showAdaptive() {
     try {
-      await AdmobAds.showBannerAd({
-        adId: 'ca-app-pub-6309294666517022/5497837595', // ID de tu anuncio de AdMob
-        isTesting: true, // Configuración de prueba
-        adSize: BannerSize.BANNER, // Tamaño del banner
-        adPosition: BannerPosition.BOTTOM // Posición del banner
+      const res = await AdmobAds.loadNativeAd({
+        adId: "ca-app-pub-6309294666517022/5497837595",
+        isTesting: false,
+        adsCount: 3
       });
-      console.log('Banner mostrado correctamente');
+      this.ads = res.ads;
+
+      this.ads.forEach(ad => {
+        console.log('Ad ID:', ad.id);
+        console.log('Headline:', ad.headline);
+        console.log('Body:', ad.body);
+        console.log('Icon:', ad.icon);
+        console.log('Cover:', ad.cover);
+        console.log('Advertiser:', ad.advertiser);
+        console.log('Call to Action:', ad.cta);
+        console.log('AdChoices URL:', ad.adChoicesUrl);
+      });
     } catch (error) {
-      console.error('Error al mostrar el banner', error);
+      console.error('Error loading native ads:', error.message);
+      // Puedes manejar el error de manera más específica según tu aplicación
     }
   }
 
+  viewAd(id) {
+    try {
+      AdmobAds.triggerNativeAd({ id: id });
+    } catch (error) {
+      console.error('Error triggering native ad:', error.message);
+      // Manejar el error, si es necesario
+    }
+  }
+
+  openAdchoices(url) {
+    try {
+      window.open(url);
+    } catch (error) {
+      console.error('Error opening AdChoices URL:', error.message);
+      // Manejar el error, si es necesario
+    }
+  }
+
+
+  async removerShowBanner() {
+    let rewardListener = AdmobAds.addListener("rewardedInterstitialAdOnRewarded", () => {
+      console.log('Rewarded Interstitial Ad Rewarded');
+    });
+
+    rewardListener.remove();
+
+    // To remove all listeners
+    AdmobAds.removeAllListeners();
+  }
   async showAdaptiveBanner() {
     try {
       await AdmobAds.showBannerAd({
         adId: 'ca-app-pub-6309294666517022/5497837595', // ID de tu anuncio de AdMob
-        isTesting: true, // Configuración de prueba
+        isTesting: false, // Configuración de prueba
         adSize: BannerSize.MEDIUM_RECTANGLE, // Tamaño de banner adaptable
-        adPosition: BannerPosition.BOTTOM // Posición del banner
+        adPosition: BannerPosition.TOP // Posición del banner
+      });
+      console.log('Banner adaptable mostrado correctamente');
+    } catch (error) {
+      console.error('Error al mostrar el banner adaptable', error);
+    }
+  }
+
+  async showAdaptiveBanner1() {
+    try {
+      await AdmobAds.showBannerAd({
+        adId: 'ca-app-pub-6309294666517022/5497837595', // ID de tu anuncio de AdMob
+        isTesting: false, // Configuración de prueba
+        adSize: BannerSize.BANNER, // Tamaño de banner adaptable
+        adPosition: BannerPosition.TOP // Posición del banner
+      });
+      console.log('Banner adaptable mostrado correctamente');
+    } catch (error) {
+      console.error('Error al mostrar el banner adaptable', error);
+    }
+  }
+  async showAdaptiveBanner2() {
+    try {
+      await AdmobAds.showBannerAd({
+        adId: 'ca-app-pub-6309294666517022/5497837595', // ID de tu anuncio de AdMob
+        isTesting: false, // Configuración de prueba
+        adSize: BannerSize.FULL_BANNER, // Tamaño de banner adaptable
+        adPosition: BannerPosition.TOP // Posición del banner
+      });
+      console.log('Banner adaptable mostrado correctamente');
+    } catch (error) {
+      console.error('Error al mostrar el banner adaptable', error);
+    }
+  }
+  async showAdaptiveBanner3() {
+    try {
+      await AdmobAds.showBannerAd({
+        adId: 'ca-app-pub-6309294666517022/5497837595', // ID de tu anuncio de AdMob
+        isTesting: false, // Configuración de prueba
+        adSize: BannerSize.LARGE_BANNER, // Tamaño de banner adaptable
+        adPosition: BannerPosition.TOP // Posición del banner
+      });
+      console.log('Banner adaptable mostrado correctamente');
+    } catch (error) {
+      console.error('Error al mostrar el banner adaptable', error);
+    }
+  }
+  async showAdaptiveBanner4() {
+    try {
+      await AdmobAds.showBannerAd({
+        adId: 'ca-app-pub-6309294666517022/5497837595', // ID de tu anuncio de AdMob
+        isTesting: false, // Configuración de prueba
+        adSize: BannerSize.LEADERBOARD, // Tamaño de banner adaptable
+        adPosition: BannerPosition.TOP // Posición del banner
       });
       console.log('Banner adaptable mostrado correctamente');
     } catch (error) {
