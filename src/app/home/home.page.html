@@ -8,7 +8,6 @@
     <!-- <ion-searchbar class="custom my-3" placeholder="Buscar"  mode="md"></ion-searchbar> -->
   </div>
 </ion-header>
-<ion-modal-controller></ion-modal-controller>
 
 <ion-content [fullscreen]="true">
   <div class="py-5 px-3 bg-gray-50 grid grid-cols-1 gap-y-8">
@@ -27,7 +26,62 @@
         </div>
       </div>
     </ng-container>
-    
+    <ng-container>
+      <div class="px-2 relative">
+        <div class="w-full h-80 bg-white rounded-3xl p-4 flex flex-col items-start justify-between gap-3 border border-gray-200 relative">
+          <div class="w-full h-full bg-white rounded-2xl flex justify-center items-center">
+            <ion-list>
+              <ion-button expand="block" color="secundary" (click)="showAdaptiveBanner()">Mostrar Anuncio</ion-button>
+              <ion-button expand="block" color="secundary" (click)="showAdaptiveBanner1()">Mostrar 1 Anuncio</ion-button>
+              <ion-button expand="block" color="secundary" (click)="showAdaptiveBanner2()">Mostrar 2 Anuncio</ion-button>
+              <ion-button expand="block" color="secundary" (click)="showAdaptiveBanner3()">Mostrar 3 Anuncio</ion-button>
+              <ion-button expand="block" color="secundary" (click)="showAdaptiveBanner4()">Mostrar 4 Anuncio</ion-button>
+              <ion-button expand="block" color="secundary" (click)="removerShowBanner()">Remover Anuncio</ion-button>
+            </ion-list>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+    <ng-container>
+      <div class="px-2 relative">
+        <div class="w-full h-40 bg-white rounded-3xl p-4 flex flex-col items-start justify-between gap-3 border border-gray-200 relative">
+          <div class="w-full h-full bg-white rounded-2xl flex justify-center items-center">
+            <ion-card *ngFor="let ad of ads">
+              <ion-card-header mode="md">
+                <ion-item lines="none">
+                  <ion-avatar slot="start">
+                    <ion-img src="{{ad.icon}}" crossorigin="Anonymous">
+                    </ion-img>
+                  </ion-avatar>
+                  <ion-label>
+                    <h2>{{ad.headline}}
+                    </h2>
+                    <p>
+                      {{ad.advertiser}}
+                    </p>
+                  </ion-label>
+                  <ion-icon slot="end" src="../../assets/icon/adchoices.svg" (click)="openAdchoices(ad.adChoicesUrl)">
+                  </ion-icon>
+                </ion-item>
+              </ion-card-header>
+            
+              <ion-card-content mode="md">
+                <p class="ion-text-wrap">
+                  {{ad.body}}
+                </p>
+            
+                <ion-img src="{{ad.cover}}" crossorigin="anonymous"></ion-img>
+            
+                <ion-chip (click)="viewAd(ad.id)" slot="end">
+                  <ion-label> {{ad.cta}} </ion-label>
+                </ion-chip>
+              </ion-card-content>
+            </ion-card>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+
     <ng-template #contenidoReal>
       <!-- Aquí colocarías tu contenido real -->
       <ion-accordion-group [value]="['first']" mode="ios" class="mb-6 mt-2 border border-stone shadow-lg rounded-lg overflow-hidden">
@@ -369,6 +423,6 @@
           </div>
         </div>
       </div>
-    </ng-container>
+    </ng-container>   
   </div>
 </ion-content>
