@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FirestoreService } from '../service/firestore.service';
 import { CuidadosGeneral } from '../interface/CuidadosGeneral.model';
+import { InfoImage } from '../interface/InfoImage.module';
 
 @Component({
   selector: 'app-cuidados',
@@ -13,6 +14,8 @@ export class CuidadosPage implements OnInit {
   cardHeading: string = '';
   cardSubtitle: string = '';
   cardContent: string = '';
+  originalImg: InfoImage[] = [];
+  img: InfoImage[] = [];
 
   constructor(private firestoreService: FirestoreService) { }
 
@@ -26,6 +29,12 @@ export class CuidadosPage implements OnInit {
         this.CuidadosGeneral = data;
         console.log(this.CuidadosGeneral);
         this.changeCardContent(this.selectedSegment);
+      }
+    });
+    this.firestoreService.getCollectionChanges<InfoImage>('InfoImage').subscribe(img => {
+      if (img) {
+        this.originalImg = img;
+        this.img = img
       }
     });
   }
@@ -111,14 +120,14 @@ export class CuidadosPage implements OnInit {
         htmlContent += `<details class="my-3" open name="comun">`
         htmlContent += `<summary>¿Cuáles son?</summary>`
         Object.keys(enfermedadesGato).forEach(enfermedad => {
-          
+
           htmlContent += `<p class="mt-3"><span class="font-bold">${enfermedad}:</span> ${enfermedadesGato[enfermedad]}</p>`;
         });
         htmlContent += `</details>`;
       }
-    } 
-    
-else {
+    }
+
+    else {
       htmlContent = `<p>No se encontraron datos de Enfermedades.</p>`;
     }
 
@@ -134,10 +143,10 @@ else {
 
     if (dietaGato || dietaPerro || dietaBarf) {
       htmlContent = `<p class="text-gray-500 text-sm my-3 mt-4 text-center">${data.descripcion}</p><hr class="my-3">`; // Agregar descripción general
-              // Agregar dieta de perros
+      // Agregar dieta de perros
       if (dietaPerro) {
         htmlContent += `<h4 class="text-base font-bold">La Dieta de Perros</h4>`;
-          htmlContent += `<details class="my-3 border border-blue-100 border-spacing-1 rounded-xl p-2 px-3" open name="gato">`
+        htmlContent += `<details class="my-3 border border-blue-100 border-spacing-1 rounded-xl p-2 px-3" open name="gato">`
         htmlContent += `<summary>¿Qué necesitan?</summary>`
         Object.keys(dietaPerro).forEach(key => {
           htmlContent += `<p class="mt-3"><span class="font-bold">${key}:</span> ${dietaPerro[key]}</p>`;
@@ -156,7 +165,7 @@ else {
         htmlContent += `<hr class="my-3">`;
       }
 
-      if(dietaBarf){
+      if (dietaBarf) {
         htmlContent += `<h4 class="text-base font-bold">${dietaBarf.tituloDieta}</h4>`;
         htmlContent += `<p class="mt-3">${dietaBarf.descripDieta}</p>`;
         htmlContent += `<details class="my-3 border border-blue-100 border-spacing-1 rounded-xl p-2 px-3" open name="gato">`
