@@ -61,10 +61,27 @@
     </ng-template>
     <!--ads local--> 
     <div id="myAds" class="grid grid-cols-3 gap-3 h-36">
-      <article class="bg-gray-200 w-full h-full rounded-lg overflow-hidden" *ngFor="let imgs of img">
-        <a [href]="imgs.instagram" target="_blank" rel="noopener noreferrer">
-          <img [src]="imgs.img" alt="ad1" class="object-cover w-full h-full">
+      <article class="relative bg-gray-200 w-full h-full sm:h-40  drop-shadow-xl" *ngFor="let imgs of img">
+        <a [href]="imgs.web" target="_blank" rel="noopener noreferrer">
+          <img [src]="imgs.img" alt="ad1" class="object-cover rounded-md w-full h-full">
         </a>
+        <ul class="absolute -bottom-5 left-2 sm:left-3 flex flex-row gap-3 bg-gray-50 opacity-95 hover:opacity-100 duration-200 rounded-lg drop-shadow-lg p-1">
+          <li class="w-5 h-5 text-sky-500 hover:text-blue-500 duration-200 text-xl rounded-full px-[2px] py-[1px]">
+            <a [href]="imgs.facebook" target="_blank" rel="noopener noreferrer">
+              <ion-icon name="logo-facebook"></ion-icon>
+            </a>
+          </li>
+          <li class="w-5 h-5 text-sky-500 hover:text-red-500 duration-200 text-xl rounded-full px-[2px] py-[1px]">
+            <a [href]="imgs.instagram" target="_blank" rel="noopener noreferrer">
+              <ion-icon name="logo-instagram"></ion-icon>
+            </a>
+          </li>
+          <li class="w-5 h-5 text-sky-500 hover:text-green-500 duration-200 text-xl rounded-full">
+            <a [href]="imgs.whatsapp" target="_blank" rel="noopener noreferrer">
+              <ion-icon name="logo-whatsapp"></ion-icon>
+            </a>
+          </li>
+        </ul>
       </article>
     </div>
     <div id="registered-animals">
