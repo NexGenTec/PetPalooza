@@ -145,7 +145,19 @@ ion-segment-button.ios {
     top: -1px;
 }
 
-ion-tab-button{
-    --padding-start:0.25rem;
-    --padding-end:0.25rem;
+ion-tab-button {
+    --padding-start: 0.25rem;
+    --padding-end: 0.25rem;
+}
+
+/* Ejemplo de estilos CSS para la tarjeta */
+ion-card {
+    margin: 10px;
+    background-color: #f0f0f0;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+ion-card-content {
+    padding: 10px;
 }
