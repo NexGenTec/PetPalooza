@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FirestoreService } from '../service/firestore.service';
 import { CuidadosGeneral } from '../interface/CuidadosGeneral.model';
 import { InfoImage } from '../interface/InfoImage.module';
+import { AdmobAds, BannerPosition, BannerSize, } from 'capacitor-admob-ads';
 
 @Component({
   selector: 'app-cuidados',
@@ -18,6 +19,10 @@ export class CuidadosPage implements OnInit {
   img: InfoImage[] = [];
 
   constructor(private firestoreService: FirestoreService) { }
+
+  ionViewDidEnter() {
+    this.showAdaptiveBanner();
+  }
 
   ngOnInit() {
     this.getCuidadosGenerales();
@@ -199,6 +204,31 @@ export class CuidadosPage implements OnInit {
     }
 
     return htmlContent;
+  }
+
+  /*Anuncio Banner  */
+  async showAdaptiveBanner() {
+    try {
+      await AdmobAds.showBannerAd({
+        adId: 'ca-app-pub-6309294666517022/1128036107', // ID de tu anuncio de AdMob
+        isTesting: true, // Configuración de prueba
+        adSize: BannerSize.FULL_BANNER, // Tamaño de banner adaptable
+        adPosition: BannerPosition.TOP // Posición del banner
+      });
+      console.log('Banner adaptable (Banner) mostrado correctamente');
+
+      // Cerrar el banner después de cierto tiempo o evento
+      setTimeout(async () => {
+        try {
+          await AdmobAds.removeBannerAd();
+          console.log('Banner adaptable (Banner) cerrado correctamente');
+        } catch (error) {
+          console.error('Error al cerrar el banner adaptable (Banner)', error);
+        }
+      }, 15000); // Ejemplo: cerrar el banner después de 10 segundos
+    } catch (error) {
+      console.error('Error al mostrar el banner adaptable (Banner)', error);
+    }
   }
 
 }

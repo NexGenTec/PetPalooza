@@ -10,7 +10,7 @@ import { ModalController, ToastController } from '@ionic/angular';
 import { InfoAve } from '../interface/InfoAve.models';
 import { ImgModalPage } from '../components/img-modal/img-modal.page';
 import { InfoImage } from '../interface/InfoImage.module';
-import { AdmobAds, BannerPosition, BannerSize } from 'capacitor-admob-ads';
+import { AdmobAds, BannerPosition, BannerSize, } from 'capacitor-admob-ads';
 
 @Component({
   selector: 'app-home',
@@ -67,12 +67,7 @@ export class homePage implements OnInit {
   }
 
   ionViewDidEnter() {
-    // Llama a una función para cargar tus anuncios
-    // this.showAdaptiveBanner();
-    // this.showAdaptiveBanner1();
-    // this.showAdaptiveBanner2();
-    // this.showAdaptiveBanner3();
-    // this.showAdaptiveBanner4();
+    this.showAdaptiveBanner();
   }
 
   ngOnInit(): void {
@@ -97,12 +92,6 @@ export class homePage implements OnInit {
       this.showSkeletonGatos = false;
       this.showSkeletonPerros = false;
     }, 3000);
-    // this.showAdaptiveBanner();
-    // this.showAdaptiveBanner1();
-    // this.showAdaptiveBanner2();
-    // this.showAdaptiveBanner3();
-    // this.showAdaptiveBanner4();
-    // this.showAdaptive();
   }
   /*/
   Se llama la data de Perros y Gatos
@@ -276,58 +265,11 @@ export class homePage implements OnInit {
     return await modal.present();
   }
 
+  /*Anuncio Banner  */
   async showAdaptiveBanner() {
     try {
       await AdmobAds.showBannerAd({
-        adId: 'ca-app-pub-6309294666517022/5497837595', // ID de tu anuncio de AdMob
-        isTesting: true, // Configuración de prueba
-        adSize: BannerSize.MEDIUM_RECTANGLE, // Tamaño de banner adaptable
-        adPosition: BannerPosition.TOP // Posición del banner
-      });
-      console.log('Banner adaptable mostrado correctamente');
-
-      // Cerrar el banner después de cierto tiempo o evento
-      setTimeout(async () => {
-        try {
-          await AdmobAds.removeBannerAd();
-          console.log('Banner adaptable cerrado correctamente');
-        } catch (error) {
-          console.error('Error al cerrar el banner adaptable', error);
-        }
-      }, 10000); // Ejemplo: cerrar el banner después de 10 segundos
-    } catch (error) {
-      console.error('Error al mostrar el banner adaptable', error);
-    }
-  }
-
-  async showAdaptiveBanner1() {
-    try {
-      await AdmobAds.showBannerAd({
-        adId: 'ca-app-pub-6309294666517022/5497837595', // ID de tu anuncio de AdMob
-        isTesting: true, // Configuración de prueba
-        adSize: BannerSize.BANNER, // Tamaño de banner adaptable
-        adPosition: BannerPosition.TOP // Posición del banner
-      });
-      console.log('Banner adaptable (Banner) mostrado correctamente');
-
-      // Cerrar el banner después de cierto tiempo o evento
-      setTimeout(async () => {
-        try {
-          await AdmobAds.removeBannerAd();
-          console.log('Banner adaptable (Banner) cerrado correctamente');
-        } catch (error) {
-          console.error('Error al cerrar el banner adaptable (Banner)', error);
-        }
-      }, 10000); // Ejemplo: cerrar el banner después de 10 segundos
-    } catch (error) {
-      console.error('Error al mostrar el banner adaptable (Banner)', error);
-    }
-  }
-
-  async showAdaptiveBanner2() {
-    try {
-      await AdmobAds.showBannerAd({
-        adId: 'ca-app-pub-6309294666517022/5497837595', // ID de tu anuncio de AdMob
+        adId: 'ca-app-pub-6309294666517022/1128036107', // ID de tu anuncio de AdMob
         isTesting: true, // Configuración de prueba
         adSize: BannerSize.FULL_BANNER, // Tamaño de banner adaptable
         adPosition: BannerPosition.TOP // Posición del banner
@@ -345,54 +287,6 @@ export class homePage implements OnInit {
       }, 10000); // Ejemplo: cerrar el banner después de 10 segundos
     } catch (error) {
       console.error('Error al mostrar el banner adaptable (Full Banner)', error);
-    }
-  }
-
-  async showAdaptiveBanner3() {
-    try {
-      await AdmobAds.showBannerAd({
-        adId: 'ca-app-pub-6309294666517022/5497837595', // ID de tu anuncio de AdMob
-        isTesting: true, // Configuración de prueba
-        adSize: BannerSize.LARGE_BANNER, // Tamaño de banner adaptable
-        adPosition: BannerPosition.TOP // Posición del banner
-      });
-      console.log('Banner adaptable (Large Banner) mostrado correctamente');
-
-      // Cerrar el banner después de cierto tiempo o evento
-      setTimeout(async () => {
-        try {
-          await AdmobAds.removeBannerAd();
-          console.log('Banner adaptable (Large Banner) cerrado correctamente');
-        } catch (error) {
-          console.error('Error al cerrar el banner adaptable (Large Banner)', error);
-        }
-      }, 10000); // Ejemplo: cerrar el banner después de 10 segundos
-    } catch (error) {
-      console.error('Error al mostrar el banner adaptable (Large Banner)', error);
-    }
-  }
-
-  async showAdaptiveBanner4() {
-    try {
-      await AdmobAds.showBannerAd({
-        adId: 'ca-app-pub-6309294666517022/5497837595', // ID de tu anuncio de AdMob
-        isTesting: true, // Configuración de prueba
-        adSize: BannerSize.LEADERBOARD, // Tamaño de banner adaptable
-        adPosition: BannerPosition.TOP // Posición del banner
-      });
-      console.log('Banner adaptable (Leaderboard) mostrado correctamente');
-
-      // Cerrar el banner después de cierto tiempo o evento
-      setTimeout(async () => {
-        try {
-          await AdmobAds.removeBannerAd();
-          console.log('Banner adaptable (Leaderboard) cerrado correctamente');
-        } catch (error) {
-          console.error('Error al cerrar el banner adaptable (Leaderboard)', error);
-        }
-      }, 10000); // Ejemplo: cerrar el banner después de 10 segundos
-    } catch (error) {
-      console.error('Error al mostrar el banner adaptable (Leaderboard)', error);
     }
   }
 }

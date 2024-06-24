@@ -26,65 +26,17 @@
         </div>
       </div>
     </ng-container>
-    <!-- HTML del componente -->
-
-    <ng-container *ngIf="showBanner">
-      <div class="px-2 relative">
-        <div class="w-full h-40 bg-white rounded-3xl p-4 flex flex-col items-start justify-between gap-3 border border-gray-200 relative">
-          <div class="w-full h-full bg-white rounded-2xl flex justify-center items-center">
-            <!-- Contenido del banner -->
-            <button (click)="showAdaptiveBanner()">Mostrar Banner</button>
-          </div>
-        </div>
-      </div>
-    </ng-container>
     <!-- Primer ng-container para BannerSize.MEDIUM_RECTANGLE -->
-    <ng-container *ngIf="showMediumRectangle">
+    <!-- <ng-container>
       <div class="px-2 relative">
         <div class="w-full h-40 bg-white rounded-3xl p-4 flex flex-col items-start justify-between gap-3 border border-gray-200 relative">
-          <div class="w-full h-full bg-white rounded-2xl flex justify-center items-center">
+          <div class="w-full h-full bg-white rounded-2xl flex justify-center items-center"> -->
             <!-- Contenido del banner -->
-            <button (click)="showAdaptiveBanner1()">Mostrar Banner 1</button>
+            <!-- <button (click)="showAdaptiveBanner1()">Mostrar Banner 1</button>
           </div>
         </div>
       </div>
-    </ng-container>
-
-    <!-- Segundo ng-container para BannerSize.BANNER -->
-    <ng-container *ngIf="showBanner">
-      <div class="px-2 relative">
-        <div class="w-full h-40 bg-white rounded-3xl p-4 flex flex-col items-start justify-between gap-3 border border-gray-200 relative">
-          <div class="w-full h-full bg-white rounded-2xl flex justify-center items-center">
-            <!-- Contenido del banner -->
-            <button (click)="showAdaptiveBanner2()">Mostrar Banner 2</button>
-          </div>
-        </div>
-      </div>
-    </ng-container>
-
-    <!-- Tercer ng-container para BannerSize.FULL_BANNER -->
-    <ng-container *ngIf="showFullBanner">
-      <div class="px-2 relative">
-        <div class="w-full h-40 bg-white rounded-3xl p-4 flex flex-col items-start justify-between gap-3 border border-gray-200 relative">
-          <div class="w-full h-full bg-white rounded-2xl flex justify-center items-center">
-            <!-- Contenido del banner -->
-            <button (click)="showAdaptiveBanner3()">Mostrar Banner 3</button>
-          </div>
-        </div>
-      </div>
-    </ng-container>
-
-    <!-- Cuarto ng-container para BannerSize.LARGE_BANNER -->
-    <ng-container *ngIf="showLargeBanner">
-      <div class="px-2 relative">
-        <div class="w-full h-40 bg-white rounded-3xl p-4 flex flex-col items-start justify-between gap-3 border border-gray-200 relative">
-          <div class="w-full h-full bg-white rounded-2xl flex justify-center items-center">
-            <!-- Contenido del banner -->
-            <button (click)="showAdaptiveBanner4()">Mostrar Banner 4</button>
-          </div>
-        </div>
-      </div>
-    </ng-container>
+    </ng-container> -->
     <ng-template #contenidoReal>
       <!-- Aquí colocarías tu contenido real -->
       <ion-accordion-group [value]="['first']" mode="ios" class="mb-6 mt-2 border border-stone shadow-lg rounded-lg overflow-hidden">
