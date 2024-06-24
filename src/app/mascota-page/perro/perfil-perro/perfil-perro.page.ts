@@ -159,7 +159,7 @@ export class PerfilPerroPage implements OnInit {
     try {
       await AdmobAds.showBannerAd({
         adId: 'ca-app-pub-6309294666517022/1128036107', // ID de tu anuncio de AdMob
-        isTesting: true, // Configuración de prueba
+        isTesting: false, // Configuración de prueba
         adSize: BannerSize.BANNER, // Tamaño de banner adaptable
         adPosition: BannerPosition.TOP // Posición del banner
       });
