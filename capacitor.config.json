@@ -1,1 +1,11 @@
-{}
+{
+    "plugins": {
+        "AdMob": {
+            "appId": "ca-app-pub-6309294666517022~4701288956",
+            "adUnits": {
+                "banner": "ca-app-pub-6309294666517022/5497837595",
+                "interstitial": "ca-app-pub-6309294666517022/2791783203"
+            }
+        }
+    }
+}

@@ -3,6 +3,7 @@ import { ImgModalPage } from '../../../components/img-modal/img-modal.page';
 import { ModalController } from '@ionic/angular';
 import { InfoPerro, Temperamento } from '../../../interface/InfoPerro.models';
 import { ModalSwiperPage } from 'src/app/components/modal-swiper/modal-swiper.page';
+import { AdmobAds, BannerPosition, BannerSize, } from 'capacitor-admob-ads';
 
 @Component({
   selector: 'app-perfil-perro',
@@ -46,6 +47,11 @@ export class PerfilPerroPage implements OnInit {
     private modalController: ModalController,
   ) {
     this.changeCardContent(this.selectedSegmentValue);
+  }
+
+
+  ionViewDidEnter() {
+    this.showAdaptiveBanner();
   }
 
   ngOnInit() {
@@ -146,6 +152,31 @@ export class PerfilPerroPage implements OnInit {
       }
     });
     return await modal.present();
+  }
+
+  /*Anuncio Banner  */
+  async showAdaptiveBanner() {
+    try {
+      await AdmobAds.showBannerAd({
+        adId: 'ca-app-pub-6309294666517022/1128036107', // ID de tu anuncio de AdMob
+        isTesting: true, // Configuración de prueba
+        adSize: BannerSize.BANNER, // Tamaño de banner adaptable
+        adPosition: BannerPosition.TOP // Posición del banner
+      });
+      console.log('Banner adaptable (Banner) mostrado correctamente');
+
+      // Cerrar el banner después de cierto tiempo o evento
+      setTimeout(async () => {
+        try {
+          await AdmobAds.removeBannerAd();
+          console.log('Banner adaptable (Banner) cerrado correctamente');
+        } catch (error) {
+          console.error('Error al cerrar el banner adaptable (Banner)', error);
+        }
+      }, 20000); // Ejemplo: cerrar el banner después de 10 segundos
+    } catch (error) {
+      console.error('Error al mostrar el banner adaptable (Banner)', error);
+    }
   }
 
 }
