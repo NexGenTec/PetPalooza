@@ -115,30 +115,25 @@ export class CuidadosPage implements OnInit {
     let htmlContent = '';
     if (enfermedadesGato || enfermedadesPerro) {
       htmlContent = `<p class="text-gray-500 text-sm my-3 mt-4 text-center">${data.descripcion}</p><hr class="my-3">`; // Agregar descripción general
-      // Agregar enfermedades de perros
       if (enfermedadesPerro) {
         htmlContent += `<h4 class="text-base">Enfermedades <b>Comunes en Perros:</b></h4>`;
-        htmlContent += `<details class="my-3 border border-blue-100 border-spacing-1 rounded-xl p-2 px-3" open name="comun">`
-        htmlContent += `<summary>¿Cuáles son?</summary>`
+        htmlContent += `<details class="my-3 border border-blue-100 rounded-xl p-2 px-3" open name="comun">`;
+        htmlContent += `<summary>¿Cuáles son?</summary>`;
         Object.keys(enfermedadesPerro).forEach(enfermedad => {
           htmlContent += `<p class="mt-3"><span class="font-bold">${enfermedad}:</span> ${enfermedadesPerro[enfermedad]}</p>`;
         });
-        htmlContent += `</details">`;
-        htmlContent += `<hr class="my-3">`
+        htmlContent += `</details>`;
       }
       if (enfermedadesGato) {
         htmlContent += `<h4 class="text-base">Enfermedades <b>Comunes en Gatos:</b></h4>`;
-        htmlContent += `<details class="my-3" open name="comun">`
-        htmlContent += `<summary>¿Cuáles son?</summary>`
+        htmlContent += `<details class="my-3 border border-blue-100 rounded-xl p-2 px-3" open name="comun">`;
+        htmlContent += `<summary>¿Cuáles son?</summary>`;
         Object.keys(enfermedadesGato).forEach(enfermedad => {
-
           htmlContent += `<p class="mt-3"><span class="font-bold">${enfermedad}:</span> ${enfermedadesGato[enfermedad]}</p>`;
         });
         htmlContent += `</details>`;
       }
-    }
-
-    else {
+    } else {
       htmlContent = `<p>No se encontraron datos de Enfermedades.</p>`;
     }
 
