@@ -10,11 +10,6 @@ import { AdmobAds, BannerPosition, BannerSize, } from 'capacitor-admob-ads';
   styleUrls: ['./cuidados.page.scss'],
 })
 export class CuidadosPage implements OnInit {
-  showIcons: boolean[] = [];
-
-  toggleIcons(index: number) {
-    this.showIcons[index] = !this.showIcons[index];
-  }
   CuidadosGeneral: CuidadosGeneral[] = [];
   selectedSegment: string = 'Controles';
   cardHeading: string = '';
@@ -31,7 +26,6 @@ export class CuidadosPage implements OnInit {
 
   ngOnInit() {
     this.getCuidadosGenerales();
-    this.showIcons = this.img.map(() => false);
   }
 
   getCuidadosGenerales() {

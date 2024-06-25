@@ -20,13 +20,6 @@ import { StorageService } from '../service/storage.service';
 })
 export class homePage implements OnInit {
   
-showIcons: boolean[] = [];
-
-
-toggleIcons(index: number) {
-  this.showIcons[index] = !this.showIcons[index];
-}
-
 
   gatos: InfoGato[] = [];
   perros: InfoPerro[] = [];
@@ -81,7 +74,6 @@ toggleIcons(index: number) {
   }
 
   ngOnInit(): void {
-    this.showIcons = this.img.map(() => false);
     this.getQuirkyFacts();
     this.loadFavorites();
     this.loadData();
