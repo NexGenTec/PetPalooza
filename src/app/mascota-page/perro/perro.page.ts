@@ -5,6 +5,7 @@ import { FirestoreService } from '../../service/firestore.service';
 import { Router } from '@angular/router';
 import { ImgModalPage } from '../../components/img-modal/img-modal.page';
 import { ModalController, ToastController } from '@ionic/angular';
+import { StorageService } from 'src/app/service/storage.service';
 
 @Component({
   selector: 'app-perro',
@@ -25,7 +26,10 @@ export class perroPage {
   constructor(
     private firestores: FirestoreService,
     private toastController: ToastController,
-    private router: Router, private modalController: ModalController) {
+    private router: Router,
+    private modalController: ModalController,
+    private favoritesService: StorageService
+  ) {
     this.loadData();
   }
 
@@ -99,35 +103,16 @@ export class perroPage {
   }
 
   isInFavorites(animal: any, type: string): boolean {
-    const favorites: any[] = JSON.parse(localStorage.getItem('favorites')) || [];
-    return favorites.some(favorite => favorite.id === animal.id && favorite.type === type);
+    return this.favoritesService.isInFavorites(animal, type);
   }
 
   async addToFavorites(animal: any, type: string) {
-    let favorites: any[] = JSON.parse(localStorage.getItem('favorites')) || [];
-    const index = favorites.findIndex(favorite => favorite.id === animal.id && favorite.type === type);
-    if (index !== -1) {
-      favorites.splice(index, 1);
-      const toast = await this.toastController.create({
-        message: 'Eliminado de favoritos',
-        duration: 2000,
-        position: 'top',
-        color: 'danger'
-      });
-      toast.present();
-    } else {
-      animal.type = type; // Agregar el tipo de animal (perro o gato)
-      favorites.push(animal);
-      const toast = await this.toastController.create({
-        message: 'Agregado a favoritos',
-        duration: 2000,
-        position: 'top',
-        color: 'success'
-      });
-      toast.present();
-    }
-    localStorage.setItem('favorites', JSON.stringify(favorites));
-    this.favorites = favorites;
+    await this.favoritesService.addToFavorites(animal, type);
+    this.loadFavorites();  // Actualizar la lista de favoritos después de agregar o eliminar
+  }
+
+  private loadFavorites() {
+    this.favorites = this.favoritesService.getFavorites();
   }
 
 }
