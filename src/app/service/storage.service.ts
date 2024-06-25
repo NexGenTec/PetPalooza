@@ -47,7 +47,17 @@ export class StorageService {
       message: message,
       duration: 2000,
       position: 'top',
-      color: color
+      color: color,
+      buttons: [
+        {
+          side: 'end',
+          icon: 'close-circle',
+          role: 'cancel'
+        }
+      ],
+      animated: true,
+      translucent: true,
+      cssClass: 'custom-toast'
     });
     toast.present();
   }
