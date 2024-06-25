@@ -43,14 +43,14 @@
       </div>
     </section> -->
     <!--ads local--> 
-    <div id="myAds" class="grid grid-cols-3 gap-3 h-36">
+    <div id="myAds" class="grid grid-cols-3 gap-3 h-36 mb-12">
       <article class="relative bg-gray-200 w-full h-full sm:h-40 drop-shadow-xl" *ngFor="let imgs of img; let i = index">
         <a [href]="imgs.web" target="_blank" rel="noopener noreferrer">
           <img [src]="imgs.img" alt="ad1" class="object-cover rounded-md w-full h-full">
         </a>
         <div class="group grid grid-cols-3 gap-0 duration-500 relative">
           <h1
-            class="absolute z-10 cursor-pointer menu-icon"
+            class="absolute z-20 cursor-pointer menu-icon"
             [class.hidden]="showIcons[i]"
             (click)="toggleIcons(i)"
           >
@@ -121,7 +121,7 @@
         </a>
       </article>
     </div> -->
-    <section class="my-3 mt-12">
+    <section class="my-3 mt-116">
       <div class="border-b border-gray-200 pb-2 bg-white mx-3">
         <ion-segment mode="ios" [(ngModel)]="selectedSegment" (ionChange)="changeCardContent(selectedSegment)" class="rounded-lg mb-3">
           <ion-segment-button value="Controles" [checked]="selectedSegment === 'Controles'">
