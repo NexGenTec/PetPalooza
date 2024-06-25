@@ -11,6 +11,7 @@ import { InfoAve } from '../interface/InfoAve.models';
 import { ImgModalPage } from '../components/img-modal/img-modal.page';
 import { InfoImage } from '../interface/InfoImage.module';
 import { AdmobAds, BannerPosition, BannerSize, } from 'capacitor-admob-ads';
+import { StorageService } from '../service/storage.service';
 
 @Component({
   selector: 'app-home',
@@ -63,6 +64,7 @@ export class homePage implements OnInit {
     private storage: Storage,
     private modalController: ModalController,
     private toastController: ToastController,
+    private favoritesService: StorageService
   ) {
   }
 
@@ -151,11 +153,8 @@ export class homePage implements OnInit {
     });
   }
 
-  loadFavorites() {
-    const storedFavorites = localStorage.getItem('favorites');
-    if (storedFavorites) {
-      this.favorites = JSON.parse(storedFavorites);
-    }
+  private loadFavorites() {
+    this.favorites = this.favoritesService.getFavorites();
   }
 
 
@@ -165,35 +164,12 @@ export class homePage implements OnInit {
   }
 
   isInFavorites(animal: any, type: string): boolean {
-    const favorites: any[] = JSON.parse(localStorage.getItem('favorites')) || [];
-    return favorites.some(favorite => favorite.id === animal.id && favorite.type === type);
+    return this.favoritesService.isInFavorites(animal, type);
   }
 
   async addToFavorites(animal: any, type: string) {
-    let favorites: any[] = JSON.parse(localStorage.getItem('favorites')) || [];
-    const index = favorites.findIndex(favorite => favorite.id === animal.id && favorite.type === type);
-    if (index !== -1) {
-      favorites.splice(index, 1);
-      const toast = await this.toastController.create({
-        message: 'Eliminado de favoritos',
-        duration: 2000,
-        position: 'top',
-        color: 'danger'
-      });
-      toast.present();
-    } else {
-      animal.type = type; // Agregar el tipo de animal (perro o gato)
-      favorites.push(animal);
-      const toast = await this.toastController.create({
-        message: 'Agregado a favoritos',
-        duration: 2000,
-        position: 'top',
-        color: 'success'
-      });
-      toast.present();
-    }
-    localStorage.setItem('favorites', JSON.stringify(favorites));
-    this.favorites = favorites;
+    await this.favoritesService.addToFavorites(animal, type);
+    this.loadFavorites();  // Actualizar la lista de favoritos después de agregar o eliminar
   }
 
   navigateToCat() {
