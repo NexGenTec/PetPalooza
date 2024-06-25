@@ -14,6 +14,11 @@ import { AdmobAds, BannerPosition, BannerSize, } from 'capacitor-admob-ads';
   styleUrls: ['./adoptame.page.scss'],
 })
 export class AdoptamePage implements OnInit {
+  showIcons: boolean[] = [];
+
+  toggleIcons(index: number) {
+    this.showIcons[index] = !this.showIcons[index];
+  }
 
   fundaciones: fundaciones[] = [];
   huachito: Huachitos[] = [];
@@ -42,6 +47,7 @@ export class AdoptamePage implements OnInit {
   }
 
   ngOnInit(): void {
+    this.showIcons = this.img.map(() => false);
     this.getQuirkyFacts();
     this.getHuachitos();
     setInterval(() => {

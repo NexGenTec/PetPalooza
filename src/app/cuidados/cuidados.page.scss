@@ -15,3 +15,39 @@ ion-segment-button.ios {
     --padding-top:5px;
     --padding-bottom:5px;
 }
+
+.group {
+    position: relative;
+  }
+  
+  .group .menu-icon {
+
+    top: 2px; 
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  
+.close-icon {
+    position: absolute;
+    bottom: 40px; 
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  
+  .hidden {
+    display: none;
+  }
+  
+  .group  a ion-icon {
+    display: flex;
+    align-items: center;
+    // opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+
+.group  a ion-icon.ng-enter-active,
+.group  a ion-icon.ng-leave-active {
+    opacity: 1;
+    transform: translateY(0);
+}

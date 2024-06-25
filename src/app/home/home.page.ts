@@ -19,6 +19,14 @@ import { StorageService } from '../service/storage.service';
   styleUrls: ['home.page.scss']
 })
 export class homePage implements OnInit {
+  
+showIcons: boolean[] = [];
+
+
+toggleIcons(index: number) {
+  this.showIcons[index] = !this.showIcons[index];
+}
+
 
   gatos: InfoGato[] = [];
   perros: InfoPerro[] = [];
@@ -73,6 +81,7 @@ export class homePage implements OnInit {
   }
 
   ngOnInit(): void {
+    this.showIcons = this.img.map(() => false);
     this.getQuirkyFacts();
     this.loadFavorites();
     this.loadData();
@@ -266,3 +275,5 @@ export class homePage implements OnInit {
     }
   }
 }
+
+
