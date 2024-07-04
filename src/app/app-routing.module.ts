@@ -19,6 +19,14 @@ const routes: Routes = [
     loadChildren: () => import('./mascota-page/perro/perfil-perro/perfil-perro.module').then(m => m.PerfilPerroPageModule)
   },
   {
+    path: 'page-ave/:categoria',
+    loadChildren: () => import('./mascota-page/aves/page-ave/page-ave.module').then(m => m.PageAvePageModule)
+  },
+  {
+    path: 'perfil-ave/:id',
+    loadChildren: () => import('./mascota-page/aves/page-ave/perfil-ave/perfil-ave.module').then(m => m.PerfilAvePageModule)
+  },
+  {
     path: 'welcome-modal',
     loadChildren: () => import('./components/welcome-modal/welcome-modal.module').then(m => m.WelcomeModalPageModule)
   },
@@ -33,12 +41,10 @@ const routes: Routes = [
   {
     path: 'cuidados',
     loadChildren: () => import('./cuidados/cuidados.module').then(m => m.CuidadosPageModule)
+  },  {
+    path: 'modal-swiper',
+    loadChildren: () => import('./components/modal-swiper/modal-swiper.module').then( m => m.ModalSwiperPageModule)
   },
-  // {
-  //   path: 'vetshop',
-  //   loadChildren: () => import('./cuidados/vets&shop.module').then( m => m.CuidadosPageModule)
-  // },
-
 
 ];
 @NgModule({

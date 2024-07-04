@@ -1,19 +1,17 @@
+<ion-toolbar class="border-b border-gray-200">
+  <div class="flex gap-2 items-center justify-between mx-3">
+    <ion-buttons slot="start" class="flex flex-grow basis-0">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <img 
+      class="max-h-14 my-1"
+      alt="logo PetPalooza" 
+      src="assets/img/logo/PetPalooza.png" 
+    />
+    <div class="flex flex-grow basis-0"></div>
+  </div>
+</ion-toolbar>
 <ion-content [fullscreen]="true">
-
-  <ion-toolbar class="border-b border-gray-200">
-    <div class="flex gap-2 items-center justify-between mx-3">
-      <ion-buttons slot="start" class="flex flex-grow basis-0">
-        <ion-back-button defaultHref="/"></ion-back-button>
-      </ion-buttons>
-      <img 
-        class="max-h-14 my-1"
-        alt="logo PetPalooza" 
-        src="assets/img/logo/PetPalooza.png" 
-      />
-      <div class="flex flex-grow basis-0"></div>
-    </div>
-  </ion-toolbar>
-
  <div class="bg-gray-50">
     <!-- profile 1 -->
     <div class="bg-blue-100 pt-20 pb-6 px-3 min-h-[93vh]">
@@ -73,17 +71,18 @@
           </div>
           <ion-card-content *ngIf="!showImagesContainer" class="ion-text-start" [innerHTML]="cardContent"></ion-card-content>
         </ion-card>
-        <ng-container *ngIf="showImagesContainer && perro && perro.length ">
+        <ng-container *ngIf="showImagesContainer && perro && perro.length">
           <div class="container mx-auto p-4">
             <div class="grid grid-cols-2 md:grid-cols-2 gap-4 max-w-xl mx-auto">
               <div *ngFor="let imgUrl of getImagesArray(perro[0])">
                 <div class="max-w-full rounded-lg overflow-hidden">
-                  <ion-img class="h-full object-cover max-h-[300px]" [src]="imgUrl" alt="Imagen de {{ perro[0].Raza }}" ></ion-img>
+                  <ion-img [src]="imgUrl" alt="Imagen de {{ perro[0].Raza }}" (click)="openModalSwiper(perro[0])">
+                  </ion-img>
                 </div>
               </div>
             </div>
           </div>
-        </ng-container>                 
+        </ng-container>                
       </div>
     </div>
   </div>

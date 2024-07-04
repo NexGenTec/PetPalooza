@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { ImgModalSwiperPage } from './img-modal-swiper.page';
+import { PageAvePage } from './page-ave.page';
 
 const routes: Routes = [
   {
     path: '',
-    component: ImgModalSwiperPage
+    component: PageAvePage
   }
 ];
 
@@ -14,4 +14,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class ImgModalSwiperPageRoutingModule {}
+export class PageAvePageRoutingModule {}

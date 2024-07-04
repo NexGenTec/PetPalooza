@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { ImgModalPage } from '../../../components/img-modal/img-modal.page';
 import { ModalController } from '@ionic/angular';
 import { InfoPerro, Temperamento } from '../../../interface/InfoPerro.models';
-import { FirestoreService } from '../../../service/firestore.service';
-import { ImgModalSwiperPage } from './img-modal-swiper/img-modal-swiper.page';
+import { ModalSwiperPage } from 'src/app/components/modal-swiper/modal-swiper.page';
 
 @Component({
   selector: 'app-perfil-perro',
@@ -44,8 +42,8 @@ export class PerfilPerroPage implements OnInit {
 
   infoPerro: any = (this.perro as any).default;
 
-  constructor(private route: ActivatedRoute, private modalController: ModalController,
-    private firestores: FirestoreService,
+  constructor(
+    private modalController: ModalController,
   ) {
     this.changeCardContent(this.selectedSegmentValue);
   }
@@ -139,10 +137,13 @@ export class PerfilPerroPage implements OnInit {
     return await modal.present();
   }
 
-  async openModalSwiper(images: string[]) {
+  async openModalSwiper(perro: InfoPerro) {
     const modal = await this.modalController.create({
-      component: ImgModalSwiperPage,
-      componentProps: { images }
+      component: ModalSwiperPage,
+      componentProps: {
+        images: this.getImagesArray(perro),
+        initialSlide: 0
+      }
     });
     return await modal.present();
   }

@@ -1,17 +1,17 @@
 <ion-header class="bg-white shadow-none border-b border-gray-200">
-  <div class="flex gap-2 items-center mx-3">
-    <img 
-      class="max-h-14 mx-auto"
-      alt="logo PetPalooza" 
-      src="assets/img/logo/PetPalooza.png" 
-    />
-    <ion-searchbar class="custom my-3" placeholder="Buscar" mode="md" [(ngModel)]="searchTerm" (ionChange)="filterGatos()"></ion-searchbar>
-  </div>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title class="mx-auto">
+      <ion-searchbar class="custom my-3" placeholder="Buscar" mode="md" [(ngModel)]="searchTerm" (ionChange)="filterGatos()"></ion-searchbar>
+    </ion-title>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
   <div class="px-3 pt-5 bg-gray-50">
-    <section class="max-w-md w-full mx-auto">
+    <section class=" w-full mx-auto">
       <!-- Dato Freak -->
       <ion-accordion-group [value]="['first']" mode="ios" class="mb-6 mt-2 border border-stone shadow-lg rounded-lg overflow-hidden">
         <ion-accordion value="first" *ngIf="DatosFreak[currentDatoIndex]?.categoria === 'gato'">

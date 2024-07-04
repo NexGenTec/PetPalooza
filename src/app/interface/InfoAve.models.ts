@@ -11,6 +11,7 @@ export interface InfoAve {
     fechaCreacion: FechaCreacion;
     img: { [key: string]: string };
     CaractFisicas: CaractFisicas;
+    categoria: string
 }
 
 export interface CaractFisicas {

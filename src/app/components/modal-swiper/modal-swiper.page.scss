@@ -1,15 +1,20 @@
 /* modal-swiper.page.scss */
+
 ion-content {
     --background: rgba(0, 0, 0, 0.5);
+    /* Fondo semitransparente */
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
+    /* Ocupa el 100% del alto de la pantalla */
 }
 
 .swiper-container {
     width: 100%;
+    /* Ocupa el 100% del ancho disponible */
     height: 100%;
+    /* Ocupa el 100% del alto disponible */
 }
 
 .swiper-slide {
