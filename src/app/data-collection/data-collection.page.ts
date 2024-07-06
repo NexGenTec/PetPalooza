@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { FirestoreService } from 'src/app/service/firestore.service';
 import { QuirkyFacts } from '../interface/QuirkyFacts.models';
+import { ToastController } from '@ionic/angular';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-data-collection',
@@ -13,20 +15,51 @@ export class DataCollectionPage {
     Titulo: '',
     descripcion: '',
   };
+  quirkyFactsList: QuirkyFacts[] = [];
 
-  constructor(private firestoreService: FirestoreService) { }
+  constructor(
+    private firestoreService: FirestoreService,
+    private toastController: ToastController
+  ) { }
 
   ngOnInit() {
-  }
+    this.loadQuirkyFacts();
+   }
 
-  submitForm(formData: QuirkyFacts) {
-    console.log('Datos del formulario:', formData);
-    this.firestoreService.addDocument('QuirkyFacts', formData)
+  async submitForm(form: NgForm) {
+    console.log('Datos del formulario:', this.formData);
+    this.firestoreService.addDocument('QuirkyFacts', this.formData)
       .then(() => {
-        console.log('Datos subidos exitosamente a Firebase');
+        this.presentToast('Datos subidos exitosamente a Firebase');
+        this.resetForm(form);
       })
       .catch((error) => {
-        console.error('Error al subir los datos a Firebase:', error);
+        this.presentToast('Error al subir los datos a Firebase');
       });
+  }
+
+  resetForm(form: NgForm) {
+    form.resetForm();
+    this.formData = {
+      categoria: '',
+      Titulo: '',
+      descripcion: '',
+    };
+  }
+
+  async presentToast(message: string) {
+    const toast = await this.toastController.create({
+      message: message,
+      duration: 2000,
+      color: 'success',
+      position: 'top'
+    });
+    toast.present();
+  }
+
+  loadQuirkyFacts() {
+    this.firestoreService.getCollection<QuirkyFacts>('QuirkyFacts').subscribe(data => {
+      this.quirkyFactsList = data;
+    });
   }
 }

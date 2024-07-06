@@ -8,27 +8,19 @@ const routes: Routes = [
     component: TabsPage,
     children: [
       {
-        path: 'gato',
-        loadChildren: () => import('../gato/gato.module').then(m => m.gatoPageModule)
-      },
-      {
-        path: 'home',
-        loadChildren: () => import('../home/home.module').then(m => m.homePageModule)
-      },
-      {
-        path: 'perro',
-        loadChildren: () => import('../perro/perro.module').then(m => m.perroPageModule)
+        path: 'data-collection',
+        loadChildren: () => import('../data-collection/data-collection.module').then( m => m.DataCollectionPageModule)
       },
       {
         path: '',
-        redirectTo: '/tabs/home',
+        redirectTo: '/tabs/data-collection',
         pathMatch: 'full'
       }
     ]
   },
   {
     path: '',
-    redirectTo: '/tabs/home',
+    redirectTo: '/tabs/data-collection',
     pathMatch: 'full'
   }
 ];

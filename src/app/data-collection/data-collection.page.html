@@ -1,8 +1,8 @@
 <ion-content [fullscreen]="true">
-  <ion-title size="large" class="ion-text-center">Subir Información de Datos Curiosos</ion-title>
+  <ion-title size="large" class="ion-text-center">Datos Curiosos</ion-title>
   <ion-card>
     <ion-card-content>
-      <form (submit)="submitForm(formData)">
+      <form #form="ngForm" (ngSubmit)="submitForm(form)">
         <ion-item>
           <ion-label position="stacked">Título</ion-label>
           <ion-input type="text" [(ngModel)]="formData.Titulo" name="Titulo" required></ion-input>
@@ -22,4 +22,17 @@
       </form>
     </ion-card-content>
   </ion-card>
+  <ion-title size="large" class="ion-text-center">Lista de Datos Curiosos</ion-title>
+  <ion-list>
+    <ion-list-header>
+      <ion-label>Datos Curiosos</ion-label>
+    </ion-list-header>
+    <ion-item *ngFor="let fact of quirkyFactsList">
+      <ion-label>
+        <h2>{{ fact.Titulo }}</h2>
+        <h3>{{ fact.categoria }}</h3>
+        <p>{{ fact.descripcion }}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
 </ion-content>

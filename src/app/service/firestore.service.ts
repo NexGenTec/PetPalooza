@@ -10,7 +10,7 @@ export class FirestoreService {
   constructor(private firestore: AngularFirestore) { }
 
   // Obtener cambios en una colección
-  getCollectionChanges<T>(path: string): Observable<T[]> {
+  getCollection<T>(path: string): Observable<T[]> {
     return this.firestore.collection<T>(path).valueChanges();
   }
 
