@@ -21,6 +21,7 @@ import { getAuth, provideAuth } from '@angular/fire/auth';
 import { getAnalytics, provideAnalytics, ScreenTrackingService, UserTrackingService } from '@angular/fire/analytics';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { getDatabase, provideDatabase } from '@angular/fire/database';
+import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { getStorage, provideStorage } from '@angular/fire/storage';
 import { HttpClientModule } from '@angular/common/http';
 import { AngularFireModule } from '@angular/fire/compat';
@@ -31,11 +32,11 @@ if (!environment.production) { (self as any).FIREBASE_APPCHECK_DEBUG_TOKEN = fal
 const routes: Routes = [
 
 ]
-
 @NgModule({
   declarations: [AppComponent],
   imports: [BrowserModule, IonicModule.forRoot(),
     AngularFireModule.initializeApp(environment.firebase),
+    AngularFirestoreModule,
     IonicStorageModule.forRoot(),
     AppRoutingModule,
     HttpClientModule,

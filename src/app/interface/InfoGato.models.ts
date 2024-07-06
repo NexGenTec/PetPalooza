@@ -1,7 +1,7 @@
 export interface InfoGato {
     cuidados: Cuidados;
     origen: string;
-    Año: string;
+    Anio: string;
     Raza: string;
     Temperamento: Temperamento[];
     Longevidad: string;
@@ -15,7 +15,7 @@ export interface InfoGato {
 
 export interface CaractFisicas {
     Cuerpo: string;
-    Tamaño: string;
+    Tamano: string;
     Colores: string;
     Pelaje: string;
 }

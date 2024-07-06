@@ -39,16 +39,20 @@ const routes: Routes = [
         path: 'cuidados',
         loadChildren: () => import('../cuidados/cuidados.module').then(m => m.CuidadosPageModule)
       },
+       {
+        path: 'data-collection',
+        loadChildren: () => import('../data-collection/data-collection.module').then( m => m.DataCollectionPageModule)
+      },
       {
         path: '',
-        redirectTo: '/tabs/home',
+        redirectTo: '/tabs/data-collection',
         pathMatch: 'full'
       }
     ]
   },
   {
     path: '',
-    redirectTo: '/tabs/home',
+    redirectTo: '/tabs/data-collection',
     pathMatch: 'full'
   }
 ];

@@ -41,11 +41,29 @@ const routes: Routes = [
   {
     path: 'cuidados',
     loadChildren: () => import('./cuidados/cuidados.module').then(m => m.CuidadosPageModule)
-  },  {
+  },
+  {
     path: 'modal-swiper',
     loadChildren: () => import('./components/modal-swiper/modal-swiper.module').then( m => m.ModalSwiperPageModule)
   },
-
+    loadChildren: () => import('./img-modal/img-modal.module').then(m => m.ImgModalPageModule)
+  },
+  // {
+  //   path: 'perfil-gato/:id',
+  //   loadChildren: () => import('./perfil-gato/perfil-gato.module').then(m => m.PerfilGatoPageModule)
+  // },
+  // {
+  //   path: 'perfil-perro/:id',
+  //   loadChildren: () => import('./perfil-perro/perfil-perro.module').then(m => m.PerfilPerroPageModule)
+  // },
+  {
+    path: 'welcome-modal',
+    loadChildren: () => import('./welcome-modal/welcome-modal.module').then(m => m.WelcomeModalPageModule)
+  },
+  {
+    path: 'favoritos',
+    loadChildren: () => import('./favoritos/favoritos.module').then(m => m.FavoritosPageModule)
+  },
 ];
 @NgModule({
   imports: [
