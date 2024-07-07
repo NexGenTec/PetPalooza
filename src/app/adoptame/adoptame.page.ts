@@ -5,7 +5,7 @@ import { HuachitoService } from '../service/huachito.service';
 import { Huachitos } from '../interface/Huachitos.models';
 import { ModalController } from '@ionic/angular';
 import { ImgModalPage } from '../components/img-modal/img-modal.page';
-import { InfoImage } from '../interface/InfoImage.module';
+import { InfoImage } from '../interface/InfoImage.models';
 import { AdmobAds, BannerPosition, BannerSize, } from 'capacitor-admob-ads';
 
 @Component({

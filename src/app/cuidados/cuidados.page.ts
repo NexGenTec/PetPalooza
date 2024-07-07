@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FirestoreService } from '../service/firestore.service';
 import { CuidadosGeneral } from '../interface/CuidadosGeneral.model';
-import { InfoImage } from '../interface/InfoImage.module';
+import { InfoImage } from '../interface/InfoImage.models';
 import { AdmobAds, BannerPosition, BannerSize, } from 'capacitor-admob-ads';
 
 @Component({

@@ -9,7 +9,7 @@ import { WelcomeModalPage } from '../components/welcome-modal/welcome-modal.page
 import { ModalController, ToastController } from '@ionic/angular';
 import { InfoAve } from '../interface/InfoAve.models';
 import { ImgModalPage } from '../components/img-modal/img-modal.page';
-import { InfoImage } from '../interface/InfoImage.module';
+import { InfoImage } from '../interface/InfoImage.models';
 import { AdmobAds, BannerPosition, BannerSize, } from 'capacitor-admob-ads';
 import { StorageService } from '../service/storage.service';
 
