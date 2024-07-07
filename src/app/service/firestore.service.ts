@@ -23,7 +23,6 @@ export class FirestoreService {
   }
 
   getDocumentChanges<tipo>(enlace: string) {
-    console.log('getDocumentChanges -> ', enlace);
     const document = doc(this.firestore, enlace);
     return docData(document) as Observable<tipo>;
   }

@@ -32,7 +32,6 @@ export class CuidadosPage implements OnInit {
     this.firestoreService.getCollectionChanges<CuidadosGeneral>('CuidadosGeneral').subscribe(data => {
       if (data) {
         this.CuidadosGeneral = data;
-        console.log(this.CuidadosGeneral);
         this.changeCardContent(this.selectedSegment);
       }
     });
@@ -46,9 +45,7 @@ export class CuidadosPage implements OnInit {
 
   changeCardContent(segmentValue: string) {
     const selectedData = this.CuidadosGeneral.find(item => item.tituloSeg === segmentValue);
-    // console.log(this.selectedSegment);
     if (selectedData) {
-      // console.log(selectedData);
       this.cardHeading = selectedData.tituloSeg;
       this.cardSubtitle = ''
       switch (segmentValue) {

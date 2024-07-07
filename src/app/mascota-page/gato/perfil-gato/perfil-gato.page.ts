@@ -41,7 +41,6 @@ export class PerfilGatoPage implements OnInit {
 
   ngOnInit() {
     const gato = history.state.data;
-    console.log(gato)
     this.infoName = gato.Raza;
     this.infoOrigin = gato.origen;
     this.infoImage = gato.imgPerfil;
@@ -58,7 +57,6 @@ export class PerfilGatoPage implements OnInit {
         imagesArray.push(gato.img[key]);
       }
     }
-    console.log(imagesArray);
     return Object.values(gato.img);
   }
 

@@ -56,7 +56,6 @@ export class PerfilPerroPage implements OnInit {
 
   ngOnInit() {
     const perro = history.state.data;
-    console.log(perro)
     this.infoName = perro.Raza;
     this.infoOrigin = perro.origen;
     this.infoImage = perro.imgPerfil;
@@ -72,7 +71,6 @@ export class PerfilPerroPage implements OnInit {
         imagesArray.push(perro.Img[key]);
       }
     }
-    console.log(imagesArray);
     return Object.values(perro.Img);
   }
 
@@ -163,13 +161,10 @@ export class PerfilPerroPage implements OnInit {
         adSize: BannerSize.BANNER, // Tamaño de banner adaptable
         adPosition: BannerPosition.TOP // Posición del banner
       });
-      console.log('Banner adaptable (Banner) mostrado correctamente');
-
       // Cerrar el banner después de cierto tiempo o evento
       setTimeout(async () => {
         try {
           await AdmobAds.removeBannerAd();
-          console.log('Banner adaptable (Banner) cerrado correctamente');
         } catch (error) {
           console.error('Error al cerrar el banner adaptable (Banner)', error);
         }

@@ -95,11 +95,9 @@ export class perroPage {
   }
 
   filterPerros() {
-    console.log('Search term:', this.searchTerm);
     this.filteredPerros = this.perros.filter(gato =>
       gato.Raza.toLowerCase().includes(this.searchTerm.toLowerCase())
     );
-    console.log('Filtered gatos:', this.filteredPerros);
   }
 
   isInFavorites(animal: any, type: string): boolean {

@@ -12,6 +12,7 @@ import { ImgModalPage } from '../components/img-modal/img-modal.page';
 import { InfoImage } from '../interface/InfoImage.models';
 import { AdmobAds, BannerPosition, BannerSize, } from 'capacitor-admob-ads';
 import { StorageService } from '../service/storage.service';
+import { NotificationsService } from '../service/notifications.service';
 
 @Component({
   selector: 'app-home',
@@ -65,7 +66,8 @@ export class homePage implements OnInit {
     private storage: Storage,
     private modalController: ModalController,
     private toastController: ToastController,
-    private favoritesService: StorageService
+    private favoritesService: StorageService,
+    private pushNotificationService: NotificationsService,
   ) {
   }
 
@@ -95,6 +97,7 @@ export class homePage implements OnInit {
       this.showSkeletonGatos = false;
       this.showSkeletonPerros = false;
     }, 3000);
+    this.pushNotificationService.initPushNotifications();
   }
   /*/
   Se llama la data de Perros y Gatos

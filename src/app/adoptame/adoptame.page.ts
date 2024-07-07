@@ -58,7 +58,6 @@ export class AdoptamePage implements OnInit {
     this.firestores.getCollectionChanges<fundaciones>('fundaciones').subscribe(dato => {
       if (dato) {
         this.fundaciones = dato;
-        console.log(dato)
       }
     });
     this.firestores.getCollectionChanges<InfoImage>('InfoImage').subscribe(img => {
@@ -75,7 +74,6 @@ export class AdoptamePage implements OnInit {
     this.huachitoService.getAnimales().subscribe({
       next: (data) => {
         if (data && data.data) {
-          console.log(data)
           this.huachito = data.data;
           this.texto1showSkeleton = false;
           this.mostrarError500 = false;
@@ -118,13 +116,10 @@ export class AdoptamePage implements OnInit {
         adSize: BannerSize.FULL_BANNER, // Tamaño de banner adaptable
         adPosition: BannerPosition.TOP // Posición del banner
       });
-      console.log('Banner adaptable (Banner) mostrado correctamente');
-
       // Cerrar el banner después de cierto tiempo o evento
       setTimeout(async () => {
         try {
           await AdmobAds.removeBannerAd();
-          console.log('Banner adaptable (Banner) cerrado correctamente');
         } catch (error) {
           console.error('Error al cerrar el banner adaptable (Banner)', error);
         }

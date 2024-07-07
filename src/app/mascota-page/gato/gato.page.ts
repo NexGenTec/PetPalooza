@@ -75,11 +75,9 @@ export class gatoPage implements OnInit {
   }
 
   filterGatos() {
-    console.log('Search term:', this.searchTerm);
     this.filteredGatos = this.gatos.filter(gato =>
       gato.Raza.toLowerCase().includes(this.searchTerm.toLowerCase())
     );
-    console.log('Filtered gatos:', this.filteredGatos);
   }
 
   isInFavorites(animal: any, type: string): boolean {
