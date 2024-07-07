@@ -6,8 +6,8 @@ import {
   PushNotifications,
   Token,
 } from '@capacitor/push-notifications';
-import { LocalNotifications, LocalNotificationSchema } from '@capacitor/local-notifications';
 import { Notificaccion } from '../interface/Notification.models';
+import { LocalNotifications, LocalNotificationSchema } from '@capacitor/local-notifications';
 
 @Injectable({
   providedIn: 'root'
@@ -68,9 +68,8 @@ export class NotificationsService {
     // Datos comunes a guardar
     const data: Notificaccion = {
       id: notification?.id || '',
-      data: notification?.data || {},
-      title: notification?.title || '', // Título de la notificación
-      body: notification?.body || ''    // Cuerpo de la notificación
+      title: notification?.title || '',
+      body: notification?.body || '' 
     };
 
     notificacionesCollection.add(data)
@@ -84,9 +83,9 @@ export class NotificationsService {
 
   private showLocalNotification(notification: PushNotificationSchema) {
     const localNotification: LocalNotificationSchema = {
+      id: typeof notification.id === 'string' ? parseInt(notification.id, 10) : notification.id || 1,
       title: notification.title,
       body: notification.body,
-      id: typeof notification.id === 'string' ? parseInt(notification.id, 10) : notification.id || 1,
     };
 
     LocalNotifications.schedule({
