@@ -1,0 +1,23 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/pets"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Perros</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content [fullscreen]="true">
+  <ion-list>
+    <ion-item *ngFor="let dog of dogs" (click)="navigateToTargetPage(dog)">
+      <ion-avatar slot="start">
+        <ion-img [src]="dog.imgPerfil" alt="Imagen de {{ dog.Raza }}" class="circular-image"></ion-img>
+      </ion-avatar>
+      <ion-label>
+        <h2>{{ dog.Raza }}</h2>
+        <p>Origen: {{ dog.origen }}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>

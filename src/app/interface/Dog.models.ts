@@ -1,4 +1,4 @@
-export interface InfoPerro {
+export interface Dog {
     origen: string;
     fechaCreacion: FechaCreacion;
     Longevidad: string;

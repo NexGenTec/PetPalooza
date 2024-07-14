@@ -3,8 +3,20 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   {
-    path: '',
-    loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule)
+    path: 'fun-facts',
+    loadChildren: () => import('./fun-facts/fun-facts.module').then( m => m.FunFactsPageModule)
+  },
+  {
+    path: 'pets',
+    loadChildren: () => import('./pets/pets.module').then( m => m.PetsPageModule)
+  },
+  {
+    path: 'foundations',
+    loadChildren: () => import('./foundations/foundations.module').then( m => m.FoundationsPageModule)
+  },
+  {
+    path: 'pets',
+    loadChildren: () => import('./pets/pets.module').then( m => m.PetsPageModule)
   },
   {
     path: 'img-modal',
@@ -14,7 +26,13 @@ const routes: Routes = [
     path: 'welcome-modal',
     loadChildren: () => import('./welcome-modal/welcome-modal.module').then(m => m.WelcomeModalPageModule)
   },
+  {
+    path: '',
+    redirectTo: 'pets',
+    pathMatch: 'full'
+  },
 ];
+
 @NgModule({
   imports: [
     RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })

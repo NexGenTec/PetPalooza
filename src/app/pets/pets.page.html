@@ -1,0 +1,27 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Mascotas</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content [fullscreen]="true">
+  <ion-card (click)="goToPage('cat')">
+    <ion-card-header>
+      <ion-card-title>Gato</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      Información sobre gatos.
+    </ion-card-content>
+  </ion-card>
+  
+  <ion-card (click)="goToPage('dog')">
+    <ion-card-header>
+      <ion-card-title>Perro</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      Información sobre perros.
+    </ion-card-content>
+  </ion-card>
+</ion-content>

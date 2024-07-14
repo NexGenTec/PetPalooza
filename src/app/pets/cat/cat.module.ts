@@ -4,17 +4,17 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { DataCollectionPageRoutingModule } from './data-collection-routing.module';
+import { CatPageRoutingModule } from './cat-routing.module';
 
-import { DataCollectionPage } from './data-collection.page';
+import { CatPage } from './cat.page';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    DataCollectionPageRoutingModule
+    CatPageRoutingModule
   ],
-  declarations: [DataCollectionPage]
+  declarations: [CatPage]
 })
-export class DataCollectionPageModule {}
+export class CatPageModule {}

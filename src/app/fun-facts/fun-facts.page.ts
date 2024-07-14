@@ -1,15 +1,15 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FirestoreService } from 'src/app/service/firestore.service';
 import { QuirkyFacts } from '../interface/QuirkyFacts.models';
 import { ToastController } from '@ionic/angular';
 import { NgForm } from '@angular/forms';
 
 @Component({
-  selector: 'app-data-collection',
-  templateUrl: './data-collection.page.html',
-  styleUrls: ['./data-collection.page.scss'],
+  selector: 'app-fun-facts',
+  templateUrl: './fun-facts.page.html',
+  styleUrls: ['./fun-facts.page.scss'],
 })
-export class DataCollectionPage {
+export class FunFactsPage implements OnInit {
   formData: QuirkyFacts = {
     categoria: '',
     Titulo: '',
