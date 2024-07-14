@@ -15,23 +15,30 @@ export class DataCollectionPage {
     Titulo: '',
     descripcion: '',
   };
-  quirkyFactsList: QuirkyFacts[] = [];
+  quirkyFactsList: ({ id: string } & QuirkyFacts)[] = [];
+  editingFactId: string;
 
   constructor(
     private firestoreService: FirestoreService,
-    private toastController: ToastController
+    private toastController: ToastController,
   ) { }
 
   ngOnInit() {
     this.loadQuirkyFacts();
-   }
+  }
 
   async submitForm(form: NgForm) {
+    if (form.invalid) {
+      this.presentToast('Por favor, completa todos los campos obligatorios.');
+      return;
+    }
+
     console.log('Datos del formulario:', this.formData);
     this.firestoreService.addDocument('QuirkyFacts', this.formData)
       .then(() => {
         this.presentToast('Datos subidos exitosamente a Firebase');
         this.resetForm(form);
+        this.loadQuirkyFacts();
       })
       .catch((error) => {
         this.presentToast('Error al subir los datos a Firebase');
@@ -58,8 +65,23 @@ export class DataCollectionPage {
   }
 
   loadQuirkyFacts() {
-    this.firestoreService.getCollection<QuirkyFacts>('QuirkyFacts').subscribe(data => {
+    this.firestoreService.getCollectionChanges<QuirkyFacts>('QuirkyFacts').subscribe(data => {
       this.quirkyFactsList = data;
+      console.log('Datos cargados:', this.quirkyFactsList);
     });
   }
+
+  deleteFact(id: string) {
+    console.log('ID to delete:', id);
+    this.firestoreService.deleteDocument('QuirkyFacts', id)
+      .then(() => {
+        this.presentToast('Dato curioso eliminado exitosamente de Firebase');
+        this.loadQuirkyFacts();
+      })
+      .catch((error) => {
+        this.presentToast('Error al eliminar el dato curioso de Firebase');
+        console.error('Error:', error);
+      });
+  }
+
 }

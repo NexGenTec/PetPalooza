@@ -10,6 +10,7 @@ import { App } from '@capacitor/app';
 export class AppComponent {
   private lastTimeBackPress = 0;
   private timePeriodToExit = 2000;
+  public menuType: string = 'overlay';
 
   constructor(
     private platform: Platform,
