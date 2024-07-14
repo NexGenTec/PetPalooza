@@ -44,18 +44,18 @@
 
         <div class="border-b border-gray-200 pb-2 bg-white mx-3">
           <ion-segment mode="ios" [(ngModel)]="selectedSegmentValue" (ionChange)="changeCardContent(selectedSegmentValue)">
-            <!-- <ion-segment-button value="caracteristicas" [checked]="selectedSegmentValue === 'caracteristicas'">
+            <ion-segment-button value="caracteristicas" [checked]="selectedSegmentValue === 'caracteristicas'">
                 <ion-icon name="paw-outline"></ion-icon>
-            </ion-segment-button> -->
-            <!-- <ion-segment-button value="temperamento" [checked]="selectedSegmentValue === 'temperamento'">
+            </ion-segment-button>
+            <ion-segment-button value="temperamento" [checked]="selectedSegmentValue === 'temperamento'">
              <ion-icon name="leaf-outline"></ion-icon>
-            </ion-segment-button> -->
-            <!-- <ion-segment-button value="cuidado" [checked]="selectedSegmentValue === 'cuidado'">
+            </ion-segment-button>
+            <ion-segment-button value="cuidado" [checked]="selectedSegmentValue === 'cuidado'">
               <ion-icon name="fitness-outline"></ion-icon>
-            </ion-segment-button> -->
-            <!-- <ion-segment-button value="images" [checked]="selectedSegmentValue === 'images'">
+            </ion-segment-button>
+            <ion-segment-button value="images" [checked]="selectedSegmentValue === 'images'">
               <ion-icon name="images-outline"></ion-icon>
-            </ion-segment-button> -->
+            </ion-segment-button>
           </ion-segment>
         </div>
 
@@ -71,7 +71,7 @@
           </div>
           <ion-card-content *ngIf="!showImagesContainer" class="ion-text-start" [innerHTML]="cardContent"></ion-card-content>
         </ion-card>
-        <!-- <ng-container *ngIf="showImagesContainer && perro && perro.length">
+        <ng-container *ngIf="showImagesContainer && perro && perro.length">
           <div class="container mx-auto p-4">
             <div class="grid grid-cols-2 md:grid-cols-2 gap-4 max-w-xl mx-auto">
               <div *ngFor="let imgUrl of getImagesArray(perro[0])">
@@ -82,7 +82,7 @@
               </div>
             </div>
           </div>
-        </ng-container>                 -->
+        </ng-container>                
       </div>
     </div>
   </div>

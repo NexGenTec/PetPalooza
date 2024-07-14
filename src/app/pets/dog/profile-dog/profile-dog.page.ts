@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { ImgModalPage } from 'src/app/img-modal/img-modal.page';
-import { Dog } from 'src/app/interface/Dog.models';
+import { InfoPerro, Temperamento } from '../../../interface/InfoPerro.models';
+import { ModalSwiperPage } from 'src/app/modal-swiper/modal-swiper.page';
 
 @Component({
   selector: 'app-profile-dog',
@@ -19,7 +20,7 @@ export class ProfileDogPage implements OnInit {
   infoOrigin!: string;
   infoHistory!: string;
 
-  perro: Dog[] = [{
+  perro: InfoPerro[] = [{
     Img: { img1: 'url1', img2: 'url2', img3: 'url3' },
     origen: '',
     fechaCreacion: undefined,
@@ -35,10 +36,7 @@ export class ProfileDogPage implements OnInit {
   }];
   selectedPerroId!: number;
   showImagesContainer: boolean = false;
-  // temperamentoChips: Temperamento[] = [];
-
-
-
+  temperamentoChips: Temperamento[] = [];
   infoPerro: any = (this.perro as any).default;
 
   constructor(
@@ -58,7 +56,7 @@ export class ProfileDogPage implements OnInit {
     this.perro = [perro];
   }
 
-  getImagesArray(perro: Dog): string[] {
+  getImagesArray(perro: InfoPerro): string[] {
     const imagesArray: string[] = [];
     for (const key in perro.Img) {
       if (perro.Img.hasOwnProperty(key)) {
@@ -69,9 +67,9 @@ export class ProfileDogPage implements OnInit {
     return Object.values(perro.Img);
   }
 
-  // getPerroById(id: number): Dog[] {
-  //   return this.infoPerro.filter((perro: Dog) => perro.id === id);
-  // }
+  getPerroById(id: number): InfoPerro[] {
+    return this.infoPerro.filter((perro: InfoPerro) => perro.id === id);
+  }
 
   changeCardContent(segmentValue: string) {
     const perro = history.state.data;
@@ -83,46 +81,46 @@ export class ProfileDogPage implements OnInit {
         this.cardHeading = 'Características Físicas';
         this.cardSubtitle = perro.Raza;
         this.cardContent = Object.keys(perro.CaractFisicas).map(key => `<p><span class="font-bold">${key}:</span> ${perro.CaractFisicas[key]}</p>`).join('<hr class="my-3">');
-        // this.temperamentoChips = [];
+        this.temperamentoChips = [];
         this.showImagesContainer = false;
         break;
       case 'temperamento':
         this.cardHeading = 'Temperamento';
         this.cardSubtitle = '';
         this.cardContent = perro.Temperamento.map((temp: { descripcion: any; }) => `<p>${temp.descripcion}</p>`).join('<hr class="my-3">');
-        // this.temperamentoChips = this.getTemperamentoChips(perro.Temperamento);
+        this.temperamentoChips = this.getTemperamentoChips(perro.Temperamento);
         this.showImagesContainer = false;
         break;
       case 'cuidado':
         this.cardHeading = 'Cuidado y Salud';
         this.cardSubtitle = perro.Raza;
         this.cardContent = Object.keys(perro.cuidados).map(key => `<p><span class="font-bold">${key}:</span> ${perro.cuidados[key]}</p>`).join('<hr class="my-3">');
-        // this.temperamentoChips = [];
+        this.temperamentoChips = [];
         this.showImagesContainer = false;
         break;
       case 'images':
         this.cardHeading = 'Imágenes';
         this.cardSubtitle = perro.Raza;
         this.cardContent = '';
-        // this.temperamentoChips = [];
+        this.temperamentoChips = [];
         this.showImagesContainer = true;
         break;
       default:
         this.selectedSegmentValue = 'caracteristicas';
         this.cardHeading = 'Características Físicas';
         this.cardSubtitle = perro.Raza;
-        // this.temperamentoChips = [];
+        this.temperamentoChips = [];
         this.showImagesContainer = false;
         break;
     }
   }
 
 
-  // getTemperamentoChips(temperamento: Temperamento[]): Temperamento[] {
-  //   return temperamento.filter(item => item.aplicable);
-  // }
+  getTemperamentoChips(temperamento: Temperamento[]): Temperamento[] {
+    return temperamento.filter(item => item.aplicable);
+  }
 
-  getNameRaza(raza: Dog[]): Dog[] {
+  getNameRaza(raza: InfoPerro[]): InfoPerro[] {
     return raza.filter(item => item.Raza)
   }
 
@@ -136,14 +134,14 @@ export class ProfileDogPage implements OnInit {
     return await modal.present();
   }
 
-  // async openModalSwiper(perro: InfoPerro) {
-  //   const modal = await this.modalController.create({
-  //     component: ModalSwiperPage,
-  //     componentProps: {
-  //       images: this.getImagesArray(perro),
-  //       initialSlide: 0
-  //     }
-  //   });
-  //   return await modal.present();
-  // }
+  async openModalSwiper(perro: InfoPerro) {
+    const modal = await this.modalController.create({
+      component: ModalSwiperPage,
+      componentProps: {
+        images: this.getImagesArray(perro),
+        initialSlide: 0
+      }
+    });
+    return await modal.present();
+  }
 }

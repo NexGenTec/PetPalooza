@@ -8,10 +8,6 @@ const routes: Routes = [
     path: '',
     component: DogPage
   },
-  {
-    path: 'profile-dog/:id',
-    loadChildren: () => import('./profile-dog/profile-dog.module').then( m => m.ProfileDogPageModule)
-  }
 ];
 
 @NgModule({

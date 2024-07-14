@@ -7,6 +7,9 @@ import { IonicModule } from '@ionic/angular';
 import { DogPageRoutingModule } from './dog-routing.module';
 
 import { DogPage } from './dog.page';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { register } from 'swiper/element/bundle';
+register();
 
 @NgModule({
   imports: [
@@ -15,6 +18,7 @@ import { DogPage } from './dog.page';
     IonicModule,
     DogPageRoutingModule
   ],
-  declarations: [DogPage]
+  declarations: [DogPage],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class DogPageModule {}

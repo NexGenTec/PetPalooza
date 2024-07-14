@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FirestoreService } from '../../service/firestore.service';
-import { Dog } from '../../interface/Dog.models';
-import { ActivatedRoute, Router } from '@angular/router';
+import { InfoPerro } from '../../interface/InfoPerro.models';
+import { ModalController } from '@ionic/angular';
+import { ImgModalPage } from 'src/app/img-modal/img-modal.page';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dog',
@@ -9,28 +11,63 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./dog.page.scss'],
 })
 export class DogPage implements OnInit {
-  dogs: Dog[] = [];
+  perros: InfoPerro[] = [];
+  currentDatoIndex: number = 0;
+  infoPerroChunks: InfoPerro[][] = [];
+  filteredPerros: InfoPerro[] = [];
+  searchTerm: string = '';
+
+
 
   constructor(
-  private firestoreService: FirestoreService,
-  private router: Router,
-  private route: ActivatedRoute
+    private firestores: FirestoreService,
+    private router: Router,
+    private modalController: ModalController,
+  ) {
+    this.loadData();
+  }
 
-  ) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.loadData();
   }
 
   loadData() {
-    this.firestoreService.getCollectionChanges<Dog>('InfoPerro').subscribe(dogs => {
-      this.dogs = dogs;
-      console.log(dogs)
+    this.firestores.getCollectionChanges<InfoPerro>('InfoPerro').subscribe(perro => {
+      if (perro) {
+        this.perros = perro
+        this.filteredPerros = [...this.perros];
+        console.log(perro)
+        console.log(this.perros)
+      }
+    })
+  }
+  async openModal(imageUrl: string) {
+    const modal = await this.modalController.create({
+      component: ImgModalPage,
+      componentProps: {
+        imageUrl: imageUrl
+      }
     });
+    return await modal.present();
   }
 
-  navigateToTargetPage(dog: Dog) {
-    this.router.navigate(['/profile-dog', dog.id], { state: { data: dog } });
+  swiperOptions = {
+    slidesPerView: 3,
+    spaceBetween: 10,
+    navigation: true
+  };
+
+
+  navigateToTargetPage(segment: string, perro: InfoPerro) {
+    this.router.navigate([segment, perro.id], { state: { data: perro } });
   }
-  
+
+  filterPerros() {
+    console.log('Search term:', this.searchTerm);
+    this.filteredPerros = this.perros.filter(gato =>
+      gato.Raza.toLowerCase().includes(this.searchTerm.toLowerCase())
+    );
+    console.log('Filtered gatos:', this.filteredPerros);
+  }
 }

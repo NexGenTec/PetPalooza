@@ -7,10 +7,6 @@ const routes: Routes = [
     loadChildren: () => import('./fun-facts/fun-facts.module').then( m => m.FunFactsPageModule)
   },
   {
-    path: 'pets',
-    loadChildren: () => import('./pets/pets.module').then( m => m.PetsPageModule)
-  },
-  {
     path: 'foundations',
     loadChildren: () => import('./foundations/foundations.module').then( m => m.FoundationsPageModule)
   },
@@ -19,8 +15,20 @@ const routes: Routes = [
     loadChildren: () => import('./pets/pets.module').then( m => m.PetsPageModule)
   },
   {
+    path: 'profile-dog/:id',
+    loadChildren: () => import('../app/pets/dog/profile-dog/profile-dog.module').then( m => m.ProfileDogPageModule)
+  },
+  {
+    path: 'profile-cat/:id',
+    loadChildren: () => import('../app/pets/cat/profile-cat/profile-cat.module').then( m => m.ProfileCatPageModule)
+  },
+  {
     path: 'img-modal',
     loadChildren: () => import('./img-modal/img-modal.module').then(m => m.ImgModalPageModule)
+  },
+  {
+    path: 'modal-swiper',
+    loadChildren: () => import('./modal-swiper/modal-swiper.module').then( m => m.ModalSwiperPageModule)
   },
   {
     path: 'welcome-modal',

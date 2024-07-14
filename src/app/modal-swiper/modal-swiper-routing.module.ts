@@ -1,17 +1,17 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { CatPage } from './cat.page';
+import { ModalSwiperPage } from './modal-swiper.page';
 
 const routes: Routes = [
   {
     path: '',
-    component: CatPage
-  },
+    component: ModalSwiperPage
+  }
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class CatPageRoutingModule {}
+export class ModalSwiperPageRoutingModule {}
