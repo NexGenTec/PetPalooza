@@ -36,7 +36,7 @@ export class FirestoreService {
   }
 
   // Eliminar un documento de una colección
-  deleteDocument<T>(path: string, documentId: string) {
-    return this.firestore.collection<T>(path).doc(documentId).delete();
+  deleteDocument(path: string, id: string | number) {
+    return this.firestore.collection(path).doc(id.toString()).delete();
   }
 }

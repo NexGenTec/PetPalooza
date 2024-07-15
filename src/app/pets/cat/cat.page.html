@@ -11,6 +11,123 @@
 <ion-content [fullscreen]="true">
   <div class="px-3 pt-5 bg-gray-50">
     <section class=" w-full mx-auto">
+      <ion-card>
+        <ion-card-content>
+          <form #gatoForm="ngForm" (ngSubmit)="newGato.id ? updateGato(gatoForm) : addGato(gatoForm)" novalidate>
+            <ion-item>
+              <ion-label position="stacked">ID</ion-label>
+              <ion-input type="number" [(ngModel)]="newGato.id" name="id" required></ion-input>
+            </ion-item>
+            <div *ngIf="gatoForm.submitted && !gatoForm.controls['id']?.valid" class="error">
+              El ID es obligatorio.
+            </div>
+
+            <ion-item>
+              <ion-label position="stacked">Raza</ion-label>
+              <ion-input type="text" [(ngModel)]="newGato.Raza" name="Raza" required></ion-input>
+            </ion-item>
+            <div *ngIf="gatoForm.submitted && !gatoForm.controls['Raza']?.valid" class="error">
+              La raza es obligatoria.
+            </div>
+
+            <ion-item>
+              <ion-label position="stacked">Origen</ion-label>
+              <ion-input type="text" [(ngModel)]="newGato.origen" name="origen" required></ion-input>
+            </ion-item>
+            <div *ngIf="gatoForm.submitted && !gatoForm.controls['origen']?.valid" class="error">
+              El origen es obligatorio.
+            </div>
+
+            <ion-item>
+              <ion-label position="stacked">Año</ion-label>
+              <ion-input type="text" [(ngModel)]="newGato.Anio" name="Anio" required></ion-input>
+            </ion-item>
+            <div *ngIf="gatoForm.submitted && !gatoForm.controls['Anio']?.valid" class="error">
+              El año es obligatorio.
+            </div>
+
+            <ion-item>
+              <ion-label position="stacked">Imagen del Perfil</ion-label>
+              <ion-input type="text" [(ngModel)]="newGato.imgPerfil" name="imgPerfil" required></ion-input>
+            </ion-item>
+            <div *ngIf="gatoForm.submitted && !gatoForm.controls['imgPerfil']?.valid" class="error">
+              La imagen del perfil es obligatoria.
+            </div>
+
+            <ion-item>
+              <ion-label position="stacked">Longevidad</ion-label>
+              <ion-input type="text" [(ngModel)]="newGato.Longevidad" name="Longevidad" required></ion-input>
+            </ion-item>
+            <div *ngIf="gatoForm.submitted && !gatoForm.controls['Longevidad']?.valid" class="error">
+              La longevidad es obligatoria.
+            </div>
+
+            <ion-item>
+              <ion-label position="stacked">Historia</ion-label>
+              <ion-textarea [(ngModel)]="newGato.historia" name="historia" required></ion-textarea>
+            </ion-item>
+            <div *ngIf="gatoForm.submitted && !gatoForm.controls['historia']?.valid" class="error">
+              La historia es obligatoria.
+            </div>
+
+            <ion-item class="temperamento-container">
+              <ion-label position="stacked" class="label-temperamento">Temperamento</ion-label>
+              <div *ngFor="let temperamento of newGato.Temperamento; let i = index" class="temperamento-item">
+                <ion-item>
+                  <ion-label position="stacked" class="label-tipo">Tipo</ion-label>
+                  <ion-input type="text" [(ngModel)]="temperamento.tipo" name="tipo-{{i}}" required></ion-input>
+                </ion-item>
+                <ion-item>
+                  <ion-label position="stacked" class="label-descripcion">Descripción</ion-label>
+                  <ion-textarea [(ngModel)]="temperamento.descripcion" name="descripcion-{{i}}" required></ion-textarea>
+                </ion-item>
+                <ion-button color="danger" (click)="removeTemperamento(i)" fill="clear" class="btn-remove">Eliminar</ion-button>
+              </div>
+              <ion-button color="primary" (click)="addTemperamento()" fill="clear" class="btn-add">Agregar Temperamento</ion-button>
+            </ion-item>
+
+            <ion-item class="cuidados-container">
+              <ion-label position="stacked">Cuidados</ion-label>
+              <!-- Loop through existing cuidados -->
+              <div *ngFor="let key of getCuidadosKeys()" class="cuidado-item">
+                <ion-item>
+                  <ion-label position="stacked">{{ key }}</ion-label>
+                  <ion-textarea [(ngModel)]="newGato.cuidados[key]" name="cuidado-{{ key }}" required></ion-textarea>
+                </ion-item>
+                <ion-button color="danger" (click)="removeCuidado(key)" fill="clear" class="btn-remove">Eliminar</ion-button>
+              </div>
+
+              <!-- Add new cuidado section -->
+              <!-- <ion-item>
+                <ion-input placeholder="Nombre del cuidado" [(ngModel)]="cuidadoKey" name="cuidadoKey"></ion-input>
+                <ion-textarea placeholder="Descripción del cuidado" [(ngModel)]="cuidadoValue" name="cuidadoValue"></ion-textarea>
+                <ion-button color="primary" (click)="addCuidado(cuidadoKey, cuidadoValue)" fill="clear" class="btn-add">Agregar Cuidado</ion-button>
+              </ion-item> -->
+            </ion-item>
+     
+            <ion-item>
+              <ion-label position="stacked">Fecha de Creación</ion-label>
+              <ion-datetime displayFormat="DD MMM YYYY" [(ngModel)]="newGato.fechaCreacion" name="fechaCreacion" required></ion-datetime>
+            </ion-item>
+            <div *ngIf="gatoForm.submitted && !gatoForm.controls['fechaCreacion']?.valid" class="error">
+              La fecha de creación es obligatoria.
+            </div>
+              
+            <ion-item>
+              <ion-label position="stacked">Características Físicas</ion-label>
+              <ion-textarea [(ngModel)]="newGato.CaractFisicas" name="CaractFisicas" required></ion-textarea>
+            </ion-item>
+            <div *ngIf="gatoForm.submitted && !gatoForm.controls['CaractFisicas']?.valid" class="error">
+              Las características físicas son obligatorias.
+            </div>
+
+            <ion-button expand="block" type="submit" color="secondary" class="ion-color-light" [disabled]="gatoForm.invalid">
+              {{ newGato.id ? 'Actualizar Gato' : 'Agregar Gato' }}
+            </ion-button>
+          </form>
+        </ion-card-content>
+      </ion-card>
+
       <!-- Divider -->
       <!-- <hr class="my-5 border-blue-500/30"> -->
     
@@ -42,6 +159,21 @@
                 </svg>
               </button>
             </div> -->
+            <div class="absolute top-3 right-3 w-10 h-10 rounded-full bg-white flex justify-center items-center">
+              <button type="button" (click)="deleteGato(gato)">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x">
+                  <line x1="18" y1="6" x2="6" y2="18"></line>
+                  <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+              </button>
+            </div>
+            <div class="absolute top-3 left-3 w-10 h-10 rounded-full bg-white flex justify-center items-center">
+              <button type="button" (click)="editGato(gato)">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-7 h-7">
+                  <path d="M 17.984375 1.9863281 C 17.707031 1.9863281 17.417969 2.0976562 17.207031 2.3085938 L 14.962891 4.5527344 L 19.447266 9.0371094 L 21.691406 6.7929688 C 22.121094 6.3632812 22.121094 5.6523438 21.691406 5.2226562 L 18.767578 2.2988281 C 18.550781 2.0820312 18.261719 1.9863281 17.984375 1.9863281 Z M 13.621094 5.8945312 L 2 17.515625 L 2 22 L 6.484375 22 L 18.105469 10.378906 L 13.621094 5.8945312 Z"></path>
+                </svg>
+              </button>
+            </div>
           </div>
         </div>
       </div>

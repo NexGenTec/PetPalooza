@@ -15,13 +15,38 @@ export class CatPage implements OnInit {
   favorites: any[] = [];
   currentDatoIndex: number = 0;
   searchTerm: string = '';
+  newGato: InfoGato = {
+    cuidados: {
+      Entrenamiento: '',
+      Cepillado: '',
+      "Chequeos preventivos": '',
+      Activos: '',
+      Ejercitarse: '',
+      Enfermedades: ''
+    },
+    origen: '',
+    Anio: '',
+    Raza: '',
+    Temperamento: [],
+    Longevidad: '',
+    historia: '',
+    id: 0,
+    imgPerfil: '',
+    fechaCreacion: { seconds: 0, nanoseconds: 0 },
+    img: {},
+    CaractFisicas: { Cuerpo: '', Tamano: '', Colores: '', Pelaje: '' }
+  };
+
+  cuidadoKey: string = '';
+  cuidadoValue: string = '';
+
 
 
   constructor(
     private firestores: FirestoreService,
     private router: Router,
   ) {
-    this.loadData();
+    
   }
 
 
@@ -34,6 +59,7 @@ export class CatPage implements OnInit {
       if (gato) {
         this.gatos = gato
         this.filteredGatos = [...this.gatos];
+        console.log(this.gatos)
       }
     })
   }
@@ -48,5 +74,85 @@ export class CatPage implements OnInit {
       gato.Raza.toLowerCase().includes(this.searchTerm.toLowerCase())
     );
     console.log('Filtered gatos:', this.filteredGatos);
+  }
+
+  addGato(form: any) {
+    if (form.valid) {
+      const newGatoWithId = { ...this.newGato, id: Date.now() };
+      this.firestores.addDocument<InfoGato>('InfoGato', newGatoWithId).then(() => {
+        this.resetNewGatoForm();
+        this.loadData();
+        form.reset();
+      });
+    }
+  }
+
+  editGato(gato: InfoGato) {
+    // Lógica para editar gato
+    this.newGato = { ...gato };
+  }
+
+  updateGato(form: any) {
+    if (form.valid) {
+      this.firestores.updateDocument<InfoGato>('InfoGato', this.newGato.id.toString(), this.newGato).then(() => {
+        this.resetNewGatoForm();
+        this.loadData();
+        form.reset();
+      });
+    }
+  }
+
+  deleteGato(gato: InfoGato) {
+    this.firestores.deleteDocument('InfoGato', gato.id).then(() => {
+      this.loadData();
+    });
+  }
+
+  resetNewGatoForm() {
+    this.newGato = {
+      cuidados: {
+        Entrenamiento: '',
+        Cepillado: '',
+        "Chequeos preventivos": '',
+        Activos: '',
+        Ejercitarse: '',
+        Enfermedades: ''
+      },
+      origen: '',
+      Anio: '',
+      Raza: '',
+      Temperamento: [],
+      Longevidad: '',
+      historia: '',
+      id: 0,
+      imgPerfil: '',
+      fechaCreacion: { seconds: 0, nanoseconds: 0 },
+      img: {},
+      CaractFisicas: { Cuerpo: '', Tamano: '', Colores: '', Pelaje: '' }
+    };
+  }
+  addTemperamento() {
+    this.newGato.Temperamento.push({ tipo: '', descripcion: '', aplicable: true });
+  }
+
+  removeTemperamento(index: number) {
+    this.newGato.Temperamento.splice(index, 1);
+  }
+
+  getCuidadosKeys() {
+    return Object.keys(this.newGato.cuidados);
+  }
+  
+
+  addCuidado(cuidadoKey: string, cuidadoValue: string) {
+    if (cuidadoKey && cuidadoValue) {
+      this.newGato.cuidados[cuidadoKey] = cuidadoValue;
+      this.cuidadoKey = ''; // Clear input fields after adding
+      this.cuidadoValue = '';
+    }
+  }
+  
+  removeCuidado(cuidadoKey: string) {
+    delete this.newGato.cuidados[cuidadoKey];
   }
 }
