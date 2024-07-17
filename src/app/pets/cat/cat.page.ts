@@ -1,7 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { InfoGato } from 'src/app/interface/InfoGato.models';
-import { FirestoreService } from 'src/app/service/firestore.service';
+import { InfoGato, CaracteristicasFisicas } from '../../interface/InfoGato.models';
+import { FirestoreService } from '../../service/firestore.service';
+import { AngularFireStorage } from '@angular/fire/compat/storage';
+import { finalize } from 'rxjs/operators';
+import { ModalController, ToastController } from '@ionic/angular';
+import { CatModalPage } from './cat-modal/cat-modal.page';
 
 @Component({
   selector: 'app-cat',
@@ -9,12 +13,9 @@ import { FirestoreService } from 'src/app/service/firestore.service';
   styleUrls: ['./cat.page.scss'],
 })
 export class CatPage implements OnInit {
-
   gatos: InfoGato[] = [];
-  filteredGatos: InfoGato[] = [];
-  favorites: any[] = [];
-  currentDatoIndex: number = 0;
   searchTerm: string = '';
+  filteredGatos: InfoGato[] = [];
   newGato: InfoGato = {
     cuidados: {
       Entrenamiento: '',
@@ -34,77 +35,155 @@ export class CatPage implements OnInit {
     imgPerfil: '',
     fechaCreacion: { seconds: 0, nanoseconds: 0 },
     img: {},
-    CaractFisicas: { Cuerpo: '', Tamano: '', Colores: '', Pelaje: '' }
+    CaractFisicas: []
   };
-
-  cuidadoKey: string = '';
-  cuidadoValue: string = '';
-
-
+  imageFile: File | null = null;
 
   constructor(
-    private firestores: FirestoreService,
     private router: Router,
-  ) {
-    
-  }
+    private firestoreService: FirestoreService,
+    private storage: AngularFireStorage,
+    private modalController: ModalController,
+    private toastController: ToastController
+  ) {}
 
-
-  ngOnInit(): void {
+  ngOnInit() {
     this.loadData();
   }
 
   loadData() {
-    this.firestores.getCollectionChanges<InfoGato>('InfoGato').subscribe(gato => {
-      if (gato) {
-        this.gatos = gato
-        this.filteredGatos = [...this.gatos];
-        console.log(this.gatos)
+    this.firestoreService.getCollectionChanges<InfoGato>('InfoGato').subscribe((filteredGatos) => {
+      this.gatos = filteredGatos;
+      console.log(filteredGatos);
+    });
+  }
+
+  async openModal(edit: boolean, gato?: InfoGato) {
+    if (edit && gato) {
+      this.newGato = { ...gato };
+
+      // Asegurar que `imgPerfil` esté configurado si existe una imagen cargada para el gato
+      if (gato.imgPerfil) {
+        this.imageFile = null; // Limpiar el archivo seleccionado en el modal
       }
-    })
+    } else {
+      this.newGato = {
+        cuidados: {
+          Entrenamiento: '',
+          Cepillado: '',
+          "Chequeos preventivos": '',
+          Activos: '',
+          Ejercitarse: '',
+          Enfermedades: ''
+        },
+        origen: '',
+        Anio: '',
+        Raza: '',
+        Temperamento: [],
+        Longevidad: '',
+        historia: '',
+        id: 0,
+        imgPerfil: '',
+        fechaCreacion: { seconds: 0, nanoseconds: 0 },
+        img: {},
+        CaractFisicas: []
+      };
+      this.imageFile = null;
+    }
+
+    const modal = await this.modalController.create({
+      component: CatModalPage,
+      componentProps: { newGato: this.newGato, isEdit: edit },
+    });
+
+    modal.onDidDismiss().then((result) => {
+      if (result.data) {
+        if (edit) {
+          this.updateGato(result.data.gato);
+        } else {
+          this.addGato(result.data.gato);
+        }
+      }
+    });
+
+    return await modal.present();
   }
 
-  navigateToTargetPage(segment: string, gato: InfoGato) {
-    this.router.navigate([segment, gato.id], { state: { data: gato } });
-  }
+  addGato(newGato: InfoGato) {
+    newGato.fechaCreacion = { seconds: Math.floor(Date.now() / 1000), nanoseconds: 0 };
 
-  filterGatos() {
-    console.log('Search term:', this.searchTerm);
-    this.filteredGatos = this.gatos.filter(gato =>
-      gato.Raza.toLowerCase().includes(this.searchTerm.toLowerCase())
-    );
-    console.log('Filtered gatos:', this.filteredGatos);
-  }
+    if (this.imageFile) {
+      const filePath = `Gatos/${newGato.Raza}/${this.imageFile.name}`;
+      const fileRef = this.storage.ref(filePath);
+      const task = this.storage.upload(filePath, this.imageFile);
 
-  addGato(form: any) {
-    if (form.valid) {
-      const newGatoWithId = { ...this.newGato, id: Date.now() };
-      this.firestores.addDocument<InfoGato>('InfoGato', newGatoWithId).then(() => {
+      task.snapshotChanges().pipe(
+        finalize(() => {
+          fileRef.getDownloadURL().subscribe((url) => {
+            newGato.imgPerfil = url;
+            this.firestoreService.addDocument<InfoGato>('InfoGato', newGato).then(() => {
+              this.resetNewGatoForm();
+              this.loadData();
+              this.presentToast('Gato agregado con éxito', 'success');
+            }).catch((error) => {
+              console.error('Error al agregar el gato:', error);
+              this.presentToast('Error al agregar el gato', 'danger');
+            });
+          });
+        })
+      ).subscribe();
+    } else {
+      this.firestoreService.addDocument<InfoGato>('InfoGato', newGato).then(() => {
         this.resetNewGatoForm();
         this.loadData();
-        form.reset();
+        this.presentToast('Gato agregado con éxito', 'success');
+      }).catch((error) => {
+        console.error('Error al agregar el gato:', error);
+        this.presentToast('Error al agregar el gato', 'danger');
       });
     }
   }
 
-  editGato(gato: InfoGato) {
-    // Lógica para editar gato
-    this.newGato = { ...gato };
-  }
-
-  updateGato(form: any) {
-    if (form.valid) {
-      this.firestores.updateDocument<InfoGato>('InfoGato', this.newGato.id.toString(), this.newGato).then(() => {
+  updateGato(updatedGato: InfoGato) {
+    if (this.imageFile) {
+      const filePath = `Gatos/${updatedGato.Raza}/${this.imageFile.name}`;
+      const fileRef = this.storage.ref(filePath);
+      const task = this.storage.upload(filePath, this.imageFile);
+  
+      task.snapshotChanges().pipe(
+        finalize(() => {
+          fileRef.getDownloadURL().subscribe((url) => {
+            updatedGato.imgPerfil = url;
+            this.firestoreService.updateDocument<InfoGato>('InfoGato', updatedGato.id.toString(), updatedGato).then(() => {
+              this.resetNewGatoForm();
+              this.loadData();
+              this.presentToast('Gato actualizado con éxito', 'success');
+            }).catch((error) => {
+              console.error('Error al actualizar el gato:', error);
+              this.presentToast('Error al actualizar el gato', 'danger');
+            });
+          });
+        })
+      ).subscribe();
+    } else {
+      this.firestoreService.updateDocument<InfoGato>('InfoGato', updatedGato.id.toString(), updatedGato).then(() => {
         this.resetNewGatoForm();
         this.loadData();
-        form.reset();
+        this.presentToast('Gato actualizado con éxito', 'success');
+      }).catch((error) => {
+        console.error('Error al actualizar el gato:', error);
+        this.presentToast('Error al actualizar el gato', 'danger');
       });
     }
   }
-
+  
   deleteGato(gato: InfoGato) {
-    this.firestores.deleteDocument('InfoGato', gato.id).then(() => {
+    this.firestoreService.deleteDocument('InfoGato', gato.id).then(() => {
       this.loadData();
+      this.presentToast('Gato eliminado con éxito', 'success');
+    }).catch((error) => {
+      console.error('Error al eliminar el gato:', error);
+      this.presentToast('Error al eliminar el gato', 'danger');
     });
   }
 
@@ -128,31 +207,25 @@ export class CatPage implements OnInit {
       imgPerfil: '',
       fechaCreacion: { seconds: 0, nanoseconds: 0 },
       img: {},
-      CaractFisicas: { Cuerpo: '', Tamano: '', Colores: '', Pelaje: '' }
+      CaractFisicas: []
     };
-  }
-  addTemperamento() {
-    this.newGato.Temperamento.push({ tipo: '', descripcion: '', aplicable: true });
+    this.imageFile = null;
   }
 
-  removeTemperamento(index: number) {
-    this.newGato.Temperamento.splice(index, 1);
+  async presentToast(message: string, color: string) {
+    const toast = await this.toastController.create({
+      message,
+      color,
+      duration: 2000
+    });
+    toast.present();
   }
 
-  getCuidadosKeys() {
-    return Object.keys(this.newGato.cuidados);
+  onFileSelected(event: any) {
+    this.imageFile = event.target.files[0];
   }
-  
 
-  addCuidado(cuidadoKey: string, cuidadoValue: string) {
-    if (cuidadoKey && cuidadoValue) {
-      this.newGato.cuidados[cuidadoKey] = cuidadoValue;
-      this.cuidadoKey = ''; // Clear input fields after adding
-      this.cuidadoValue = '';
-    }
-  }
-  
-  removeCuidado(cuidadoKey: string) {
-    delete this.newGato.cuidados[cuidadoKey];
+  navigateToTargetPage(segment: string, gato: InfoGato) {
+    this.router.navigate([segment, gato.id], { state: { data: gato } });
   }
 }

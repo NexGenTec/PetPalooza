@@ -1,41 +1,38 @@
 export interface InfoGato {
-    cuidados: Cuidados;
-    origen: string;
-    Anio: string;
-    Raza: string;
-    Temperamento: Temperamento[];
-    Longevidad: string;
-    historia: string;
     id: number;
+    historia: string;
+    Longevidad: string;
+    Raza: string;
+    img: { [key: string]: string }; // URLs de imágenes
+    Temperamento: Temperamento[];
+    origen: string;
     imgPerfil: string;
-    fechaCreacion: FechaCreacion;
-    img: { [key: string]: string };
-    CaractFisicas: CaractFisicas;
-}
-
-export interface CaractFisicas {
-    Cuerpo: string;
-    Tamano: string;
-    Colores: string;
-    Pelaje: string;
-}
-
-export interface Temperamento {
+    cuidados: Cuidados;
+    fechaCreacion: {
+      seconds: number;
+      nanoseconds: number;
+    };
+    Anio: string;
+    CaractFisicas: CaracteristicasFisicas[];
+  }
+  
+  export interface Temperamento {
     tipo: string;
     descripcion: string;
     aplicable: boolean;
-}
-
-export interface Cuidados {
+  }
+  
+  export interface Cuidados {
     Entrenamiento: string;
     Cepillado: string;
     "Chequeos preventivos": string;
     Activos: string;
     Ejercitarse: string;
     Enfermedades: string;
-}
-
-export interface FechaCreacion {
-    seconds: number;
-    nanoseconds: number;
-}
+  }
+  
+  export interface CaracteristicasFisicas {
+    nombre: string;
+    descripcion: string;
+  }
+  
