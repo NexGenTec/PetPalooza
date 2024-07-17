@@ -16,7 +16,6 @@ ion-content {
   
   .error-icon {
     color: #f56c6c;
-    margin-end: 8px;
   }
 }
 
@@ -106,6 +105,10 @@ ion-label {
   margin-top: 24px; /* Aumenta el espacio superior */
 }
 
+.first-item {
+  margin-top: 16px; /* Ajusta el margen superior del primer ion-item */
+}
+
 .main-label {
   font-weight: bold;
   margin-bottom: 8px;
@@ -159,4 +162,64 @@ ion-label {
   background-color: #fff; /* Fondo blanco */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra suave */
 }
+
+/* Estilos para la subida de archivos */
+.file-upload {
+  ion-item {
+    --background: #fff;
+    --border-radius: 8px;
+    --box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    --transition: box-shadow 0.3s ease, transform 0.3s ease;
+    padding: 16px;
+    cursor: pointer;
+    position: relative;
+
+    &:hover {
+      --box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      transform: translateY(-2px);
+    }
+
+    ion-label {
+      color: #495057;
+      font-weight: 500;
+      margin-bottom: 8px;
+    }
+
+    input[type="file"] {
+      display: none;
+    }
+    
+
+    .upload-icon {
+      font-size: 24px;
+      color: #6c757d;
+      margin-bottom: 8px;
+    }
+
+    .upload-text {
+      font-size: 14px;
+      color: #6c757d;
+      text-align: center;
+    }
+  }
+
+  .error-message {
+    --background: #ffe3e3;
+    --border-color: #f56c6c;
+    --border-radius: 8px;
+    --padding-start: 16px;
+    --padding-end: 16px;
+    margin-top: 12px;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+
+    .error-icon {
+      color: #f56c6c;
+    }
+  }
+}
+
+
+
 

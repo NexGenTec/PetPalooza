@@ -1,14 +1,17 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { AngularFirestore, DocumentReference } from '@angular/fire/compat/firestore';
 import { map } from 'rxjs/operators';
+import { AngularFireStorage } from '@angular/fire/compat/storage';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FirestoreService {
 
-  constructor(private firestore: AngularFirestore) { }
+  constructor(private firestore: AngularFirestore,
+    private storage: AngularFireStorage
+  ) { }
 
   // Obtener cambios en una colección con IDs
   getCollectionChanges<T>(path: string): Observable<({ id: string } & T)[]> {
@@ -21,8 +24,10 @@ export class FirestoreService {
     );
   }
 
-  addDocument<T>(collectionPath: string, data: T) {
-    return this.firestore.collection(collectionPath).add(data);
+  // Añadir un documento a una colección
+  addDocument<T>(collectionName: string, data: T): Promise<DocumentReference<T>> {
+    const collectionRef = this.firestore.collection<T>(collectionName);
+    return collectionRef.add(data);
   }
 
   // Obtener un documento específico de una colección

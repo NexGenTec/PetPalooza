@@ -33,16 +33,16 @@ export class FunFactsPage implements OnInit {
       return;
     }
 
-    console.log('Datos del formulario:', this.formData);
-    this.firestoreService.addDocument('QuirkyFacts', this.formData)
-      .then(() => {
-        this.presentToast('Datos subidos exitosamente a Firebase');
-        this.resetForm(form);
-        this.loadQuirkyFacts();
-      })
-      .catch((error) => {
-        this.presentToast('Error al subir los datos a Firebase');
-      });
+    // console.log('Datos del formulario:', this.formData);
+    // this.firestoreService.addDocument('QuirkyFacts', this.formData)
+    //   .then(() => {
+    //     this.presentToast('Datos subidos exitosamente a Firebase');
+    //     this.resetForm(form);
+    //     this.loadQuirkyFacts();
+    //   })
+    //   .catch((error) => {
+    //     this.presentToast('Error al subir los datos a Firebase');
+    //   });
   }
 
   resetForm(form: NgForm) {

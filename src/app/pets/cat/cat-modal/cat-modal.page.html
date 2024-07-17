@@ -17,19 +17,19 @@
           <!-- Raza -->
           <ion-item>
             <ion-label position="stacked">Raza</ion-label>
-            <ion-input type="text" [(ngModel)]="newGato.Raza" name="Raza" required></ion-input>
+            <ion-input type="text" [(ngModel)]="newGato.Raza" name="Raza" required placeholder="Ingrese la raza"></ion-input>
           </ion-item>
           <ion-item *ngIf="gatoForm.submitted && !gatoForm.controls['Raza']?.valid" class="error-message">
             <ion-icon name="alert-circle" class="error-icon"></ion-icon>
             <div>La raza es obligatoria.</div>
           </ion-item>
-
+          
           <!-- Origen -->
           <ion-item>
             <ion-label position="stacked">Origen</ion-label>
-            <ion-input type="text" [(ngModel)]="newGato.origen" name="origen" required></ion-input>
+            <ion-input type="text" [(ngModel)]="newGato.Origen" name="Origen" required placeholder="Ingrese el origen"></ion-input>
           </ion-item>
-          <ion-item *ngIf="gatoForm.submitted && !gatoForm.controls['origen']?.valid" class="error-message">
+          <ion-item *ngIf="gatoForm.submitted && !gatoForm.controls['Origen']?.valid" class="error-message">
             <ion-icon name="alert-circle" class="error-icon"></ion-icon>
             <div>El origen es obligatorio.</div>
           </ion-item>
@@ -45,16 +45,31 @@
           </ion-item>
 
           <!-- Imagen del Perfil -->
-          <ion-item>
-            <ion-label position="stacked">Imagen del Perfil</ion-label>
-            <input type="file" (change)="onFileSelected($event)" accept="image/*" />
+          <ion-item class="file-upload">
+            <ion-label position="stacked">Seleccionar archivo</ion-label>
+            <input type="file" (change)="onFileSelected($event)" accept="image/png, image/jpeg" />
           </ion-item>
-          
-          <ion-item *ngIf="gatoForm.submitted && !imageFile && !newGato.imgPerfil" class="error-message">
-            <ion-icon name="alert-circle" class="error-icon"></ion-icon>
-            <div>La imagen del perfil es obligatoria.</div>
+          <!-- Vista previa de la imagen seleccionada -->
+          <ion-item *ngIf="imageFile">
+            <img [src]="getSelectedImage()" alt="Imagen seleccionada" class="selected-image" />
+          </ion-item>
+          <!-- Mostrar imagen existente si no se ha seleccionado una nueva -->
+          <ion-item *ngIf="!imageFile && newGato.imgPerfil">
+            <img [src]="newGato.imgPerfil" alt="Imagen actual" class="current-image" />
           </ion-item>
 
+          <!-- Imágenes -->
+          <!-- <ion-item class="form-section">
+            <ion-label position="stacked">Imágenes</ion-label>
+            <ng-container *ngFor="let file of imageFiles; let i = index">
+              <ion-item class="temperamento-item">
+                <ion-img [src]="getSelectedImages(i)" alt="Imagen seleccionada" class="selected-image" (click)="openSwiperModal()"></ion-img>
+                <ion-button color="danger" (click)="removeImage(i)" fill="clear">Eliminar</ion-button>
+              </ion-item>
+            </ng-container>
+            <input type="file" (change)="onFileSelected($event)" accept="image/png, image/jpeg" multiple />
+          </ion-item> -->
+                    
           <!-- Longevidad -->
           <ion-item>
             <ion-label position="stacked">Longevidad</ion-label>
@@ -68,82 +83,83 @@
           <!-- Historia -->
           <ion-item>
             <ion-label position="stacked">Historia</ion-label>
-            <ion-textarea [(ngModel)]="newGato.historia" name="historia" required></ion-textarea>
+            <ion-textarea [(ngModel)]="newGato.Historia" name="Historia" required></ion-textarea>
           </ion-item>
-          <ion-item *ngIf="gatoForm.submitted && !gatoForm.controls['historia']?.valid" class="error-message">
+          <ion-item *ngIf="gatoForm.submitted && !gatoForm.controls['Historia']?.valid" class="error-message">
             <ion-icon name="alert-circle" class="error-icon"></ion-icon>
             <div>La historia es obligatoria.</div>
           </ion-item>
 
           <!-- Temperamento -->
           <ion-item class="temperamento-container">
-            <ion-label position="stacked" class="label-temperamento">Temperamento</ion-label>
-            <div *ngFor="let temperamento of newGato.Temperamento; let i = index" class="temperamento-item">
-              <ion-item>
-                <ion-label position="stacked" class="label-tipo">Tipo</ion-label>
-                <ion-input type="text" [(ngModel)]="temperamento.tipo" name="tipo-{{i}}" required></ion-input>
+            <ion-label position="stacked">Temperamento</ion-label>
+            <ng-container *ngFor="let temp of newGato.Temperamento; let j = index">
+              <ion-item class="temperamento-item">
+                <ion-label position="stacked">Tipo</ion-label>
+                <ion-input type="text" [(ngModel)]="temp.tipo" name="temperamento-tipo-{{j}}" required></ion-input>
               </ion-item>
-              <ion-item>
-                <ion-label position="stacked" class="label-descripcion">Descripción</ion-label>
-                <ion-textarea [(ngModel)]="temperamento.descripcion" name="descripcion-{{i}}" required></ion-textarea>
-              </ion-item>
-              <ion-button color="danger" (click)="removeTemperamento(i)" fill="clear" class="btn-remove">Eliminar</ion-button>
-            </div>
-            <ion-button color="primary" (click)="addTemperamento()" fill="clear" class="btn-add">Agregar Temperamento</ion-button>
-          </ion-item>
-
-          <!-- Cuidados -->
-          <ion-item class="cuidados-container">
-            <ion-label position="stacked">Cuidados</ion-label>
-            <div *ngFor="let key of getCuidadosKeys()" class="cuidado-item">
-              <ion-item>
-                <ion-label position="stacked">{{ key }}</ion-label>
-                <ion-textarea [(ngModel)]="newGato.cuidados[key]" name="cuidado-{{ key }}" required></ion-textarea>
-              </ion-item>
-              <ion-button color="danger" (click)="removeCuidado(key)" fill="clear" class="btn-remove">Eliminar</ion-button>
-            </div>
-          </ion-item>
-
-          <!-- Fecha de Creación -->
-          <ion-item>
-            <ion-label position="stacked">Fecha de Creación</ion-label>
-            <ion-datetime displayFormat="DD MMM YYYY" [(ngModel)]="newGato.fechaCreacion.seconds" name="fechaCreacion" required></ion-datetime>
-          </ion-item>
-          <ion-item *ngIf="gatoForm.submitted && !gatoForm.controls['fechaCreacion']?.valid" class="error-message">
-            <ion-icon name="alert-circle" class="error-icon"></ion-icon>
-            <div>La fecha de creación es obligatoria.</div>
-          </ion-item>
-
-          <!-- En el formulario existente -->
-          <!-- Características Físicas -->
-          <ion-item class="caracteristicas-fisicas-container">
-            <ion-label position="stacked" class="main-label">Características Físicas</ion-label>
-
-            <ion-list>
-              <ion-item *ngFor="let caracteristica of newGato.CaractFisicas | keyvalue; let i = index">
-                <ion-label position="stacked">Nombre</ion-label>
-                <ion-input type="text" [(ngModel)]="caracteristica.value" name="nombre-{{i}}" required></ion-input>
-            
+              <ion-item class="temperamento-item">
                 <ion-label position="stacked">Descripción</ion-label>
-                <ion-textarea [(ngModel)]="caracteristica.value" name="descripcion-{{i}}" required></ion-textarea>
-            
-                <ion-button color="danger" (click)="removeCaracteristica(i.toString())" fill="clear" class="btn-remove">Eliminar</ion-button>
+                <ion-textarea [(ngModel)]="temp.descripcion" name="temperamento-descripcion-{{j}}" required></ion-textarea>
+                <ion-button color="danger" (click)="removeTemperamento(j)" fill="clear">Eliminar</ion-button>
               </ion-item>
-            </ion-list>
-                     
-            <ion-item>
-              <ion-label position="stacked">Nuevo Nombre</ion-label>
-              <ion-input type="text" [(ngModel)]="nuevaCaracteristica.nombre"></ion-input>
+            </ng-container>
+            <ion-button color="primary" (click)="addTemperamento()" fill="clear">Agregar Temperamento</ion-button>
+          </ion-item>
+          
+          <!-- Alerta si no se han ingresado temperamentos -->
+          <ion-item *ngIf="gatoForm.submitted && newGato.Temperamento.length === 0" class="error-message">
+            <ion-icon name="alert-circle" class="error-icon"></ion-icon>
+            <div>Debe ingresar al menos un temperamento.</div>
+          </ion-item>
 
-              <ion-label position="stacked">Nueva Descripción</ion-label>
-              <ion-textarea [(ngModel)]="nuevaCaracteristica.descripcion"></ion-textarea>
+          <!-- Características Físicas -->
+          <ion-item class="form-section">
+            <ion-label position="stacked">Características Físicas</ion-label>
+            <ng-container *ngFor="let caracteristica of newGato.caracteristicasFisicas; let i = index">
+              <ion-item class="temperamento-item">
+                <ion-label position="stacked">Tipo</ion-label>
+                <ion-input type="text" [(ngModel)]="caracteristica.tipo" name="caracteristica-tipo-{{i}}" required></ion-input>
+              </ion-item>
+              <ion-item class="temperamento-item">
+                <ion-label position="stacked">Descripción</ion-label>
+                <ion-textarea [(ngModel)]="caracteristica.descripcion" name="descripcion-{{i}}" required></ion-textarea>
+                <ion-button color="danger" (click)="removeCaracteristicaFisica(i)" fill="clear">Eliminar</ion-button>
+              </ion-item>
+            </ng-container>
+            <ion-button color="primary" (click)="addCaracteristicaFisica()" fill="clear">Agregar Característica Física</ion-button>
 
-              <ion-button (click)="addCaracteristica()" color="primary" fill="clear" class="btn-add" >Agregar</ion-button>
+            <!-- Alerta si no se han ingresado características físicas -->
+            <ion-item *ngIf="gatoForm.submitted && newGato.caracteristicasFisicas.length === 0" class="error-message">
+              <ion-icon name="alert-circle" class="error-icon"></ion-icon>
+              <div>Debe ingresar al menos una característica física.</div>
             </ion-item>
           </ion-item>
 
+          <!-- Cuidados -->
+          <ion-item class="form-section">
+            <ion-label position="stacked">Cuidados</ion-label>
+            <ng-container *ngFor="let cuidado of newGato.Cuidados; let i = index">
+              <ion-item class="temperamento-item">
+                <ion-label position="stacked">Tipo</ion-label>
+                <ion-input type="text" [(ngModel)]="cuidado.tipo" name="tipo-{{i}}" required></ion-input>
+              </ion-item>
+              <ion-item class="temperamento-item">
+                <ion-label position="stacked">Descripción</ion-label>
+                <ion-textarea [(ngModel)]="cuidado.descripcion" name="cuidado-{{i}}" required></ion-textarea>
+                <ion-button color="danger" (click)="removeCuidado(i)" fill="clear">Eliminar</ion-button>
+              </ion-item>
+            </ng-container>
+            <ion-button color="primary" (click)="addCuidado()" fill="clear">Agregar Cuidado</ion-button>
+
+            <!-- Alerta si no se han ingresado cuidados -->
+            <ion-item *ngIf="gatoForm.submitted && newGato.Cuidados.length === 0" class="error-message">
+              <ion-icon name="alert-circle" class="error-icon"></ion-icon>
+              <div>Debe ingresar al menos un cuidado.</div>
+            </ion-item>
+          </ion-item>
           <!-- Botón de Enviar -->
-          <ion-button type="submit" expand="block" shape="round" >
+          <ion-button type="submit" expand="block" shape="round">
             {{ newGato.id ? 'Actualizar Gato' : 'Agregar Gato' }}
           </ion-button>
         </form>

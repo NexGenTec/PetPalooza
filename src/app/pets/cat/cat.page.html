@@ -7,13 +7,12 @@
   </ion-toolbar>
 </ion-header>
 
-
 <ion-content [fullscreen]="true">
   <div class="px-3 pt-5 bg-gray-50">
-    <section class=" w-full mx-auto">
+    <section class="w-full mx-auto">
       <div class="grid grid-cols-2 gap-3 py-3 w-full">
         <div class="h-max rounded-xl overflow-hidden border border-blue-300 shadow-lg relative" *ngFor="let gato of gatos">
-          <ion-card class="m-0 h-44 relative group" mode="md"  (click)="navigateToTargetPage('profile-cat', gato)">
+          <ion-card class="m-0 h-44 relative group" mode="md" (click)="navigateToTargetPage('profile-cat', gato)">
             <img 
               class="h-full w-full object-cover object-center absolute top-0 left-0 transition-all duration-300 group-hover:scale-110" 
               alt="Imagen de {{ gato.Raza }}" 
@@ -21,7 +20,7 @@
             />
             <ion-card-header class="p-2 h-full w-full justify-end bg-gradient-to-b from-transparent from-40% via-black/50 to-black/80">
               <ion-card-title class="text-white">{{ gato.Raza }}</ion-card-title>
-              <ion-card-subtitle class="text-gray-200">{{ gato.origen }}</ion-card-subtitle>
+              <ion-card-subtitle class="text-gray-200">{{ gato.Origen }}</ion-card-subtitle>
             </ion-card-header>
           </ion-card>
           <div class="absolute top-3 right-3 w-10 h-10 rounded-full bg-white flex justify-center items-center">
@@ -33,7 +32,7 @@
             </button>
           </div>
           <div class="absolute top-3 left-3 w-10 h-10 rounded-full bg-white flex justify-center items-center">
-            <button type="button" (click)="openModal(true,gato)">
+            <button type="button" (click)="openModal(true, gato)">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-7 h-7">
                 <path d="M 17.984375 1.9863281 C 17.707031 1.9863281 17.417969 2.0976562 17.207031 2.3085938 L 14.962891 4.5527344 L 19.447266 9.0371094 L 21.691406 6.7929688 C 22.121094 6.3632812 22.121094 5.6523438 21.691406 5.2226562 L 18.767578 2.2988281 C 18.550781 2.0820312 18.261719 1.9863281 17.984375 1.9863281 Z M 13.621094 5.8945312 L 2 17.515625 L 2 22 L 6.484375 22 L 18.105469 10.378906 L 13.621094 5.8945312 Z"></path>
               </svg>

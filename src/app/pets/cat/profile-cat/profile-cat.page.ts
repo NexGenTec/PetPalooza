@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { ImgModalPage } from 'src/app/img-modal/img-modal.page';
-import { InfoGato, Temperamento } from 'src/app/interface/InfoGato.models';
+import { InfoGato, Temperamento, Cuidado, CaracteristicasFisicas } from 'src/app/interface/InfoGato.models';
 import { ModalSwiperPage } from 'src/app/modal-swiper/modal-swiper.page';
 
 @Component({
@@ -21,122 +21,95 @@ export class ProfileCatPage implements OnInit {
   infoOrigin!: string;
   infoHistory!: string;
 
-  gato: InfoGato[] = [];
-  selectedPerroId!: number;
+  gato!: InfoGato;
   showImagesContainer: boolean = false;
   temperamentoChips: Temperamento[] = [];
 
-  infoGato: any = (this.gato as any).default;
-
-  constructor(
-    private modalController: ModalController,
-  ) {
-    this.changeCardContent(this.selectedSegmentValue);
-  }
+  constructor(private modalController: ModalController) {}
 
   ngOnInit() {
-    const gato = history.state.data;
-    console.log(gato)
-    this.infoName = gato.Raza;
-    this.infoOrigin = gato.origen;
-    this.infoImage = gato.imgPerfil;
-    this.infoHistory = gato.historia;
-    this.changeCardContent(this.selectedSegmentValue);
-    this.gato = [gato];
+    this.gato = history.state.data;
+    if (this.gato) {
+      this.infoName = this.gato.Raza;
+      this.infoOrigin = this.gato.Origen;
+      this.infoImage = this.gato.imgPerfil;
+      this.infoHistory = this.gato.Historia;
+      this.changeCardContent(this.selectedSegmentValue);
+    }
   }
 
   getImagesArray(gato: InfoGato): string[] {
-    const imagesArray: string[] = [];
-    for (const key in gato.img) {
-      if (gato.img.hasOwnProperty(key)) {
-        imagesArray.push(gato.img[key]);
-      }
-    }
-    console.log(imagesArray);
-    return Object.values(gato.img);
-  }
-
-  getPerroById(id: number): InfoGato[] {
-    return this.infoGato.filter((gato: InfoGato) => gato.id === id);
+    return Object.values(gato.Img);
   }
 
   changeCardContent(segmentValue: string) {
-    const gato = history.state.data;
-    if (!gato) {
-      return;
-    }
+    if (!this.gato) return;
+
     switch (segmentValue) {
       case 'caracteristicas':
-        this.cardHeading = 'Características Físicas';
-        this.cardSubtitle = gato.Raza;
-        this.cardContent = Object.keys(gato.CaractFisicas).map(key => `<p><span class="font-bold">${key}:</span> ${gato.CaractFisicas[key]}</p>`).join('<hr class="my-3">');
+        this.setCardContent('Características Físicas', this.gato.Raza, this.formatCharacteristics(this.gato.caracteristicasFisicas));
         this.temperamentoChips = [];
         this.showImagesContainer = false;
         break;
       case 'temperamento':
-        this.cardHeading = 'Temperamento';
-        this.cardSubtitle = '';
-        this.cardContent = gato.Temperamento
-          .filter(temp => temp.descripcion !== '')
-          .map(temp => `<p>${temp.descripcion}</p>`)
-          .join('<hr class="my-3">');
-
-        this.temperamentoChips = this.getTemperamentoChips(gato.Temperamento);
+        this.setCardContent('Temperamento', '', this.formatTemperamento(this.gato.Temperamento));
+        this.temperamentoChips = this.gato.Temperamento.filter(temp => temp.tipo);
         this.showImagesContainer = false;
         break;
       case 'cuidado':
-        this.cardHeading = 'Cuidado y Salud';
-        this.cardSubtitle = gato.Raza;
-        this.cardContent = Object.keys(gato.cuidados).map(key => `<p><span class="font-bold">${key}:</span> ${gato.cuidados[key]}</p>`).join('<hr class="my-3">');
-
+        this.setCardContent('Cuidado y Salud', this.gato.Raza, this.formatCuidado(this.gato.Cuidados));
         this.temperamentoChips = [];
         this.showImagesContainer = false;
         break;
       case 'images':
-        this.cardHeading = 'Imágenes';
-        this.cardSubtitle = gato.Raza;
-        this.cardContent = '';
+        this.setCardContent('Imágenes', this.gato.Raza, '');
         this.temperamentoChips = [];
         this.showImagesContainer = true;
         break;
       default:
-        this.selectedSegmentValue = 'caracteristicas';
-        this.cardHeading = 'Características Físicas';
-        this.cardSubtitle = gato.Raza;
-        this.temperamentoChips = [];
-        this.showImagesContainer = false;
+        this.changeCardContent('caracteristicas');
         break;
     }
   }
 
-  getTemperamentoChips(temperamento: Temperamento[]): Temperamento[] {
-    return temperamento.filter(item => item.aplicable);
+  setCardContent(heading: string, subtitle: string, content: string) {
+    this.cardHeading = heading;
+    this.cardSubtitle = subtitle;
+    this.cardContent = content;
   }
 
-  getNameRaza(raza: InfoGato[]): InfoGato[] {
-    return raza.filter(item => item.Raza)
+  formatCharacteristics(characteristics: CaracteristicasFisicas[]): string {
+    return characteristics
+      .map(item => `<p><span class="font-bold">${item.tipo}:</span> ${item.descripcion}</p>`)
+      .join('<hr class="my-3">');
   }
 
+  formatTemperamento(temperamento: Temperamento[]): string {
+    return temperamento
+      .filter(temp => temp.descripcion !== '')
+      .map(temp => `<p>${temp.descripcion}</p>`)
+      .join('<hr class="my-3">');
+  }
+
+  formatCuidado(cuidados: Cuidado[]): string {
+    return cuidados
+      .map(item => `<p><span class="font-bold">${item.tipo}:</span> ${item.descripcion}</p>`)
+      .join('<hr class="my-3">');
+  }
 
   async openModal(imageUrl: string) {
     const modal = await this.modalController.create({
       component: ImgModalPage,
-      componentProps: {
-        imageUrl: imageUrl
-      }
+      componentProps: { imageUrl }
     });
-    return await modal.present();
+    await modal.present();
   }
 
   async openModalSwiper(gato: InfoGato) {
     const modal = await this.modalController.create({
       component: ModalSwiperPage,
-      componentProps: {
-        images: this.getImagesArray(gato),
-        initialSlide: 0
-      }
+      componentProps: { images: this.getImagesArray(gato), initialSlide: 0 }
     });
-    return await modal.present();
+    await modal.present();
   }
-
 }
