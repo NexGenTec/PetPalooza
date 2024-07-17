@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { InfoGato } from '../../../interface/InfoGato.models';
 
@@ -9,18 +9,67 @@ import { InfoGato } from '../../../interface/InfoGato.models';
 })
 export class CatModalPage implements OnInit {
   @Input() newGato: InfoGato;
+  @ViewChild('datePicker') datePicker;
+  showDatePicker: boolean = false;
   imageFile: File | null = null;
   existingImage: string | null = null;
+  formattedFechaCreacion: string = '';
 
   constructor(private modalController: ModalController,
   ) {}
 
   ngOnInit(): void {
-    // Verificar si el gato tiene una imagen existente
-    if (this.newGato.imgPerfil) {
-      this.existingImage = this.newGato.imgPerfil; // Guardar la URL de la imagen existente
-      this.imageFile = null; // Limpiar el archivo seleccionado para no mostrar la imagen existente
+    // Initialize fechaCreacion if not set
+    if (!this.newGato.fechaCreacion || 
+        (this.newGato.fechaCreacion.seconds === 0 && this.newGato.fechaCreacion.nanoseconds === 0)) {
+      const now = new Date();
+      this.newGato.fechaCreacion = {
+        seconds: Math.floor(now.getTime() / 1000),
+        nanoseconds: (now.getTime() % 1000) * 1e6,
+        isoString: now.toISOString()
+      };
+    } else {
+      const fecha = new Date(this.newGato.fechaCreacion.seconds * 1000);
+      this.newGato.fechaCreacion = {
+        seconds: this.newGato.fechaCreacion.seconds,
+        nanoseconds: this.newGato.fechaCreacion.nanoseconds,
+        isoString: fecha.toISOString()
+      };
     }
+    this.updateFechaCreacion();
+
+    // Check if there's an existing image profile
+    if (this.newGato.imgPerfil) {
+      this.existingImage = this.newGato.imgPerfil;
+      this.imageFile = null;
+    }
+  }
+
+  updateFechaCreacion() {
+    if (this.newGato.fechaCreacion && this.newGato.fechaCreacion.isoString) {
+      const fecha = new Date(this.newGato.fechaCreacion.isoString);
+      this.formattedFechaCreacion = fecha.toLocaleDateString() + ' ' + fecha.toLocaleTimeString();
+    }
+  }
+
+  setCurrentDateTime() {
+    const now = new Date();
+    this.newGato.fechaCreacion = {
+      seconds: Math.floor(now.getTime() / 1000),
+      nanoseconds: (now.getTime() % 1000) * 1e6,
+      isoString: now.toISOString()
+    };
+    this.updateFechaCreacion();
+  }
+
+  getMinDate(): string {
+    const today = new Date();
+    return today.toISOString();
+  }
+
+  getMaxDate(): string {
+    const today = new Date();
+    return new Date(today.getFullYear() + 1, today.getMonth(), today.getDate()).toISOString();
   }
 
   dismissModal() {

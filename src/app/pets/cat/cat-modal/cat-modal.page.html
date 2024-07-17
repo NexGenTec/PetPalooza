@@ -56,20 +56,7 @@
           <!-- Mostrar imagen existente si no se ha seleccionado una nueva -->
           <ion-item *ngIf="!imageFile && newGato.imgPerfil">
             <img [src]="newGato.imgPerfil" alt="Imagen actual" class="current-image" />
-          </ion-item>
-
-          <!-- Imágenes -->
-          <!-- <ion-item class="form-section">
-            <ion-label position="stacked">Imágenes</ion-label>
-            <ng-container *ngFor="let file of imageFiles; let i = index">
-              <ion-item class="temperamento-item">
-                <ion-img [src]="getSelectedImages(i)" alt="Imagen seleccionada" class="selected-image" (click)="openSwiperModal()"></ion-img>
-                <ion-button color="danger" (click)="removeImage(i)" fill="clear">Eliminar</ion-button>
-              </ion-item>
-            </ng-container>
-            <input type="file" (change)="onFileSelected($event)" accept="image/png, image/jpeg" multiple />
-          </ion-item> -->
-                    
+          </ion-item>                    
           <!-- Longevidad -->
           <ion-item>
             <ion-label position="stacked">Longevidad</ion-label>
@@ -158,6 +145,37 @@
               <div>Debe ingresar al menos un cuidado.</div>
             </ion-item>
           </ion-item>
+          
+          <!-- Fecha de Creacion -->
+          <ion-item>
+          <ion-label position="stacked">Fecha de Creación</ion-label>
+          <ion-input readonly [value]="formattedFechaCreacion" (click)="showDatePicker = !showDatePicker"></ion-input>
+          <ion-button fill="clear" slot="end" (click)="setCurrentDateTime()">
+            <ion-icon name="time"></ion-icon>
+          </ion-button>
+            <ion-datetime
+              *ngIf="showDatePicker"
+              displayFormat="DD MMM YYYY HH:mm"
+              [(ngModel)]="newGato.fechaCreacion.isoString"
+              (ionChange)="updateFechaCreacion()"
+              name="fechaCreacion"
+              [min]="getMinDate()"
+              [max]="getMaxDate()"
+              required>
+            </ion-datetime>
+          </ion-item>
+          
+           <!-- <ion-item>
+            <ion-label position="stacked">Fecha de Creación</ion-label>
+            <ion-input readonly [value]="formattedFechaCreacion" (click)="openDatePicker()"></ion-input>
+            <ion-button (click)="openDatePicker()">Seleccionar Fecha</ion-button>
+            <ion-datetime #datePicker displayFormat="DD MMM YYYY HH:mm" [(ngModel)]="newGato.fechaCreacion.isoString" (ionChange)="updateFechaCreacion()" name="fechaCreacion" required></ion-datetime>
+          </ion-item>
+          <ion-item *ngIf="gatoForm.submitted && !gatoForm.controls['fechaCreacion']?.valid" class="error-message">
+            <ion-icon name="alert-circle" class="error-icon"></ion-icon>
+            <div>La fecha de creación es obligatoria.</div>
+          </ion-item> -->
+          
           <!-- Botón de Enviar -->
           <ion-button type="submit" expand="block" shape="round">
             {{ newGato.id ? 'Actualizar Gato' : 'Agregar Gato' }}

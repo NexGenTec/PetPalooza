@@ -1,6 +1,7 @@
 export interface FechaCreacion {
   seconds: number;
   nanoseconds: number;
+  isoString?: string;
 }
 
 export interface Cuidado {
