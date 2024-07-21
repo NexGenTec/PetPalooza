@@ -26,13 +26,13 @@ export class PetsPage implements OnInit {
   }
 
   async loadData() {
-    this.firestores.getCollectionChanges<InfoGato>('InfoGato').subscribe(gatos => {
+    this.firestores.getCollectionChanges<InfoGato>('InfoGatos').subscribe(gatos => {
       if (gatos) {
         this.originalGatos = gatos;
       }
     });
 
-    this.firestores.getCollectionChanges<InfoPerro>('InfoPerro').subscribe(perros => {
+    this.firestores.getCollectionChanges<InfoPerro>('InfoPerros').subscribe(perros => {
       if (perros) {
         this.originalPerros = perros;
       }

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { InfoGato } from '../../interface/InfoGato.models';
 import { FirestoreService } from '../../service/firestore.service';
-import { AngularFireStorage, AngularFireUploadTask } from '@angular/fire/compat/storage';
+import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { finalize } from 'rxjs/operators';
 import { AlertController, ModalController, ToastController, LoadingController } from '@ionic/angular';
 import { CatModalPage } from './cat-modal/cat-modal.page';
@@ -18,7 +18,8 @@ export class CatPage implements OnInit {
   filteredGatos: InfoGato[] = [];
   newGato: InfoGato = this.initializeNewGato();
   imageFile: File | null = null;
-  loading: HTMLIonLoadingElement; // Variable para mantener la referencia del loading
+  imagesFiles: File[] = [];
+  loading: HTMLIonLoadingElement;
 
   constructor(
     private router: Router,
@@ -27,7 +28,7 @@ export class CatPage implements OnInit {
     private modalController: ModalController,
     private toastController: ToastController,
     private alertController: AlertController,
-    private loadingController: LoadingController // Inyecta LoadingController
+    private loadingController: LoadingController
   ) {}
 
   ngOnInit() {
@@ -60,7 +61,6 @@ export class CatPage implements OnInit {
   async openModal(edit: boolean, gato?: InfoGato) {
     if (edit && gato) {
       this.newGato = { ...gato };
-      // Mantén el ID del gato para poder pasarlo al guardar
       this.newGato.id = gato.id;
       if (gato.imgPerfil) {
         this.imageFile = null; 
@@ -76,149 +76,130 @@ export class CatPage implements OnInit {
     });
   
     modal.onDidDismiss().then((result) => {
-      if (result.data && result.data.gato) {
-        // Verifica si la imagen se recibió correctamente desde el modal
-        if (result.data.imageFile) {
-          this.imageFile = result.data.imageFile;
-          console.log('Archivo de imagen recibido:', this.imageFile);
-        }
-
-        if (edit) {
-          console.log('Gato editado:', result.data.gato);
-          this.saveGato(result.data.gato, true);
+      if (result.data) {
+        const { gato, imageFile, imagesFiles, action } = result.data;
+        if (action === 'update') {
+          this.updateGato(gato, imageFile, imagesFiles);
         } else {
-          console.log('Nuevo gato agregado:', result.data.gato);
-          this.saveGato(result.data.gato, false);
+          this.addGato(gato, imageFile, imagesFiles);
         }
       }
     });
-  
-    return await modal.present();
+
+    await modal.present();
   }
 
-  async saveGato(gato: InfoGato, edit: boolean) {
-    // Mostrar loading antes de empezar la operación
-    this.loading = await this.loadingController.create({
-      message: edit ? 'Actualizando gato...' : 'Guardando gato...',
+  async addGato(gato: InfoGato, imageFile: File | null, imagesFiles: File[]) {
+    const loading = await this.loadingController.create({
+      message: 'Adding Cat...',
     });
-    await this.loading.present();
+    await loading.present();
 
-    if (this.imageFile) {
-      const filePath = `Gato/${gato.Raza}/${this.imageFile.name}`;
-      const fileRef = this.storage.ref(filePath);
-      const task: AngularFireUploadTask = this.storage.upload(filePath, this.imageFile);
-  
-      task.snapshotChanges().pipe(
-        finalize(() => {
-          fileRef.getDownloadURL().subscribe((url) => {
-            // Actualiza el objeto gato con el nuevo URL de imagen
-            gato.imgPerfil = url;
-  
-            // Si es una edición y hay una imagen anterior, borrarla
-            if (edit && gato.id && gato.imgPerfil !== this.newGato.imgPerfil) {
-              const oldImageRef = this.storage.refFromURL(gato.imgPerfil);
-              oldImageRef.delete().toPromise().then(() => {
-                console.log(`Imagen anterior ${gato.imgPerfil} eliminada`);
-                // Guarda el gato en Firestore después de eliminar la imagen anterior
-                this.saveGatoToFirestore(gato, edit);
-              }).catch((error) => {
-                console.error(`Error al eliminar imagen anterior ${gato.imgPerfil}`, error);
-                // Aun así, guarda el gato en Firestore en caso de error al eliminar la imagen
-                this.saveGatoToFirestore(gato, edit);
-              });
-            } else {
-              // Si no hay imagen anterior para eliminar, guarda el gato en Firestore directamente
-              this.saveGatoToFirestore(gato, edit);
-            }
-          });
-        })
-      ).subscribe();
-    } else {
-      // Si no hay nueva imagen, solo guarda el gato en Firestore
-      this.saveGatoToFirestore(gato, edit);
+    try {
+      if (imageFile) {
+        const imagePath = `Gatos/${gato.Raza}/imgPerfil/${imageFile.name}`;
+        const uploadTask = this.storage.upload(imagePath, imageFile);
+        const imageUrl = await (await uploadTask).ref.getDownloadURL();
+        gato.imgPerfil = imageUrl;
+      }
+
+      if (imagesFiles.length > 0) {
+        gato.Img = [];
+        for (const image of imagesFiles) {
+          const imagePath = `Gatos/${gato.Raza}/imagenes/${image.name}`;
+          const uploadTask = this.storage.upload(imagePath, image);
+          const imageUrl = await (await uploadTask).ref.getDownloadURL();
+          gato.Img.push(imageUrl);
+        }
+      }
+
+      await this.firestoreService.addDocument('InfoGatos', gato);
+      this.loadData();
+      await this.showToast('Cat added successfully');
+    } catch (error) {
+      await this.showAlert('Error', 'There was an error adding the cat: ' + error);
+    } finally {
+      loading.dismiss();
     }
   }
 
-  saveGatoToFirestore(gato: InfoGato, edit: boolean) {
-    if (edit) {
-      this.firestoreService.updateDocument<InfoGato>('InfoGatos', gato.id, gato).then(() => {
-        this.afterSaveSuccess('Gato actualizado con éxito');
-      }).catch((error) => {
-        this.afterSaveError('Error al actualizar el gato', error);
-      });
-    } else {
-      // Aquí llamamos a addDocument sin pasar un ID específico
-      this.firestoreService.addDocument<InfoGato>('InfoGatos', gato).then(() => {
-        this.afterSaveSuccess('Gato agregado con éxito');
-      }).catch((error) => {
-        this.afterSaveError('Error al agregar el gato', error);
-      });
-    }
-  }
+  async updateGato(gato: InfoGato, imageFile: File | null, imagesFiles: File[]) {
+    const loading = await this.loadingController.create({
+      message: 'Updating Cat...',
+    });
+    await loading.present();
 
-  afterSaveSuccess(message: string) {
-    // Ocultar loading después de completar con éxito
-    if (this.loading) {
-      this.loading.dismiss();
-    }
-    this.resetNewGatoForm();
-    this.loadData();
-    this.presentToast(message, 'success');
-  }
+    try {
+      if (imageFile) {
+        // const imagePath = `Gato/${gato.Raza}/imgPerfil/${imageFile.name}`;
+        const imagePath = `Gato/${gato.Raza}/${imageFile.name}`;
+        const uploadTask = this.storage.upload(imagePath, imageFile);
+        const imageUrl = await (await uploadTask).ref.getDownloadURL();
+        gato.imgPerfil = imageUrl;
+      }
 
-  afterSaveError(message: string, error: any) {
-    // Ocultar loading en caso de error
-    if (this.loading) {
-      this.loading.dismiss();
+      if (imagesFiles.length > 0) {
+        gato.Img = [];
+        for (const image of imagesFiles) {
+          // const imagePath = `Gato/${gato.Raza}/imagenes/${image.name}`;
+          const imagePath = `Gato/${gato.Raza}/${image.name}`;
+          const uploadTask = this.storage.upload(imagePath, image);
+          const imageUrl = await (await uploadTask).ref.getDownloadURL();
+          gato.Img.push(imageUrl);
+        }
+      }
+
+      await this.firestoreService.updateDocument('InfoGatos', gato.id, gato);
+      this.loadData();
+      await this.showToast('Cat updated successfully');
+    } catch (error) {
+      await this.showAlert('Error', 'There was an error updating the cat: ' + error);
+    } finally {
+      loading.dismiss();
     }
-    console.error(message, error);
-    this.presentToast(message, 'danger');
   }
 
   async deleteGato(gato: InfoGato) {
     const alert = await this.alertController.create({
-      header: 'Confirmar Eliminación',
-      mode: 'ios',
-      message: `¿Estás seguro de eliminar al gato ${gato.Raza}?`,
+      header: 'Confirm Delete',
+      message: 'Are you sure you want to delete this cat?',
       buttons: [
         {
-          text: 'Cancelar',
+          text: 'Cancel',
           role: 'cancel',
-          cssClass: 'secondary',
         },
         {
-          text: 'Eliminar',
+          text: 'Delete',
           handler: async () => {
-            try {
-              // Elimina el documento del gato en Firestore
-              await this.firestoreService.deleteDocument('InfoGatos', gato.id);
-          
-              // Elimina la carpeta y su contenido en Firebase Storage
-              const storageRef = this.storage.ref(`Gato/${gato.Raza}`);
-              const res = await storageRef.listAll().toPromise();
-          
-              await Promise.all(res.items.map(async (item) => {
-                await item.delete();
-                console.log(`Archivo ${item.name} eliminado`);
-              }));
-          
-              await storageRef.delete();
-              
-              // Actualiza la lista de gatos después de eliminar
-              this.loadData();
-              this.presentToast('Gato eliminado con éxito', 'success');
-            } catch (error) {
-              console.error('Error al eliminar el gato:', error);
-              this.presentToast('Error al eliminar el gato', 'danger');
-            }
-          }
-        }
-      ]
+            await this.firestoreService.deleteDocument('InfoGatos', gato.id);
+            this.loadData();
+            await this.showToast('Cat deleted successfully');
+          },
+        },
+      ],
     });
 
     await alert.present();
   }
-  
+
+  async showToast(message: string) {
+    const toast = await this.toastController.create({
+      message,
+      duration: 2000,
+    });
+    toast.present();
+  }
+
+  async showAlert(header: string, message: string) {
+    const alert = await this.alertController.create({
+      header,
+      message,
+      buttons: ['OK'],
+    });
+    await alert.present();
+  }
+
+    
   resetNewGatoForm() {
     this.newGato = this.initializeNewGato();
     this.imageFile = null;

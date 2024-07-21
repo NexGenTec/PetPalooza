@@ -12,14 +12,14 @@ export class CatModalPage implements OnInit {
   @ViewChild('datePicker') datePicker;
   showDatePicker: boolean = false;
   imageFile: File | null = null;
+  imagesFiles: File[] = [];
   existingImage: string | null = null;
   formattedFechaCreacion: string = '';
+  selectedImages: string[] = [];
 
-  constructor(private modalController: ModalController,
-  ) {}
+  constructor(private modalController: ModalController) {}
 
   ngOnInit(): void {
-    // Initialize fechaCreacion if not set
     if (!this.newGato.fechaCreacion || 
         (this.newGato.fechaCreacion.seconds === 0 && this.newGato.fechaCreacion.nanoseconds === 0)) {
       const now = new Date();
@@ -38,10 +38,13 @@ export class CatModalPage implements OnInit {
     }
     this.updateFechaCreacion();
 
-    // Check if there's an existing image profile
     if (this.newGato.imgPerfil) {
       this.existingImage = this.newGato.imgPerfil;
       this.imageFile = null;
+    }
+
+    if (this.newGato.Img && this.newGato.Img.length) {
+      this.selectedImages = this.newGato.Img;
     }
   }
 
@@ -78,22 +81,13 @@ export class CatModalPage implements OnInit {
 
   addGato(gatoForm: any) {
     if (gatoForm.valid) {
-      console.log('Nuevo gato:', this.newGato);
-      console.log('Archivo de imagen:', this.imageFile);
-      // Asegúrate de que estás enviando el objeto completo con la imagen
-      this.modalController.dismiss({ gato: this.newGato, imageFile: this.imageFile });
+      this.modalController.dismiss({ gato: this.newGato, imageFile: this.imageFile, imagesFiles: this.imagesFiles });
     }
   }
 
   updateGato(form: any) {
     if (form.valid) {
-      // Si se seleccionó una nueva imagen, reemplazar la imagen existente
-      if (this.imageFile) {
-        this.modalController.dismiss({ gato: this.newGato, imageFile: this.imageFile, action: 'update' });
-      } else {
-        // Si no se seleccionó una nueva imagen, mantener la imagen existente
-        this.modalController.dismiss({ gato: this.newGato, imageFile: null, action: 'update' });
-      }
+      this.modalController.dismiss({ gato: this.newGato, imageFile: this.imageFile, imagesFiles: this.imagesFiles, action: 'update' });
     }
   }
 
@@ -104,8 +98,15 @@ export class CatModalPage implements OnInit {
     }
   }
 
+  onFileSelecteds(event: Event) {
+    const target = event.target as HTMLInputElement;
+    if (target.files && target.files.length) {
+      this.imagesFiles = Array.from(target.files).slice(0, 10);
+      this.selectedImages = this.imagesFiles.map(file => URL.createObjectURL(file));
+    }
+  }
+
   getSelectedImage(): string | null {
-    // Mostrar la imagen seleccionada o la existente si no se seleccionó una nueva
     return this.imageFile ? URL.createObjectURL(this.imageFile) : this.existingImage;
   }
 

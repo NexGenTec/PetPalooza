@@ -44,19 +44,62 @@
             <div>El año es obligatorio.</div>
           </ion-item>
 
+          <ion-item>
+            <ion-label>Imagen de Perfil</ion-label>
+            <ion-input type="file" (change)="onFileSelected($event)" accept="image/*"></ion-input>
+          </ion-item>
+          <ion-img *ngIf="getSelectedImage()" [src]="getSelectedImage()"></ion-img>
+      
+          <ion-item>
+            <ion-label>Imágenes del Gato</ion-label>
+            <ion-input type="file" (change)="onFileSelecteds($event)" accept="image/*" multiple></ion-input>
+          </ion-item>
+          <ion-grid>
+            <ion-row>
+              <ion-col size="6" *ngFor="let img of selectedImages">
+                <ion-img [src]="img"></ion-img>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+
           <!-- Imagen del Perfil -->
-          <ion-item class="file-upload">
+          <!-- <ion-item class="file-upload">
             <ion-label position="stacked">Seleccionar archivo</ion-label>
             <input type="file" (change)="onFileSelected($event)" accept="image/png, image/jpeg" />
-          </ion-item>
+          </ion-item> -->
           <!-- Vista previa de la imagen seleccionada -->
-          <ion-item *ngIf="imageFile">
+          <!-- <ion-item *ngIf="imageFile">
             <img [src]="getSelectedImage()" alt="Imagen seleccionada" class="selected-image" />
-          </ion-item>
+          </ion-item> -->
           <!-- Mostrar imagen existente si no se ha seleccionado una nueva -->
-          <ion-item *ngIf="!imageFile && newGato.imgPerfil">
+          <!-- <ion-item *ngIf="!imageFile && newGato.imgPerfil">
             <img [src]="newGato.imgPerfil" alt="Imagen actual" class="current-image" />
-          </ion-item>                    
+          </ion-item>      -->
+
+          <!-- Imagen Array -->
+          <!-- <ion-item class="file-upload">
+            <ion-label position="stacked">Seleccionar archivos</ion-label>
+            <input type="file" (change)="onFileSelecteds($event)" accept="image/png, image/jpeg" multiple />
+          </ion-item> -->
+
+          <!-- Vista previa de las imágenes seleccionadas -->
+          <!-- <ion-row>
+            <ion-col size="6" *ngFor="let img of selectedImages">
+              <ion-item>
+                <img [src]="img" alt="Imagen seleccionada" class="selected-image" />
+              </ion-item>
+            </ion-col>
+          </ion-row> -->
+
+          <!-- Mostrar imagen existente si no se ha seleccionado una nueva -->
+          <!-- <ion-row *ngIf="!imagesFiles.length && newGato.Img && newGato.Img.length">
+            <ion-col size="6" *ngFor="let img of newGato.Img">
+              <ion-item>
+                <img [src]="img" alt="Imagen actual" class="current-image" />
+              </ion-item>
+            </ion-col>
+          </ion-row> -->
+
           <!-- Longevidad -->
           <ion-item>
             <ion-label position="stacked">Longevidad</ion-label>
@@ -164,18 +207,7 @@
               required>
             </ion-datetime>
           </ion-item>
-          
-           <!-- <ion-item>
-            <ion-label position="stacked">Fecha de Creación</ion-label>
-            <ion-input readonly [value]="formattedFechaCreacion" (click)="openDatePicker()"></ion-input>
-            <ion-button (click)="openDatePicker()">Seleccionar Fecha</ion-button>
-            <ion-datetime #datePicker displayFormat="DD MMM YYYY HH:mm" [(ngModel)]="newGato.fechaCreacion.isoString" (ionChange)="updateFechaCreacion()" name="fechaCreacion" required></ion-datetime>
-          </ion-item>
-          <ion-item *ngIf="gatoForm.submitted && !gatoForm.controls['fechaCreacion']?.valid" class="error-message">
-            <ion-icon name="alert-circle" class="error-icon"></ion-icon>
-            <div>La fecha de creación es obligatoria.</div>
-          </ion-item> -->
-          
+
           <!-- Botón de Enviar -->
           <ion-button type="submit" expand="block" shape="round">
             {{ newGato.id ? 'Actualizar Gato' : 'Agregar Gato' }}
