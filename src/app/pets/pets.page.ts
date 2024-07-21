@@ -38,5 +38,5 @@ export class PetsPage implements OnInit {
       }
     });
   }
-
 }
+

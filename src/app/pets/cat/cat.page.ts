@@ -91,7 +91,7 @@ export class CatPage implements OnInit {
 
   async addGato(gato: InfoGato, imageFile: File | null, imagesFiles: File[]) {
     const loading = await this.loadingController.create({
-      message: 'Adding Cat...',
+      message: 'Agregando Gato...',
     });
     await loading.present();
 
@@ -115,9 +115,9 @@ export class CatPage implements OnInit {
 
       await this.firestoreService.addDocument('InfoGatos', gato);
       this.loadData();
-      await this.showToast('Cat added successfully');
+      await this.showToast('Gato agregado con éxito');
     } catch (error) {
-      await this.showAlert('Error', 'There was an error adding the cat: ' + error);
+      await this.showAlert('Error', 'Hubo un error al agregar el gato: ' + error);
     } finally {
       loading.dismiss();
     }
@@ -125,14 +125,13 @@ export class CatPage implements OnInit {
 
   async updateGato(gato: InfoGato, imageFile: File | null, imagesFiles: File[]) {
     const loading = await this.loadingController.create({
-      message: 'Updating Cat...',
+      message: 'Actualizando Gato...',
     });
     await loading.present();
 
     try {
       if (imageFile) {
-        // const imagePath = `Gato/${gato.Raza}/imgPerfil/${imageFile.name}`;
-        const imagePath = `Gato/${gato.Raza}/${imageFile.name}`;
+        const imagePath = `Gato/${gato.Raza}/imgPerfil/${imageFile.name}`;
         const uploadTask = this.storage.upload(imagePath, imageFile);
         const imageUrl = await (await uploadTask).ref.getDownloadURL();
         gato.imgPerfil = imageUrl;
@@ -141,8 +140,7 @@ export class CatPage implements OnInit {
       if (imagesFiles.length > 0) {
         gato.Img = [];
         for (const image of imagesFiles) {
-          // const imagePath = `Gato/${gato.Raza}/imagenes/${image.name}`;
-          const imagePath = `Gato/${gato.Raza}/${image.name}`;
+          const imagePath = `Gato/${gato.Raza}/imagenes/${image.name}`;
           const uploadTask = this.storage.upload(imagePath, image);
           const imageUrl = await (await uploadTask).ref.getDownloadURL();
           gato.Img.push(imageUrl);
@@ -151,9 +149,9 @@ export class CatPage implements OnInit {
 
       await this.firestoreService.updateDocument('InfoGatos', gato.id, gato);
       this.loadData();
-      await this.showToast('Cat updated successfully');
+      await this.showToast('Gato actualizado con éxito');
     } catch (error) {
-      await this.showAlert('Error', 'There was an error updating the cat: ' + error);
+      await this.showAlert('Error', 'Hubo un error al actualizar el gato: ' + error);
     } finally {
       loading.dismiss();
     }
@@ -161,19 +159,19 @@ export class CatPage implements OnInit {
 
   async deleteGato(gato: InfoGato) {
     const alert = await this.alertController.create({
-      header: 'Confirm Delete',
-      message: 'Are you sure you want to delete this cat?',
+      header: 'Confirmar eliminación',
+      message: '¿Estás seguro de que deseas eliminar este gato?',
       buttons: [
         {
-          text: 'Cancel',
+          text: 'Cancelar',
           role: 'cancel',
         },
         {
-          text: 'Delete',
+          text: 'Eliminar',
           handler: async () => {
             await this.firestoreService.deleteDocument('InfoGatos', gato.id);
             this.loadData();
-            await this.showToast('Cat deleted successfully');
+            await this.showToast('Gato eliminado con éxito');
           },
         },
       ],
