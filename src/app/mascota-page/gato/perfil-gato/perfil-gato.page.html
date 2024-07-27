@@ -18,78 +18,97 @@
   <div class="bg-gray-50">
     <!-- profile 1 -->
     <div class="bg-blue-100 pt-20 pb-6 px-3 min-h-[93vh]">
-
       <div class="relative mx-auto md:max-w-2xl min-w-0 break-words bg-white w-full shadow-lg rounded-xl pb-3">
-        <div class="px-6">
+        <ng-container *ngIf="!isLoading; else loadingSkeleton">
+          <div class="px-6">
             <div class="flex flex-wrap justify-center">
-                <div class="w-full flex justify-center" (click)="openModal(infoImage)">
-                    <div class="relative">
-                        <img src={{infoImage}} class="shadow-xl rounded-full align-middle border-none absolute -m-16 -ml-20 lg:-ml-16 max-w-[150px] max-h-[150px] h-[150px] w-[150px] object-cover object-center"/>
-                    </div>
+              <div class="w-full flex justify-center" (click)="openModal(infoImage)">
+                <div class="relative">
+                  <img src="{{infoImage}}" class="shadow-xl rounded-full align-middle border-none absolute -m-16 -ml-20 lg:-ml-16 max-w-[150px] max-h-[150px] h-[150px] w-[150px] object-cover object-center"/>
                 </div>
-                <div class="w-full text-center mt-24"></div>
-            </div>
-            <div class="text-center mt-2">
+              </div>
+              <div class="w-full text-center mt-24">
                 <h3 class="text-2xl text-slate-700 font-bold leading-normal mb-1">{{ infoName }}</h3>
-                <div class="text-xs mt-0 mb-2 text-slate-400 font-bold uppercase">
-                  {{infoOrigin}}
-                </div>
-            </div>
-            <div class="mt-6 py-6 border-t border-slate-200 text-center">
+                <div class="text-xs mt-0 mb-2 text-slate-400 font-bold uppercase">{{ infoOrigin }}</div>
+              </div>
+              <div class="mt-6 py-6 border-t border-slate-200 text-center">
                 <div class="flex flex-wrap justify-center">
-                    <div class="w-full px-4">
-                        <p class="font-light text-sm leading-relaxed text-slate-600 mb-4">
-                          {{infoHistory}}  
-                        </p>
-                    </div>
+                  <div class="w-full px-4">
+                    <p class="font-light text-sm leading-relaxed text-slate-600 mb-4">{{ infoHistory }}</p>
+                  </div>
                 </div>
+              </div>
             </div>
-        </div>
-        <div class="border-b border-gray-200 pb-2 bg-white mx-3">
-          <ion-segment mode="ios"  [(ngModel)]="selectedSegmentValue"  (ionChange)="changeCardContent(selectedSegmentValue)">
-            <ion-segment-button value="caracteristicas" [checked]="selectedSegmentValue === 'caracteristicas'">
+          </div>  
+          <div class="border-b border-gray-200 pb-2 bg-white mx-3">
+            <ion-segment mode="ios" [(ngModel)]="selectedSegmentValue" (ionChange)="changeCardContent(selectedSegmentValue)">
+              <ion-segment-button value="caracteristicas" [checked]="selectedSegmentValue === 'caracteristicas'">
                 <ion-icon name="paw-outline"></ion-icon>
-            </ion-segment-button>
-            <ion-segment-button value="temperamento" [checked]="selectedSegmentValue === 'temperamento'">
-             <ion-icon name="leaf-outline"></ion-icon>
-            </ion-segment-button>
-            <ion-segment-button value="cuidado" [checked]="selectedSegmentValue === 'cuidado'">
-              <ion-icon name="fitness-outline"></ion-icon>
-            </ion-segment-button>
-            <ion-segment-button value="images" [checked]="selectedSegmentValue === 'images'">
-              <ion-icon name="images-outline"></ion-icon>
-            </ion-segment-button>
-          </ion-segment>
-        </div>
-
-        <ion-card class="shadow-none">
-          <ion-card-content class="flex text-center flex-col">
-            <h6>{{ cardHeading }}</h6>
-            <small>{{ cardSubtitle}}</small>
-          </ion-card-content>
-          <div class="flex justify-center flex-wrap">
-            <ion-chip *ngFor="let chip of temperamentoChips" color="secondary">
-              {{ chip.tipo }}
-            </ion-chip>
+              </ion-segment-button>
+              <ion-segment-button value="temperamento" [checked]="selectedSegmentValue === 'temperamento'">
+                <ion-icon name="leaf-outline"></ion-icon>
+              </ion-segment-button>
+              <ion-segment-button value="cuidado" [checked]="selectedSegmentValue === 'cuidado'">
+                <ion-icon name="fitness-outline"></ion-icon>
+              </ion-segment-button>
+              <ion-segment-button value="images" [checked]="selectedSegmentValue === 'images'">
+                <ion-icon name="images-outline"></ion-icon>
+              </ion-segment-button>
+            </ion-segment>
           </div>
-          <ion-card-content *ngIf="!showImagesContainer" class="ion-text-start" [innerHTML]="cardContent" >
-          </ion-card-content>
-        </ion-card>
-        <ng-container *ngIf="showImagesContainer && gato && gato.length">
-          <div class="container mx-auto p-4">
-            <div class="grid grid-cols-2 md:grid-cols-2 gap-4 max-w-xl mx-auto">
-              <div *ngFor="let imgUrl of getImagesArray(gato[0])">
-                <div class="max-w-full rounded-lg overflow-hidden">
-                  <ion-img [src]="imgUrl" alt="Imagen de {{ gato[0].Raza }}" (click)="openModalSwiper(gato[0])">
-                  </ion-img>
+
+          <ion-card class="shadow-none">
+            <ion-card-content class="flex text-center flex-col">
+              <h6>{{ cardHeading }}</h6>
+              <small>{{ cardSubtitle }}</small>
+            </ion-card-content>
+            <div class="flex justify-center flex-wrap">
+              <ion-chip *ngFor="let chip of temperamentoChips" color="secondary">
+                {{ chip.tipo }}
+              </ion-chip>
+            </div>
+            <ion-card-content *ngIf="!showImagesContainer" class="ion-text-start" [innerHTML]="cardContent">
+            </ion-card-content>
+          </ion-card>
+
+          <ng-container *ngIf="showImagesContainer && gato">
+            <div class="container mx-auto p-4">
+              <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 max-w-xl mx-auto">
+                <div *ngFor="let imgUrl of getImagesArray(gato)">
+                  <div class="max-w-full rounded-lg overflow-hidden">
+                    <ion-img [src]="imgUrl" alt="Imagen de {{ gato.Raza }}" (click)="openModalSwiper(gato)">
+                    </ion-img>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ng-container>
+        </ng-container>
+        <ng-template #loadingSkeleton>
+          <div class="px-6">
+            <div class="flex flex-wrap justify-center">
+              <div class="w-full flex justify-center">
+                <div class="relative">
+                  <div class="shadow-xl rounded-full align-middle border-none absolute -m-16 -ml-20 lg:-ml-16 max-w-[150px] max-h-[150px] h-[150px] w-[150px] bg-gray-200 animate-pulse"></div>
+                </div>
+              </div>
+              <div class="w-full text-center mt-24">
+                <div class="text-2xl text-slate-700 font-bold leading-normal mb-1 bg-gray-200 animate-pulse h-6 w-3/4 mx-auto"></div>
+                <div class="text-xs mt-0 mb-2 text-slate-400 font-bold uppercase bg-gray-200 animate-pulse h-4 w-1/2 mx-auto"></div>
+              </div>
+              <div class="mt-6 py-6 border-t border-slate-200 text-center">
+                <div class="flex flex-wrap justify-center">
+                  <div class="w-full px-4">
+                    <div class="font-light text-sm leading-relaxed text-slate-600 mb-4 bg-gray-200 animate-pulse h-4 w-full"></div>
+                    <div class="font-light text-sm leading-relaxed text-slate-600 mb-4 bg-gray-200 animate-pulse h-4 w-full"></div>
+                    <div class="font-light text-sm leading-relaxed text-slate-600 mb-4 bg-gray-200 animate-pulse h-4 w-full"></div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </ng-container>
+        </ng-template>
       </div>
     </div>
   </div>
 </ion-content>
-
-

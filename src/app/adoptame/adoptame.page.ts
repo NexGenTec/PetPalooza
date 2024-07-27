@@ -7,6 +7,7 @@ import { ModalController } from '@ionic/angular';
 import { ImgModalPage } from '../components/img-modal/img-modal.page';
 import { InfoImage } from '../interface/InfoImage.models';
 import { AdmobAds, BannerPosition, BannerSize, } from 'capacitor-admob-ads';
+import { environment } from 'src/environments/environment.prod';
 
 @Component({
   selector: 'app-adoptame',
@@ -111,7 +112,7 @@ export class AdoptamePage implements OnInit {
   async showAdaptiveBanner() {
     try {
       await AdmobAds.showBannerAd({
-        adId: 'ca-app-pub-6309294666517022/1128036107', // ID de tu anuncio de AdMob
+        adId: environment.AdmobAds.APP_ID, // ID de tu anuncio de AdMob
         isTesting: false, // Configuración de prueba
         adSize: BannerSize.FULL_BANNER, // Tamaño de banner adaptable
         adPosition: BannerPosition.TOP // Posición del banner

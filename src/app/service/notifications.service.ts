@@ -8,6 +8,7 @@ import {
 } from '@capacitor/push-notifications';
 import { Notificaccion } from '../interface/Notification.models';
 import { LocalNotifications, LocalNotificationSchema } from '@capacitor/local-notifications';
+import { Router } from '@angular/router'; 
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +17,7 @@ export class NotificationsService {
 
   constructor(
     private afs: AngularFirestore,
+     private router: Router
   ) { }
 
   initPushNotifications() {
@@ -39,12 +41,19 @@ export class NotificationsService {
       // Guardar la notificación en Firestore
       this.notificationToFirestore(notification);
       // Mostrar la notificación local
-      this.showLocalNotification(notification);
+      // this.showLocalNotification(notification);
     });
 
     PushNotifications.addListener('pushNotificationActionPerformed', (notification: ActionPerformed) => {
-      console.log('Push action performed: ' + JSON.stringify(notification));
-    });
+      console.log('Push action performed: ', notification);
+      const data = notification.notification.data;
+      if (data.Route) {
+        console.log('Redirecting to: ', data.Route);
+        this.router.navigate([data.Route]);
+      } else {
+        console.error('No route found in notification data.');
+      }
+    });    
   }
 
   private saveToken(token: string | null) {
@@ -79,17 +88,5 @@ export class NotificationsService {
       .catch(error => {
         console.error('Error al guardar en Firestore: ', error);
       });
-  }
-
-  private showLocalNotification(notification: PushNotificationSchema) {
-    const localNotification: LocalNotificationSchema = {
-      id: typeof notification.id === 'string' ? parseInt(notification.id, 10) : notification.id || 1,
-      title: notification.title,
-      body: notification.body,
-    };
-
-    LocalNotifications.schedule({
-      notifications: [localNotification]
-    });
   }
 }

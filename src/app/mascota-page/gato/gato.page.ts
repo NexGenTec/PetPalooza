@@ -3,8 +3,9 @@ import { InfoGato } from '../../interface/InfoGato.models';
 import { QuirkyFacts } from '../../interface/QuirkyFacts.models';
 import { FirestoreService } from '../../service/firestore.service';
 import { Router } from '@angular/router';
-import { ToastController } from '@ionic/angular';
+import { Platform, ToastController } from '@ionic/angular';
 import { StorageService } from 'src/app/service/storage.service';
+import { ActionPerformed, PushNotifications } from '@capacitor/push-notifications';
 
 @Component({
   selector: 'app-gato',
@@ -19,13 +20,14 @@ export class gatoPage implements OnInit {
   favorites: any[] = [];
   currentDatoIndex: number = 0;
   searchTerm: string = '';
+  gatoId: string | null = null;
 
 
   constructor(
     private firestores: FirestoreService,
     private router: Router,
-    private toastController: ToastController,
-    private favoritesService: StorageService
+    private favoritesService: StorageService,
+    private platform: Platform
   ) {
     this.loadData();
   }
@@ -40,7 +42,7 @@ export class gatoPage implements OnInit {
   }
 
   loadData() {
-    this.firestores.getCollectionChanges<InfoGato>('InfoGato').subscribe(gato => {
+    this.firestores.getCollectionChanges<InfoGato>('InfoGatos').subscribe(gato => {
       if (gato) {
         this.gatos = gato
         this.filteredGatos = [...this.gatos];

@@ -1,10 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { LoadingController, ModalController, Platform } from '@ionic/angular';
 import { ImgModalPage } from '../../../components/img-modal/img-modal.page';
-import { InfoGato, Temperamento } from '../../../interface/InfoGato.models';
+import { CaracteristicasFisicas, Cuidado, InfoGato, Temperamento } from '../../../interface/InfoGato.models';
 import { ModalSwiperPage } from 'src/app/components/modal-swiper/modal-swiper.page';
-import { AdmobAds, BannerPosition, BannerSize, } from 'capacitor-admob-ads';
-
+import { AdmobAds, BannerPosition, BannerSize } from 'capacitor-admob-ads';
+import { ActionPerformed, PushNotifications } from '@capacitor/push-notifications';
+import { ActivatedRoute, Router } from '@angular/router';
+import { DataOflineService } from 'src/app/service/data-ofline.service';
+import { environment } from '../../../../environments/environment.prod';
 @Component({
   selector: 'app-perfil-gato',
   templateUrl: './perfil-gato.page.html',
@@ -22,132 +25,174 @@ export class PerfilGatoPage implements OnInit {
   infoOrigin!: string;
   infoHistory!: string;
 
-  gato: InfoGato[] = [];
-  selectedPerroId!: number;
+  gato!: InfoGato;
   showImagesContainer: boolean = false;
   temperamentoChips: Temperamento[] = [];
+  id: string;
 
-  infoGato: any = (this.gato as any).default;
+  isLoading: boolean = true;
 
   constructor(
     private modalController: ModalController,
-  ) {
-    this.changeCardContent(this.selectedSegmentValue);
-  }
-
-  ionViewDidEnter() {
-    this.showAdaptiveBanner();
-  }
+    private platform: Platform,
+    private router: Router,
+    private route: ActivatedRoute,
+    private ofline: DataOflineService,
+    private loadingController: LoadingController ) {}
 
   ngOnInit() {
-    const gato = history.state.data;
-    this.infoName = gato.Raza;
-    this.infoOrigin = gato.origen;
-    this.infoImage = gato.imgPerfil;
-    this.infoHistory = gato.historia;
-    this.changeCardContent(this.selectedSegmentValue);
-    this.gato = [gato];
-    this.showAdaptiveBanner()
+    this.platform.ready().then(() => {
+      PushNotifications.addListener('pushNotificationActionPerformed', async (notification: ActionPerformed) => {
+        const data = notification.notification.data;
+        
+        if (data && data.Route) {
+          const route = data.Route.split('/');
+          this.id = route[1];
+          console.log('Redirigiendo a:', data.Route);
+  
+          const loading = await this.showLoading();
+  
+          // Navigate to the route and load data
+          this.router.navigate([data.Route]).then(() => {
+            this.loadGatoData().finally(() => {
+              // Dismiss loading spinner
+              loading.dismiss();
+            });
+          });
+        } else {
+          console.error('No se encontró una ruta en los datos de notificación.');
+        }
+      });
+    });
+    this.id = this.route.snapshot.paramMap.get('id');
+    if (this.id) {
+      this.loadGatoData().finally(() => {
+
+      });
+    } else if (history.state.data) {
+      this.gato = history.state.data;
+      this.populateGatoData();
+    }
+  }        
+
+  async showLoading() {
+    const loading = await this.loadingController.create({
+      message: 'Cargando datos del gato...',
+    });
+    await loading.present();
+    return loading;
+  }
+
+  async loadGatoData() {
+    const loading = await this.showLoading();
+  
+    if (this.id) {
+      this.ofline.getGatoById(this.id).subscribe({
+        next: (data) => {
+          this.gato = data;
+          this.populateGatoData();
+          loading.dismiss();
+          this.isLoading = false; // Data loaded, set isLoading to false
+        },
+        error: (error) => {
+          console.error("Error al cargar la data: ", error);
+          loading.dismiss();
+          this.isLoading = false; // Error occurred, set isLoading to false
+        }
+      });
+    }
+  }  
+
+  populateGatoData() {
+    if (this.gato) {
+      this.infoName = this.gato.Raza;
+      this.infoOrigin = this.gato.Origen;
+      this.infoImage = this.gato.imgPerfil;
+      this.infoHistory = this.gato.Historia;
+      this.changeCardContent(this.selectedSegmentValue);
+    }
   }
 
   getImagesArray(gato: InfoGato): string[] {
-    const imagesArray: string[] = [];
-    for (const key in gato.img) {
-      if (gato.img.hasOwnProperty(key)) {
-        imagesArray.push(gato.img[key]);
-      }
-    }
-    return Object.values(gato.img);
-  }
-
-  getPerroById(id: number): InfoGato[] {
-    return this.infoGato.filter((gato: InfoGato) => gato.id === id);
+    return Object.values(gato.Img);
   }
 
   changeCardContent(segmentValue: string) {
-    const gato = history.state.data;
-    if (!gato) {
-      return;
-    }
+    if (!this.gato) return;
+
     switch (segmentValue) {
       case 'caracteristicas':
-        this.cardHeading = 'Características Físicas';
-        this.cardSubtitle = gato.Raza;
-        this.cardContent = Object.keys(gato.CaractFisicas).map(key => `<p><span class="font-bold">${key}:</span> ${gato.CaractFisicas[key]}</p>`).join('<hr class="my-3">');
+        this.setCardContent('Características Físicas', this.gato.Raza, this.formatCharacteristics(this.gato.caracteristicasFisicas));
         this.temperamentoChips = [];
         this.showImagesContainer = false;
         break;
       case 'temperamento':
-        this.cardHeading = 'Temperamento';
-        this.cardSubtitle = '';
-        this.cardContent = gato.Temperamento
-          .filter(temp => temp.descripcion !== '')
-          .map(temp => `<p>${temp.descripcion}</p>`)
-          .join('<hr class="my-3">');
-
-        this.temperamentoChips = this.getTemperamentoChips(gato.Temperamento);
+        this.setCardContent('Temperamento', '', this.formatTemperamento(this.gato.Temperamento));
+        this.temperamentoChips = this.gato.Temperamento.filter(temp => temp.tipo);
         this.showImagesContainer = false;
         break;
       case 'cuidado':
-        this.cardHeading = 'Cuidado y Salud';
-        this.cardSubtitle = gato.Raza;
-        this.cardContent = Object.keys(gato.cuidados).map(key => `<p><span class="font-bold">${key}:</span> ${gato.cuidados[key]}</p>`).join('<hr class="my-3">');
-
+        this.setCardContent('Cuidado y Salud', this.gato.Raza, this.formatCuidado(this.gato.Cuidados));
         this.temperamentoChips = [];
         this.showImagesContainer = false;
         break;
       case 'images':
-        this.cardHeading = 'Imágenes';
-        this.cardSubtitle = gato.Raza;
-        this.cardContent = '';
+        this.setCardContent('Imágenes', this.gato.Raza, '');
         this.temperamentoChips = [];
         this.showImagesContainer = true;
         break;
       default:
-        this.selectedSegmentValue = 'caracteristicas';
-        this.cardHeading = 'Características Físicas';
-        this.cardSubtitle = gato.Raza;
-        this.temperamentoChips = [];
-        this.showImagesContainer = false;
+        this.changeCardContent('caracteristicas');
         break;
     }
   }
 
-  getTemperamentoChips(temperamento: Temperamento[]): Temperamento[] {
-    return temperamento.filter(item => item.aplicable);
+  setCardContent(heading: string, subtitle: string, content: string) {
+    this.cardHeading = heading;
+    this.cardSubtitle = subtitle;
+    this.cardContent = content;
   }
 
-  getNameRaza(raza: InfoGato[]): InfoGato[] {
-    return raza.filter(item => item.Raza)
+  formatCharacteristics(characteristics: CaracteristicasFisicas[]): string {
+    return characteristics
+      .map(item => `<p><span class="font-bold">${item.tipo}:</span> ${item.descripcion}</p>`)
+      .join('<hr class="my-3">');
   }
 
+  formatTemperamento(temperamento: Temperamento[]): string {
+    return temperamento
+      .filter(temp => temp.descripcion !== '')
+      .map(temp => `<p>${temp.descripcion}</p>`)
+      .join('<hr class="my-3">');
+  }
+
+  formatCuidado(cuidados: Cuidado[]): string {
+    return cuidados
+      .map(item => `<p><span class="font-bold">${item.tipo}:</span> ${item.descripcion}</p>`)
+      .join('<hr class="my-3">');
+  }
 
   async openModal(imageUrl: string) {
     const modal = await this.modalController.create({
       component: ImgModalPage,
-      componentProps: {
-        imageUrl: imageUrl
-      }
+      componentProps: { imageUrl }
     });
-    return await modal.present();
+    await modal.present();
   }
 
   async openModalSwiper(gato: InfoGato) {
     const modal = await this.modalController.create({
       component: ModalSwiperPage,
-      componentProps: {
-        images: this.getImagesArray(gato),
-        initialSlide: 0
-      }
+      componentProps: { images: this.getImagesArray(gato), initialSlide: 0 }
     });
-    return await modal.present();
+    await modal.present();
   }
 
   /*Anuncio Banner  */
   async showAdaptiveBanner() {
     try {
       await AdmobAds.showBannerAd({
-        adId: 'ca-app-pub-6309294666517022/1128036107', // ID de tu anuncio de AdMob
+        adId: environment.AdmobAds.APP_ID, // ID de tu anuncio de AdMob
         isTesting: false, // Configuración de prueba
         adSize: BannerSize.BANNER, // Tamaño de banner adaptable
         adPosition: BannerPosition.TOP // Posición del banner
@@ -168,3 +213,4 @@ export class PerfilGatoPage implements OnInit {
     }
   }
 }
+  

@@ -43,7 +43,7 @@ export class perroPage {
   }
 
   loadData() {
-    this.firestores.getCollectionChanges<InfoPerro>('InfoPerro').subscribe(perro => {
+    this.firestores.getCollectionChanges<InfoPerro>('InfoPerros').subscribe(perro => {
       if (perro) {
         this.perros = perro
         this.filteredPerros = [...this.perros];
