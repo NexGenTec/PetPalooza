@@ -66,15 +66,16 @@
               {{ chip.tipo }}
             </ion-chip>
           </div>
-          <ion-card-content *ngIf="!showImagesContainer" class="ion-text-start" [innerHTML]="cardContent"></ion-card-content>
+          <ion-card-content *ngIf="!showImagesContainer" class="ion-text-start" [innerHTML]="cardContent">
+          </ion-card-content>
         </ion-card>
 
-        <ng-container *ngIf="showImagesContainer && perro && perro.length">
+        <ng-container *ngIf="showImagesContainer && perro">
           <div class="container mx-auto p-4">
-            <div class="grid grid-cols-2 md:grid-cols-2 gap-4 max-w-xl mx-auto">
-              <div *ngFor="let imgUrl of getImagesArray(perro[0])">
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 max-w-xl mx-auto">
+              <div *ngFor="let imgUrl of getImagesArray(perro)">
                 <div class="max-w-full rounded-lg overflow-hidden">
-                  <ion-img [src]="imgUrl" alt="Imagen de {{ perro[0].Raza }}" (click)="openModalSwiper(perro[0])">
+                  <ion-img [src]="imgUrl" alt="Imagen de {{ perro.Raza }}" (click)="openModalSwiper(perro)">
                   </ion-img>
                 </div>
               </div>
