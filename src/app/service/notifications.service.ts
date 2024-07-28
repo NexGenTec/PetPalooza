@@ -7,7 +7,6 @@ import {
   Token,
 } from '@capacitor/push-notifications';
 import { Notificaccion } from '../interface/Notification.models';
-import { LocalNotifications, LocalNotificationSchema } from '@capacitor/local-notifications';
 import { Router } from '@angular/router'; 
 
 @Injectable({

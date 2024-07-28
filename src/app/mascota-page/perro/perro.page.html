@@ -11,75 +11,77 @@
 
 <ion-content [fullscreen]="true">
   <div class="px-3 pt-5 bg-gray-50">
-    <section class="w-full mx-auto">
-    <!-- Dato Freak -->
-    <ion-accordion-group [value]="['first']" mode="ios" class="mb-6 mt-2 border border-stone shadow-lg rounded-lg overflow-hidden">
-      <ion-accordion value="first" *ngIf="DatosFreak[currentDatoIndex]?.categoria === 'perro'">
-        <ion-item slot="header">
-          <div class="flex items-center gap-4 py-3">
-            <span class="shrink-0 rounded-full bg-blue-400 p-2 text-white">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-                class="h-4 w-4"
-              >
-                <path
-                  fill-rule="evenodd"
-                  d="M18 3a1 1 0 00-1.447-.894L8.763 6H5a3 3 0 000 6h.28l1.771 5.316A1 1 0 008 18h1a1 1 0 001-1v-4.382l6.553 3.276A1 1 0 0018 15V3z"
-                  clip-rule="evenodd"
-                ></path>
-              </svg>
-            </span>
-            <p class="font-medium sm:text-lg text-blue-600">{{DatosFreak[currentDatoIndex]?.Titulo}}</p>
+    <section class=" w-full mx-auto">
+      <!-- Dato Freak -->
+      <ion-accordion-group [value]="['first']" mode="ios" class="mb-6 mt-2 border border-stone shadow-lg rounded-lg overflow-hidden">
+        <ion-accordion value="first" *ngIf="DatosFreak[currentDatoIndex]?.categoria === 'perro'">
+          <ion-item slot="header">
+            <div class="flex items-center gap-4 py-3">
+              <span class="shrink-0 rounded-full bg-blue-400 p-2 text-white">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                  class="h-4 w-4"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M18 3a1 1 0 00-1.447-.894L8.763 6H5a3 3 0 000 6h.28l1.771 5.316A1 1 0 008 18h1a1 1 0 001-1v-4.382l6.553 3.276A1 1 0 0018 15V3z"
+                    clip-rule="evenodd"
+                  ></path>
+                </svg>
+              </span>
+              <p class="font-medium sm:text-lg text-blue-600">{{DatosFreak[currentDatoIndex]?.Titulo}}</p>
+            </div>
+          </ion-item>
+          <div class="px-3 py-2 bg-white" slot="content">
+            <p class="text-gray-600">
+              {{DatosFreak[currentDatoIndex]?.descripcion}}
+            </p>
           </div>
-        </ion-item>
-        <div class="px-3 py-2 bg-white" slot="content">
-          <p class="text-gray-600">
-            {{DatosFreak[currentDatoIndex]?.descripcion}}
-          </p>
-        </div>
-      </ion-accordion>
-    </ion-accordion-group>
-  
-    <!-- Divider -->
-    <hr class="my-5 border-blue-500/30">
-    <!-- Perros -->
-    <div class="w-full max-w-[570px] rounded-[20px] px-8 pt-4 text-center">
-      <h1 class="pb-2 text-3xl font-medium">Todos los Perros</h1>
-      <span class="bg-blue-400 mx-auto mb-4 inline-block h-1 w-[90px] rounded"></span>
-    </div>
-
-    <!-- Mostrar perros filtrados si hay resultados de búsqueda -->
-    <div *ngIf="filteredPerros.length > 0; else noPerros">
-      <div class="grid grid-cols-2 gap-3 py-3 w-full">
-        <div class="h-max rounded-xl overflow-hidden border border-blue-300 shadow-lg relative" *ngFor="let perro of filteredPerros">
-          <ion-card class="m-0 h-44 relative group" mode="md" (click)="navigateToTargetPage('perfil-perro', perro)">
-            <img 
-              class="h-full w-full object-cover object-center absolute top-0 left-0 transition-all duration-300 group-hover:scale-110" 
-              alt="Imagen de {{ perro.Raza }}" 
-              [src]="perro.imgPerfil" 
-            />
-            <ion-card-header class="p-2 h-full w-full justify-end bg-gradient-to-b from-transparent from-40% via-black/50 to-black/80">
-              <ion-card-title class="text-white">{{ perro.Raza }}</ion-card-title>
-              <ion-card-subtitle class="text-gray-200">{{ perro.Origen }}</ion-card-subtitle>
-            </ion-card-header>
-          </ion-card>
-          <div class="absolute top-3 right-3 w-10 h-10 rounded-full bg-white flex justify-center items-center text-red-400">
-            <button type="button" [class.animate]="isInFavorites(perro, 'gato')" [class.animate-pulse]="!isInFavorites(perro, 'gato')" (click)="addToFavorites(perro, 'gato')">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-7 h-7">
-                <path d="m11.645 20.91-.007-.003-.022-.012a15.247 15.247 0 0 1-.383-.218 25.18 25.18 0 0 1-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0 1 12 5.052 5.5 5.5 0 0 1 16.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 0 1-4.244 3.17 15.247 15.247 0 0 1-.383.219l-.022.012-.007.004-.003.001a.752.752 0 0 1-.704 0l-.003-.001Z"/>
-              </svg>
-            </button>                      
+        </ion-accordion>
+      </ion-accordion-group>
+    
+      <!-- Divider -->
+      <hr class="my-5 border-blue-500/30">
+    
+      <!-- Perros -->
+      <div class="w-full max-w-[570px] rounded-[20px] px-8 pt-4 text-center">
+        <h1 class="pb-2 text-3xl font-medium">Todos los Perros</h1>
+        <span class="bg-blue-400 mx-auto mb-4 inline-block h-1 w-[90px] rounded"></span>
+      </div>
+    
+      <!-- Mostrar perros filtrados si hay resultados de búsqueda -->
+      <div *ngIf="filteredPerros.length > 0; else noResults">
+        <div class="grid grid-cols-2 gap-3 py-3 w-full">
+          <div class="h-max rounded-xl overflow-hidden border border-blue-300 shadow-lg relative" *ngFor="let perro of filteredPerros">
+            <ion-card class="m-0 h-44 relative group" mode="md"  (click)="navigateToTargetPage('perfil-perro', perro)">
+              <img 
+                class="h-full w-full object-cover object-center absolute top-0 left-0 transition-all duration-300 group-hover:scale-110" 
+                alt="Imagen de {{ perro.Raza }}" 
+                [src]="perro.imgPerfil" 
+              />
+              <ion-card-header class="p-2 h-full w-full justify-end bg-gradient-to-b from-transparent from-40% via-black/50 to-black/80">
+                <ion-card-title class="text-white">{{ perro.Raza }}</ion-card-title>
+                <ion-card-subtitle class="text-gray-200">{{ perro.Origen }}</ion-card-subtitle>
+              </ion-card-header>
+            </ion-card>
+            <div class="absolute top-3 right-3 w-10 h-10 rounded-full bg-white flex justify-center items-center text-red-400 ">
+              <button type="button" [class.animate]="isInFavorites(perro, 'perro')" [class.animate-pulse]="!isInFavorites(perro, 'perro')" (click)="addToFavorites(perro, 'perro')">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-7 h-7">
+                  <path d="m11.645 20.91-.007-.003-.022-.012a15.247 15.247 0 0 1-.383-.218 25.18 25.18 0 0 1-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0 1 12 5.052 5.5 5.5 0 0 1 16.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 0 1-4.244 3.17 15.247 15.247 0 0 1-.383.219l-.022.012-.007.004-.003.001a.752.752 0 0 1-.704 0l-.003-.001Z"/>
+                </svg>
+              </button>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-
-    <!-- Mostrar mensaje si no hay resultados de búsqueda -->
-    <ng-template #noPerros>
-      <div class="text-center text-gray-600 mt-4">No se encontraron resultados para "{{ searchTerm }}"</div>
-    </ng-template>
-  </section>
+    
+      <!-- Mostrar mensaje si no hay resultados de búsqueda -->
+      <ng-template #noResults>
+        <div class="text-center text-gray-600 mt-4">No se encontraron resultados para "{{ searchTerm }}"</div>
+      </ng-template>
+    </section>
   </div>
+  
 </ion-content>

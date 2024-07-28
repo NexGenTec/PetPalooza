@@ -125,16 +125,16 @@ export class homePage implements OnInit {
       }
     });
 
-    this.firestores.getCollectionChanges<InfoAve>('InfoAve').subscribe(aves => {
-      if (aves) {
-        this.originalAves = aves;
-        this.aves = aves
-          .filter(ave => ave.fechaCreacion && ave.fechaCreacion.seconds)
-          .sort((a, b) => b.fechaCreacion.seconds - a.fechaCreacion.seconds)
-          //Cantida de Perros en ultimos
-          .slice(0, 2);
-      }
-    });
+    // this.firestores.getCollectionChanges<InfoAve>('InfoAve').subscribe(aves => {
+    //   if (aves) {
+    //     this.originalAves = aves;
+    //     this.aves = aves
+    //       .filter(ave => ave.fechaCreacion && ave.fechaCreacion.seconds)
+    //       .sort((a, b) => b.fechaCreacion.seconds - a.fechaCreacion.seconds)
+    //       //Cantida de Perros en ultimos
+    //       .slice(0, 2);
+    //   }
+    // });
     this.firestores.getCollectionChanges<InfoImage>('InfoImage').subscribe(img => {
       if (img) {
         this.originalImg = img;
