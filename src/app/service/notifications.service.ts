@@ -7,7 +7,7 @@ import {
   Token,
 } from '@capacitor/push-notifications';
 import { Notificaccion } from '../interface/Notification.models';
-import { Router } from '@angular/router'; 
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +16,7 @@ export class NotificationsService {
 
   constructor(
     private afs: AngularFirestore,
-     private router: Router
+    private router: Router
   ) { }
 
   initPushNotifications() {
@@ -51,7 +51,7 @@ export class NotificationsService {
       } else {
         console.error('No route found in notification data.');
       }
-    });    
+    });
   }
 
   private saveToken(token: string | null) {
@@ -76,7 +76,7 @@ export class NotificationsService {
     const data: Notificaccion = {
       id: notification?.id || '',
       title: notification?.title || '',
-      body: notification?.body || '' 
+      body: notification?.body || ''
     };
 
     notificacionesCollection.add(data)
