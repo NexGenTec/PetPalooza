@@ -21,127 +21,114 @@ export class ProfileDogPage implements OnInit {
   infoHistory!: string;
 
   perro: InfoPerro[] = [{
-    Img: { img1: 'url1', img2: 'url2', img3: 'url3' },
-    origen: '',
+    Img: [],
+    Origen: '',
     fechaCreacion: undefined,
     Longevidad: '',
     Temperamento: [],
-    Año: '',
-    historia: '',
-    CaractFisicas: undefined,
-    id: 0,
+    Anio: '',
+    Historia: '',
+    caracteristicasFisicas: [],
+    id: '',
     Raza: '',
     imgPerfil: '',
-    cuidados: undefined
+    Cuidados: []
   }];
   selectedPerroId!: number;
   showImagesContainer: boolean = false;
   temperamentoChips: Temperamento[] = [];
-  infoPerro: any = (this.perro as any).default;
 
-  constructor(
-    private modalController: ModalController,
-  ) {
-    this.changeCardContent(this.selectedSegmentValue);
-  }
+  constructor(private modalController: ModalController) {}
 
   ngOnInit() {
     const perro = history.state.data;
-    console.log(perro)
-    this.infoName = perro.Raza;
-    this.infoOrigin = perro.origen;
-    this.infoImage = perro.imgPerfil;
-    this.infoHistory = perro.historia;
-    this.changeCardContent(this.selectedSegmentValue);
-    this.perro = [perro];
+    if (perro) {
+      this.infoName = perro.Raza;
+      this.infoOrigin = perro.Origen;
+      this.infoImage = perro.imgPerfil;
+      this.infoHistory = perro.Historia;
+      this.changeCardContent(this.selectedSegmentValue);
+      this.perro = [perro];
+    }
   }
 
   getImagesArray(perro: InfoPerro): string[] {
-    const imagesArray: string[] = [];
-    for (const key in perro.Img) {
-      if (perro.Img.hasOwnProperty(key)) {
-        imagesArray.push(perro.Img[key]);
-      }
-    }
-    console.log(imagesArray);
     return Object.values(perro.Img);
-  }
-
-  getPerroById(id: number): InfoPerro[] {
-    return this.infoPerro.filter((perro: InfoPerro) => perro.id === id);
   }
 
   changeCardContent(segmentValue: string) {
     const perro = history.state.data;
-    if (!perro) {
-      return;
-    }
+    if (!perro) return;
+
     switch (segmentValue) {
       case 'caracteristicas':
-        this.cardHeading = 'Características Físicas';
-        this.cardSubtitle = perro.Raza;
-        this.cardContent = Object.keys(perro.CaractFisicas).map(key => `<p><span class="font-bold">${key}:</span> ${perro.CaractFisicas[key]}</p>`).join('<hr class="my-3">');
+        this.setCardContent('Características Físicas', perro.Raza, this.formatCharacteristics(perro.caracteristicasFisicas));
         this.temperamentoChips = [];
         this.showImagesContainer = false;
         break;
       case 'temperamento':
-        this.cardHeading = 'Temperamento';
-        this.cardSubtitle = '';
-        this.cardContent = perro.Temperamento.map((temp: { descripcion: any; }) => `<p>${temp.descripcion}</p>`).join('<hr class="my-3">');
+        this.setCardContent('Temperamento', '', this.formatTemperamento(perro.Temperamento));
         this.temperamentoChips = this.getTemperamentoChips(perro.Temperamento);
         this.showImagesContainer = false;
         break;
       case 'cuidado':
-        this.cardHeading = 'Cuidado y Salud';
-        this.cardSubtitle = perro.Raza;
-        this.cardContent = Object.keys(perro.cuidados).map(key => `<p><span class="font-bold">${key}:</span> ${perro.cuidados[key]}</p>`).join('<hr class="my-3">');
+        this.setCardContent('Cuidado y Salud', perro.Raza, this.formatCuidado(perro.Cuidados));
         this.temperamentoChips = [];
         this.showImagesContainer = false;
         break;
       case 'images':
-        this.cardHeading = 'Imágenes';
-        this.cardSubtitle = perro.Raza;
-        this.cardContent = '';
+        this.setCardContent('Imágenes', perro.Raza, '');
         this.temperamentoChips = [];
         this.showImagesContainer = true;
         break;
       default:
-        this.selectedSegmentValue = 'caracteristicas';
-        this.cardHeading = 'Características Físicas';
-        this.cardSubtitle = perro.Raza;
-        this.temperamentoChips = [];
-        this.showImagesContainer = false;
+        this.changeCardContent('caracteristicas');
         break;
     }
   }
 
-
-  getTemperamentoChips(temperamento: Temperamento[]): Temperamento[] {
-    return temperamento.filter(item => item.aplicable);
+  setCardContent(heading: string, subtitle: string, content: string) {
+    this.cardHeading = heading;
+    this.cardSubtitle = subtitle;
+    this.cardContent = content;
   }
 
-  getNameRaza(raza: InfoPerro[]): InfoPerro[] {
-    return raza.filter(item => item.Raza)
+  formatCharacteristics(characteristics: any[]): string {
+    return characteristics
+      .map(item => `<p><span class="font-bold">${item.tipo}:</span> ${item.descripcion}</p>`)
+      .join('<hr class="my-3">');
+  }
+
+  formatTemperamento(temperamento: Temperamento[]): string {
+    return temperamento
+      .filter(temp => temp.descripcion !== '')
+      .map(temp => `<p>${temp.descripcion}</p>`)
+      .join('<hr class="my-3">');
+  }
+
+  formatCuidado(cuidados: any[]): string {
+    return cuidados
+      .map(item => `<p><span class="font-bold">${item.tipo}:</span> ${item.descripcion}</p>`)
+      .join('<hr class="my-3">');
+  }
+
+  getTemperamentoChips(temperamento: Temperamento[]): Temperamento[] {
+    return temperamento.filter(item => item.tipo);
   }
 
   async openModal(imageUrl: string) {
     const modal = await this.modalController.create({
       component: ImgModalPage,
-      componentProps: {
-        imageUrl: imageUrl
-      }
+      componentProps: { imageUrl }
     });
-    return await modal.present();
+    await modal.present();
   }
 
   async openModalSwiper(perro: InfoPerro) {
     const modal = await this.modalController.create({
       component: ModalSwiperPage,
-      componentProps: {
-        images: this.getImagesArray(perro),
-        initialSlide: 0
-      }
+      componentProps: { images: this.getImagesArray(perro), initialSlide: 0 }
     });
-    return await modal.present();
+    await modal.present();
   }
 }

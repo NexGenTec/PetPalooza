@@ -1,0 +1,240 @@
+/* Estilos generales */
+ion-content {
+    --background: #f4f5f8;
+  }
+  
+  .error-message {
+    --background: #ffe3e3;
+    --border-color: #f56c6c;
+    --border-radius: 8px;
+    --padding-start: 16px;
+    --padding-end: 16px;
+    margin-top: 12px;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    
+    .error-icon {
+      color: #f56c6c;
+    }
+  }
+  
+  form {
+    padding: 0 20px; /* Ajusta el padding del formulario */
+  }
+  
+  
+  ion-item {
+    --border-radius: 8px; /* Añade bordes redondeados a los ion-item */
+    --background: #fff; /* Fondo blanco */
+    --box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    --padding-start: 12px; /* Ajusta el padding izquierdo */
+    margin-bottom: 16px; /* Aumenta el espacio entre ion-items */
+  }
+  
+  ion-label {
+    color: #495057; /* Color del texto */
+    font-weight: 500; /* Peso de la fuente */
+  }
+  
+  .button {
+    --border-radius: 8px;
+    margin-top: 20px;
+  }
+  
+  /* Estilos específicos para secciones */
+  
+  /* Estilos para el contenedor de temperamento */
+  .temperamento-container {
+    margin-bottom: 24px; /* Aumenta el espacio inferior */
+  }
+  
+  .temperamento-item {
+    padding: 12px;
+    border: 1px solid #ced4da; /* Borde más suave */
+    border-radius: 8px;
+    margin-top: 12px;
+    background-color: #fff; /* Fondo blanco */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra suave */
+  }
+  
+  .label-temperamento {
+    margin-bottom: 8px;
+    color: #6c757d; /* Color del título */
+  }
+  
+  .label-tipo,
+  .label-descripcion {
+    font-weight: bold;
+    color: #495057; /* Color del texto */
+  }
+  
+  .btn-remove,
+  .btn-add {
+    --border-radius: 20px;
+    margin-top: 8px;
+    font-size: 0.9rem; /* Ajusta el tamaño de fuente de los botones */
+    color: #007bff; /* Color del botón */
+  }
+  
+  .btn-remove:hover,
+  .btn-add:hover {
+    background-color: rgba(0, 123, 255, 0.1); /* Efecto de hover más claro */
+  }
+  
+  /* Estilos para el contenedor de cuidados */
+  .cuidados-container {
+    margin-bottom: 24px; /* Aumenta el espacio inferior */
+  }
+  
+  .cuidado-item {
+    padding: 12px;
+    border: 1px solid #ced4da; /* Borde más suave */
+    border-radius: 8px;
+    margin-top: 12px;
+    background-color: #fff; /* Fondo blanco */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra suave */
+  }
+  
+  .cuidado-item ion-label {
+    color: #6c757d; /* Color del título */
+  }
+  
+  /* Estilos para el contenedor de características físicas */
+  .caracteristicas-fisicas-container {
+    margin-top: 24px; /* Aumenta el espacio superior */
+  }
+  
+  .first-item {
+    margin-top: 16px; /* Ajusta el margen superior del primer ion-item */
+  }
+  
+  .main-label {
+    font-weight: bold;
+    margin-bottom: 8px;
+    color: #343a40; /* Color del título */
+  }
+  
+  .caracteristica-item {
+    padding: 12px;
+    border: 1px solid #ced4da; /* Borde más suave */
+    border-radius: 8px;
+    margin-top: 12px;
+    background-color: #fff; /* Fondo blanco */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra suave */
+  }
+  
+  .caracteristica-item ion-label {
+    color: #6c757d; /* Color del título */
+  }
+  
+  .btn-remove,
+  .btn-add {
+    --border-radius: 20px;
+    margin-top: 8px;
+    font-size: 0.9rem; /* Ajusta el tamaño de fuente de los botones */
+    color: #007bff; /* Color del botón */
+  }
+  
+  .btn-remove:hover,
+  .btn-add:hover {
+    background-color: rgba(0, 123, 255, 0.1); /* Efecto de hover más claro */
+  }
+  
+  /* Estilos para la fecha de creación */
+  .date-container {
+    position: relative;
+  }
+  
+  .date-icon {
+    position: absolute;
+    top: 50%;
+    right: 1rem;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #6c757d; /* Color del icono */
+  }
+  
+  .date-picker {
+    display: block;
+    margin-top: 8px;
+    border: none; /* Eliminar borde del selector de fecha */
+    background-color: #fff; /* Fondo blanco */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra suave */
+  }
+  
+  /* Estilos para la subida de archivos */
+  .file-upload {
+    ion-item {
+      --background: #fff;
+      --border-radius: 8px;
+      --box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      --transition: box-shadow 0.3s ease, transform 0.3s ease;
+      padding: 16px;
+      cursor: pointer;
+      position: relative;
+  
+      &:hover {
+        --box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        transform: translateY(-2px);
+      }
+  
+      ion-label {
+        color: #495057;
+        font-weight: 500;
+        margin-bottom: 8px;
+      }
+  
+      input[type="file"] {
+        display: none;
+      }
+      
+  
+      .upload-icon {
+        font-size: 24px;
+        color: #6c757d;
+        margin-bottom: 8px;
+      }
+  
+      .upload-text {
+        font-size: 14px;
+        color: #6c757d;
+        text-align: center;
+      }
+    }
+  
+    .error-message {
+      --background: #ffe3e3;
+      --border-color: #f56c6c;
+      --border-radius: 8px;
+      --padding-start: 16px;
+      --padding-end: 16px;
+      margin-top: 12px;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+  
+      .error-icon {
+        color: #f56c6c;
+      }
+    }
+  }
+  
+  .selected-image, .current-image {
+    width: 100%;
+    height: auto;
+    max-height: 200px;
+    margin-bottom: 10px;
+  }
+  .file-upload {
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+  .error-message {
+    color: red;
+    display: flex;
+    align-items: center;
+  }
+  .error-icon {
+    margin-right: 5px;
+  }  

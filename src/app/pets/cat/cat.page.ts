@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 import { InfoGato } from '../../interface/InfoGato.models';
 import { FirestoreService } from '../../service/firestore.service';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
-import { finalize } from 'rxjs/operators';
 import { AlertController, ModalController, ToastController, LoadingController } from '@ionic/angular';
 import { CatModalPage } from './cat-modal/cat-modal.page';
 
@@ -175,6 +174,7 @@ export class CatPage implements OnInit {
           },
         },
       ],
+      mode:'ios'
     });
 
     await alert.present();
@@ -193,6 +193,7 @@ export class CatPage implements OnInit {
       header,
       message,
       buttons: ['OK'],
+      mode:'ios'
     });
     await alert.present();
   }

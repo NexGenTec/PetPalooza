@@ -12,10 +12,6 @@ const routes: Routes = [
     path: 'cat-modal',
     loadChildren: () => import('./cat-modal/cat-modal.module').then( m => m.CatModalPageModule)
   },
-  {
-    path: 'cat-modal',
-    loadChildren: () => import('./cat-modal/cat-modal.module').then( m => m.CatModalPageModule)
-  },
 ];
 
 @NgModule({
