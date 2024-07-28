@@ -8,6 +8,7 @@ import { environment } from '../../../../environments/environment.prod';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DataOflineService } from 'src/app/service/data-ofline.service';
 import { ActionPerformed, PushNotifications } from '@capacitor/push-notifications';
+import { AddImagePage } from '../add-image/add-image.page';
 
 @Component({
   selector: 'app-perfil-perro',
@@ -31,6 +32,7 @@ export class PerfilPerroPage implements OnInit {
   id: string;
 
   isLoading: boolean = true;
+  isLoadingImg: boolean = true;
 
   constructor(
     private modalController: ModalController,
@@ -119,6 +121,7 @@ export class PerfilPerroPage implements OnInit {
 
   changeCardContent(segmentValue: string) {
     if (!this.perro) return;
+    this.isLoadingImg = true; 
 
     switch (segmentValue) {
       case 'caracteristicas':
@@ -140,6 +143,9 @@ export class PerfilPerroPage implements OnInit {
         this.setCardContent('Imágenes', this.perro.Raza, '');
         this.temperamentoChips = [];
         this.showImagesContainer = true;
+        setTimeout(() => {
+          this.isLoadingImg = false;
+        }, 1000);
         break;
       default:
         this.changeCardContent('caracteristicas');
@@ -187,6 +193,15 @@ export class PerfilPerroPage implements OnInit {
     });
     await modal.present();
   }
+
+  async onAddImage() {
+    const modal = await this.modalController.create({
+      component: AddImagePage,
+      componentProps: { perroRaza: this.perro.Raza }
+    });
+    console.log('Gato ID al crear modal:', this.perro.Raza);  // Verifica que gato.id no sea undefined
+    await modal.present();
+  }  
 
   /*Anuncio Banner  */
   async showAdaptiveBanner() {

@@ -1,7 +1,7 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { LoadingController, ModalController, ToastController } from '@ionic/angular';
-import { ImgUploadService } from '../../../service/img-upload.service';
+import { Component, Input, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { LoadingController, ModalController, ToastController } from '@ionic/angular';
+import { ImgUploadService } from 'src/app/service/img-upload.service';
 
 @Component({
   selector: 'app-add-image',
@@ -12,7 +12,7 @@ export class AddImagePage implements OnInit {
 
   selectedFile: File | null = null;
   imageUrl: string | ArrayBuffer | null = null;
-  @Input() gatoRaza: string | null = null;
+  @Input() perroRaza: string | null = null;
 
   constructor(
     private modalController: ModalController,
@@ -23,7 +23,7 @@ export class AddImagePage implements OnInit {
   ) {}
 
   ngOnInit() {
-    console.log('Raza del gato en AddImagePage:', this.gatoRaza);  
+    console.log('Raza del perro en AddImagePage:', this.perroRaza);  
   }
 
   onFileSelected(event: any) {
@@ -39,13 +39,13 @@ export class AddImagePage implements OnInit {
   }
 
   async uploadImage() {
-    if (this.selectedFile && this.gatoRaza) {
+    if (this.selectedFile && this.perroRaza) {
       const loading = await this.showLoading();
       try {
-        const imageUrl = await this.uploadService.uploadImageGato(this.selectedFile, this.gatoRaza);
+        const imageUrl = await this.uploadService.uploadImagePerro(this.selectedFile, this.perroRaza);
         console.log('Imagen subida exitosamente: ', imageUrl);
         await this.firestore.collection('SolicitudesImg').add({
-          gatoRaza: this.gatoRaza,
+          perroRaza: this.perroRaza,
           imageUrl: imageUrl,
           timestamp: new Date()
         });
