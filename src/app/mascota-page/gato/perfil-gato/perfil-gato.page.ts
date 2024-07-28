@@ -8,6 +8,7 @@ import { ActionPerformed, PushNotifications } from '@capacitor/push-notification
 import { ActivatedRoute, Router } from '@angular/router';
 import { DataOflineService } from 'src/app/service/data-ofline.service';
 import { environment } from '../../../../environments/environment.prod';
+import { AddImagePage } from '../add-image/add-image.page';
 @Component({
   selector: 'app-perfil-gato',
   templateUrl: './perfil-gato.page.html',
@@ -31,6 +32,7 @@ export class PerfilGatoPage implements OnInit {
   id: string;
 
   isLoading: boolean = true;
+  isLoadingImg: boolean = true;
 
   constructor(
     private modalController: ModalController,
@@ -38,7 +40,7 @@ export class PerfilGatoPage implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private ofline: DataOflineService,
-    private loadingController: LoadingController ) {}
+    private loadingController: LoadingController, ) {}
 
   ngOnInit() {
     this.platform.ready().then(() => {
@@ -119,6 +121,7 @@ export class PerfilGatoPage implements OnInit {
 
   changeCardContent(segmentValue: string) {
     if (!this.gato) return;
+    this.isLoadingImg = true; 
 
     switch (segmentValue) {
       case 'caracteristicas':
@@ -140,6 +143,9 @@ export class PerfilGatoPage implements OnInit {
         this.setCardContent('Imágenes', this.gato.Raza, '');
         this.temperamentoChips = [];
         this.showImagesContainer = true;
+        setTimeout(() => {
+          this.isLoadingImg = false;
+        }, 1000);
         break;
       default:
         this.changeCardContent('caracteristicas');
@@ -187,6 +193,16 @@ export class PerfilGatoPage implements OnInit {
     });
     await modal.present();
   }
+
+  async onAddImage() {
+    const modal = await this.modalController.create({
+      component: AddImagePage,
+      componentProps: { gatoRaza: this.gato.Raza }
+    });
+    console.log('Gato ID al crear modal:', this.gato.Raza);  // Verifica que gato.id no sea undefined
+    await modal.present();
+  }  
+  
 
   /*Anuncio Banner  */
   async showAdaptiveBanner() {

@@ -7,6 +7,10 @@ const routes: Routes = [
     path: '',
     component: gatoPage,
   },
+  {
+    path: 'add-image',
+    loadChildren: () => import('./add-image/add-image.module').then( m => m.AddImagePageModule)
+  },
 ];
 
 @NgModule({

@@ -1,0 +1,24 @@
+<ion-content mode="md" class="flex items-center justify-center">
+  <button class="absolute top-2 right-0 w-12 text-gray-700 z-50" (click)="closeModal()">
+    <ion-icon class="bg-gray-50 text-gray-700 rounded-full text-xl" slot="icon-only" name="close"></ion-icon>
+  </button>
+  <div class="w-full max-w-md p-4 mx-auto">
+    <form class="form" (ngSubmit)="uploadImage()">
+      <h1 class="form-title">Sube la imagen de tu mascota</h1>
+      <p class="form-paragraph">El archivo debe ser una imagen</p>
+
+      <!-- Previsualización de imagen -->
+      <div *ngIf="imageUrl" class="image-preview">
+        <img [src]="imageUrl" alt="Image preview" />
+      </div>
+
+      <label for="file-input" class="drop-container">
+        <span class="drop-title">Arrastra los archivos aquí</span>
+        o
+        <input type="file" accept="image/*" id="file-input" (change)="onFileSelected($event)" required />
+      </label>
+
+      <ion-button expand="block" type="submit" color="secondary" [disabled]="!selectedFile">Subir Imagen</ion-button>
+    </form>
+  </div>
+</ion-content>
