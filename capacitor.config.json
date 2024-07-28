@@ -6,6 +6,9 @@
                 "banner": "ca-app-pub-6309294666517022/5497837595",
                 "interstitial": "ca-app-pub-6309294666517022/2791783203"
             }
+        },
+         "PushNotifications": {
+            "presentationOptions": ["badge", "sound", "alert"]
         }
     }
 }

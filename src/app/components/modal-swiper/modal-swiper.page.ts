@@ -14,7 +14,7 @@ export class ModalSwiperPage implements OnInit {
   constructor(private modalController: ModalController) { }
 
   ngOnInit() {
-    console.log('Imagenes Recividas:', this.images);
+
   }
 
   dismiss() {

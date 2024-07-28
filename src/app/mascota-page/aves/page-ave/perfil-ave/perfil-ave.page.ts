@@ -34,7 +34,6 @@ export class PerfilAvePage implements OnInit {
   }
   ngOnInit() {
     const ave = history.state.data;
-    console.log(ave)
     this.infoName = ave.Raza;
     this.infoOrigin = ave.origen;
     this.infoImage = ave.imgPerfil;
@@ -50,7 +49,6 @@ export class PerfilAvePage implements OnInit {
         imagesArray.push(ave.img[key]);
       }
     }
-    console.log(imagesArray);
     return Object.values(ave.img);
   }
 

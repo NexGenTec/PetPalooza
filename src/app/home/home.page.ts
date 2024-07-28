@@ -9,9 +9,11 @@ import { WelcomeModalPage } from '../components/welcome-modal/welcome-modal.page
 import { ModalController, ToastController } from '@ionic/angular';
 import { InfoAve } from '../interface/InfoAve.models';
 import { ImgModalPage } from '../components/img-modal/img-modal.page';
-import { InfoImage } from '../interface/InfoImage.module';
+import { InfoImage } from '../interface/InfoImage.models';
 import { AdmobAds, BannerPosition, BannerSize, } from 'capacitor-admob-ads';
 import { StorageService } from '../service/storage.service';
+import { NotificationsService } from '../service/notifications.service';
+import { environment } from '../../environments/environment.prod';
 
 @Component({
   selector: 'app-home',
@@ -64,8 +66,8 @@ export class homePage implements OnInit {
     private firestores: FirestoreService,
     private storage: Storage,
     private modalController: ModalController,
-    private toastController: ToastController,
-    private favoritesService: StorageService
+    private favoritesService: StorageService,
+    private pushNotificationService: NotificationsService,
   ) {
   }
 
@@ -95,12 +97,13 @@ export class homePage implements OnInit {
       this.showSkeletonGatos = false;
       this.showSkeletonPerros = false;
     }, 3000);
+    this.pushNotificationService.initPushNotifications();
   }
   /*/
   Se llama la data de Perros y Gatos
   */
   async loadData() {
-    this.firestores.getCollectionChanges<InfoGato>('InfoGato').subscribe(gatos => {
+    this.firestores.getCollectionChanges<InfoGato>('InfoGatos').subscribe(gatos => {
       if (gatos) {
         this.originalGatos = gatos;
         this.gatos = gatos
@@ -111,7 +114,7 @@ export class homePage implements OnInit {
       }
     });
 
-    this.firestores.getCollectionChanges<InfoPerro>('InfoPerro').subscribe(perros => {
+    this.firestores.getCollectionChanges<InfoPerro>('InfoPerros').subscribe(perros => {
       if (perros) {
         this.originalPerros = perros;
         this.perros = perros
@@ -122,16 +125,16 @@ export class homePage implements OnInit {
       }
     });
 
-    this.firestores.getCollectionChanges<InfoAve>('InfoAve').subscribe(aves => {
-      if (aves) {
-        this.originalAves = aves;
-        this.aves = aves
-          .filter(ave => ave.fechaCreacion && ave.fechaCreacion.seconds)
-          .sort((a, b) => b.fechaCreacion.seconds - a.fechaCreacion.seconds)
-          //Cantida de Perros en ultimos
-          .slice(0, 2);
-      }
-    });
+    // this.firestores.getCollectionChanges<InfoAve>('InfoAve').subscribe(aves => {
+    //   if (aves) {
+    //     this.originalAves = aves;
+    //     this.aves = aves
+    //       .filter(ave => ave.fechaCreacion && ave.fechaCreacion.seconds)
+    //       .sort((a, b) => b.fechaCreacion.seconds - a.fechaCreacion.seconds)
+    //       //Cantida de Perros en ultimos
+    //       .slice(0, 2);
+    //   }
+    // });
     this.firestores.getCollectionChanges<InfoImage>('InfoImage').subscribe(img => {
       if (img) {
         this.originalImg = img;
@@ -174,6 +177,7 @@ export class homePage implements OnInit {
   }
 
   navigateToCat() {
+    console.log('Navegando a:',);
     this.router.navigate(['/tabs/gato']);
   }
 
@@ -187,6 +191,7 @@ export class homePage implements OnInit {
   }
 
   navigateToTargetPage(segment: string, gato: InfoGato) {
+    console.log('Navegando a:', segment, gato.id);
     this.router.navigate([segment, gato.id], { state: { data: gato } });
   }
 
@@ -246,7 +251,7 @@ export class homePage implements OnInit {
   async showAdaptiveBanner() {
     try {
       await AdmobAds.showBannerAd({
-        adId: 'ca-app-pub-6309294666517022/1128036107', // ID de tu anuncio de AdMob
+        adId: environment.AdmobAds.APP_ID, // ID de tu anuncio de AdMob
         isTesting: false, // Configuración de prueba
         adSize: BannerSize.FULL_BANNER, // Tamaño de banner adaptable
         adPosition: BannerPosition.TOP // Posición del banner

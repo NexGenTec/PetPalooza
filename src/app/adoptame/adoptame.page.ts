@@ -5,8 +5,9 @@ import { HuachitoService } from '../service/huachito.service';
 import { Huachitos } from '../interface/Huachitos.models';
 import { ModalController } from '@ionic/angular';
 import { ImgModalPage } from '../components/img-modal/img-modal.page';
-import { InfoImage } from '../interface/InfoImage.module';
+import { InfoImage } from '../interface/InfoImage.models';
 import { AdmobAds, BannerPosition, BannerSize, } from 'capacitor-admob-ads';
+import { environment } from 'src/environments/environment.prod';
 
 @Component({
   selector: 'app-adoptame',
@@ -58,7 +59,6 @@ export class AdoptamePage implements OnInit {
     this.firestores.getCollectionChanges<fundaciones>('fundaciones').subscribe(dato => {
       if (dato) {
         this.fundaciones = dato;
-        console.log(dato)
       }
     });
     this.firestores.getCollectionChanges<InfoImage>('InfoImage').subscribe(img => {
@@ -75,7 +75,6 @@ export class AdoptamePage implements OnInit {
     this.huachitoService.getAnimales().subscribe({
       next: (data) => {
         if (data && data.data) {
-          console.log(data)
           this.huachito = data.data;
           this.texto1showSkeleton = false;
           this.mostrarError500 = false;
@@ -113,18 +112,15 @@ export class AdoptamePage implements OnInit {
   async showAdaptiveBanner() {
     try {
       await AdmobAds.showBannerAd({
-        adId: 'ca-app-pub-6309294666517022/1128036107', // ID de tu anuncio de AdMob
+        adId: environment.AdmobAds.APP_ID, // ID de tu anuncio de AdMob
         isTesting: false, // Configuración de prueba
         adSize: BannerSize.FULL_BANNER, // Tamaño de banner adaptable
         adPosition: BannerPosition.TOP // Posición del banner
       });
-      console.log('Banner adaptable (Banner) mostrado correctamente');
-
       // Cerrar el banner después de cierto tiempo o evento
       setTimeout(async () => {
         try {
           await AdmobAds.removeBannerAd();
-          console.log('Banner adaptable (Banner) cerrado correctamente');
         } catch (error) {
           console.error('Error al cerrar el banner adaptable (Banner)', error);
         }

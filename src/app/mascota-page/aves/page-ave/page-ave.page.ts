@@ -21,8 +21,6 @@ export class PageAvePage implements OnInit {
     this.route.params.subscribe(params => {
       this.categoria = params['categoria'];
       this.infoAve = JSON.parse(params['info']);
-      console.log('Categoría recibida:', this.categoria);
-      console.log('Info del ave:', this.infoAve);
     });
   }
 }

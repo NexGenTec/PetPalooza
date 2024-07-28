@@ -1,9 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ImgModalPage } from '../../../components/img-modal/img-modal.page';
-import { ModalController } from '@ionic/angular';
-import { InfoPerro, Temperamento } from '../../../interface/InfoPerro.models';
+import { LoadingController, ModalController, Platform } from '@ionic/angular';
+import { CaracteristicasFisicas, Cuidado, InfoPerro, Temperamento } from '../../../interface/InfoPerro.models';
 import { ModalSwiperPage } from 'src/app/components/modal-swiper/modal-swiper.page';
-import { AdmobAds, BannerPosition, BannerSize, } from 'capacitor-admob-ads';
+import { AdmobAds, BannerPosition, BannerSize } from 'capacitor-admob-ads';
+import { environment } from '../../../../environments/environment.prod';
+import { ActivatedRoute, Router } from '@angular/router';
+import { DataOflineService } from 'src/app/service/data-ofline.service';
+import { ActionPerformed, PushNotifications } from '@capacitor/push-notifications';
 
 @Component({
   selector: 'app-perfil-perro',
@@ -21,144 +25,174 @@ export class PerfilPerroPage implements OnInit {
   infoOrigin!: string;
   infoHistory!: string;
 
-  perro: InfoPerro[] = [{
-    Img: { img1: 'url1', img2: 'url2', img3: 'url3' },
-    origen: '',
-    fechaCreacion: undefined,
-    Longevidad: '',
-    Temperamento: [],
-    Año: '',
-    historia: '',
-    CaractFisicas: undefined,
-    id: 0,
-    Raza: '',
-    imgPerfil: '',
-    cuidados: undefined
-  }];
-  selectedPerroId!: number;
+  perro!: InfoPerro;
   showImagesContainer: boolean = false;
   temperamentoChips: Temperamento[] = [];
+  id: string;
 
-
-
-  infoPerro: any = (this.perro as any).default;
+  isLoading: boolean = true;
 
   constructor(
     private modalController: ModalController,
-  ) {
-    this.changeCardContent(this.selectedSegmentValue);
-  }
-
-
-  ionViewDidEnter() {
-    this.showAdaptiveBanner();
-  }
+    private platform: Platform,
+    private router: Router,
+    private route: ActivatedRoute,
+    private ofline: DataOflineService,
+    private loadingController: LoadingController ) {}
 
   ngOnInit() {
-    const perro = history.state.data;
-    console.log(perro)
-    this.infoName = perro.Raza;
-    this.infoOrigin = perro.origen;
-    this.infoImage = perro.imgPerfil;
-    this.infoHistory = perro.historia;
-    this.changeCardContent(this.selectedSegmentValue);
-    this.perro = [perro];
+    this.platform.ready().then(() => {
+      PushNotifications.addListener('pushNotificationActionPerformed', async (notification: ActionPerformed) => {
+        const data = notification.notification.data;
+        
+        if (data && data.Route) {
+          const route = data.Route.split('/');
+          this.id = route[1];
+          console.log('Redirigiendo a:', data.Route);
+  
+          const loading = await this.showLoading();
+  
+          // Navigate to the route and load data
+          this.router.navigate([data.Route]).then(() => {
+            this.loadPerroData().finally(() => {
+              // Dismiss loading spinner
+              loading.dismiss();
+            });
+          });
+        } else {
+          console.error('No se encontró una ruta en los datos de notificación.');
+        }
+      });
+    });
+    this.id = this.route.snapshot.paramMap.get('id');
+    if (this.id) {
+      this.loadPerroData().finally(() => {
+
+      });
+    } else if (history.state.data) {
+      this.perro = history.state.data;
+      this.populatePerroData();
+    }
+  }        
+
+  async showLoading() {
+    const loading = await this.loadingController.create({
+      message: 'Cargando datos del perro...',
+    });
+    await loading.present();
+    return loading;
+  }
+
+  async loadPerroData() {
+    const loading = await this.showLoading();
+  
+    if (this.id) {
+      this.ofline.getPerroById(this.id).subscribe({
+        next: (data) => {
+          this.perro = data;
+          this.populatePerroData();
+          loading.dismiss();
+          this.isLoading = false; // Data loaded, set isLoading to false
+        },
+        error: (error) => {
+          console.error("Error al cargar la data: ", error);
+          loading.dismiss();
+          this.isLoading = false; // Error occurred, set isLoading to false
+        }
+      });
+    }
+  }  
+
+  populatePerroData() {
+    if (this.perro) {
+      this.infoName = this.perro.Raza;
+      this.infoOrigin = this.perro.Origen;
+      this.infoImage = this.perro.imgPerfil;
+      this.infoHistory = this.perro.Historia;
+      this.changeCardContent(this.selectedSegmentValue);
+    }
   }
 
   getImagesArray(perro: InfoPerro): string[] {
-    const imagesArray: string[] = [];
-    for (const key in perro.Img) {
-      if (perro.Img.hasOwnProperty(key)) {
-        imagesArray.push(perro.Img[key]);
-      }
-    }
-    console.log(imagesArray);
     return Object.values(perro.Img);
   }
 
-  getPerroById(id: number): InfoPerro[] {
-    return this.infoPerro.filter((perro: InfoPerro) => perro.id === id);
-  }
-
   changeCardContent(segmentValue: string) {
-    const perro = history.state.data;
-    if (!perro) {
-      return;
-    }
+    if (!this.perro) return;
+
     switch (segmentValue) {
       case 'caracteristicas':
-        this.cardHeading = 'Características Físicas';
-        this.cardSubtitle = perro.Raza;
-        this.cardContent = Object.keys(perro.CaractFisicas).map(key => `<p><span class="font-bold">${key}:</span> ${perro.CaractFisicas[key]}</p>`).join('<hr class="my-3">');
+        this.setCardContent('Características Físicas', this.perro.Raza, this.formatCharacteristics(this.perro.caracteristicasFisicas));
         this.temperamentoChips = [];
         this.showImagesContainer = false;
         break;
       case 'temperamento':
-        this.cardHeading = 'Temperamento';
-        this.cardSubtitle = '';
-        this.cardContent = perro.Temperamento.map((temp: { descripcion: any; }) => `<p>${temp.descripcion}</p>`).join('<hr class="my-3">');
-        this.temperamentoChips = this.getTemperamentoChips(perro.Temperamento);
+        this.setCardContent('Temperamento', '', this.formatTemperamento(this.perro.Temperamento));
+        this.temperamentoChips = this.perro.Temperamento.filter(temp => temp.tipo);
         this.showImagesContainer = false;
         break;
       case 'cuidado':
-        this.cardHeading = 'Cuidado y Salud';
-        this.cardSubtitle = perro.Raza;
-        this.cardContent = Object.keys(perro.cuidados).map(key => `<p><span class="font-bold">${key}:</span> ${perro.cuidados[key]}</p>`).join('<hr class="my-3">');
+        this.setCardContent('Cuidado y Salud', this.perro.Raza, this.formatCuidado(this.perro.Cuidados));
         this.temperamentoChips = [];
         this.showImagesContainer = false;
         break;
       case 'images':
-        this.cardHeading = 'Imágenes';
-        this.cardSubtitle = perro.Raza;
-        this.cardContent = '';
+        this.setCardContent('Imágenes', this.perro.Raza, '');
         this.temperamentoChips = [];
         this.showImagesContainer = true;
         break;
       default:
-        this.selectedSegmentValue = 'caracteristicas';
-        this.cardHeading = 'Características Físicas';
-        this.cardSubtitle = perro.Raza;
-        this.temperamentoChips = [];
-        this.showImagesContainer = false;
+        this.changeCardContent('caracteristicas');
         break;
     }
   }
 
-
-  getTemperamentoChips(temperamento: Temperamento[]): Temperamento[] {
-    return temperamento.filter(item => item.aplicable);
+  setCardContent(heading: string, subtitle: string, content: string) {
+    this.cardHeading = heading;
+    this.cardSubtitle = subtitle;
+    this.cardContent = content;
   }
 
-  getNameRaza(raza: InfoPerro[]): InfoPerro[] {
-    return raza.filter(item => item.Raza)
+  formatCharacteristics(characteristics: CaracteristicasFisicas[]): string {
+    return characteristics
+      .map(item => `<p><span class="font-bold">${item.tipo}:</span> ${item.descripcion}</p>`)
+      .join('<hr class="my-3">');
+  }
+
+  formatTemperamento(temperamento: Temperamento[]): string {
+    return temperamento
+      .filter(temp => temp.descripcion !== '')
+      .map(temp => `<p>${temp.descripcion}</p>`)
+      .join('<hr class="my-3">');
+  }
+
+  formatCuidado(cuidados: Cuidado[]): string {
+    return cuidados
+      .map(item => `<p><span class="font-bold">${item.tipo}:</span> ${item.descripcion}</p>`)
+      .join('<hr class="my-3">');
   }
 
   async openModal(imageUrl: string) {
     const modal = await this.modalController.create({
       component: ImgModalPage,
-      componentProps: {
-        imageUrl: imageUrl
-      }
+      componentProps: { imageUrl }
     });
-    return await modal.present();
+    await modal.present();
   }
 
   async openModalSwiper(perro: InfoPerro) {
     const modal = await this.modalController.create({
       component: ModalSwiperPage,
-      componentProps: {
-        images: this.getImagesArray(perro),
-        initialSlide: 0
-      }
+      componentProps: { images: this.getImagesArray(perro), initialSlide: 0 }
     });
-    return await modal.present();
+    await modal.present();
   }
 
   /*Anuncio Banner  */
   async showAdaptiveBanner() {
     try {
       await AdmobAds.showBannerAd({
-        adId: 'ca-app-pub-6309294666517022/1128036107', // ID de tu anuncio de AdMob
+        adId: environment.AdmobAds.APP_ID, // ID de tu anuncio de AdMob
         isTesting: false, // Configuración de prueba
         adSize: BannerSize.BANNER, // Tamaño de banner adaptable
         adPosition: BannerPosition.TOP // Posición del banner
@@ -178,5 +212,5 @@ export class PerfilPerroPage implements OnInit {
       console.error('Error al mostrar el banner adaptable (Banner)', error);
     }
   }
-
 }
+  

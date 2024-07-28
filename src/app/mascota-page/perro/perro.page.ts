@@ -3,8 +3,6 @@ import { InfoPerro } from '../../interface/InfoPerro.models';
 import { QuirkyFacts } from '../../interface/QuirkyFacts.models';
 import { FirestoreService } from '../../service/firestore.service';
 import { Router } from '@angular/router';
-import { ImgModalPage } from '../../components/img-modal/img-modal.page';
-import { ModalController, ToastController } from '@ionic/angular';
 import { StorageService } from 'src/app/service/storage.service';
 
 @Component({
@@ -13,22 +11,20 @@ import { StorageService } from 'src/app/service/storage.service';
   styleUrls: ['perro.page.scss']
 })
 export class perroPage {
+
   perros: InfoPerro[] = [];
   DatosFreak: QuirkyFacts[] = [];
-  currentDatoIndex: number = 0;
-  infoPerroChunks: InfoPerro[][] = [];
   filteredPerros: InfoPerro[] = [];
   favorites: any[] = [];
+  currentDatoIndex: number = 0;
   searchTerm: string = '';
-
+  perroId: string | null = null;
 
 
   constructor(
     private firestores: FirestoreService,
-    private toastController: ToastController,
     private router: Router,
-    private modalController: ModalController,
-    private favoritesService: StorageService
+    private favoritesService: StorageService,
   ) {
     this.loadData();
   }
@@ -43,7 +39,7 @@ export class perroPage {
   }
 
   loadData() {
-    this.firestores.getCollectionChanges<InfoPerro>('InfoPerro').subscribe(perro => {
+    this.firestores.getCollectionChanges<InfoPerro>('InfoPerros').subscribe(perro => {
       if (perro) {
         this.perros = perro
         this.filteredPerros = [...this.perros];
@@ -59,23 +55,6 @@ export class perroPage {
       }
     });
   }
-
-  async openModal(imageUrl: string) {
-    const modal = await this.modalController.create({
-      component: ImgModalPage,
-      componentProps: {
-        imageUrl: imageUrl
-      }
-    });
-    return await modal.present();
-  }
-
-  swiperOptions = {
-    slidesPerView: 3,
-    spaceBetween: 10,
-    navigation: true
-  };
-
 
   showRandomQuirkyFact() {
     const perroIndices = this.DatosFreak.map((fact, index) => {
@@ -95,11 +74,9 @@ export class perroPage {
   }
 
   filterPerros() {
-    console.log('Search term:', this.searchTerm);
-    this.filteredPerros = this.perros.filter(gato =>
-      gato.Raza.toLowerCase().includes(this.searchTerm.toLowerCase())
+    this.filteredPerros = this.perros.filter(perro =>
+      perro.Raza.toLowerCase().includes(this.searchTerm.toLowerCase())
     );
-    console.log('Filtered gatos:', this.filteredPerros);
   }
 
   isInFavorites(animal: any, type: string): boolean {
@@ -108,11 +85,10 @@ export class perroPage {
 
   async addToFavorites(animal: any, type: string) {
     await this.favoritesService.addToFavorites(animal, type);
-    this.loadFavorites();  // Actualizar la lista de favoritos después de agregar o eliminar
+    this.loadFavorites();
   }
 
   private loadFavorites() {
     this.favorites = this.favoritesService.getFavorites();
   }
-
 }
