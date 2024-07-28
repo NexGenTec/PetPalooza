@@ -40,7 +40,6 @@ export class NotificationsService {
       // Guardar la notificación en Firestore
       this.notificationToFirestore(notification);
       // Mostrar la notificación local
-      // this.showLocalNotification(notification);
     });
 
     PushNotifications.addListener('pushNotificationActionPerformed', (notification: ActionPerformed) => {
