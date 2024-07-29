@@ -1,7 +1,5 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { InfoPerro } from 'src/app/interface/InfoPerro.models';
 
 @Component({

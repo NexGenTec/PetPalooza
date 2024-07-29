@@ -21,7 +21,7 @@
           </ion-item>
           <ion-item *ngIf="perroForm.submitted && !perroForm.controls['Raza']?.valid" class="error-message">
             <ion-icon name="alert-circle" class="error-icon"></ion-icon>
-            <div>La raza es obliperroria.</div>
+            <div>La raza es obligatoria.</div>
           </ion-item>
           
           <!-- Origen -->
@@ -31,25 +31,27 @@
           </ion-item>
           <ion-item *ngIf="perroForm.submitted && !perroForm.controls['Origen']?.valid" class="error-message">
             <ion-icon name="alert-circle" class="error-icon"></ion-icon>
-            <div>El origen es obliperrorio.</div>
+            <div>El origen es obligatorio.</div>
           </ion-item>
 
           <!-- Año -->
           <ion-item>
             <ion-label position="stacked">Año</ion-label>
-            <ion-input type="text" [(ngModel)]="newPerro.Anio" name="Anio" required></ion-input>
+            <ion-input type="text" [(ngModel)]="newPerro.Anio" name="Anio" required placeholder="Ingrese el año"></ion-input>
           </ion-item>
           <ion-item *ngIf="perroForm.submitted && !perroForm.controls['Anio']?.valid" class="error-message">
             <ion-icon name="alert-circle" class="error-icon"></ion-icon>
-            <div>El año es obliperrorio.</div>
+            <div>El año es obligatorio.</div>
           </ion-item>
 
+          <!-- Imagen de Perfil -->
           <ion-item>
             <ion-label>Imagen de Perfil</ion-label>
             <ion-input type="file" (change)="onFileSelected($event)" accept="image/*"></ion-input>
           </ion-item>
           <ion-img *ngIf="getSelectedImage()" [src]="getSelectedImage()"></ion-img>
       
+          <!-- Imágenes del Perro -->
           <ion-item>
             <ion-label>Imágenes del Perro</ion-label>
             <ion-input type="file" (change)="onFileSelecteds($event)" accept="image/*" multiple></ion-input>
@@ -62,62 +64,24 @@
             </ion-row>
           </ion-grid>
 
-          <!-- Imagen del Perfil -->
-          <!-- <ion-item class="file-upload">
-            <ion-label position="stacked">Seleccionar archivo</ion-label>
-            <input type="file" (change)="onFileSelected($event)" accept="image/png, image/jpeg" />
-          </ion-item> -->
-          <!-- Vista previa de la imagen seleccionada -->
-          <!-- <ion-item *ngIf="imageFile">
-            <img [src]="getSelectedImage()" alt="Imagen seleccionada" class="selected-image" />
-          </ion-item> -->
-          <!-- Mostrar imagen existente si no se ha seleccionado una nueva -->
-          <!-- <ion-item *ngIf="!imageFile && newPerro.imgPerfil">
-            <img [src]="newPerro.imgPerfil" alt="Imagen actual" class="current-image" />
-          </ion-item>      -->
-
-          <!-- Imagen Array -->
-          <!-- <ion-item class="file-upload">
-            <ion-label position="stacked">Seleccionar archivos</ion-label>
-            <input type="file" (change)="onFileSelecteds($event)" accept="image/png, image/jpeg" multiple />
-          </ion-item> -->
-
-          <!-- Vista previa de las imágenes seleccionadas -->
-          <!-- <ion-row>
-            <ion-col size="6" *ngFor="let img of selectedImages">
-              <ion-item>
-                <img [src]="img" alt="Imagen seleccionada" class="selected-image" />
-              </ion-item>
-            </ion-col>
-          </ion-row> -->
-
-          <!-- Mostrar imagen existente si no se ha seleccionado una nueva -->
-          <!-- <ion-row *ngIf="!imagesFiles.length && newPerro.Img && newPerro.Img.length">
-            <ion-col size="6" *ngFor="let img of newPerro.Img">
-              <ion-item>
-                <img [src]="img" alt="Imagen actual" class="current-image" />
-              </ion-item>
-            </ion-col>
-          </ion-row> -->
-
           <!-- Longevidad -->
           <ion-item>
             <ion-label position="stacked">Longevidad</ion-label>
-            <ion-input type="text" [(ngModel)]="newPerro.Longevidad" name="Longevidad" required></ion-input>
+            <ion-input type="text" [(ngModel)]="newPerro.Longevidad" name="Longevidad" required placeholder="Ingrese la longevidad"></ion-input>
           </ion-item>
           <ion-item *ngIf="perroForm.submitted && !perroForm.controls['Longevidad']?.valid" class="error-message">
             <ion-icon name="alert-circle" class="error-icon"></ion-icon>
-            <div>La longevidad es obliperroria.</div>
+            <div>La longevidad es obligatoria.</div>
           </ion-item>
 
           <!-- Historia -->
           <ion-item>
             <ion-label position="stacked">Historia</ion-label>
-            <ion-textarea [(ngModel)]="newPerro.Historia" name="Historia" required></ion-textarea>
+            <ion-textarea [(ngModel)]="newPerro.Historia" name="Historia" required placeholder="Ingrese la historia"></ion-textarea>
           </ion-item>
           <ion-item *ngIf="perroForm.submitted && !perroForm.controls['Historia']?.valid" class="error-message">
             <ion-icon name="alert-circle" class="error-icon"></ion-icon>
-            <div>La historia es obliperroria.</div>
+            <div>La historia es obligatoria.</div>
           </ion-item>
 
           <!-- Temperamento -->
@@ -126,11 +90,11 @@
             <ng-container *ngFor="let temp of newPerro.Temperamento; let j = index">
               <ion-item class="temperamento-item">
                 <ion-label position="stacked">Tipo</ion-label>
-                <ion-input type="text" [(ngModel)]="temp.tipo" name="temperamento-tipo-{{j}}" required></ion-input>
+                <ion-input type="text" [(ngModel)]="temp.tipo" name="temperamento-tipo-{{j}}" required placeholder="Ingrese el tipo"></ion-input>
               </ion-item>
               <ion-item class="temperamento-item">
                 <ion-label position="stacked">Descripción</ion-label>
-                <ion-textarea [(ngModel)]="temp.descripcion" name="temperamento-descripcion-{{j}}" required></ion-textarea>
+                <ion-textarea [(ngModel)]="temp.descripcion" name="temperamento-descripcion-{{j}}" required placeholder="Ingrese la descripción"></ion-textarea>
                 <ion-button color="danger" (click)="removeTemperamento(j)" fill="clear">Eliminar</ion-button>
               </ion-item>
             </ng-container>
@@ -149,11 +113,11 @@
             <ng-container *ngFor="let caracteristica of newPerro.caracteristicasFisicas; let i = index">
               <ion-item class="temperamento-item">
                 <ion-label position="stacked">Tipo</ion-label>
-                <ion-input type="text" [(ngModel)]="caracteristica.tipo" name="caracteristica-tipo-{{i}}" required></ion-input>
+                <ion-input type="text" [(ngModel)]="caracteristica.tipo" name="caracteristica-tipo-{{i}}" required placeholder="Ingrese el tipo"></ion-input>
               </ion-item>
               <ion-item class="temperamento-item">
                 <ion-label position="stacked">Descripción</ion-label>
-                <ion-textarea [(ngModel)]="caracteristica.descripcion" name="descripcion-{{i}}" required></ion-textarea>
+                <ion-textarea [(ngModel)]="caracteristica.descripcion" name="descripcion-{{i}}" required placeholder="Ingrese la descripción"></ion-textarea>
                 <ion-button color="danger" (click)="removeCaracteristicaFisica(i)" fill="clear">Eliminar</ion-button>
               </ion-item>
             </ng-container>
@@ -172,11 +136,11 @@
             <ng-container *ngFor="let cuidado of newPerro.Cuidados; let i = index">
               <ion-item class="temperamento-item">
                 <ion-label position="stacked">Tipo</ion-label>
-                <ion-input type="text" [(ngModel)]="cuidado.tipo" name="tipo-{{i}}" required></ion-input>
+                <ion-input type="text" [(ngModel)]="cuidado.tipo" name="tipo-{{i}}" required placeholder="Ingrese el tipo"></ion-input>
               </ion-item>
               <ion-item class="temperamento-item">
                 <ion-label position="stacked">Descripción</ion-label>
-                <ion-textarea [(ngModel)]="cuidado.descripcion" name="cuidado-{{i}}" required></ion-textarea>
+                <ion-textarea [(ngModel)]="cuidado.descripcion" name="cuidado-{{i}}" required placeholder="Ingrese la descripción"></ion-textarea>
                 <ion-button color="danger" (click)="removeCuidado(i)" fill="clear">Eliminar</ion-button>
               </ion-item>
             </ng-container>
@@ -188,7 +152,7 @@
               <div>Debe ingresar al menos un cuidado.</div>
             </ion-item>
           </ion-item>
-          
+
           <!-- Fecha de Creacion -->
           <ion-item>
           <ion-label position="stacked">Fecha de Creación</ion-label>
