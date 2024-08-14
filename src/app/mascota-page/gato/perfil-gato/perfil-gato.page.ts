@@ -24,6 +24,7 @@ export class PerfilGatoPage implements OnInit {
   infoImage!: string;
   infoOrigin!: string;
   infoHistory!: string;
+  Longevidad!:string;
 
   gato!: InfoGato;
   showImagesContainer: boolean = false;
@@ -109,6 +110,7 @@ export class PerfilGatoPage implements OnInit {
       this.infoOrigin = this.gato.Origen;
       this.infoImage = this.gato.imgPerfil;
       this.infoHistory = this.gato.Historia;
+      this.Longevidad = this.gato.Longevidad;
       this.changeCardContent(this.selectedSegmentValue);
     }
   }

@@ -108,6 +108,14 @@
             </div>
           </div>
         </ng-template>
+        <ng-container *ngIf="!isLoading; else loadingSkeleton">
+          <div class="px-2 mt-6 py-6 border-t border-slate-200 text-center ">
+            <h3 class="text-lg text-slate-500 font-bold leading-normal mb-1">Longevidad</h3>
+            <div class="w-full px-4">
+              <p class="font-light text-sm leading-relaxed text-slate-600 mb-4">{{Longevidad}}</p>
+            </div>
+          </div>
+        </ng-container>   
       </div>
     </div>
   </div>

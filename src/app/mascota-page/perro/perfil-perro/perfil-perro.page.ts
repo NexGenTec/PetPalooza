@@ -24,6 +24,7 @@ export class PerfilPerroPage implements OnInit {
   infoImage!: string;
   infoOrigin!: string;
   infoHistory!: string;
+  Longevidad!:string;
 
   perro!: InfoPerro;
   showImagesContainer: boolean = false;
@@ -109,6 +110,7 @@ export class PerfilPerroPage implements OnInit {
       this.infoOrigin = this.perro.Origen;
       this.infoImage = this.perro.imgPerfil;
       this.infoHistory = this.perro.Historia;
+      this.Longevidad = this.perro.Longevidad;
       this.changeCardContent(this.selectedSegmentValue);
     }
   }
