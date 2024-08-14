@@ -28,4 +28,4 @@ export type Genero = "hembra" | "macho";
 
 export type Region = "RM" | "Maule" | "O'Higgins" | "Tarapacá" | "Coquimbo" | "La Araucanía";
 
-export type Tipo = "Perro" | "Gato" | "Conejo";
+export type Tipo = "Perro" | "Gato" | "Conejo" | "Roedor" | "Ave";
