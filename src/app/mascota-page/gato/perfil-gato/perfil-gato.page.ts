@@ -8,6 +8,8 @@ import { ActionPerformed, PushNotifications } from '@capacitor/push-notification
 import { ActivatedRoute, Router } from '@angular/router';
 import { DataOflineService } from 'src/app/service/data-ofline.service';
 import { environment } from '../../../../environments/environment.prod';
+import { StorageService } from '../../../service/storage.service';
+
 @Component({
   selector: 'app-perfil-gato',
   templateUrl: './perfil-gato.page.html',
@@ -26,6 +28,8 @@ export class PerfilGatoPage implements OnInit {
   infoHistory!: string;
   Longevidad!:string;
 
+  favorites: any[] = [];
+  
   gato!: InfoGato;
   showImagesContainer: boolean = false;
   temperamentoChips: Temperamento[] = [];
@@ -39,7 +43,9 @@ export class PerfilGatoPage implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private ofline: DataOflineService,
+    private favoritesService: StorageService,
     private loadingController: LoadingController ) {}
+    
 
   ngOnInit() {
     this.platform.ready().then(() => {
@@ -188,6 +194,18 @@ export class PerfilGatoPage implements OnInit {
       componentProps: { images: this.getImagesArray(gato), initialSlide: 0 }
     });
     await modal.present();
+  }
+// Like button
+  private loadFavorites() {
+  this.favorites = this.favoritesService.getFavorites();
+}
+  isInFavorites(animal: any, type: string): boolean {
+    return this.favoritesService.isInFavorites(animal, type);
+  }
+
+  async addToFavorites(animal: any, type: string) {
+    await this.favoritesService.addToFavorites(animal, type);
+    this.loadFavorites();  // Actualizar la lista de favoritos después de agregar o eliminar
   }
 
   /*Anuncio Banner  */

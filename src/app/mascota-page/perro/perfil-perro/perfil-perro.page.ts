@@ -8,6 +8,7 @@ import { environment } from '../../../../environments/environment.prod';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DataOflineService } from 'src/app/service/data-ofline.service';
 import { ActionPerformed, PushNotifications } from '@capacitor/push-notifications';
+import { StorageService } from '../../../service/storage.service';
 
 @Component({
   selector: 'app-perfil-perro',
@@ -26,6 +27,8 @@ export class PerfilPerroPage implements OnInit {
   infoHistory!: string;
   Longevidad!:string;
 
+  favorites: any[] = [];
+
   perro!: InfoPerro;
   showImagesContainer: boolean = false;
   temperamentoChips: Temperamento[] = [];
@@ -39,6 +42,7 @@ export class PerfilPerroPage implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private ofline: DataOflineService,
+    private favoritesService: StorageService,
     private loadingController: LoadingController ) {}
 
   ngOnInit() {
@@ -189,6 +193,19 @@ export class PerfilPerroPage implements OnInit {
     });
     await modal.present();
   }
+
+  // Like button
+  private loadFavorites() {
+    this.favorites = this.favoritesService.getFavorites();
+  }
+    isInFavorites(animal: any, type: string): boolean {
+      return this.favoritesService.isInFavorites(animal, type);
+    }
+  
+    async addToFavorites(animal: any, type: string) {
+      await this.favoritesService.addToFavorites(animal, type);
+      this.loadFavorites();  // Actualizar la lista de favoritos después de agregar o eliminar
+    }
 
   /*Anuncio Banner  */
   async showAdaptiveBanner() {
