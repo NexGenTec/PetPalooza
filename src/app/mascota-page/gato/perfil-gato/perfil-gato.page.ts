@@ -197,9 +197,9 @@ export class PerfilGatoPage implements OnInit {
   async onAddImage() {
     const modal = await this.modalController.create({
       component: AddImagePage,
-      componentProps: { gatoRaza: this.gato.Raza }
+      componentProps: { gatoRaza: this.gato.Raza, gatoId: this.gato.id }  // Asegúrate de pasar gatoId también
     });
-    console.log('Gato ID al crear modal:', this.gato.Raza);  // Verifica que gato.id no sea undefined
+    console.log('ID del gato al crear modal:', this.gato.id);  // Verifica que gato.id no sea undefined
     await modal.present();
   }  
   

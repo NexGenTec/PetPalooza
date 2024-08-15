@@ -17,11 +17,12 @@ export class ImgUploadService {
 
   uploadImageGato(file: File, gatoRaza: string): Promise<string> {
     return new Promise((resolve, reject) => {
-      const filePath = `Gato/${gatoRaza}/ImgPendientes/${file.name}`;
+      // Ajustar el filePath según la estructura deseada
+      const filePath = `Gatos/${gatoRaza}/ImgPendientes/${file.name}`;
       console.log('File path:', filePath);
       const fileRef = this.storage.ref(filePath);
       const task = this.storage.upload(filePath, file);
-
+  
       // Monitor the upload task
       task.snapshotChanges().pipe(
         finalize(() => {
@@ -47,11 +48,11 @@ export class ImgUploadService {
         }
       );
     });
-  }
+  }  
 
   updatePerroImage(gatoId: string, imageUrl: string) {
     console.log('Updating Firestore with image URL:', imageUrl);
-    return this.firestore.collection('Gatos').doc(gatoId).update({ imgPerfil: imageUrl });
+    return this.firestore.collection('Perros').doc(gatoId).update({ imgPerfil: imageUrl });
   }
 
   uploadImagePerro(file: File, perroRaza: string): Promise<string> {

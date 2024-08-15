@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { LoadingController, ModalController, ToastController } from '@ionic/angular';
 import { ImgUploadService } from '../../../service/img-upload.service';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { InfoGato } from '../../../interface/InfoGato.models';
 
 @Component({
   selector: 'app-add-image',
@@ -13,6 +14,7 @@ export class AddImagePage implements OnInit {
   selectedFile: File | null = null;
   imageUrl: string | ArrayBuffer | null = null;
   @Input() gatoRaza: string | null = null;
+  @Input() gatoId: string | null = null; 
 
   constructor(
     private modalController: ModalController,
@@ -23,12 +25,12 @@ export class AddImagePage implements OnInit {
   ) {}
 
   ngOnInit() {
-    console.log('Raza del gato en AddImagePage:', this.gatoRaza);  
+    console.log('Raza del gato en AddImagePage:', this.gatoRaza);
+    console.log('ID del gato en AddImagePage:', this.gatoId);  // Verify gatoId
   }
 
   onFileSelected(event: any) {
     this.selectedFile = event.target.files[0];
-
     if (this.selectedFile) {
       const reader = new FileReader();
       reader.onload = () => {
@@ -39,26 +41,40 @@ export class AddImagePage implements OnInit {
   }
 
   async uploadImage() {
-    if (this.selectedFile && this.gatoRaza) {
-      const loading = await this.showLoading();
+    if (this.selectedFile && this.gatoRaza && this.gatoId) {
       try {
+        const loading = await this.showLoading();
         const imageUrl = await this.uploadService.uploadImageGato(this.selectedFile, this.gatoRaza);
-        console.log('Imagen subida exitosamente: ', imageUrl);
-        await this.firestore.collection('SolicitudesImg').add({
-          gatoRaza: this.gatoRaza,
-          imageUrl: imageUrl,
-          timestamp: new Date()
-        });
-        console.log('Firestore actualizado exitosamente.');
-        await this.presentToast('Imagen subida exitosamente. Su imagen será revisada.', 'success');
+        await this.updateFirestoreImage(imageUrl);
+        await loading.dismiss();
+        await this.presentToast('Imagen subida con éxito', 'success');
+        this.closeModal(); 
       } catch (error) {
-        console.error('Error al subir la imagen: ', error);
-
-        await this.presentToast('No se pudo subir la imagen. Inténtelo de nuevo.', 'danger');
-      } finally {
-        loading.dismiss();
-        this.closeModal();
+        await this.presentToast('Error al subir la imagen', 'danger');
       }
+    } else {
+      await this.presentToast('Seleccione un archivo y asegúrese de que la raza y ID estén definidos', 'warning');
+    }
+  }
+
+  async updateFirestoreImage(imageUrl: string) {
+    if (this.gatoId) {
+      const docRef = this.firestore.collection('InfoGatos').doc(this.gatoId);
+      const doc = await docRef.get().toPromise();
+      const currentData = doc.data() as InfoGato;
+      
+      // Si el array de imágenes no existe, lo inicializamos.
+      const updatedImgArray = currentData.Img ? [...currentData.Img] : [];
+
+      // Asegurarnos de que el array tenga al menos 6 posiciones.
+      while (updatedImgArray.length < 6) {
+        updatedImgArray.push(''); // Añadir espacios vacíos si es necesario.
+      }
+
+      // Insertamos la imagen en la posición 6 en adelante.
+      updatedImgArray.push(imageUrl);
+
+      return docRef.update({ Img: updatedImgArray });
     }
   }
 
