@@ -99,11 +99,14 @@ export class DogModalPage implements OnInit {
     }
   }
 
-  onFileSelecteds(event: Event) {
-    const target = event.target as HTMLInputElement;
-    if (target.files && target.files.length) {
-      this.imagesFiles = Array.from(target.files).slice(0, 10);
-      this.selectedImages = this.imagesFiles.map(file => URL.createObjectURL(file));
+  onFileSelecteds(event: any) {
+    const files = event.target.files;
+    for (let i = 0; i < files.length; i++) {
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        this.selectedImages.push(e.target.result);
+      };
+      reader.readAsDataURL(files[i]);
     }
   }
 
@@ -133,5 +136,9 @@ export class DogModalPage implements OnInit {
 
   removeTemperamento(index: number) {
     this.newPerro.Temperamento.splice(index, 1);
+  }
+  
+  removeImage(index: number) {
+    this.selectedImages.splice(index, 1);
   }
 }

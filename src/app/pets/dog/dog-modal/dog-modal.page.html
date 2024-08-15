@@ -51,18 +51,24 @@
           </ion-item>
           <ion-img *ngIf="getSelectedImage()" [src]="getSelectedImage()"></ion-img>
       
-          <!-- Imágenes del Perro -->
+         <!-- Imágenes del Perro -->
           <ion-item>
             <ion-label>Imágenes del Perro</ion-label>
             <ion-input type="file" (change)="onFileSelecteds($event)" accept="image/*" multiple></ion-input>
           </ion-item>
           <ion-grid>
             <ion-row>
-              <ion-col size="6" *ngFor="let img of selectedImages">
-                <ion-img [src]="img"></ion-img>
+              <ion-col size="6" *ngFor="let img of selectedImages; let i = index">
+                <ion-card>
+                  <ion-img [src]="img"></ion-img>
+                  <ion-button fill="clear" color="danger" (click)="removeImage(i)">
+                    <ion-icon name="trash"></ion-icon>
+                  </ion-button>
+                </ion-card>
               </ion-col>
             </ion-row>
           </ion-grid>
+
 
           <!-- Longevidad -->
           <ion-item>

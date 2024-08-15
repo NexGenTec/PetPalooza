@@ -133,4 +133,9 @@ export class CatModalPage implements OnInit {
   removeTemperamento(index: number) {
     this.newGato.Temperamento.splice(index, 1);
   }
+
+  removeImage(index: number) {
+    this.selectedImages.splice(index, 1);
+    this.imagesFiles.splice(index, 1);
+  }
 }
