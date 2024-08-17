@@ -9,6 +9,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { DataOflineService } from 'src/app/service/data-ofline.service';
 import { ActionPerformed, PushNotifications } from '@capacitor/push-notifications';
 import { AddImagePage } from '../add-image/add-image.page';
+import { StorageService } from '../../../service/storage.service';
 
 @Component({
   selector: 'app-perfil-perro',
@@ -25,6 +26,9 @@ export class PerfilPerroPage implements OnInit {
   infoImage!: string;
   infoOrigin!: string;
   infoHistory!: string;
+  Longevidad!:string;
+
+  favorites: any[] = [];
 
   perro!: InfoPerro;
   showImagesContainer: boolean = false;
@@ -40,6 +44,7 @@ export class PerfilPerroPage implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private ofline: DataOflineService,
+    private favoritesService: StorageService,
     private loadingController: LoadingController ) {}
 
   ngOnInit() {
@@ -111,6 +116,7 @@ export class PerfilPerroPage implements OnInit {
       this.infoOrigin = this.perro.Origen;
       this.infoImage = this.perro.imgPerfil;
       this.infoHistory = this.perro.Historia;
+      this.Longevidad = this.perro.Longevidad;
       this.changeCardContent(this.selectedSegmentValue);
     }
   }
@@ -212,6 +218,19 @@ export class PerfilPerroPage implements OnInit {
     console.log('Gato ID al crear modal:', this.perro.Raza);  // Verifica que gato.id no sea undefined
     await modal.present();
   }  
+
+  // Like button
+  private loadFavorites() {
+    this.favorites = this.favoritesService.getFavorites();
+  }
+    isInFavorites(animal: any, type: string): boolean {
+      return this.favoritesService.isInFavorites(animal, type);
+    }
+  
+    async addToFavorites(animal: any, type: string) {
+      await this.favoritesService.addToFavorites(animal, type);
+      this.loadFavorites();  // Actualizar la lista de favoritos después de agregar o eliminar
+    }
 
   /*Anuncio Banner  */
   async showAdaptiveBanner() {
