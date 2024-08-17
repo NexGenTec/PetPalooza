@@ -8,6 +8,9 @@ import { Router } from '@angular/router';
 })
 export class FavoritosPage implements OnInit {
   favoriteAnimals = [];
+  isLoading: boolean = true;
+  skeletonCategories = Array(2);
+  skeletonFavorites = Array(2); 
 
   constructor(private router: Router) { }
   ngOnInit(): void {
@@ -16,6 +19,7 @@ export class FavoritosPage implements OnInit {
       this.favoriteAnimals = JSON.parse(favoritesString);
       console.log(JSON.parse(favoritesString))
     }
+    this.simulateLoading();
   }
 
   navigateToAnimalProfile(animal: any) {
@@ -26,5 +30,11 @@ export class FavoritosPage implements OnInit {
     } else {
       console.error('Tipo de animal no válido:', animal.type);
     }
+  }
+
+  simulateLoading() {
+    setTimeout(() => {
+      this.isLoading = false;  // Simula la carga completada
+    }, 3000);  // Simula un tiempo de carga
   }
 }
