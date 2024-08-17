@@ -14,6 +14,7 @@ export class FavoritosPage implements OnInit {
     const favoritesString = localStorage.getItem('favorites');
     if (favoritesString) {
       this.favoriteAnimals = JSON.parse(favoritesString);
+      console.log(JSON.parse(favoritesString))
     }
   }
 
