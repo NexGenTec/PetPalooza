@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { LoadingController, ModalController, ToastController } from '@ionic/angular';
+import { InfoPerro } from 'src/app/interface/InfoPerro.models';
 import { ImgUploadService } from 'src/app/service/img-upload.service';
 
 @Component({
@@ -13,6 +14,7 @@ export class AddImagePage implements OnInit {
   selectedFile: File | null = null;
   imageUrl: string | ArrayBuffer | null = null;
   @Input() perroRaza: string | null = null;
+  @Input() perroId: string | null = null;
 
   constructor(
     private modalController: ModalController,
@@ -24,6 +26,7 @@ export class AddImagePage implements OnInit {
 
   ngOnInit() {
     console.log('Raza del perro en AddImagePage:', this.perroRaza);  
+    console.log('Raza del perro en AddImagePage:', this.perroId);  
   }
 
   onFileSelected(event: any) {
@@ -39,26 +42,32 @@ export class AddImagePage implements OnInit {
   }
 
   async uploadImage() {
-    if (this.selectedFile && this.perroRaza) {
-      const loading = await this.showLoading();
+    if (this.selectedFile && this.perroRaza && this.perroId) {
       try {
+        const loading = await this.showLoading();
         const imageUrl = await this.uploadService.uploadImagePerro(this.selectedFile, this.perroRaza);
-        console.log('Imagen subida exitosamente: ', imageUrl);
-        await this.firestore.collection('SolicitudesImg').add({
-          perroRaza: this.perroRaza,
-          imageUrl: imageUrl,
-          timestamp: new Date()
-        });
-        console.log('Firestore actualizado exitosamente.');
-        await this.presentToast('Imagen subida exitosamente. Su imagen será revisada.', 'success');
+        await this.updateFirestoreImage(imageUrl);
+        await loading.dismiss();
+        await this.presentToast('Imagen subida con éxito', 'success');
+        this.closeModal(); 
       } catch (error) {
-        console.error('Error al subir la imagen: ', error);
-
-        await this.presentToast('No se pudo subir la imagen. Inténtelo de nuevo.', 'danger');
-      } finally {
-        loading.dismiss();
-        this.closeModal();
+        await this.presentToast('Error al subir la imagen', 'danger');
       }
+    } else {
+      await this.presentToast('Seleccione un archivo y asegúrese de que la raza y ID estén definidos', 'warning');
+    }
+  }
+
+  async updateFirestoreImage(imageUrl: string) {
+    if (this.perroId) {
+      const docRef = this.firestore.collection('InfoPerros').doc(this.perroId);
+      const doc = await docRef.get().toPromise();
+      const currentData = doc.data() as InfoPerro;
+      
+      const updatedImgArray = currentData.ImgUsers ? [...currentData.ImgUsers] : [];
+      updatedImgArray.push(imageUrl);
+
+      return docRef.update({ ImgUsers: updatedImgArray });
     }
   }
 

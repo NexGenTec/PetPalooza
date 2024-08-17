@@ -116,7 +116,13 @@ export class PerfilGatoPage implements OnInit {
   }
 
   getImagesArray(gato: InfoGato): string[] {
+    console.log(gato.Img)
     return Object.values(gato.Img);
+  }
+
+  getImageUsersArray(gato: InfoGato): string[]{
+    console.log(gato.ImgUsers)
+    return Object.values(gato.ImgUsers);
   }
 
   changeCardContent(segmentValue: string) {
@@ -194,12 +200,20 @@ export class PerfilGatoPage implements OnInit {
     await modal.present();
   }
 
+  async openModalSwiperUser(gato: InfoGato) {
+    const modal = await this.modalController.create({
+      component: ModalSwiperPage,
+      componentProps: { images: this.getImageUsersArray(gato), initialSlide: 0 }
+    });
+    await modal.present();
+  }
+
   async onAddImage() {
     const modal = await this.modalController.create({
       component: AddImagePage,
-      componentProps: { gatoRaza: this.gato.Raza, gatoId: this.gato.id }  // Asegúrate de pasar gatoId también
+      componentProps: { gatoRaza: this.gato.Raza, gatoId: this.gato.id }
     });
-    console.log('ID del gato al crear modal:', this.gato.id);  // Verifica que gato.id no sea undefined
+    console.log('ID del gato al crear modal:', this.gato.id);
     await modal.present();
   }  
   

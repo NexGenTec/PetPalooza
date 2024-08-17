@@ -26,7 +26,7 @@ export class AddImagePage implements OnInit {
 
   ngOnInit() {
     console.log('Raza del gato en AddImagePage:', this.gatoRaza);
-    console.log('ID del gato en AddImagePage:', this.gatoId);  // Verify gatoId
+    console.log('ID del gato en AddImagePage:', this.gatoId);
   }
 
   onFileSelected(event: any) {
@@ -64,17 +64,11 @@ export class AddImagePage implements OnInit {
       const currentData = doc.data() as InfoGato;
       
       // Si el array de imágenes no existe, lo inicializamos.
-      const updatedImgArray = currentData.Img ? [...currentData.Img] : [];
+      const updatedImgArray = currentData.ImgUsers ? [...currentData.ImgUsers] : [];
 
-      // Asegurarnos de que el array tenga al menos 6 posiciones.
-      while (updatedImgArray.length < 6) {
-        updatedImgArray.push(''); // Añadir espacios vacíos si es necesario.
-      }
-
-      // Insertamos la imagen en la posición 6 en adelante.
       updatedImgArray.push(imageUrl);
 
-      return docRef.update({ Img: updatedImgArray });
+      return docRef.update({ ImgUsers: updatedImgArray });
     }
   }
 

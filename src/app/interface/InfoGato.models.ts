@@ -25,6 +25,7 @@ export interface FechaCreacion {
     Cuidados: Cuidado[];
     fechaCreacion: FechaCreacion;
     Img: any[];
+    ImgUsers:any[];
     Temperamento: Temperamento[];
     Longevidad: string;
     Raza: string;
