@@ -8,6 +8,7 @@ import { ActionPerformed, PushNotifications } from '@capacitor/push-notification
 import { ActivatedRoute, Router } from '@angular/router';
 import { DataOflineService } from 'src/app/service/data-ofline.service';
 import { environment } from '../../../../environments/environment.prod';
+import { AddImagePage } from '../add-image/add-image.page';
 import { StorageService } from '../../../service/storage.service';
 
 @Component({
@@ -36,6 +37,7 @@ export class PerfilGatoPage implements OnInit {
   id: string;
 
   isLoading: boolean = true;
+  isLoadingImg: boolean = true;
 
   constructor(
     private modalController: ModalController,
@@ -122,11 +124,18 @@ export class PerfilGatoPage implements OnInit {
   }
 
   getImagesArray(gato: InfoGato): string[] {
+    console.log(gato.Img)
     return Object.values(gato.Img);
+  }
+
+  getImageUsersArray(gato: InfoGato): string[]{
+    console.log(gato.ImgUsers)
+    return Object.values(gato.ImgUsers);
   }
 
   changeCardContent(segmentValue: string) {
     if (!this.gato) return;
+    this.isLoadingImg = true; 
 
     switch (segmentValue) {
       case 'caracteristicas':
@@ -148,6 +157,9 @@ export class PerfilGatoPage implements OnInit {
         this.setCardContent('Imágenes', this.gato.Raza, '');
         this.temperamentoChips = [];
         this.showImagesContainer = true;
+        setTimeout(() => {
+          this.isLoadingImg = false;
+        }, 1000);
         break;
       default:
         this.changeCardContent('caracteristicas');
@@ -207,6 +219,24 @@ export class PerfilGatoPage implements OnInit {
     await this.favoritesService.addToFavorites(animal, type);
     this.loadFavorites();  // Actualizar la lista de favoritos después de agregar o eliminar
   }
+
+  async openModalSwiperUser(gato: InfoGato) {
+    const modal = await this.modalController.create({
+      component: ModalSwiperPage,
+      componentProps: { images: this.getImageUsersArray(gato), initialSlide: 0 }
+    });
+    await modal.present();
+  }
+
+  async onAddImage() {
+    const modal = await this.modalController.create({
+      component: AddImagePage,
+      componentProps: { gatoRaza: this.gato.Raza, gatoId: this.gato.id }
+    });
+    console.log('ID del gato al crear modal:', this.gato.id);
+    await modal.present();
+  }  
+  
 
   /*Anuncio Banner  */
   async showAdaptiveBanner() {
