@@ -107,7 +107,6 @@ export class homePage implements OnInit {
     this.firestores.getCollectionChanges<InfoGato>('InfoGatos').subscribe(gatos => {
       if (gatos) {
         this.originalGatos = gatos;
-        console.log(this.originalGatos)
         this.gatos = gatos
           .filter(gato => gato.fechaCreacion && gato.fechaCreacion.seconds)
           .sort((a, b) => b.fechaCreacion.seconds - a.fechaCreacion.seconds)
@@ -134,6 +133,7 @@ export class homePage implements OnInit {
           .sort((a, b) => b.fechaCreacion.seconds - a.fechaCreacion.seconds)
           //Cantida de Perros en ultimos
           .slice(0, 4);
+          console.log(this.originalGatosSlice)
       }
     });
 

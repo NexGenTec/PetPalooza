@@ -310,7 +310,7 @@
       </div>
 
       <swiper-container [slidesPerView]="1.3" [loop]="false">
-        <swiper-slide *ngFor="let gato of originalGatosSlice">
+        <swiper-slide *ngFor="let gato of originalGatosSlice; let i = index">
           <ng-container *ngIf="!showSkeletonGatos; else skeletonContent">
             <div class="px-3">
               <div class="w-full h-96 bg-white rounded-3xl p-4 flex flex-col items-start justify-between gap-3 border border-gray-200">
@@ -335,7 +335,7 @@
             </div>
           </ng-container>
         </swiper-slide>
-        <!-- <swiper-slide>
+        <swiper-slide *ngIf="originalGatosSlice.length > 0">
           <div class="px-3">
             <div class="w-full h-96 bg-white rounded-3xl p-4 flex flex-col items-center justify-center gap-3 border border-gray-200">
               <div class="w-full h-full bg-blue-100 rounded-2xl flex justify-center items-center">
@@ -345,7 +345,7 @@
               </div>
             </div>
           </div>
-        </swiper-slide> -->
+        </swiper-slide>
         <ng-template #skeletonContent>
           <div class="px-3">
             <div class="w-full h-96 bg-gray-100 rounded-3xl p-4 flex flex-col items-start justify-between gap-3 border border-gray-200 animate-pulse">
@@ -379,7 +379,7 @@
       </div>
 
       <swiper-container [slidesPerView]="1.3" [loop]="false">
-        <swiper-slide *ngFor="let perro of originalPerrosSlice">
+        <swiper-slide *ngFor="let perro of originalPerrosSlice; let i = index">
           <ng-container *ngIf="!showSkeletonPerros; else skeletonContent">
             <div class="px-3">
               <div class="w-full h-96 bg-white rounded-3xl p-4 flex flex-col items-start justify-between gap-3 border border-gray-200">
@@ -404,6 +404,17 @@
             </div>
           </ng-container>
         </swiper-slide>
+        <swiper-slide *ngIf="originalPerrosSlice.length > 0">
+          <div class="px-3">
+            <div class="w-full h-96 bg-white rounded-3xl p-4 flex flex-col items-center justify-center gap-3 border border-gray-200">
+              <div class="w-full h-full bg-blue-100 rounded-2xl flex justify-center items-center">
+                <div class="bg-blue-400 hover:bg-blue-500 text-white px-4 py-2 rounded-xl cursor-pointer" (click)="navigateToDog()">
+                  <ion-label class="text-lg">Ver más</ion-label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </swiper-slide>
         <ng-template #skeletonContent>
           <div class="px-3">
             <div class="w-full h-96 bg-gray-100 rounded-3xl p-4 flex flex-col items-start justify-between gap-3 border border-gray-200 animate-pulse">
@@ -418,17 +429,6 @@
             </div>
           </div>
         </ng-template>
-        <!-- <swiper-slide>
-          <div class="px-3">
-            <div class="w-full h-96 bg-white rounded-3xl p-4 flex flex-col items-center justify-center gap-3 border border-gray-200">
-              <div class="w-full h-full bg-blue-100 rounded-2xl flex justify-center items-center">
-                <div class="bg-blue-400 hover:bg-blue-500 text-white px-4 py-2 rounded-xl cursor-pointer" (click)="navigateToDog()">
-                  <ion-label class="text-lg">Ver mas</ion-label>
-                </div>
-              </div>
-            </div>
-          </div>
-        </swiper-slide> -->
       </swiper-container>
     </div>
     <ng-container>
