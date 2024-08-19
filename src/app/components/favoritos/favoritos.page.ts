@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { StorageService } from '../../service/storage.service';
 
 @Component({
   selector: 'app-favoritos',
@@ -11,9 +12,18 @@ export class FavoritosPage implements OnInit {
   isLoading: boolean = true;
   skeletonCategories = Array(2);
   skeletonFavorites = Array(2); 
+  favorites: any[] = [];
+  loaded: boolean = false;
 
-  constructor(private router: Router) { }
+  constructor(
+    private router: Router,
+    private favoritesService: StorageService,
+  ) { }
   ngOnInit(): void {
+    setTimeout(() => {
+      this.loadFavorites();
+      this.loaded = true;
+    }, 3000);
     const favoritesString = localStorage.getItem('favorites');
     if (favoritesString) {
       this.favoriteAnimals = JSON.parse(favoritesString);
@@ -36,5 +46,17 @@ export class FavoritosPage implements OnInit {
     setTimeout(() => {
       this.isLoading = false;  // Simula la carga completada
     }, 3000);  // Simula un tiempo de carga
+  }
+
+  private loadFavorites() {
+    this.favoriteAnimals = this.favoritesService.getFavorites();
+  }
+  toggleFavorite(animal: any, type: string) {
+    this.favoritesService.addToFavorites(animal, type);
+    this.loadFavorites(); // Recargar favoritos para reflejar los cambios en la vista
+  }
+
+  isInFavorites(animal: any, type: string): boolean {
+    return this.favoritesService.isInFavorites(animal, type);
   }
 }

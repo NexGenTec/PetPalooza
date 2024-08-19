@@ -223,14 +223,15 @@ export class PerfilPerroPage implements OnInit {
   private loadFavorites() {
     this.favorites = this.favoritesService.getFavorites();
   }
-    isInFavorites(animal: any, type: string): boolean {
-      return this.favoritesService.isInFavorites(animal, type);
-    }
   
-    async addToFavorites(animal: any, type: string) {
-      await this.favoritesService.addToFavorites(animal, type);
-      this.loadFavorites();  // Actualizar la lista de favoritos después de agregar o eliminar
-    }
+  isInFavorites(animal: any, type: string): boolean {
+    return this.favoritesService.isInFavorites(animal, type);
+  }
+
+  async addToFavorites(animal: any, type: string) {
+    await this.favoritesService.addToFavorites(animal, type);
+    this.loadFavorites();  // Actualizar la lista de favoritos después de agregar o eliminar
+  }
 
   /*Anuncio Banner  */
   async showAdaptiveBanner() {

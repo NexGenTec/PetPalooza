@@ -53,6 +53,9 @@ export class homePage implements OnInit {
   showFullBanner: boolean = true;
   showLargeBanner: boolean = true;
 
+  originalGatosSlice: InfoGato[] = [];
+  originalPerrosSlice: InfoPerro[] = [];
+
   breakpointsRegisteredAnimals = {
     0: { slidesPerView: 1.15 },
     340: { slidesPerView: 2.15 },
@@ -77,14 +80,12 @@ export class homePage implements OnInit {
 
   ngOnInit(): void {
     this.getQuirkyFacts();
-    this.loadFavorites();
     this.loadData();
     this.showImage = false;
     this.initStorage();
     setInterval(() => {
       this.showRandomQuirkyFact();
     }, 30000);
-    this.loadData();
     setTimeout(() => {
       this.loadFavorites();
       this.loaded = true;
@@ -106,11 +107,17 @@ export class homePage implements OnInit {
     this.firestores.getCollectionChanges<InfoGato>('InfoGatos').subscribe(gatos => {
       if (gatos) {
         this.originalGatos = gatos;
+        console.log(this.originalGatos)
         this.gatos = gatos
           .filter(gato => gato.fechaCreacion && gato.fechaCreacion.seconds)
           .sort((a, b) => b.fechaCreacion.seconds - a.fechaCreacion.seconds)
           //Cantida de Gatos en ultimos
           .slice(0, 2);
+        this.originalGatosSlice = gatos
+          .filter(gato => gato.fechaCreacion && gato.fechaCreacion.seconds)
+          .sort((a, b) => b.fechaCreacion.seconds - a.fechaCreacion.seconds)
+          //Cantida de Gatos en ultimos
+          .slice(0, 4);
       }
     });
 
@@ -122,6 +129,11 @@ export class homePage implements OnInit {
           .sort((a, b) => b.fechaCreacion.seconds - a.fechaCreacion.seconds)
           //Cantida de Perros en ultimos
           .slice(0, 2);
+        this.originalPerrosSlice = perros
+          .filter(perro => perro.fechaCreacion && perro.fechaCreacion.seconds)
+          .sort((a, b) => b.fechaCreacion.seconds - a.fechaCreacion.seconds)
+          //Cantida de Perros en ultimos
+          .slice(0, 4);
       }
     });
 
@@ -157,14 +169,13 @@ export class homePage implements OnInit {
     });
   }
 
-  private loadFavorites() {
-    this.favorites = this.favoritesService.getFavorites();
-  }
-
-
   showRandomQuirkyFact() {
     const randomIndex = Math.floor(Math.random() * this.DatosFreak.length);
     this.currentDatoIndex = randomIndex;
+  }
+
+  private loadFavorites() {
+    this.favorites = this.favoritesService.getFavorites();
   }
 
   isInFavorites(animal: any, type: string): boolean {
