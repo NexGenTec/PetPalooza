@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { LoadingController, ModalController, ToastController } from '@ionic/angular';
 import { ImgUploadService } from '../../../service/img-upload.service';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { InfoGato } from '../../../interface/InfoGato.models';
+import { ImgUser, InfoGato } from '../../../interface/InfoGato.models';
 
 @Component({
   selector: 'app-add-image',
@@ -13,6 +13,7 @@ export class AddImagePage implements OnInit {
 
   selectedFile: File | null = null;
   imageUrl: string | ArrayBuffer | null = null;
+  imageName: string = '';
   @Input() gatoRaza: string | null = null;
   @Input() gatoId: string | null = null; 
 
@@ -25,8 +26,6 @@ export class AddImagePage implements OnInit {
   ) {}
 
   ngOnInit() {
-    console.log('Raza del gato en AddImagePage:', this.gatoRaza);
-    console.log('ID del gato en AddImagePage:', this.gatoId);
   }
 
   onFileSelected(event: any) {
@@ -62,15 +61,21 @@ export class AddImagePage implements OnInit {
       const docRef = this.firestore.collection('InfoGatos').doc(this.gatoId);
       const doc = await docRef.get().toPromise();
       const currentData = doc.data() as InfoGato;
-      
+  
       // Si el array de imágenes no existe, lo inicializamos.
       const updatedImgArray = currentData.ImgUsers ? [...currentData.ImgUsers] : [];
-
-      updatedImgArray.push(imageUrl);
-
+  
+      // Crear un nuevo objeto ImgUser con un nombre y la URL de la imagen
+      const newImgUser: ImgUser = {
+        nombre: this.imageName,
+        url: imageUrl
+      };
+  
+      updatedImgArray.push(newImgUser);
+  
       return docRef.update({ ImgUsers: updatedImgArray });
     }
-  }
+  }  
 
   async showLoading() {
     const loading = await this.loading.create({

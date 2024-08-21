@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ImgModalPage } from '../../../components/img-modal/img-modal.page';
 import { LoadingController, ModalController, Platform } from '@ionic/angular';
-import { CaracteristicasFisicas, Cuidado, InfoPerro, Temperamento } from '../../../interface/InfoPerro.models';
+import { CaracteristicasFisicas, Cuidado, ImgUser, InfoPerro, Temperamento } from '../../../interface/InfoPerro.models';
 import { ModalSwiperPage } from 'src/app/components/modal-swiper/modal-swiper.page';
 import { AdmobAds, BannerPosition, BannerSize } from 'capacitor-admob-ads';
 import { environment } from '../../../../environments/environment.prod';
@@ -10,6 +10,7 @@ import { DataOflineService } from 'src/app/service/data-ofline.service';
 import { ActionPerformed, PushNotifications } from '@capacitor/push-notifications';
 import { AddImagePage } from '../add-image/add-image.page';
 import { StorageService } from '../../../service/storage.service';
+import { ModalswiperUsersPage } from 'src/app/components/modalswiper-users/modalswiper-users.page';
 
 @Component({
   selector: 'app-perfil-perro',
@@ -26,7 +27,7 @@ export class PerfilPerroPage implements OnInit {
   infoImage!: string;
   infoOrigin!: string;
   infoHistory!: string;
-  Longevidad!:string;
+  Longevidad!: string;
 
   favorites: any[] = [];
 
@@ -45,20 +46,19 @@ export class PerfilPerroPage implements OnInit {
     private route: ActivatedRoute,
     private ofline: DataOflineService,
     private favoritesService: StorageService,
-    private loadingController: LoadingController ) {}
+    private loadingController: LoadingController) { }
 
   ngOnInit() {
     this.platform.ready().then(() => {
       PushNotifications.addListener('pushNotificationActionPerformed', async (notification: ActionPerformed) => {
         const data = notification.notification.data;
-        
+
         if (data && data.Route) {
           const route = data.Route.split('/');
           this.id = route[1];
-          console.log('Redirigiendo a:', data.Route);
-  
+
           const loading = await this.showLoading();
-  
+
           // Navigate to the route and load data
           this.router.navigate([data.Route]).then(() => {
             this.loadPerroData().finally(() => {
@@ -80,7 +80,7 @@ export class PerfilPerroPage implements OnInit {
       this.perro = history.state.data;
       this.populatePerroData();
     }
-  }        
+  }
 
   async showLoading() {
     const loading = await this.loadingController.create({
@@ -92,7 +92,7 @@ export class PerfilPerroPage implements OnInit {
 
   async loadPerroData() {
     const loading = await this.showLoading();
-  
+
     if (this.id) {
       this.ofline.getPerroById(this.id).subscribe({
         next: (data) => {
@@ -108,7 +108,7 @@ export class PerfilPerroPage implements OnInit {
         }
       });
     }
-  }  
+  }
 
   populatePerroData() {
     if (this.perro) {
@@ -121,16 +121,20 @@ export class PerfilPerroPage implements OnInit {
     }
   }
 
+
   getImagesArray(perro: InfoPerro): string[] {
-    return Object.values(perro.Img);
+    // Ensure `gato?.Img` is always an object and avoid issues with `Object.values()`
+    return Array.isArray(perro?.Img) ? Object.values(perro.Img) : [];
   }
-  getImagesUsersArray(perro: InfoPerro): string[] {
-    return Object.values(perro.ImgUsers);
+
+  getImageUsersArray(perro: InfoPerro): ImgUser[] {
+    return Array.isArray(perro?.ImgUsers) ? perro.ImgUsers : [];
   }
+
 
   changeCardContent(segmentValue: string) {
     if (!this.perro) return;
-    this.isLoadingImg = true; 
+    this.isLoadingImg = true;
 
     switch (segmentValue) {
       case 'caracteristicas':
@@ -202,35 +206,50 @@ export class PerfilPerroPage implements OnInit {
     });
     await modal.present();
   }
-  async openModalSwiperUser(perro: InfoPerro) {
-    const modal = await this.modalController.create({
-      component: ModalSwiperPage,
-      componentProps: { images: this.getImagesUsersArray(perro), initialSlide: 0 }
-    });
-    await modal.present();
+  async openModalSwiperUser(perro: InfoPerro, selectedImage: ImgUser) {
+    try {
+      // Obtén el array completo de imágenes para el swiper
+      const images: ImgUser[] = this.getImageUsersArray(perro);
+
+      // Encuentra el índice de la imagen seleccionada
+      const initialSlideIndex = images.findIndex(img => img.url === selectedImage.url);
+
+      // Crea el modal y pasa las imágenes y el índice inicial
+      const modal = await this.modalController.create({
+        component: ModalswiperUsersPage,
+        componentProps: {
+          images,
+          initialSlide: initialSlideIndex // Configura el índice inicial al de la imagen seleccionada
+        }
+      });
+
+      await modal.present();
+    } catch (error) {
+      console.error('Error presenting modal:', error);
+    }
   }
 
   async onAddImage() {
     const modal = await this.modalController.create({
       component: AddImagePage,
-      componentProps: { perroRaza: this.perro.Raza ,  perroId: this.perro.id }
+      componentProps: { perroRaza: this.perro.Raza, perroId: this.perro.id }
     });
-    console.log('Gato ID al crear modal:', this.perro.Raza);  // Verifica que gato.id no sea undefined
     await modal.present();
-  }  
+  }
 
   // Like button
   private loadFavorites() {
     this.favorites = this.favoritesService.getFavorites();
   }
-    isInFavorites(animal: any, type: string): boolean {
-      return this.favoritesService.isInFavorites(animal, type);
-    }
-  
-    async addToFavorites(animal: any, type: string) {
-      await this.favoritesService.addToFavorites(animal, type);
-      this.loadFavorites();  // Actualizar la lista de favoritos después de agregar o eliminar
-    }
+
+  isInFavorites(animal: any, type: string): boolean {
+    return this.favoritesService.isInFavorites(animal, type);
+  }
+
+  async addToFavorites(animal: any, type: string) {
+    await this.favoritesService.addToFavorites(animal, type);
+    this.loadFavorites();  // Actualizar la lista de favoritos después de agregar o eliminar
+  }
 
   /*Anuncio Banner  */
   async showAdaptiveBanner() {
@@ -257,4 +276,3 @@ export class PerfilPerroPage implements OnInit {
     }
   }
 }
-  

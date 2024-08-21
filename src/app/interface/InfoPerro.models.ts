@@ -18,6 +18,11 @@ export interface FechaCreacion {
     tipo: string;
     descripcion: string;
   }
+
+  export interface ImgUser {
+    nombre: string;
+    url: string;
+  }
   
   export interface InfoPerro {
     Historia: string;
@@ -25,7 +30,7 @@ export interface FechaCreacion {
     Cuidados: Cuidado[];
     fechaCreacion: FechaCreacion;
     Img: any[];
-    ImgUsers:any[];
+    ImgUsers: ImgUser[]; 
     Temperamento: Temperamento[];
     Longevidad: string;
     Raza: string;

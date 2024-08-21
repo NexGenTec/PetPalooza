@@ -44,8 +44,12 @@ const routes: Routes = [
   },
   {
     path: 'modal-swiper',
-    loadChildren: () => import('./components/modal-swiper/modal-swiper.module').then( m => m.ModalSwiperPageModule)
+    loadChildren: () => import('./components/modal-swiper/modal-swiper.module').then(m => m.ModalSwiperPageModule)
+  },  {
+    path: 'modalswiper-users',
+    loadChildren: () => import('./components/modalswiper-users/modalswiper-users.module').then( m => m.ModalswiperUsersPageModule)
   },
+
 ];
 @NgModule({
   imports: [
