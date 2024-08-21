@@ -55,7 +55,6 @@ export class PerfilPerroPage implements OnInit {
         if (data && data.Route) {
           const route = data.Route.split('/');
           this.id = route[1];
-          console.log('Redirigiendo a:', data.Route);
   
           const loading = await this.showLoading();
   
@@ -125,7 +124,6 @@ export class PerfilPerroPage implements OnInit {
     return Object.values(perro.Img);
   }
   getImageUsersArray(perro: InfoPerro): ImgUser[] {
-    console.log('ImgUsers Array:', perro.ImgUsers);
     return perro.ImgUsers;
   }
     
@@ -216,7 +214,6 @@ export class PerfilPerroPage implements OnInit {
       component: AddImagePage,
       componentProps: { perroRaza: this.perro.Raza ,  perroId: this.perro.id }
     });
-    console.log('Gato ID al crear modal:', this.perro.Raza);  // Verifica que gato.id no sea undefined
     await modal.present();
   }  
 

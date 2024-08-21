@@ -133,7 +133,6 @@ export class homePage implements OnInit {
           .sort((a, b) => b.fechaCreacion.seconds - a.fechaCreacion.seconds)
           //Cantida de Perros en ultimos
           .slice(0, 4);
-          console.log(this.originalGatosSlice)
       }
     });
 
@@ -188,7 +187,6 @@ export class homePage implements OnInit {
   }
 
   navigateToCat() {
-    console.log('Navegando a:',);
     this.router.navigate(['/tabs/gato']);
   }
 
@@ -202,7 +200,6 @@ export class homePage implements OnInit {
   }
 
   navigateToTargetPage(segment: string, gato: InfoGato) {
-    console.log('Navegando a:', segment, gato.id);
     this.router.navigate([segment, gato.id], { state: { data: gato } });
   }
 

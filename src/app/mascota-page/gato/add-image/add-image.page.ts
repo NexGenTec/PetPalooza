@@ -26,8 +26,6 @@ export class AddImagePage implements OnInit {
   ) {}
 
   ngOnInit() {
-    console.log('Raza del gato en AddImagePage:', this.gatoRaza);
-    console.log('ID del gato en AddImagePage:', this.gatoId);
   }
 
   onFileSelected(event: any) {

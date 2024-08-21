@@ -57,8 +57,6 @@ export class PerfilGatoPage implements OnInit {
         if (data && data.Route) {
           const route = data.Route.split('/');
           this.id = route[1];
-          console.log('Redirigiendo a:', data.Route);
-  
           const loading = await this.showLoading();
   
           // Navigate to the route and load data
@@ -128,8 +126,6 @@ export class PerfilGatoPage implements OnInit {
   }
 
   getImageUsersArray(gato: InfoGato): ImgUser[] {
-    // Log the array of ImgUser objects
-    console.log('ImgUsers Array:', gato.ImgUsers);
     return gato.ImgUsers; // Return the array of ImgUser objects
   }  
   changeCardContent(segmentValue: string) {
@@ -232,7 +228,6 @@ export class PerfilGatoPage implements OnInit {
       component: AddImagePage,
       componentProps: { gatoRaza: this.gato.Raza, gatoId: this.gato.id }
     });
-    console.log('ID del gato al crear modal:', this.gato.id);
     await modal.present();
   }  
   
