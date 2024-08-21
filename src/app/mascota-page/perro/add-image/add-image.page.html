@@ -3,9 +3,9 @@
     <ion-icon class="bg-gray-50 text-gray-700 rounded-full text-xl" slot="icon-only" name="close"></ion-icon>
   </button>
   <div class="w-full max-w-md p-4 mx-auto">
-    <form class="form" (ngSubmit)="uploadImage()" #imageForm="ngForm">
-      <h1 class="form-title">Sube la imagen de tu mascota</h1>
-      <p class="form-paragraph">El archivo debe ser una imagen</p>
+    <form class="form px-10" (ngSubmit)="uploadImage()" #imageForm="ngForm">
+      <h1 class="form-title text-lg font-semibold">Sube la imagen de tu mascota</h1>
+      <p class="form-paragraph mb-4">No se aceptan archivos de videos o gif</p>
 
       <!-- Nombre de la mascota -->
       <label for="name-input" class="drop">
@@ -15,10 +15,10 @@
 
       <!-- Selección del archivo -->
       <label for="file-input" class="drop-container">
-        <span class="drop-title">Arrastra los archivos aquí</span>
-        o
+        <span class="drop-title">Imagen de tu mascota</span>
         <input type="file" accept="image/*" id="file-input" (change)="onFileSelected($event)" required />
       </label>
+      <small class="my-3 mb-5 text-xs">Solamente puede subir una imagen por carga.</small>
 
       <!-- Previsualización de imagen -->
       <div *ngIf="imageUrl" class="image-preview">
@@ -26,9 +26,13 @@
       </div>
 
       <!-- Botón de envío -->
-      <ion-button expand="block" type="submit" color="secondary" [disabled]="!selectedFile || !imageName || !imageForm.valid">
+      <button fill="clear" expand="block" class="text-white px-3 py-2 my-2 rounded-xl bg-blue-400 hover:bg-blue-500 transition-colors" type="submit" color="secondary" [disabled]="!selectedFile || !imageName || !imageForm.valid">
         Subir Imagen
-      </ion-button>
+      </button>
     </form>
   </div>
 </ion-content>
+
+<div class="relative mx-6 my-8 text-center">
+  <small>La imagen o imagenes que suban, deben cumplir con nuestras políticas, de no ser asi, serán eliminadas.</small>
+</div>
