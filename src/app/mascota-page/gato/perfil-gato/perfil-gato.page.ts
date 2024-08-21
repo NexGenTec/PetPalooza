@@ -10,6 +10,7 @@ import { DataOflineService } from 'src/app/service/data-ofline.service';
 import { environment } from '../../../../environments/environment.prod';
 import { AddImagePage } from '../add-image/add-image.page';
 import { StorageService } from '../../../service/storage.service';
+import { ModalswiperUsersPage } from 'src/app/components/modalswiper-users/modalswiper-users.page';
 
 @Component({
   selector: 'app-perfil-gato',
@@ -27,10 +28,10 @@ export class PerfilGatoPage implements OnInit {
   infoImage!: string;
   infoOrigin!: string;
   infoHistory!: string;
-  Longevidad!:string;
+  Longevidad!: string;
 
   favorites: any[] = [];
-  
+
   gato!: InfoGato;
   showImagesContainer: boolean = false;
   temperamentoChips: Temperamento[] = [];
@@ -46,19 +47,19 @@ export class PerfilGatoPage implements OnInit {
     private route: ActivatedRoute,
     private ofline: DataOflineService,
     private favoritesService: StorageService,
-    private loadingController: LoadingController ) {}
-    
+    private loadingController: LoadingController) { }
+
 
   ngOnInit() {
     this.platform.ready().then(() => {
       PushNotifications.addListener('pushNotificationActionPerformed', async (notification: ActionPerformed) => {
         const data = notification.notification.data;
-        
+
         if (data && data.Route) {
           const route = data.Route.split('/');
           this.id = route[1];
           const loading = await this.showLoading();
-  
+
           // Navigate to the route and load data
           this.router.navigate([data.Route]).then(() => {
             this.loadGatoData().finally(() => {
@@ -80,7 +81,7 @@ export class PerfilGatoPage implements OnInit {
       this.gato = history.state.data;
       this.populateGatoData();
     }
-  }        
+  }
 
   async showLoading() {
     const loading = await this.loadingController.create({
@@ -92,7 +93,7 @@ export class PerfilGatoPage implements OnInit {
 
   async loadGatoData() {
     const loading = await this.showLoading();
-  
+
     if (this.id) {
       this.ofline.getGatoById(this.id).subscribe({
         next: (data) => {
@@ -108,7 +109,7 @@ export class PerfilGatoPage implements OnInit {
         }
       });
     }
-  }  
+  }
 
   populateGatoData() {
     if (this.gato) {
@@ -122,15 +123,15 @@ export class PerfilGatoPage implements OnInit {
   }
 
   getImagesArray(gato: InfoGato): string[] {
-    return Object.values(gato.Img);
+    return Array.isArray(gato?.Img) ? Object.values(gato.Img) : [];
   }
 
   getImageUsersArray(gato: InfoGato): ImgUser[] {
     return gato.ImgUsers; // Return the array of ImgUser objects
-  }  
+  }
   changeCardContent(segmentValue: string) {
     if (!this.gato) return;
-    this.isLoadingImg = true; 
+    this.isLoadingImg = true;
 
     switch (segmentValue) {
       case 'caracteristicas':
@@ -215,22 +216,36 @@ export class PerfilGatoPage implements OnInit {
     this.loadFavorites();  // Actualizar la lista de favoritos después de agregar o eliminar
   }
 
-  async openModalSwiperUser(gato: InfoGato) {
-    const modal = await this.modalController.create({
-      component: ModalSwiperPage,
-      componentProps: { images: this.getImageUsersArray(gato), initialSlide: 0 }
-    });
-    await modal.present();
-  }
+  async openModalSwiperUser(gato: InfoGato, selectedImage: ImgUser) {
+    try {
+      // Obtén el array completo de imágenes para el swiper
+      const images: ImgUser[] = this.getImageUsersArray(gato);
 
+      // Encuentra el índice de la imagen seleccionada
+      const initialSlideIndex = images.findIndex(img => img.url === selectedImage.url);
+
+      // Crea el modal y pasa las imágenes y el índice inicial
+      const modal = await this.modalController.create({
+        component: ModalswiperUsersPage,
+        componentProps: {
+          images,
+          initialSlide: initialSlideIndex // Configura el índice inicial al de la imagen seleccionada
+        }
+      });
+
+      await modal.present();
+    } catch (error) {
+      console.error('Error presenting modal:', error);
+    }
+  }
   async onAddImage() {
     const modal = await this.modalController.create({
       component: AddImagePage,
       componentProps: { gatoRaza: this.gato.Raza, gatoId: this.gato.id }
     });
     await modal.present();
-  }  
-  
+  }
+
 
   /*Anuncio Banner  */
   async showAdaptiveBanner() {
@@ -257,4 +272,3 @@ export class PerfilGatoPage implements OnInit {
     }
   }
 }
-  

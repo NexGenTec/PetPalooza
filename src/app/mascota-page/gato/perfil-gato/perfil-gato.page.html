@@ -123,12 +123,14 @@
                     <h2 class="text-lg font-semibold">{{ gato.Raza }} de usuarios</h2>
                   </div>
                   <div *ngFor="let imgUser of getImageUsersArray(gato)">
-                    <div class="max-w-full rounded-lg overflow-hidden">
-                      <p>{{ imgUser.nombre }}</p> <!-- Display the name of the image -->
-                      <ion-img [src]="imgUser.url" alt="Imagen de {{ imgUser.nombre }}" (click)="openModalSwiperUser(gato)">
-                      </ion-img>
+                    <div class="max-w-full rounded-lg overflow-y-hidden">
+                      <div class="relative overflow-hidden ">
+                        <p class="absolute bottom-0 left-0 w-full text-gray-100 bg-gradient-to-t from-black/90 to-transparent p-1 px-2" >{{ imgUser.nombre }}</p>
+                        <ion-img [src]="imgUser.url" alt="Imagen de {{ imgUser.nombre }}" (click)="openModalSwiperUser(gato, imgUser)">
+                        </ion-img>
+                      </div>
                     </div>
-                  </div>                                  
+                  </div>                                                                        
                 </div>
               </div>             
             </ng-container>
