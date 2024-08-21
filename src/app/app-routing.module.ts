@@ -46,6 +46,7 @@ const routes: Routes = [
     path: 'modal-swiper',
     loadChildren: () => import('./components/modal-swiper/modal-swiper.module').then( m => m.ModalSwiperPageModule)
   },
+
 ];
 @NgModule({
   imports: [

@@ -8,6 +8,10 @@ const routes: Routes = [
     path: '',
     component: FavoritosPage
   },
+  {
+    path: 'match-favorite',
+    loadChildren: () => import('../favoritos/match-favorite/match-favorite.module').then( m => m.MatchFavoritePageModule)
+  },
 ];
 
 @NgModule({

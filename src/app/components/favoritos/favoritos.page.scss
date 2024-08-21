@@ -11,4 +11,12 @@
     opacity: 0.5;
   }
 }
-  
+.button-icon {
+  font-size: 20px;
+  margin-right: 8px; /* Espacio entre el icono y el texto */
+}
+
+.button-text {
+  font-size: 16px;
+  letter-spacing: 0.5px;
+}

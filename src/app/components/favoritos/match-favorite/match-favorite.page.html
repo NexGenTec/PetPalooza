@@ -1,0 +1,39 @@
+<ion-content [fullscreen]="true">
+  <ion-toolbar class="border-b border-gray-200">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <div class="flex items-center justify-center">
+      <img 
+        class="max-h-14 my-1"
+        alt="logo PetPalooza" 
+        src="assets/img/logo/PetPalooza.png" 
+      />
+    </div>
+  </ion-toolbar>
+
+  <div class="bg-white p-4 flex flex-col items-center">
+    <!-- Nombre de la mascota -->
+    <h2 class="text-2xl font-bold mb-2">Nombre del Gato</h2>
+
+    <!-- Imagen de la mascota -->
+    <img class="w-full h-48 object-cover rounded-lg mb-4" src="assets/img/ejemplo/ejemplo2.jpg" alt="Imagen del Gato" />
+
+    <!-- Datos de la mascota -->
+    <div class="text-center mb-4">
+      <p class="text-gray-600">Edad: 2 años</p>
+      <p class="text-gray-600">Raza: Siamés</p>
+      <p class="text-gray-600">Descripción: Un gato amigable y juguetón.</p>
+    </div>
+
+    <!-- Botones de acción -->
+    <div class="flex justify-between w-full px-8">
+      <ion-button expand="full" color="danger" class="rounded-full">
+        <ion-icon name="close"></ion-icon>
+      </ion-button>
+      <ion-button expand="full" color="primary" class="rounded-full">
+        <ion-icon name="heart"></ion-icon>
+      </ion-button>
+    </div>
+  </div>
+</ion-content>
