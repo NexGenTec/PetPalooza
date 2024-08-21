@@ -6,7 +6,7 @@ import { InfoPerro } from '../interface/InfoPerro.models';
 import { QuirkyFacts } from '../interface/QuirkyFacts.models';
 import { Storage } from '@ionic/storage';
 import { WelcomeModalPage } from '../components/welcome-modal/welcome-modal.page';
-import { ModalController, ToastController } from '@ionic/angular';
+import { ModalController } from '@ionic/angular';
 import { InfoAve } from '../interface/InfoAve.models';
 import { ImgModalPage } from '../components/img-modal/img-modal.page';
 import { InfoImage } from '../interface/InfoImage.models';

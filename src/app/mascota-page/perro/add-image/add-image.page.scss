@@ -34,7 +34,6 @@
     margin-top: 2.1875rem;
     border-radius: 10px;
     border: 2px dashed rgb(171, 202, 255);
-    color: #444;
     cursor: pointer;
     transition: background .2s ease-in-out, border .2s ease-in-out;
   }
@@ -49,7 +48,6 @@
   }
   
   .drop-title {
-    color: #444;
     font-size: 20px;
     font-weight: bold;
     text-align: center;
@@ -59,7 +57,6 @@
   #file-input {
     width: 350px;
     max-width: 100%;
-    color: #444;
     padding: 2px;
     background: #fff;
     border-radius: 10px;
@@ -96,5 +93,14 @@
     max-width: 100%;
     max-height: 200px;
     border-radius: 10px;
+  }
+
+  .white-bg-blue-text {
+    background-color: rgb(255, 255, 255);
+    color: rgb(0, 0, 0);
+    border: 1px solid #000000; /* Optional: Add a border */
+    padding: 8px;
+    border-radius: 4px;
+    width: 100%; /* Make the input take the full width of its container */
   }
   

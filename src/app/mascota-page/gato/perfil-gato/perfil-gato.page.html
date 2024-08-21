@@ -122,13 +122,13 @@
                   <div *ngIf="getImageUsersArray(gato).length" class="col-span-full text-center my-4">
                     <h2 class="text-lg font-semibold">{{ gato.Raza }} de usuarios</h2>
                   </div>
-                  <!-- Mostrar las imágenes desde la sexta en adelante -->
-                  <div *ngFor="let imgUrlUser of getImageUsersArray(gato)">
+                  <div *ngFor="let imgUser of getImageUsersArray(gato)">
                     <div class="max-w-full rounded-lg overflow-hidden">
-                      <ion-img [src]="imgUrlUser" alt="Imagen de {{ gato.Raza }}" (click)="openModalSwiperUser(gato)">
+                      <p>{{ imgUser.nombre }}</p> <!-- Display the name of the image -->
+                      <ion-img [src]="imgUser.url" alt="Imagen de {{ imgUser.nombre }}" (click)="openModalSwiperUser(gato)">
                       </ion-img>
                     </div>
-                  </div>
+                  </div>                                  
                 </div>
               </div>             
             </ng-container>

@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { LoadingController, ModalController, ToastController } from '@ionic/angular';
-import { InfoPerro } from 'src/app/interface/InfoPerro.models';
+import { ImgUser, InfoPerro } from 'src/app/interface/InfoPerro.models';
 import { ImgUploadService } from 'src/app/service/img-upload.service';
 
 @Component({
@@ -13,6 +13,7 @@ export class AddImagePage implements OnInit {
 
   selectedFile: File | null = null;
   imageUrl: string | ArrayBuffer | null = null;
+  imageName: string = '';
   @Input() perroRaza: string | null = null;
   @Input() perroId: string | null = null;
 
@@ -64,10 +65,18 @@ export class AddImagePage implements OnInit {
       const doc = await docRef.get().toPromise();
       const currentData = doc.data() as InfoPerro;
       
-      const updatedImgArray = currentData.ImgUsers ? [...currentData.ImgUsers] : [];
-      updatedImgArray.push(imageUrl);
-
-      return docRef.update({ ImgUsers: updatedImgArray });
+        // Si el array de imágenes no existe, lo inicializamos.
+        const updatedImgArray = currentData.ImgUsers ? [...currentData.ImgUsers] : [];
+  
+        // Crear un nuevo objeto ImgUser con un nombre y la URL de la imagen
+        const newImgUser: ImgUser = {
+          nombre: this.imageName,
+          url: imageUrl
+        };
+    
+        updatedImgArray.push(newImgUser);
+    
+        return docRef.update({ ImgUsers: updatedImgArray });
     }
   }
 

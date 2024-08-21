@@ -4,6 +4,8 @@ import { CuidadosGeneral } from '../interface/CuidadosGeneral.model';
 import { InfoImage } from '../interface/InfoImage.models';
 import { AdmobAds, BannerPosition, BannerSize, } from 'capacitor-admob-ads';
 import { environment } from '../../environments/environment.prod';
+import { ImgModalPage } from '../components/img-modal/img-modal.page';
+import { ModalController } from '@ionic/angular';
 
 @Component({
   selector: 'app-cuidados',
@@ -19,7 +21,7 @@ export class CuidadosPage implements OnInit {
   originalImg: InfoImage[] = [];
   img: InfoImage[] = [];
 
-  constructor(private firestoreService: FirestoreService) { }
+  constructor(private firestoreService: FirestoreService, private modalController: ModalController,) { }
 
   ionViewDidEnter() {
     this.showAdaptiveBanner();
@@ -199,6 +201,15 @@ export class CuidadosPage implements OnInit {
     return htmlContent;
   }
 
+  async openModal(imageUrl: string) {
+    const modal = await this.modalController.create({
+      component: ImgModalPage,
+      componentProps: {
+        imageUrl: imageUrl
+      }
+    })
+    return await modal.present();
+  }
   /*Anuncio Banner  */
   async showAdaptiveBanner() {
     try {

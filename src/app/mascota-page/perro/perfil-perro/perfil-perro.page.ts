@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ImgModalPage } from '../../../components/img-modal/img-modal.page';
 import { LoadingController, ModalController, Platform } from '@ionic/angular';
-import { CaracteristicasFisicas, Cuidado, InfoPerro, Temperamento } from '../../../interface/InfoPerro.models';
+import { CaracteristicasFisicas, Cuidado, ImgUser, InfoPerro, Temperamento } from '../../../interface/InfoPerro.models';
 import { ModalSwiperPage } from 'src/app/components/modal-swiper/modal-swiper.page';
 import { AdmobAds, BannerPosition, BannerSize } from 'capacitor-admob-ads';
 import { environment } from '../../../../environments/environment.prod';
@@ -124,10 +124,11 @@ export class PerfilPerroPage implements OnInit {
   getImagesArray(perro: InfoPerro): string[] {
     return Object.values(perro.Img);
   }
-  getImagesUsersArray(perro: InfoPerro): string[] {
-    return Object.values(perro.ImgUsers);
+  getImageUsersArray(perro: InfoPerro): ImgUser[] {
+    console.log('ImgUsers Array:', perro.ImgUsers);
+    return perro.ImgUsers;
   }
-
+    
   changeCardContent(segmentValue: string) {
     if (!this.perro) return;
     this.isLoadingImg = true; 
@@ -205,7 +206,7 @@ export class PerfilPerroPage implements OnInit {
   async openModalSwiperUser(perro: InfoPerro) {
     const modal = await this.modalController.create({
       component: ModalSwiperPage,
-      componentProps: { images: this.getImagesUsersArray(perro), initialSlide: 0 }
+      componentProps: { images: this.getImageUsersArray(perro), initialSlide: 0 }
     });
     await modal.present();
   }

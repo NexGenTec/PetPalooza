@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { LoadingController, ModalController, Platform } from '@ionic/angular';
 import { ImgModalPage } from '../../../components/img-modal/img-modal.page';
-import { CaracteristicasFisicas, Cuidado, InfoGato, Temperamento } from '../../../interface/InfoGato.models';
+import { CaracteristicasFisicas, Cuidado, ImgUser, InfoGato, Temperamento } from '../../../interface/InfoGato.models';
 import { ModalSwiperPage } from 'src/app/components/modal-swiper/modal-swiper.page';
 import { AdmobAds, BannerPosition, BannerSize } from 'capacitor-admob-ads';
 import { ActionPerformed, PushNotifications } from '@capacitor/push-notifications';
@@ -124,15 +124,14 @@ export class PerfilGatoPage implements OnInit {
   }
 
   getImagesArray(gato: InfoGato): string[] {
-    console.log(gato.Img)
     return Object.values(gato.Img);
   }
 
-  getImageUsersArray(gato: InfoGato): string[]{
-    console.log(gato.ImgUsers)
-    return Object.values(gato.ImgUsers);
-  }
-
+  getImageUsersArray(gato: InfoGato): ImgUser[] {
+    // Log the array of ImgUser objects
+    console.log('ImgUsers Array:', gato.ImgUsers);
+    return gato.ImgUsers; // Return the array of ImgUser objects
+  }  
   changeCardContent(segmentValue: string) {
     if (!this.gato) return;
     this.isLoadingImg = true; 
@@ -207,10 +206,10 @@ export class PerfilGatoPage implements OnInit {
     });
     await modal.present();
   }
-// Like button
+  // Like button
   private loadFavorites() {
-  this.favorites = this.favoritesService.getFavorites();
-}
+    this.favorites = this.favoritesService.getFavorites();
+  }
   isInFavorites(animal: any, type: string): boolean {
     return this.favoritesService.isInFavorites(animal, type);
   }
