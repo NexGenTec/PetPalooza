@@ -127,7 +127,7 @@ export class PerfilGatoPage implements OnInit {
   }
 
   getImageUsersArray(gato: InfoGato): ImgUser[] {
-    return gato.ImgUsers; // Return the array of ImgUser objects
+    return Array.isArray(gato?.ImgUsers) ? gato.ImgUsers : [];
   }
   changeCardContent(segmentValue: string) {
     if (!this.gato) return;

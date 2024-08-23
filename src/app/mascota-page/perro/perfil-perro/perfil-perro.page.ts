@@ -123,7 +123,6 @@ export class PerfilPerroPage implements OnInit {
 
 
   getImagesArray(perro: InfoPerro): string[] {
-    // Ensure `gato?.Img` is always an object and avoid issues with `Object.values()`
     return Array.isArray(perro?.Img) ? Object.values(perro.Img) : [];
   }
 

@@ -97,12 +97,12 @@
                     </div>
                   </div>
                 </div>
-              </div>              
-              <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-                <ion-fab-button (click)="onAddImage()" color="light">
-                  <ion-icon name="add-outline" color="secondary"></ion-icon>
+              </div>  
+              <ion-fab vertical="bottom" slot="fixed" class="fixed right-6">
+                <ion-fab-button (click)="onAddImage()" color="secondary">
+                  <ion-icon name="add-outline" color="light"></ion-icon>
                 </ion-fab-button>
-              </ion-fab>  
+              </ion-fab>
             </ng-container>
             <ng-template #loadingImagesSkeleton>
               <div class="container mx-auto p-4">

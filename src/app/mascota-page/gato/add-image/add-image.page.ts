@@ -40,7 +40,7 @@ export class AddImagePage implements OnInit {
   }
 
   async uploadImage() {
-    if (this.selectedFile && this.gatoRaza && this.gatoId) {
+    if (this.selectedFile && this.gatoRaza && this.gatoId && this.imageName) {
       try {
         const loading = await this.showLoading();
         const imageUrl = await this.uploadService.uploadImageGato(this.selectedFile, this.gatoRaza);

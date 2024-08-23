@@ -18,7 +18,7 @@ export class ImgUploadService {
   uploadImageGato(file: File, gatoRaza: string): Promise<string> {
     return new Promise((resolve, reject) => {
       // Ajustar el filePath según la estructura deseada
-      const filePath = `Gatos/${gatoRaza}/ImgPendientes/${file.name}`;
+      const filePath = `Gato/${gatoRaza}/ImgPendientes/${file.name}`;
       console.log('File path:', filePath);
       const fileRef = this.storage.ref(filePath);
       const task = this.storage.upload(filePath, file);
