@@ -97,7 +97,7 @@ export class CatPage implements OnInit {
 
     try {
       if (imageFile) {
-        const imagePath = `Gatos/${gato.Raza}/imgPerfil/${imageFile.name}`;
+        const imagePath = `Gato/${gato.Raza}/imgPerfil/${imageFile.name}`;
         const uploadTask = this.storage.upload(imagePath, imageFile);
         const imageUrl = await (await uploadTask).ref.getDownloadURL();
         gato.imgPerfil = imageUrl;
@@ -106,7 +106,7 @@ export class CatPage implements OnInit {
       if (imagesFiles.length > 0) {
         gato.Img = [];
         for (const image of imagesFiles) {
-          const imagePath = `Gatos/${gato.Raza}/imagenes/${image.name}`;
+          const imagePath = `Gato/${gato.Raza}/imagenes/${image.name}`;
           const uploadTask = this.storage.upload(imagePath, image);
           const imageUrl = await (await uploadTask).ref.getDownloadURL();
           gato.Img.push(imageUrl);
