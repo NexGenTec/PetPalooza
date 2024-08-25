@@ -12,28 +12,37 @@
     </div>
   </ion-toolbar>
 
-  <div class="bg-white p-4 flex flex-col items-center">
-    <!-- Nombre de la mascota -->
-    <h2 class="text-2xl font-bold mb-2">Nombre del Gato</h2>
-
-    <!-- Imagen de la mascota -->
-    <img class="w-full h-48 object-cover rounded-lg mb-4" src="assets/img/ejemplo/ejemplo2.jpg" alt="Imagen del Gato" />
-
-    <!-- Datos de la mascota -->
-    <div class="text-center mb-4">
-      <p class="text-gray-600">Edad: 2 años</p>
-      <p class="text-gray-600">Raza: Siamés</p>
-      <p class="text-gray-600">Descripción: Un gato amigable y juguetón.</p>
-    </div>
-
-    <!-- Botones de acción -->
-    <div class="flex justify-between w-full px-8">
-      <ion-button expand="full" color="danger" class="rounded-full">
-        <ion-icon name="close"></ion-icon>
-      </ion-button>
-      <ion-button expand="full" color="primary" class="rounded-full">
-        <ion-icon name="heart"></ion-icon>
-      </ion-button>
+  <div *ngIf="loading; else content">
+    <!-- Skeleton Loader -->
+    <div class="skeleton-loader">
+      <div class="skeleton-image"></div>
+      <div class="skeleton-text"></div>
+      <div class="skeleton-text"></div>
+      <div class="skeleton-text"></div>
     </div>
   </div>
+
+  <ng-template #content>
+    <div *ngIf="combinedAnimals.length > 0; else noAnimal" class="bg-white p-4 flex flex-col items-center">
+      <h2 class="text-2xl font-bold mb-2">{{ getCurrentAnimal()?.nombre }}</h2>
+      <img class="w-full h-48 object-cover rounded-lg mb-4" [src]="getCurrentAnimal()?.imgPerfil" alt="Imagen de la mascota" />
+      <div class="text-center mb-4">
+        <p class="text-gray-600">Edad: {{ getCurrentAnimal()?.Anio }}</p>
+        <p class="text-gray-600">Raza: {{ getCurrentAnimal()?.Raza }}</p>
+        <p class="text-gray-600">Descripción: {{ getCurrentAnimal()?.Longevidad }}</p>
+      </div>
+      <div class="flex justify-between w-full px-8">
+        <ion-button expand="full" color="danger" class="rounded-full" (click)="onDislike()">
+          <ion-icon name="close"></ion-icon>
+        </ion-button>
+        <ion-button expand="full" color="primary" class="rounded-full" (click)="onLike(getCurrentAnimal())">
+          <ion-icon name="heart"></ion-icon>
+        </ion-button>
+      </div>
+    </div>
+
+    <ng-template #noAnimal>
+      <p class="text-center p-4">Ya todos las mascotas están en favoritos - Estaremos actualizando nuestra data momentáneamente.</p>
+    </ng-template>
+  </ng-template>
 </ion-content>

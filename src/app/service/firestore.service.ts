@@ -27,9 +27,9 @@ export class FirestoreService {
     return docData(document) as Observable<tipo>;
   }
 
-  getCollectionChanges<tipo>(path: string) {
+  getCollectionChanges<tipo>(path: string): Observable<tipo[]> {
     const itemCollection = collection(this.firestore, path);
-    return collectionData(itemCollection) as Observable<tipo[]>;
+    return collectionData(itemCollection, { idField: 'id' }) as Observable<tipo[]>;
   }
 
   createDocument(data: any, enlace: string) {
