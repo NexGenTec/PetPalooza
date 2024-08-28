@@ -28,6 +28,10 @@ const routes: Routes = [
         loadChildren: () => import('../mascota-page/perro/perro.module').then(m => m.perroPageModule)
       },
       {
+        path: 'mestizo',
+        loadChildren: () => import('../mascota-page/mestizo/mestizo.module').then( m => m.MestizoPageModule)
+      },
+      {
         path: 'home',
         loadChildren: () => import('../home/home.module').then(m => m.homePageModule)
       },
