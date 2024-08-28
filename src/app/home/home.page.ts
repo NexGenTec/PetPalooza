@@ -75,7 +75,7 @@ export class homePage implements OnInit {
   }
 
   ionViewDidEnter() {
-    this.showAdaptiveBanner();
+    // this.showAdaptiveBanner();
   }
 
   ngOnInit(): void {
@@ -255,30 +255,30 @@ export class homePage implements OnInit {
     return await modal.present();
   }
 
-  /*Anuncio Banner  */
-  async showAdaptiveBanner() {
-    try {
-      await AdmobAds.showBannerAd({
-        adId: environment.AdmobAds.APP_ID, // ID de tu anuncio de AdMob
-        isTesting: false, // Configuración de prueba
-        adSize: BannerSize.FULL_BANNER, // Tamaño de banner adaptable
-        adPosition: BannerPosition.TOP // Posición del banner
-      });
-      console.log('Banner adaptable (Full Banner) mostrado correctamente');
+  // /*Anuncio Banner  */
+  // async showAdaptiveBanner() {
+  //   try {
+  //     await AdmobAds.showBannerAd({
+  //       adId: environment.AdmobAds.APP_ID, // ID de tu anuncio de AdMob
+  //       isTesting: false, // Configuración de prueba
+  //       adSize: BannerSize.FULL_BANNER, // Tamaño de banner adaptable
+  //       adPosition: BannerPosition.TOP // Posición del banner
+  //     });
+  //     console.log('Banner adaptable (Full Banner) mostrado correctamente');
 
-      // Cerrar el banner después de cierto tiempo o evento
-      setTimeout(async () => {
-        try {
-          await AdmobAds.removeBannerAd();
-          console.log('Banner adaptable (Full Banner) cerrado correctamente');
-        } catch (error) {
-          console.error('Error al cerrar el banner adaptable (Full Banner)', error);
-        }
-      }, 10000); // Ejemplo: cerrar el banner después de 10 segundos
-    } catch (error) {
-      console.error('Error al mostrar el banner adaptable (Full Banner)', error);
-    }
-  }
+  //     // Cerrar el banner después de cierto tiempo o evento
+  //     setTimeout(async () => {
+  //       try {
+  //         await AdmobAds.removeBannerAd();
+  //         console.log('Banner adaptable (Full Banner) cerrado correctamente');
+  //       } catch (error) {
+  //         console.error('Error al cerrar el banner adaptable (Full Banner)', error);
+  //       }
+  //     }, 10000); // Ejemplo: cerrar el banner después de 10 segundos
+  //   } catch (error) {
+  //     console.error('Error al mostrar el banner adaptable (Full Banner)', error);
+  //   }
+  // }
 }
 
 

@@ -251,27 +251,27 @@ export class PerfilPerroPage implements OnInit {
   }
 
   /*Anuncio Banner  */
-  async showAdaptiveBanner() {
-    try {
-      await AdmobAds.showBannerAd({
-        adId: environment.AdmobAds.APP_ID, // ID de tu anuncio de AdMob
-        isTesting: false, // Configuración de prueba
-        adSize: BannerSize.BANNER, // Tamaño de banner adaptable
-        adPosition: BannerPosition.TOP // Posición del banner
-      });
-      console.log('Banner adaptable (Banner) mostrado correctamente');
+  // async showAdaptiveBanner() {
+  //   try {
+  //     await AdmobAds.showBannerAd({
+  //       adId: environment.AdmobAds.APP_ID, // ID de tu anuncio de AdMob
+  //       isTesting: false, // Configuración de prueba
+  //       adSize: BannerSize.BANNER, // Tamaño de banner adaptable
+  //       adPosition: BannerPosition.TOP // Posición del banner
+  //     });
+  //     console.log('Banner adaptable (Banner) mostrado correctamente');
 
-      // Cerrar el banner después de cierto tiempo o evento
-      setTimeout(async () => {
-        try {
-          await AdmobAds.removeBannerAd();
-          console.log('Banner adaptable (Banner) cerrado correctamente');
-        } catch (error) {
-          console.error('Error al cerrar el banner adaptable (Banner)', error);
-        }
-      }, 20000); // Ejemplo: cerrar el banner después de 10 segundos
-    } catch (error) {
-      console.error('Error al mostrar el banner adaptable (Banner)', error);
-    }
-  }
+  //     // Cerrar el banner después de cierto tiempo o evento
+  //     setTimeout(async () => {
+  //       try {
+  //         await AdmobAds.removeBannerAd();
+  //         console.log('Banner adaptable (Banner) cerrado correctamente');
+  //       } catch (error) {
+  //         console.error('Error al cerrar el banner adaptable (Banner)', error);
+  //       }
+  //     }, 20000); // Ejemplo: cerrar el banner después de 10 segundos
+  //   } catch (error) {
+  //     console.error('Error al mostrar el banner adaptable (Banner)', error);
+  //   }
+  // }
 }
