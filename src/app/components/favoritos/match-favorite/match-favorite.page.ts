@@ -17,13 +17,12 @@ export class MatchFavoritePage implements OnInit {
   perros: InfoPerro[] = [];
   combinedAnimals: any[] = [];
   currentIndex: number = 0;
-  loading: boolean = true; // Add this line
+  isLoading: boolean = true; // Add this line
 
   constructor(  
     private router: Router,
     private firestores: FirestoreService,
     private favoritesService: StorageService,
-    private cdr: ChangeDetectorRef
   ) { }
 
   ngOnInit() {
@@ -31,7 +30,7 @@ export class MatchFavoritePage implements OnInit {
   }
 
   async loadAnimals() {
-    this.loading = true; // Set loading to true when starting to load data
+    this.isLoading = true; // Set loading to true when starting to load data
     try {
       const gatos = await firstValueFrom(this.firestores.getCollectionChanges<InfoGato>('InfoGatos'));
       const perros = await firstValueFrom(this.firestores.getCollectionChanges<InfoPerro>('InfoPerros'));
@@ -47,13 +46,11 @@ export class MatchFavoritePage implements OnInit {
       if (this.combinedAnimals.length > 0 && this.currentIndex >= this.combinedAnimals.length) {
         this.currentIndex = 0;
       }
-  
-      this.cdr.detectChanges(); // Force view update
 
     } catch (error) {
       console.error('Error al cargar animales:', error);
     } finally {
-      this.loading = false; // Set loading to false when data is loaded
+      this.isLoading = false; // Set loading to false when data is loaded
     }
   }
   
