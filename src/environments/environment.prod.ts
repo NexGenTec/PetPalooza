@@ -1,8 +1,5 @@
 export const environment = {
   production: true,
-  AdmobAds:{
-    APP_ID:"ca-app-pub-6309294666517022/1128036107"
-  },
   firebase: {
     apiKey: "AIzaSyAwCHFzKYwBLRbSScpOzvgivUBcN4WZIGs",
     authDomain: "petpalooza-63384.firebaseapp.com",

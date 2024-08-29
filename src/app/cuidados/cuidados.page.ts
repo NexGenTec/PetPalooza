@@ -2,8 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FirestoreService } from '../service/firestore.service';
 import { CuidadosGeneral } from '../interface/CuidadosGeneral.model';
 import { InfoImage } from '../interface/InfoImage.models';
-import { AdmobAds, BannerPosition, BannerSize, } from 'capacitor-admob-ads';
-import { environment } from '../../environments/environment.prod';
 import { ImgModalPage } from '../components/img-modal/img-modal.page';
 import { ModalController } from '@ionic/angular';
 
@@ -24,7 +22,6 @@ export class CuidadosPage implements OnInit {
   constructor(private firestoreService: FirestoreService, private modalController: ModalController,) { }
 
   ionViewDidEnter() {
-    // this.showAdaptiveBanner();
   }
 
   ngOnInit() {

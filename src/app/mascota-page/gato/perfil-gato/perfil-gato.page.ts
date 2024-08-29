@@ -3,11 +3,9 @@ import { LoadingController, ModalController, Platform } from '@ionic/angular';
 import { ImgModalPage } from '../../../components/img-modal/img-modal.page';
 import { CaracteristicasFisicas, Cuidado, ImgUser, InfoGato, Temperamento } from '../../../interface/InfoGato.models';
 import { ModalSwiperPage } from 'src/app/components/modal-swiper/modal-swiper.page';
-import { AdmobAds, BannerPosition, BannerSize } from 'capacitor-admob-ads';
 import { ActionPerformed, PushNotifications } from '@capacitor/push-notifications';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DataOflineService } from 'src/app/service/data-ofline.service';
-import { environment } from '../../../../environments/environment.prod';
 import { AddImagePage } from '../add-image/add-image.page';
 import { StorageService } from '../../../service/storage.service';
 import { ModalswiperUsersPage } from 'src/app/components/modalswiper-users/modalswiper-users.page';
@@ -245,30 +243,4 @@ export class PerfilGatoPage implements OnInit {
     });
     await modal.present();
   }
-
-
-  /*Anuncio Banner  */
-  // async showAdaptiveBanner() {
-  //   try {
-  //     await AdmobAds.showBannerAd({
-  //       adId: environment.AdmobAds.APP_ID, // ID de tu anuncio de AdMob
-  //       isTesting: false, // Configuración de prueba
-  //       adSize: BannerSize.BANNER, // Tamaño de banner adaptable
-  //       adPosition: BannerPosition.TOP // Posición del banner
-  //     });
-  //     console.log('Banner adaptable (Banner) mostrado correctamente');
-
-  //     // Cerrar el banner después de cierto tiempo o evento
-  //     setTimeout(async () => {
-  //       try {
-  //         await AdmobAds.removeBannerAd();
-  //         console.log('Banner adaptable (Banner) cerrado correctamente');
-  //       } catch (error) {
-  //         console.error('Error al cerrar el banner adaptable (Banner)', error);
-  //       }
-  //     }, 20000); // Ejemplo: cerrar el banner después de 10 segundos
-  //   } catch (error) {
-  //     console.error('Error al mostrar el banner adaptable (Banner)', error);
-  //   }
-  // }
 }

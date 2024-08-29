@@ -26,7 +26,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { AngularFireModule } from '@angular/fire/compat';
 import { environment } from 'src/environments/environment';
 import { IonicStorageModule } from '@ionic/storage-angular';
-import { AdmobAds } from 'capacitor-admob-ads';
 if (!environment.production) { (self as any).FIREBASE_APPCHECK_DEBUG_TOKEN = false; }
 
 const routes: Routes = [
