@@ -71,10 +71,10 @@
                 </h1>
   
                 <div class="my-3 flex justify-between">
-                  <div id="temperamento" class="flex flex-wrap gap-2 items-end">
+                  <div id="temperamento" class="flex flex-wrap gap-2 items-end"   *ngFor="let temperamento of getCurrentAnimal()?.Temperamento">
                     <span 
                       class="text-white text-sm font-normal px-3 py-1 rounded-full bg-gradient-to-br from-[#24c6dc] to-[#5359a8]">
-                      Amigable
+                      {{ temperamento.tipo }}
                     </span>
                   </div>
 
