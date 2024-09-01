@@ -84,13 +84,13 @@ export class PerfilGatoPage implements OnInit {
   // Para compartir la url de perfil gato
   shareContent() {
     if (navigator.share) {
-        const url = this.route.url;
+        const location = window.location.href;
           navigator.share({
             title: `Raza: ${this.gato.Raza}`,
             text: `Revisa la raza ${this.gato.Raza} y más dentro de PetPalooza`,
             // url: `https://perfil-perro/${this.gato.id}`,
-            url: `${window.location.origin}${this.gato.id}`,
             // url: `${window.location.origin}${url}`,
+            url: `${location}`
 
           })
           .then(() => console.log('Contenido compartido exitosamente'))

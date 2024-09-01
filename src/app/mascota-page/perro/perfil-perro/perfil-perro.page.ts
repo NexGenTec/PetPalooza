@@ -109,14 +109,14 @@ export class PerfilPerroPage implements OnInit {
 
   shareContent() {
     if (navigator.share) {
-      const url = this.route.url;
+      // const url = this.route.url;
+      const location = window.location.href;
           navigator.share({
             title: `Raza: ${this.perro.Raza}`,
             text: `Revisa la raza ${this.perro.Raza} y más dentro de PetPalooza`,
             // url: `https://perfil-perro/${this.perro.id}`,
             // url: `${window.location.origin}${url}`,
-            url: `${window.location.origin}${this.perro.id}`,
-
+            url: `${location}`,
 
           })
           .then(() => console.log('Contenido compartido exitosamente'))
