@@ -89,7 +89,8 @@ export class PerfilGatoPage implements OnInit {
             title: `Raza: ${this.gato.Raza}`,
             text: `Revisa la raza ${this.gato.Raza} y más dentro de PetPalooza`,
             // url: `https://perfil-perro/${this.gato.id}`,
-            url: `${window.location.origin}${url}`,
+            url: `${window.location.origin}${this.gato.id}`,
+            // url: `${window.location.origin}${url}`,
 
           })
           .then(() => console.log('Contenido compartido exitosamente'))

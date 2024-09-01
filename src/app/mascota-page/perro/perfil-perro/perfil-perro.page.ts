@@ -114,7 +114,9 @@ export class PerfilPerroPage implements OnInit {
             title: `Raza: ${this.perro.Raza}`,
             text: `Revisa la raza ${this.perro.Raza} y más dentro de PetPalooza`,
             // url: `https://perfil-perro/${this.perro.id}`,
-            url: `${window.location.origin}${url}`,
+            // url: `${window.location.origin}${url}`,
+            url: `${window.location.origin}${this.perro.id}`,
+
 
           })
           .then(() => console.log('Contenido compartido exitosamente'))
