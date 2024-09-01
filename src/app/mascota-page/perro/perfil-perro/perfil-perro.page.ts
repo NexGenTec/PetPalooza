@@ -79,6 +79,47 @@ export class PerfilPerroPage implements OnInit {
       this.populatePerroData();
     }
   }
+  
+  // shareContent() {
+  //   if (navigator.share) {
+  //       console.log('img perro',this.perro.imgPerfil)
+  //       fetch(this.perro.imgPerfil, {mode:'cors'})
+  //         .then(response => {if(!response.ok) {
+  //         throw new Error(`Error http! status: ${response.status}`);
+  //       }
+  //       return response.blob();
+  //     }).then(blob => {
+  //         const file = new File([blob], 'mascota.jpg', { type: blob.type });
+  //         navigator.share({
+  //           title: `Raza: ${this.perro.Raza}`,
+  //           text: `Revisa la raza ${this.perro.Raza} y más dentro de PetPalooza`,
+  //           url: `https://perfil-perro/${this.perro.id}`,
+  //           files: [file]
+  //         })
+  //         .then(() => console.log('Contenido compartido exitosamente'))
+  //         .catch((error) => console.error('Error al compartir:', error));
+  //       })
+  //       .catch(error => console.error('Error al obtener la imagen:', error));
+  //   } else {
+  //     console.error('API de Web Share no soportada en este navegador');
+  //   }
+  // }
+
+  // Para compartir la url de perfil perro
+
+  shareContent() {
+    if (navigator.share) {
+          navigator.share({
+            title: `Raza: ${this.perro.Raza}`,
+            text: `Revisa la raza ${this.perro.Raza} y más dentro de PetPalooza`,
+            url: `https://perfil-perro/${this.perro.id}`,
+          })
+          .then(() => console.log('Contenido compartido exitosamente'))
+          .catch((error) => console.error('Error al compartir:', error));
+    } else {
+      console.error('API de Web Share no soportada en este navegador');
+    }
+  }
 
   async showLoading() {
     const loading = await this.loadingController.create({

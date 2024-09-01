@@ -81,6 +81,21 @@ export class PerfilGatoPage implements OnInit {
     }
   }
 
+  // Para compartir la url de perfil gato
+  shareContent() {
+    if (navigator.share) {
+          navigator.share({
+            title: `Raza: ${this.gato.Raza}`,
+            text: `Revisa la raza ${this.gato.Raza} y más dentro de PetPalooza`,
+            url: `https://perfil-perro/${this.gato.id}`,
+          })
+          .then(() => console.log('Contenido compartido exitosamente'))
+          .catch((error) => console.error('Error al compartir:', error));
+    } else {
+      console.error('API de Web Share no soportada en este navegador');
+    }
+  }
+
   async showLoading() {
     const loading = await this.loadingController.create({
       message: 'Cargando datos del gato...',
