@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, ElementRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { InfoGato } from 'src/app/interface/InfoGato.models';
 import { InfoPerro } from 'src/app/interface/InfoPerro.models';
@@ -12,15 +12,16 @@ import { firstValueFrom } from 'rxjs';
   styleUrls: ['./match-favorite.page.scss'],
 })
 export class MatchFavoritePage implements OnInit {
+  @ViewChild('textContainer') textContainer: ElementRef;
 
   gatos: InfoGato[] = [];
   perros: InfoPerro[] = [];
   combinedAnimals: any[] = [];
   currentIndex: number = 0;
-  isLoading: boolean = true; // Add this line
+  isLoading: boolean = true;
+  isExpanded: boolean = false;
 
   constructor(  
-    private router: Router,
     private firestores: FirestoreService,
     private favoritesService: StorageService,
   ) { }
@@ -30,7 +31,7 @@ export class MatchFavoritePage implements OnInit {
   }
 
   async loadAnimals() {
-    this.isLoading = true; // Set loading to true when starting to load data
+    this.isLoading = true;
     try {
       const gatos = await firstValueFrom(this.firestores.getCollectionChanges<InfoGato>('InfoGatos'));
       const perros = await firstValueFrom(this.firestores.getCollectionChanges<InfoPerro>('InfoPerros'));
@@ -50,7 +51,7 @@ export class MatchFavoritePage implements OnInit {
     } catch (error) {
       console.error('Error al cargar animales:', error);
     } finally {
-      this.isLoading = false; // Set loading to false when data is loaded
+      this.isLoading = false;
     }
   }
   
@@ -88,5 +89,10 @@ export class MatchFavoritePage implements OnInit {
 
   getCurrentAnimal() {
     return this.combinedAnimals[this.currentIndex] || null;
-  }    
+  }
+
+  toggleExpand() {
+    this.isExpanded = !this.isExpanded;
+  }
+      
 }

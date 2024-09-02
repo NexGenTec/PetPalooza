@@ -47,5 +47,19 @@ ion-icon {
   margin-bottom: 8px;
 }
 
+.collapsed {
+  max-height: 60px; /* Altura máxima para el modo colapsado */
+  overflow: hidden; /* Oculta el contenido que sobrepasa la altura */
+  display: -webkit-box; /* Necesario para el truncamiento de múltiples líneas */
+  -webkit-line-clamp: 3; /* Número de líneas visibles antes de truncar */
+  -webkit-box-orient: vertical; /* Orientación del contenedor */
+  text-overflow: ellipsis; /* Muestra los puntos suspensivos (...) */
+}
+
+.expanded {
+  max-height: none; /* Sin restricción de altura en el modo expandido */
+  overflow: auto; /* Permite el desplazamiento */
+}
+
   
   
