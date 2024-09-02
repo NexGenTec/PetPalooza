@@ -65,11 +65,14 @@
       </div>
     </ng-template>
 
-    <div class="w-full max-w-[570px] rounded-[20px] px-3 pt-4 text-start flex flex-col justify-start">
+    <div class="w-full max-w-[570px] rounded-[20px] px-3 pt-4 text-start flex flex-col justify-start mb-5">
       <h1 class="pb-2 text-2xl font-medium">Favoritos</h1>
       <span class="bg-blue-400 inline-block h-1 w-[90px] rounded"></span>
     </div>
-
+    <ion-button expand="full" color="primary" class="custom-button"(click)="navigateToFavoriteMatch()" expand="block" fill="outline" class="mx-4">
+      <ion-icon name="paw" slot="start" class="button-icon"></ion-icon>
+      <span class="button-text"> Te sugerimos</span>
+    </ion-button>    
     <!-- Skeleton for Favorites -->
     <div *ngIf="isLoading; else favoritesLoaded" class="grid grid-cols-2 md:grid-cols-3 max-w-[900px] mx-auto gap-5 py-3 w-full px-2">
       <div *ngFor="let item of skeletonFavorites" class="rounded-xl overflow-hidden border border-gray-100 p-3">
@@ -78,7 +81,6 @@
         <div class="h-4 bg-gray-200 w-1/2 rounded"></div>
       </div>
     </div>
-
     <!-- Favorites Content -->
     <ng-template #favoritesLoaded>
       <ng-container *ngIf="favoriteAnimals.length > 0; else noFavorites">
@@ -119,10 +121,6 @@
       </ng-container>
     </ng-template>
 
-    <ion-button expand="full" color="primary" class="custom-button"(click)="navigateToFavoriteMatch()" expand="block" fill="outline">
-      <ion-icon name="paw" slot="start" class="button-icon"></ion-icon>
-      <span class="button-text"> Te sugerimos</span>
-    </ion-button>    
 
     <ng-template #noFavorites>
       <div class="flex flex-col items-center justify-center text-center py-10">
