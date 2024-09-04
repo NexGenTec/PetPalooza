@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { StorageService } from '../../service/storage.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-favoritos',
@@ -58,4 +58,8 @@ export class FavoritosPage implements OnInit {
   isInFavorites(animal: any, type: string): boolean {
     return this.favoritesService.isInFavorites(animal, type);
   }
+
+  navigateToFavoriteMatch() {
+    this.router.navigate(['/favoritos/match-favorite']);
+  }  
 }
