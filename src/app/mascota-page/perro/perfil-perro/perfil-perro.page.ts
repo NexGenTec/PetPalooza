@@ -81,33 +81,6 @@ export class PerfilPerroPage implements OnInit {
     }
   }
   
-  // shareContent() {
-  //   if (naviperror.share) {
-  //       console.log('img perro',this.perro.imgPerfil)
-  //       fetch(this.perro.imgPerfil, {mode:'cors'})
-  //         .then(response => {if(!response.ok) {
-  //         throw new Error(`Error http! status: ${response.status}`);
-  //       }
-  //       return response.blob();
-  //     }).then(blob => {
-  //         const file = new File([blob], 'mascota.jpg', { type: blob.type });
-  //         naviperror.share({
-  //           title: `Raza: ${this.perro.Raza}`,
-  //           text: `Revisa la raza ${this.perro.Raza} y más dentro de PetPalooza`,
-  //           url: `https://perfil-perro/${this.perro.id}`,
-  //           files: [file]
-  //         })
-  //         .then(() => console.log('Contenido compartido exitosamente'))
-  //         .catch((error) => console.error('Error al compartir:', error));
-  //       })
-  //       .catch(error => console.error('Error al obtener la imagen:', error));
-  //   } else {
-  //     console.error('API de Web Share no soportada en este navegador');
-  //   }
-  // }
-
-  // Para compartir la url de perfil perro
-
   async shareContent(tipo: 'gato' | 'perro') {
     if (!this.perro) {
       console.error('No hay datos del perfil para compartir.');
@@ -117,7 +90,7 @@ export class PerfilPerroPage implements OnInit {
     const perfilId = this.perro.id;
     const truncatedHistory = this.truncateText(this.perro.Historia, 250);
     const shareTitle = `¡Conoce a ${this.perro.Raza}!`;
-    const shareText = `${tipo === 'perro' ? '🐶' : '🐱'} **${this.perro.Raza}**\n\n` +
+    const shareText = `${tipo === 'gato' ? '🐱' : '🐶'} **${this.perro.Raza}**\n\n` +
                       `🌟 **Historia:** ${truncatedHistory}\n` +
                       `🌍 **Origen:** ${this.perro.Origen}\n\n` +
                       `¡Descubre más sobre este increíble ${tipo} y muchos otros en nuestra app!`;

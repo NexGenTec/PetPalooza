@@ -84,28 +84,30 @@ export class PerfilGatoPage implements OnInit {
 
   async shareContent(tipo: 'gato' | 'perro') {
     if (!this.gato) {
-      console.error('No hay datos del perfil para compartir.');
-      return;
+        console.error('No hay datos del perfil para compartir.');
+        return;
     }
-  
+
     const perfilId = this.gato.id;
     const truncatedHistory = this.truncateText(this.gato.Historia, 250);
     const shareTitle = `¡Conoce a ${this.gato.Raza}!`;
+    const imageUrl = this.gato.imgPerfil; // URL pública de la imagen
     const shareText = `${tipo === 'gato' ? '🐱' : '🐶'} **${this.gato.Raza}**\n\n` +
                       `🌟 **Historia:** ${truncatedHistory}\n` +
                       `🌍 **Origen:** ${this.gato.Origen}\n\n` +
                       `¡Descubre más sobre este increíble ${tipo} y muchos otros en nuestra app!`;
+
     const shareUrl = `https://petpalooza.netlify.app/#/perfil-${tipo}/${perfilId}`;
-  
+
     try {
-      await Share.share({
-        title: shareTitle,
-        text: shareText,
-        url: shareUrl,
-        dialogTitle: 'Compartir con',
-      });
+        await Share.share({
+          title: shareTitle,
+            text: `${shareText}\n\nMás información: ${shareUrl}`,
+            url: imageUrl, // Enlace a la imagen
+            dialogTitle: 'Compartir con',
+        });
     } catch (error) {
-      console.error('Error al compartir contenido:', error);
+        console.error('Error al compartir contenido:', error);
     }
   }  
   
