@@ -1,6 +1,6 @@
 <ion-content [fullscreen]="true">
   <div class="flex flex-col h-full">
-    <ion-toolbar class="border-b border-gray-200">
+    <!-- <ion-toolbar class="border-b border-gray-200">
       <ion-buttons slot="start">
         <ion-back-button defaultHref="/"></ion-back-button>
       </ion-buttons>
@@ -11,7 +11,7 @@
           src="assets/img/logo/PetPalooza.png" 
         />
       </div>
-    </ion-toolbar>
+    </ion-toolbar> -->
     <div *ngIf="isLoading; else content">
       <div class="flex flex-col h-full" class="h-screen">
         <!-- Skeleton Loader -->
@@ -59,17 +59,31 @@
     </div>
     <ng-template #content>
       <div class="flex flex-col flex-grow">
-        <div class="h-full w-full max-w-md mx-auto p-4">
+        <div class="h-full w-full max-w-md mx-auto p-2 relative">
+          <div class="absolute top-6 left-5 z-50 ">
+            <ion-buttons slot="start" class="bg-gray-50 opacity-70 text-gray-900 rounded-full">
+              <ion-back-button defaultHref="/favoritos"></ion-back-button>
+            </ion-buttons>
+          </div>
+          <div class="absolute top-3 right-4 z-50 rounded-full">
+            <img 
+              class="max-h-14 my-1 rounded-full opacity-70"
+              alt="logo PetPalooza" 
+              src="assets/img/logo/PetPalooza.png" 
+            />
+          </div>
           <div class="bg-gray-300 flex flex-col items-center justify-center w-full h-full relative rounded-lg overflow-hidden" *ngIf="combinedAnimals.length > 0; else noAnimal">
             <img 
               class="object-cover object-center w-full h-full absolute top-0 left-0" 
               [src]="getCurrentAnimal()?.imgPerfil" alt="Imagen de la mascota"/>
             <div class="relative h-full w-full bg-gradient-to-b from-transparent from-30% via-black/50 to-black flex items-end">
               <div class="p-3">
-                <h1 class="text-4xl text-white">
-                  {{ getCurrentAnimal()?.Raza }} <span class="text-gray-300">{{ getCurrentAnimal()?.Anio }}</span>
-                </h1>
-  
+                <div class="flex flex-col">
+                  <h2 class="text-3xl text-white">
+                    {{ getCurrentAnimal()?.Raza }}
+                  </h2>
+                  <span class="text-gray-300 text-2xl">{{ getCurrentAnimal()?.Anio }}</span>
+                </div>
                 <div class="my-3 flex justify-between">
                   <div id="temperamento" class="flex flex-wrap gap-2 items-end" >
                     <span 
@@ -106,7 +120,7 @@
                 </div>
                 <div class="my-3 flex justify-between">
                   <div class="bg-gray-600/40 text-gray-100 font-light p-3 rounded-md overflow-hidden">
-                    <div [ngClass]="{ 'line-clamp-3': !isExpanded, 'line-clamp-none': isExpanded }">
+                    <div [ngClass]="{ 'line-clamp-2': !isExpanded, 'line-clamp-none': isExpanded }">
                       {{ getCurrentAnimal()?.Historia }}
                     </div>
                   </div>                  
