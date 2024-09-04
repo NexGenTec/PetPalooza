@@ -100,7 +100,7 @@ export class PerfilPerroPage implements OnInit {
     try {
       await Share.share({
         title: shareTitle,
-        text: shareText,
+        text: `${shareText}\n\nMás información: ${shareUrl}`,
         url: imageUrl,
         dialogTitle: 'Compartir con',
       });
