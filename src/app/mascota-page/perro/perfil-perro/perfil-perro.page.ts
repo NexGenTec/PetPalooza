@@ -90,7 +90,8 @@ export class PerfilPerroPage implements OnInit {
     const perfilId = this.perro.id;
     const truncatedHistory = this.truncateText(this.perro.Historia, 250);
     const shareTitle = `¡Conoce a ${this.perro.Raza}!`;
-    const shareText = `${tipo === 'gato' ? '🐱' : '🐶'} **${this.perro.Raza}**\n\n` +
+    const imageUrl = this.perro.imgPerfil; // URL pública de la imagen
+    const shareText = `${tipo === 'perro' ? '🐱' : '🐶'} **${this.perro.Raza}**\n\n` +
                       `🌟 **Historia:** ${truncatedHistory}\n` +
                       `🌍 **Origen:** ${this.perro.Origen}\n\n` +
                       `¡Descubre más sobre este increíble ${tipo} y muchos otros en nuestra app!`;
@@ -100,7 +101,7 @@ export class PerfilPerroPage implements OnInit {
       await Share.share({
         title: shareTitle,
         text: shareText,
-        url: shareUrl,
+        url: imageUrl,
         dialogTitle: 'Compartir con',
       });
     } catch (error) {
