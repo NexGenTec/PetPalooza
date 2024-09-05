@@ -9,6 +9,7 @@ import { DataOflineService } from 'src/app/service/data-ofline.service';
 import { AddImagePage } from '../add-image/add-image.page';
 import { StorageService } from '../../../service/storage.service';
 import { ModalswiperUsersPage } from 'src/app/components/modalswiper-users/modalswiper-users.page';
+import { Share } from '@capacitor/share';
 
 @Component({
   selector: 'app-perfil-gato',
@@ -81,23 +82,40 @@ export class PerfilGatoPage implements OnInit {
     }
   }
 
-  // Para compartir la url de perfil gato
-  shareContent() {
-    if (navigator.share) {
-        const location = window.location.href;
-          navigator.share({
-            title: `Raza: ${this.gato.Raza}`,
-            text: `Revisa la raza ${this.gato.Raza} y más dentro de PetPalooza`,
-            // url: `https://perfil-perro/${this.gato.id}`,
-            // url: `${window.location.origin}${url}`,
-            url: `${location}`
-
-          })
-          .then(() => console.log('Contenido compartido exitosamente'))
-          .catch((error) => console.error('Error al compartir:', error));
-    } else {
-      console.error('API de Web Share no soportada en este navegador');
+  async shareContent(tipo: 'gato' | 'perro') {
+    if (!this.gato) {
+        console.error('No hay datos del perfil para compartir.');
+        return;
     }
+
+    const perfilId = this.gato.id;
+    const truncatedHistory = this.truncateText(this.gato.Historia, 250);
+    const shareTitle = `¡Conoce a ${this.gato.Raza}!`;
+    const imageUrl = this.gato.imgPerfil; // URL pública de la imagen
+    const shareText = `${tipo === 'gato' ? '🐱' : '🐶'} **${this.gato.Raza}**\n\n` +
+                      `🌟 **Historia:** ${truncatedHistory}\n` +
+                      `🌍 **Origen:** ${this.gato.Origen}\n\n` +
+                      `¡Descubre más sobre este increíble ${tipo} y muchos otros en nuestra app!`;
+
+    const shareUrl = `https://play.google.com/store/apps/details?id=com.nexgentech.petpaloozaa`;
+
+    try {
+        await Share.share({
+          title: shareTitle,
+            text: `${shareText}\n\nMás información: ${shareUrl}`,
+            url: imageUrl, // Enlace a la imagen
+            dialogTitle: 'Compartir con',
+        });
+    } catch (error) {
+        console.error('Error al compartir contenido:', error);
+    }
+  }  
+  
+  truncateText(text: string, maxLength: number = 40): string {
+    if (text.length > maxLength) {
+      return text.substring(0, maxLength) + '...';
+    }
+    return text;
   }
 
   async showLoading() {
@@ -117,12 +135,12 @@ export class PerfilGatoPage implements OnInit {
           this.gato = data;
           this.populateGatoData();
           loading.dismiss();
-          this.isLoading = false; // Data loaded, set isLoading to false
+          this.isLoading = false;
         },
         error: (error) => {
           console.error("Error al cargar la data: ", error);
           loading.dismiss();
-          this.isLoading = false; // Error occurred, set isLoading to false
+          this.isLoading = false;
         }
       });
     }

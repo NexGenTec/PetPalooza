@@ -9,6 +9,7 @@ import { ActionPerformed, PushNotifications } from '@capacitor/push-notification
 import { AddImagePage } from '../add-image/add-image.page';
 import { StorageService } from '../../../service/storage.service';
 import { ModalswiperUsersPage } from 'src/app/components/modalswiper-users/modalswiper-users.page';
+import { Share } from '@capacitor/share';
 
 @Component({
   selector: 'app-perfil-perro',
@@ -80,50 +81,39 @@ export class PerfilPerroPage implements OnInit {
     }
   }
   
-  // shareContent() {
-  //   if (navigator.share) {
-  //       console.log('img perro',this.perro.imgPerfil)
-  //       fetch(this.perro.imgPerfil, {mode:'cors'})
-  //         .then(response => {if(!response.ok) {
-  //         throw new Error(`Error http! status: ${response.status}`);
-  //       }
-  //       return response.blob();
-  //     }).then(blob => {
-  //         const file = new File([blob], 'mascota.jpg', { type: blob.type });
-  //         navigator.share({
-  //           title: `Raza: ${this.perro.Raza}`,
-  //           text: `Revisa la raza ${this.perro.Raza} y más dentro de PetPalooza`,
-  //           url: `https://perfil-perro/${this.perro.id}`,
-  //           files: [file]
-  //         })
-  //         .then(() => console.log('Contenido compartido exitosamente'))
-  //         .catch((error) => console.error('Error al compartir:', error));
-  //       })
-  //       .catch(error => console.error('Error al obtener la imagen:', error));
-  //   } else {
-  //     console.error('API de Web Share no soportada en este navegador');
-  //   }
-  // }
-
-  // Para compartir la url de perfil perro
-
-  shareContent() {
-    if (navigator.share) {
-      // const url = this.route.url;
-      const location = window.location.href;
-          navigator.share({
-            title: `Raza: ${this.perro.Raza}`,
-            text: `Revisa la raza ${this.perro.Raza} y más dentro de PetPalooza`,
-            // url: `https://perfil-perro/${this.perro.id}`,
-            // url: `${window.location.origin}${url}`,
-            url: `${location}`,
-
-          })
-          .then(() => console.log('Contenido compartido exitosamente'))
-          .catch((error) => console.error('Error al compartir:', error));
-    } else {
-      console.error('API de Web Share no soportada en este navegador');
+  async shareContent(tipo: 'gato' | 'perro') {
+    if (!this.perro) {
+      console.error('No hay datos del perfil para compartir.');
+      return;
     }
+  
+    const perfilId = this.perro.id;
+    const truncatedHistory = this.truncateText(this.perro.Historia, 250);
+    const shareTitle = `¡Conoce a ${this.perro.Raza}!`;
+    const imageUrl = this.perro.imgPerfil; // URL pública de la imagen
+    const shareText = `${tipo === 'perro' ? '🐱' : '🐶'} **${this.perro.Raza}**\n\n` +
+                      `🌟 **Historia:** ${truncatedHistory}\n` +
+                      `🌍 **Origen:** ${this.perro.Origen}\n\n` +
+                      `¡Descubre más sobre este increíble ${tipo} y muchos otros en nuestra app!`;
+    const shareUrl = `https://play.google.com/store/apps/details?id=com.nexgentech.petpaloozaa`;
+  
+    try {
+      await Share.share({
+        title: shareTitle,
+        text: `${shareText}\n\nMás información: ${shareUrl}`,
+        url: imageUrl,
+        dialogTitle: 'Compartir con',
+      });
+    } catch (error) {
+      console.error('Error al compartir contenido:', error);
+    }
+  }  
+  
+  truncateText(text: string, maxLength: number = 40): string {
+    if (text.length > maxLength) {
+      return text.substring(0, maxLength) + '...';
+    }
+    return text;
   }
 
   async showLoading() {
