@@ -53,6 +53,7 @@ export class StorageService {
       message: message,
       duration: 2000,
       position: 'top',
+      mode:'ios',
       color: color,
       buttons: [
         {
