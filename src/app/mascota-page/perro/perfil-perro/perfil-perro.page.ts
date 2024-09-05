@@ -95,7 +95,7 @@ export class PerfilPerroPage implements OnInit {
                       `🌟 **Historia:** ${truncatedHistory}\n` +
                       `🌍 **Origen:** ${this.perro.Origen}\n\n` +
                       `¡Descubre más sobre este increíble ${tipo} y muchos otros en nuestra app!`;
-    const shareUrl = `https://petpalooza.netlify.app/#/perfil-${tipo}/${perfilId}`;
+    const shareUrl = `https://play.google.com/store/apps/details?id=com.nexgentech.petpaloozaa`;
   
     try {
       await Share.share({

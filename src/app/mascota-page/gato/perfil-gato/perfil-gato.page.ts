@@ -97,7 +97,7 @@ export class PerfilGatoPage implements OnInit {
                       `🌍 **Origen:** ${this.gato.Origen}\n\n` +
                       `¡Descubre más sobre este increíble ${tipo} y muchos otros en nuestra app!`;
 
-    const shareUrl = `https://petpalooza.netlify.app/#/perfil-${tipo}/${perfilId}`;
+    const shareUrl = `https://play.google.com/store/apps/details?id=com.nexgentech.petpaloozaa`;
 
     try {
         await Share.share({
