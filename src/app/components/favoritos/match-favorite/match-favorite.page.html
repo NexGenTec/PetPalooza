@@ -1,17 +1,5 @@
 <ion-content [fullscreen]="true">
   <div class="flex flex-col h-full">
-    <!-- <ion-toolbar class="border-b border-gray-200">
-      <ion-buttons slot="start">
-        <ion-back-button defaultHref="/"></ion-back-button>
-      </ion-buttons>
-      <div class="flex items-center justify-center">
-        <img 
-          class="max-h-14 my-1"
-          alt="logo PetPalooza" 
-          src="assets/img/logo/PetPalooza.png" 
-        />
-      </div>
-    </ion-toolbar> -->
     <div *ngIf="isLoading; else content">
       <div class="flex flex-col h-full" class="h-screen">
         <!-- Skeleton Loader -->
@@ -65,13 +53,13 @@
               <ion-back-button defaultHref="/favoritos"></ion-back-button>
             </ion-buttons>
           </div>
-          <div class="absolute top-3 right-4 z-50 rounded-full">
+          <!-- <div class="absolute top-3 right-4 z-50 rounded-full">
             <img 
               class="max-h-14 my-1 rounded-full opacity-70"
               alt="logo PetPalooza" 
               src="assets/img/logo/PetPalooza.png" 
             />
-          </div>
+          </div> -->
           <div class="bg-gray-300 flex flex-col items-center justify-center w-full h-full relative rounded-lg overflow-hidden" *ngIf="combinedAnimals.length > 0; else noAnimal">
             <img 
               class="object-cover object-center w-full h-full absolute top-0 left-0" 
@@ -93,7 +81,12 @@
                     </span>
                   </div>
 
-                  <div class="flex items-end">
+                  <div class="flex gap-2 items-end" >
+                    <button
+                    class="flex items-center justify-center bg-black/50 text-white p-1 duration-300 rounded-full"
+                    >
+                    <ion-icon name="eye-outline"></ion-icon>
+                  </button>
                     <button
                       *ngIf="isExpanded"
                       class="flex items-center justify-center bg-black/50 text-white p-1 duration-300 rounded-full"
@@ -125,11 +118,20 @@
                     </div>
                   </div>                  
                 </div>
-                <div id="buttons" class="flex justify-around mt-6 mb-4">
+                <div id="buttons" class="flex justify-around items-center mt-6 mb-4">
                   <button
                     class="flex items-center justify-center bg-[#27292e] text-[#60a5fa] p-2 duration-300 rounded-full" (click)="onDislike()">
                     <svg  xmlns="http://www.w3.org/2000/svg"  width="35"  height="35"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="3"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-x"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M18 6l-12 12" /><path d="M6 6l12 12" /></svg> 
                   </button>
+                  <div class="flex items-center">
+                    <a href="/" class="rounded-full ">
+                      <img 
+                      class="max-h-14 rounded-full overflow-hidden"
+                      alt="logo PetPalooza" 
+                      src="assets/img/logo/PetPalooza_512px.png" 
+                    />
+                    </a>
+                  </div>
                   <button
                     class="flex items-center justify-center bg-[#24252A] text-[#FC2488] p-2 duration-300 rounded-full" (click)="onLike(getCurrentAnimal())" >
                     <svg  xmlns="http://www.w3.org/2000/svg"  width="35"  height="35"  viewBox="0 0 24 24"  fill="currentColor"  class="icon icon-tabler icons-tabler-filled icon-tabler-heart"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6.979 3.074a6 6 0 0 1 4.988 1.425l.037 .033l.034 -.03a6 6 0 0 1 4.733 -1.44l.246 .036a6 6 0 0 1 3.364 10.008l-.18 .185l-.048 .041l-7.45 7.379a1 1 0 0 1 -1.313 .082l-.094 -.082l-7.493 -7.422a6 6 0 0 1 3.176 -10.215z" /></svg>

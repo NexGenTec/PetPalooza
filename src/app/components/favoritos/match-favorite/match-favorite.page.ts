@@ -4,6 +4,7 @@ import { InfoPerro } from 'src/app/interface/InfoPerro.models';
 import { FirestoreService } from 'src/app/service/firestore.service';
 import { StorageService } from 'src/app/service/storage.service';
 import { firstValueFrom } from 'rxjs';
+import { Router } from '@angular/router';
 import { ConfettiService } from 'src/app/animaciones/confetti.service';
 @Component({
   selector: 'app-match-favorite',
@@ -21,6 +22,7 @@ export class MatchFavoritePage implements OnInit {
   isExpanded: boolean = false;
 
   constructor(
+    private router: Router,
     private firestores: FirestoreService,
     private favoritesService: StorageService,
     private confettiService: ConfettiService
@@ -30,12 +32,22 @@ export class MatchFavoritePage implements OnInit {
     this.loadAnimals();
   }
 
+  navigateToAnimalProfile(animal: any) {
+    if (animal.type === 'perro') {
+      this.router.navigate(['/perfil-perro', animal.id], { state: { data: animal } });
+    } else if (animal.type === 'gato') {
+      this.router.navigate(['/perfil-gato', animal.id], { state: { data: animal } });
+    } else {
+      console.error('Tipo de animal no válido:', animal.type);
+    }
+  }
+
   async loadAnimals() {
     this.isLoading = true;
     try {
       const gatos = await firstValueFrom(this.firestores.getCollectionChanges<InfoGato>('InfoGatos'));
       const perros = await firstValueFrom(this.firestores.getCollectionChanges<InfoPerro>('InfoPerros'));
-
+    
       const favoriteGatos = await firstValueFrom(this.favoritesService.getFavoritesByType('gato'));
       const favoritePerros = await firstValueFrom(this.favoritesService.getFavoritesByType('perro'));
 

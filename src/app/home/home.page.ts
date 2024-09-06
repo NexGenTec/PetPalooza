@@ -251,6 +251,10 @@ export class homePage implements OnInit {
     })
     return await modal.present();
   }
+
+  navigateToFavoriteMatch() {
+    this.router.navigate(['/favoritos/match-favorite']);
+  }  
 }
 
 

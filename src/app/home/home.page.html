@@ -1,12 +1,12 @@
 <ion-header class="bg-white shadow-none border-b border-gray-200">
-  <div class="flex gap-2 items-center mx-3 my-2">
+  <a href="/" class="flex gap-2 items-center mx-3 my-2">
     <img 
       class="max-h-14 mx-auto"
       alt="logo PetPalooza" 
       src="assets/img/logo/PetPalooza.png" 
     />
     <!-- <ion-searchbar class="custom my-3" placeholder="Buscar"  mode="md"></ion-searchbar> -->
-  </div>
+  </a>
 </ion-header>
 
 <ion-content [fullscreen]="true">
@@ -58,7 +58,7 @@
       </ion-accordion-group>      
     </ng-template>
     <!--ads local--> 
-    <div id="myAds" class="grid grid-cols-3 gap-3 h-36 mb-12">
+    <div id="myAds" class="grid grid-cols-3 gap-3 h-36 mb-10">
       <article class="relative bg-gray-200 w-full h-full sm:h-40 drop-shadow-xl" *ngFor="let imgs of img">
         <a target="_blank" rel="noopener noreferrer">
           <img [src]="imgs.img" alt="ad1" class="object-cover rounded-md w-full h-full" (click)="openModal(imgs.img)">
@@ -109,7 +109,9 @@
         </div>
       </article>
     </div>
-    <div id="registered-animals" class="my-3 mt-12">
+    <!--fin ads local-->
+
+    <div id="registered-animals" class="mb-1 mt-10">
       <div class="w-full max-w-[570px] rounded-[20px] px-3 pt-4 text-start flex flex-col justify-start">
         <ng-container *ngIf="texto1showSkeleton; else contenido">
           <!-- Skeleton Loader -->
@@ -197,6 +199,11 @@
         </swiper-slide> -->
       </swiper-container> 
     </div>
+
+    <ion-button expand="full" color="primary" class="custom-button"(click)="navigateToFavoriteMatch()" expand="block" fill="outline" class="mx-2">
+      <ion-icon name="paw" slot="start" class="button-icon"></ion-icon>
+      <span class="button-text">Matchea a tus favoritos</span>
+    </ion-button> 
     
     <div id="animal-filter">
       <ion-segment mode="ios" [(ngModel)]="currentView">
