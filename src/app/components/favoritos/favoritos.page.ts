@@ -11,7 +11,7 @@ export class FavoritosPage implements OnInit {
   favoriteAnimals = [];
   isLoading: boolean = true;
   skeletonCategories = Array(2);
-  skeletonFavorites = Array(2); 
+  skeletonFavorites = Array(4); 
   favorites: any[] = [];
   loaded: boolean = false;
 
