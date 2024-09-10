@@ -129,11 +129,20 @@
         </div>
       </div>
       <ng-template #noAnimal>
-        <div class="flex flex-col items-center justify-center h-screen w-screen text-center py-10">
-          <img src="../../../assets/img/Heart.jpeg" alt="Corazón" class="w-20 h-20 mb-4">
-          <p class="text-gray-500 mt-2">Ya todos las mascotas están en favoritos - Estaremos actualizando nuestra data momentáneamente.</p>
+        <div class="flex flex-col flex-grow justify-center items-center h-screen text-center py-10">
+          <div class="h-full w-full max-w-md mx-auto px-1 py-2 relative">
+            <div class="flex flex-col items-center justify-center w-full h-full relative rounded-lg overflow-hidden">
+              <div class="h-full w-full max-w-md mx-auto">
+                <img src="../../../assets/img/Heart.jpeg" alt="Corazón" class="w-20 h-20 mb-4 mx-auto">
+                <p class="text-gray-500 text-center mt-2">
+                  ¡Felicitaciones! Has añadido todas las mascotas a tus favoritos. 
+                  Pronto tendremos nuevas aventuras peludas por aquí, ¡no te lo pierdas!
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
-      </ng-template>
+      </ng-template>        
     </ng-template>
   </div>
 </ion-content>
