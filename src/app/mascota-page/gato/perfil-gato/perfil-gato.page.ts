@@ -290,34 +290,6 @@ export class PerfilGatoPage implements OnInit {
     await modal.present();
   }
 
-  // toggleLike(imgUser: ImgUser) {
-  //   imgUser.liked = !imgUser.liked;
-  // }
-  // toggleSmile(imgUser: ImgUser) {
-  //   imgUser.reactedWithSmile = !imgUser.reactedWithSmile;
-  // }  
-
-  // toggleLike(imgUser: ImgUser) {
-  //   imgUser.liked = !imgUser.liked;
-  //   imgUser.likeCount = (imgUser.likeCount || 0) + (imgUser.liked ? 1 : -1);
-
-  //   if (this.gato && this.gato.id) {
-  //     this.firebaseService.updateImgUserInGato(this.gato.id, imgUser.url, { likeCount: imgUser.likeCount, liked: imgUser.liked })
-  //       .then(() => console.log('Likes actualizados en InfoGato en Firebase'))
-  //       .catch(error => console.error('Error al actualizar likes en InfoGato en Firebase:', error));
-  //   }
-  // }
-
-  // toggleSmile(imgUser: ImgUser) {
-  //   imgUser.reactedWithSmile = !imgUser.reactedWithSmile;
-  //   imgUser.smileCount = (imgUser.smileCount || 0) + (imgUser.reactedWithSmile ? 1 : -1);
-  //   if (this.gato && this.gato.id) {
-  //     this.firebaseService.updateImgUserInGato(this.gato.id, imgUser.url, { smileCount: imgUser.smileCount, reactedWithSmile: imgUser.reactedWithSmile })
-  //       .then(() => console.log('Smiles actualizados en InfoGato en Firebase'))
-  //       .catch(error => console.error('Error al actualizar smiles en InfoGato en Firebase:', error));
-  //   }
-  // }
-
   async toggleLike(imgUser: ImgUser) {
     imgUser.likedDevices = imgUser.likedDevices || [];
     const hasAlreadyLiked = imgUser.likedDevices.includes(this.deviceId);
