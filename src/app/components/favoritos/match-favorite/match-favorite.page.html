@@ -42,17 +42,17 @@
     <ng-template #content>
       <!-- Tu contenido real aquí -->
       <div class="flex flex-col flex-grow">
-        <div class="h-full w-full max-w-md mx-auto px-1 py-2 relative">
+        <div class="h-full w-full max-w-md mx-auto relative">
           <div class="absolute top-6 left-5 z-50 ">
             <ion-buttons slot="start" class="bg-gray-50 opacity-70 text-gray-900 rounded-full">
               <ion-back-button defaultHref="/favoritos"></ion-back-button>
             </ion-buttons>
           </div>
-          <div class="bg-gray-300 flex flex-col items-center justify-center w-full h-full relative rounded-lg overflow-hidden" *ngIf="combinedAnimals.length > 0; else noAnimal">
+          <div class="bg-gray-300 flex flex-col items-center justify-center w-full h-full relative overflow-hidden" *ngIf="combinedAnimals.length > 0; else noAnimal">
             <img 
-              class="object-cover object-center w-full h-full absolute top-0 left-0" 
+              class="object-scale-down object-center w-full h-full absolute top-0 left-0" 
               [src]="getCurrentAnimal()?.imgPerfil" alt="Imagen de la mascota"/>
-            <div class="relative h-full w-full bg-gradient-to-b from-transparent from-30% via-black/50 to-black flex items-end">
+            <div class="relative h-full w-full bg-gradient-to-b from-transparent from-30% via-sky-900/50 to-black flex items-end">
               <div class="p-3">
                 <div class="flex flex-col">
                   <h2 class="text-3xl text-white">
