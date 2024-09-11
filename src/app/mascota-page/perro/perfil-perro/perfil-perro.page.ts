@@ -134,7 +134,8 @@ export class PerfilPerroPage implements OnInit {
 
   async showLoading() {
     const loading = await this.loadingController.create({
-      message: 'Cargando datos del perro...',
+      duration: 5000,
+      mode:'ios'
     });
     await loading.present();
     return loading;

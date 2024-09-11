@@ -3,7 +3,6 @@ import { InfoGato } from '../../interface/InfoGato.models';
 import { QuirkyFacts } from '../../interface/QuirkyFacts.models';
 import { FirestoreService } from '../../service/firestore.service';
 import { Router } from '@angular/router';
-import { Platform } from '@ionic/angular';
 import { StorageService } from 'src/app/service/storage.service';
 
 @Component({
@@ -37,12 +36,11 @@ export class gatoPage implements OnInit {
     this.getQuirkyFacts();
     this.factInterval = setInterval(() => {
       this.showRandomQuirkyFact();
-    }, 10000);  // Cambia el dato curioso cada 10 segundos
+    }, 10000);
     this.loadData();
   }
 
   ngOnDestroy(): void {
-    // Cancelar el intervalo para evitar fugas de memoria
     if (this.factInterval) {
       clearInterval(this.factInterval);
     }
@@ -96,7 +94,7 @@ export class gatoPage implements OnInit {
 
   async addToFavorites(animal: any, type: string) {
     await this.favoritesService.addToFavorites(animal, type);
-    this.loadFavorites();  // Actualizar la lista de favoritos después de agregar o eliminar
+    this.loadFavorites();
   }
 
   private loadFavorites() {

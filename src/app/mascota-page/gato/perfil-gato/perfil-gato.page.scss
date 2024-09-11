@@ -63,3 +63,22 @@ ion-segment-button.ios {
         opacity: 0.5;
     }
 }
+
+.custom-loading {
+    --background: rgba(0, 0, 0, 0.8); /* Fondo semitransparente */
+    --spinner-color: #ffcc00; /* Color del spinner */
+    --color: white; /* Color del texto */
+}
+
+.custom-loading::before {
+    content: '';
+    background-image: url('/assets/gato-loading.gif');
+    background-size: contain;
+    background-repeat: no-repeat;
+    display: block;
+    width: 80px;
+    height: 80px;
+    margin: 0 auto;
+}
+  
+  
