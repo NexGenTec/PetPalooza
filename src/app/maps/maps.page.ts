@@ -29,7 +29,7 @@ export class MapsPage implements AfterViewInit {
             lat: -33.4489,
             lng: -70.6693,
           },
-          zoom: 10,
+          zoom: 11,
           styles: [
             {
               "elementType": "geometry",
@@ -193,20 +193,17 @@ export class MapsPage implements AfterViewInit {
 
   private async addCustomMarkers() {
     const petvet = [
-      { position: { lat: -33.4643, lng: -70.6010 }, title: "Veterinaria San Jorge", iconUrl: "assets/img/logo/small-vet-icon.png" },
-      { position: { lat: -33.4594, lng: -70.6434 }, title: "Pet Shop Animales del Sur", iconUrl: "assets/img/logo/small-pet-shop-icon.png" },
-      { position: { lat: -33.4340, lng: -70.6065 }, title: "Veterinaria VetCare", iconUrl: "assets/img/logo/small-vet-icon.png" },
-      { position: { lat: -33.4382, lng: -70.6345 }, title: "Pet Shop Gato & Perro", iconUrl: "assets/img/logo/small-pet-shop-icon.png" },
-      { position: { lat: -33.4727, lng: -70.6176 }, title: "Veterinaria Santiago Norte", iconUrl: "assets/img/logo/small-vet-icon.png" },
-      { position: { lat: -33.4586, lng: -70.6303 }, title: "Pet Shop La Mascota Feliz", iconUrl: "assets/img/logo/small-pet-shop-icon.png" },
-      { position: { lat: -33.4102, lng: -70.5569 }, title: "Veterinaria VetPlus", iconUrl: "assets/img/logo/small-vet-icon.png" },
-      { position: { lat: -33.4344, lng: -70.6140 }, title: "Pet Shop Mundo Animal", iconUrl: "assets/img/logo/small-pet-shop-icon.png" },
-      { position: { lat: -33.4054, lng: -70.5718 }, title: "Veterinaria San Francisco", iconUrl: "assets/img/logo/small-vet-icon.png" },
-      { position: { lat: -33.4934, lng: -70.7784 }, title: "Pet Shop Animalia", iconUrl: "assets/img/logo/small-pet-shop-icon.png" }
+      { position: { lat: -33.4643, lng: -70.6010 }, title: "Veterinaria San Jorge", },
+      { position: { lat: -33.4594, lng: -70.6434 }, title: "Pet Shop Animales del Sur", },
+      { position: { lat: -33.4340, lng: -70.6065 }, title: "Veterinaria VetCare", },
+      { position: { lat: -33.4382, lng: -70.6345 }, title: "Pet Shop Gato & Perro",},
+      { position: { lat: -33.4727, lng: -70.6176 }, title: "Veterinaria Santiago Norte", },
+      { position: { lat: -33.4586, lng: -70.6303 }, title: "Pet Shop La Mascota Feliz", },
+      { position: { lat: -33.4102, lng: -70.5569 }, title: "Veterinaria VetPlus", },
+      { position: { lat: -33.4344, lng: -70.6140 }, title: "Pet Shop Mundo Animal" },
+      { position: { lat: -33.4054, lng: -70.5718 }, title: "Veterinaria San Francisco", },
+      { position: { lat: -33.4934, lng: -70.7784 }, title: "Pet Shop Animalia",}
     ];
-
-
-
     for (const marker of petvet) {
       await this.newMap.addMarker({
         coordinate: marker.position,
