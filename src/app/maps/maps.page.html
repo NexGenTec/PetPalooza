@@ -1,53 +1,19 @@
 <ion-content [fullscreen]="true">
-    <div class="map-container">
+    <div class="map-container" id="open-modal">
       <div #mapContainer class="map"></div>
     </div>
-    <ion-modal #modal
+    <ion-modal 
+      #modal
+      trigger="open-modal"
       [isOpen]="true"
-      [initialBreakpoint]="0.25"
+      [initialBreakpoint]="0.2"
       [backdropDismiss]="false"
-      [backdropBreakpoint]="0.1"[breakpoints]="[0.1, 0.25, 0.5, 0.75]">
+      [backdropBreakpoint]="0.5"
+      [breakpoints]="[0, 0.1, 0.25, 0.4]">
       <ng-template>
-        <ion-content>
-          <ion-list>
-            <ion-item>
-              <ion-avatar slot="start">
-                <ion-img src="https://i.pravatar.cc/300?u=b"></ion-img>
-              </ion-avatar>
-              <ion-label>
-                <h2>Connor Smith</h2>
-                <p>Sales Rep</p>
-              </ion-label>
-            </ion-item>
-            <ion-item>
-              <ion-avatar slot="start">
-                <ion-img src="https://i.pravatar.cc/300?u=a"></ion-img>
-              </ion-avatar>
-              <ion-label>
-                <h2>Daniel Smith</h2>
-                <p>Product Designer</p>
-              </ion-label>
-            </ion-item>
-            <ion-item>
-              <ion-avatar slot="start">
-                <ion-img src="https://i.pravatar.cc/300?u=d"></ion-img>
-              </ion-avatar>
-              <ion-label>
-                <h2>Greg Smith</h2>
-                <p>Director of Operations</p>
-              </ion-label>
-            </ion-item>
-            <ion-item>
-              <ion-avatar slot="start">
-                <ion-img src="https://i.pravatar.cc/300?u=e"></ion-img>
-              </ion-avatar>
-              <ion-label>
-                <h2>Zoey Smith</h2>
-                <p>CEO</p>
-              </ion-label>
-            </ion-item>
-          </ion-list>
-        </ion-content>
+        <button class="absolute top-2 right-0 w-12 text-gray-700 z-50" (click)="dismiss()">
+          <ion-icon class="bg-gray-50 text-gray-700 rounded-full text-xl" slot="icon-only" name="close"></ion-icon>
+        </button>
       </ng-template>
     </ion-modal>
 </ion-content>

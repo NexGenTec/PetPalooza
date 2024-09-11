@@ -1,5 +1,6 @@
 import { Component, ElementRef, AfterViewInit, ViewChild } from '@angular/core';
 import { GoogleMap } from '@capacitor/google-maps';
+import { ModalController } from '@ionic/angular';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -12,7 +13,7 @@ export class MapsPage implements AfterViewInit {
   @ViewChild('mapContainer', { static: false }) mapRef: ElementRef<HTMLElement>;
   newMap: GoogleMap;
 
-  constructor() { }
+  constructor(private modalController: ModalController) { }
 
   async ngAfterViewInit() {
     await this.createMap();
@@ -211,5 +212,9 @@ export class MapsPage implements AfterViewInit {
         snippet: marker.title,
       });
     }
+  }
+
+  dismiss() {
+    this.modalController.dismiss();
   }
 }
