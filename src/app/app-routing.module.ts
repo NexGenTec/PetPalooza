@@ -35,23 +35,13 @@ const routes: Routes = [
     loadChildren: () => import('./components/favoritos/favoritos.module').then(m => m.FavoritosPageModule)
   },
   {
-    path: 'adoptame',
-    loadChildren: () => import('./adoptame/adoptame.module').then(m => m.AdoptamePageModule)
-  },
-  {
-    path: 'cuidados',
-    loadChildren: () => import('./cuidados/cuidados.module').then(m => m.CuidadosPageModule)
-  },
-  {
     path: 'modal-swiper',
     loadChildren: () => import('./components/modal-swiper/modal-swiper.module').then(m => m.ModalSwiperPageModule)
   },
   {
     path: 'modalswiper-users',
-    loadChildren: () => import('./components/modalswiper-users/modalswiper-users.module').then( m => m.ModalswiperUsersPageModule)
+    loadChildren: () => import('./components/modalswiper-users/modalswiper-users.module').then(m => m.ModalswiperUsersPageModule)
   },
-
-
 ];
 @NgModule({
   imports: [
