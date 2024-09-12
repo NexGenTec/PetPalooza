@@ -13,6 +13,7 @@ import { Share } from '@capacitor/share';
 import { ReactionService } from 'src/app/service/reaction.service';
 import { Device } from '@capacitor/device';
 import { v4 as uuidv4 } from 'uuid';
+import { InteractionService } from 'src/app/service/interaction.service';
 
 @Component({
   selector: 'app-perfil-perro',
@@ -50,7 +51,8 @@ export class PerfilPerroPage implements OnInit {
     private ofline: DataOflineService,
     private favoritesService: StorageService,
     private loadingController: LoadingController,
-    private firebaseService: ReactionService) {
+    private firebaseService: ReactionService,
+    private interactionService: InteractionService) {
       this.deviceId = localStorage.getItem('deviceId') || uuidv4();
       localStorage.setItem('deviceId', this.deviceId);
     }
@@ -297,8 +299,9 @@ export class PerfilPerroPage implements OnInit {
   }
 
   async addToFavorites(animal: any, type: string) {
+    this.interactionService.triggerLike(); 
     await this.favoritesService.addToFavorites(animal, type);
-    this.loadFavorites();  // Actualizar la lista de favoritos después de agregar o eliminar
+    this.loadFavorites();
   }
 
   async toggleLike(imgUser: ImgUser) {
