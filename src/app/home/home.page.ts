@@ -53,6 +53,7 @@ export class homePage implements OnInit {
 
   originalGatosSlice: InfoGato[] = [];
   originalPerrosSlice: InfoPerro[] = [];
+  isLoading = true;
 
   breakpointsRegisteredAnimals = {
     0: { slidesPerView: 1.15 },
@@ -147,6 +148,7 @@ export class homePage implements OnInit {
       if (img) {
         this.originalImg = img;
         this.img = img
+        this.isLoading = false;
       }
     });
   }

@@ -20,9 +20,13 @@ export interface FechaCreacion {
   }
 
   export interface ImgUser {
+    url: string;
     nombre: string;
-    url: string; // The URL or path to the image
-  }
+    likeCount?: number;
+    smileCount?: number;
+    likedDevices?: string[];
+    reactedDevices?: string[];
+  }  
   
   export interface InfoGato {
     Historia: string;
@@ -37,5 +41,5 @@ export interface FechaCreacion {
     caracteristicasFisicas: CaracteristicasFisicas[];
     imgPerfil: string;
     Origen: string;
-    id?: string; // Propiedad id opcional
+    id?: string;
   }

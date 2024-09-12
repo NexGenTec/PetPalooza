@@ -20,8 +20,12 @@ export interface FechaCreacion {
   }
 
   export interface ImgUser {
-    nombre: string;
     url: string;
+    nombre: string;
+    likeCount?: number;
+    smileCount?: number;
+    likedDevices?: string[];
+    reactedDevices?: string[];
   }
   
   export interface InfoPerro {
