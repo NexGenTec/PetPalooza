@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { StorageService } from '../../service/storage.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-favoritos',
@@ -10,8 +10,8 @@ import { StorageService } from '../../service/storage.service';
 export class FavoritosPage implements OnInit {
   favoriteAnimals = [];
   isLoading: boolean = true;
-  skeletonCategories = Array(2);
-  skeletonFavorites = Array(2); 
+  skeletonCategories = Array(4);
+  skeletonFavorites = Array(6); 
   favorites: any[] = [];
   loaded: boolean = false;
 
@@ -58,4 +58,8 @@ export class FavoritosPage implements OnInit {
   isInFavorites(animal: any, type: string): boolean {
     return this.favoritesService.isInFavorites(animal, type);
   }
+
+  navigateToFavoriteMatch() {
+    this.router.navigate(['/favoritos/match-favorite']);
+  }  
 }

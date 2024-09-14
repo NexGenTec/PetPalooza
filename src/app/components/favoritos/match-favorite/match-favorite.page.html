@@ -1,0 +1,148 @@
+<ion-content [fullscreen]="true">
+  <div class="flex flex-col h-full">
+    <div *ngIf="isLoading; else content">
+      <!-- Skeleton Loader -->
+      <div class="flex flex-col h-screen w-screen">
+        <div class="relative h-full w-full max-w-md mx-auto px-1 py-2">
+          <div class="absolute top-6 left-5 z-50">
+            <div class="bg-gray-600 rounded-full w-8 h-8"></div>
+          </div>
+          <div class="bg-gray-600 flex flex-col items-center justify-center w-full h-full relative rounded-lg overflow-hidden">
+            <div class="w-full h-full bg-gray-600 animate-pulse"></div>
+            <div class="relative h-full w-full bg-gradient-to-b from-transparent from-30% via-black/50 to-black flex items-end">
+              <div class="p-3 w-full">
+                <div class="flex flex-col">
+                  <div class="bg-gray-200 h-8 w-3/4 rounded mb-2 animate-pulse"></div>
+                  <div class="bg-gray-200 h-6 w-1/2 rounded animate-pulse"></div>
+                </div>
+                <div class="my-3 flex justify-between">
+                  <div class="flex flex-wrap gap-2 items-end">
+                    <div class="bg-gray-200 h-6 w-24 rounded-full animate-pulse"></div>
+                  </div>
+                  <div class="flex gap-2 items-end">
+                    <div class="bg-gray-200 h-8 w-8 rounded-full animate-pulse"></div>
+                    <div class="bg-gray-200 h-8 w-8 rounded-full animate-pulse"></div>
+                    <div class="bg-gray-200 h-8 w-8 rounded-full animate-pulse"></div>
+                  </div>
+                </div>
+                <div class="my-3 flex justify-between">
+                  <div class="bg-gray-200/40 text-gray-200 font-light p-3 rounded-md overflow-hidden animate-pulse w-full"></div>
+                </div>
+                <div id="buttons" class="flex justify-around items-center mt-6 mb-4">
+                  <div class="bg-gray-200 h-12 w-12 rounded-full animate-pulse"></div>
+                  <div class="bg-gray-200 h-14 w-14 rounded-full animate-pulse"></div>
+                  <div class="bg-gray-200 h-12 w-12 rounded-full animate-pulse"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <ng-template #content>
+      <!-- Tu contenido real aquí -->
+      <div class="flex flex-col flex-grow">
+        <div class="h-full w-full max-w-md mx-auto relative">
+          <div class="absolute top-6 left-5 z-50 ">
+            <ion-buttons slot="start" class="bg-gray-50 opacity-70 text-gray-900 rounded-full">
+              <ion-back-button defaultHref="/favoritos"></ion-back-button>
+            </ion-buttons>
+          </div>
+          <div class="bg-gray-300 flex flex-col items-center justify-center w-full h-full relative overflow-hidden" *ngIf="combinedAnimals.length > 0; else noAnimal">
+            <img 
+              class="object-scale-down object-center w-full h-full absolute top-0 left-0" 
+              [src]="getCurrentAnimal()?.imgPerfil" alt="Imagen de la mascota"/>
+            <div class="relative h-full w-full bg-gradient-to-b from-transparent from-30% via-sky-900/50 to-black flex items-end">
+              <div class="p-3">
+                <div class="flex flex-col">
+                  <h2 class="text-3xl text-white">
+                    {{ getCurrentAnimal()?.Raza }}
+                  </h2>
+                  <span class="text-gray-300 text-2xl">{{ getCurrentAnimal()?.Anio }}</span>
+                </div>
+                <div class="my-3 flex justify-between">
+                  <div id="temperamento" class="flex flex-wrap gap-2 items-end">
+                    <span 
+                      *ngFor="let temperamento of getCurrentAnimal()?.Temperamento"
+                      class="text-white text-sm font-normal px-3 py-1 rounded-full bg-gradient-to-br from-[#24c6dc] to-[#5359a8]">
+                      {{ temperamento.tipo }}
+                    </span>
+                  </div>
+                  <div class="flex gap-2 items-end">
+                    <button
+                      class="flex items-center justify-center bg-black/50 text-white p-1 duration-300 rounded-full">
+                      <ion-icon name="eye-outline" (click)="navigateToAnimalProfile(getCurrentAnimal())"></ion-icon>
+                    </button>
+                    <button
+                      *ngIf="isExpanded"
+                      class="flex items-center justify-center bg-black/50 text-white p-1 duration-300 rounded-full"
+                      (click)="toggleExpand()">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-arrow-down">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M12 19l0 -14" />
+                        <path d="M18 13l-6 6" />
+                        <path d="M6 13l6 6" />
+                      </svg>
+                    </button>
+                    <button
+                      *ngIf="!isExpanded"
+                      class="flex items-center justify-center bg-black/50 text-white p-1 duration-300 rounded-full"
+                      (click)="toggleExpand()">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-arrow-up">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M12 5l0 14" />
+                        <path d="M18 11l-6 -6" />
+                        <path d="M6 11l6 -6" />
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+                <div class="my-3 flex justify-between">
+                  <div class="bg-gray-600/40 text-gray-100 font-light p-3 rounded-md overflow-hidden">
+                    <div [ngClass]="{ 'line-clamp-2': !isExpanded, 'line-clamp-none': isExpanded }">
+                      {{ getCurrentAnimal()?.Historia }}
+                    </div>
+                  </div>                  
+                </div>
+                <div id="buttons" class="flex justify-around items-center mt-6 mb-4">
+                  <button
+                    class="flex items-center justify-center bg-[#27292e] text-[#60a5fa] p-2 duration-300 rounded-full" (click)="onDislike()">
+                    <svg  xmlns="http://www.w3.org/2000/svg"  width="35"  height="35"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="3"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-x"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M18 6l-12 12" /><path d="M6 6l12 12" /></svg> 
+                  </button>
+                  <div class="flex items-center">
+                    <a href="/" class="rounded-full ">
+                      <img 
+                      class="max-h-14 rounded-full overflow-hidden"
+                      alt="logo PetPalooza" 
+                      src="assets/img/logo/PetPalooza_512px.png" 
+                    />
+                    </a>
+                  </div>
+                  <button
+                    class="flex items-center justify-center bg-[#24252A] text-[#FC2488] p-2 duration-300 rounded-full" (click)="onLike(getCurrentAnimal())">
+                    <svg  xmlns="http://www.w3.org/2000/svg"  width="35"  height="35"  viewBox="0 0 24 24"  fill="currentColor"  class="icon icon-tabler icons-tabler-filled icon-tabler-heart"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6.979 3.074a6 6 0 0 1 4.988 1.425l.037 .033l.034 -.03a6 6 0 0 1 4.733 -1.44l.246 .036a6 6 0 0 1 3.364 10.008l-.18 .185l-.048 .041l-7.45 7.379a1 1 0 0 1 -1.313 .082l-.094 -.082l-7.493 -7.422a6 6 0 0 1 3.176 -10.215z" /></svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <ng-template #noAnimal>
+        <div class="flex flex-col flex-grow justify-center items-center h-screen text-center py-10">
+          <div class="h-full w-full max-w-md mx-auto px-1 py-2 relative">
+            <div class="flex flex-col items-center justify-center w-full h-full relative rounded-lg overflow-hidden">
+              <div class="h-full w-full max-w-md mx-auto">
+                <img src="../../../assets/img/Heart.jpeg" alt="Corazón" class="w-20 h-20 mb-4 mx-auto">
+                <p class="text-gray-500 text-center mt-2">
+                  ¡Felicitaciones! Has añadido todas las mascotas a tus favoritos. 
+                  Pronto tendremos nuevas aventuras peludas por aquí, ¡no te lo pierdas!
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-template>        
+    </ng-template>
+  </div>
+</ion-content>

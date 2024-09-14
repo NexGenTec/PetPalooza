@@ -3,14 +3,17 @@ import { ImgModalPage } from '../../../components/img-modal/img-modal.page';
 import { LoadingController, ModalController, Platform } from '@ionic/angular';
 import { CaracteristicasFisicas, Cuidado, ImgUser, InfoPerro, Temperamento } from '../../../interface/InfoPerro.models';
 import { ModalSwiperPage } from 'src/app/components/modal-swiper/modal-swiper.page';
-import { AdmobAds, BannerPosition, BannerSize } from 'capacitor-admob-ads';
-import { environment } from '../../../../environments/environment.prod';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DataOflineService } from 'src/app/service/data-ofline.service';
 import { ActionPerformed, PushNotifications } from '@capacitor/push-notifications';
 import { AddImagePage } from '../add-image/add-image.page';
 import { StorageService } from '../../../service/storage.service';
 import { ModalswiperUsersPage } from 'src/app/components/modalswiper-users/modalswiper-users.page';
+import { Share } from '@capacitor/share';
+import { ReactionService } from 'src/app/service/reaction.service';
+import { Device } from '@capacitor/device';
+import { v4 as uuidv4 } from 'uuid';
+import { InteractionService } from 'src/app/service/interaction.service';
 
 @Component({
   selector: 'app-perfil-perro',
@@ -38,6 +41,7 @@ export class PerfilPerroPage implements OnInit {
 
   isLoading: boolean = true;
   isLoadingImg: boolean = true;
+  deviceId: string;
 
   constructor(
     private modalController: ModalController,
@@ -46,9 +50,14 @@ export class PerfilPerroPage implements OnInit {
     private route: ActivatedRoute,
     private ofline: DataOflineService,
     private favoritesService: StorageService,
-    private loadingController: LoadingController) { }
+    private loadingController: LoadingController,
+    private firebaseService: ReactionService,
+    private interactionService: InteractionService) {
+      this.deviceId = localStorage.getItem('deviceId') || uuidv4();
+      localStorage.setItem('deviceId', this.deviceId);
+    }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.platform.ready().then(() => {
       PushNotifications.addListener('pushNotificationActionPerformed', async (notification: ActionPerformed) => {
         const data = notification.notification.data;
@@ -80,11 +89,55 @@ export class PerfilPerroPage implements OnInit {
       this.perro = history.state.data;
       this.populatePerroData();
     }
+    try {
+      const deviceIdInfo = await Device.getId();
+      console.log('ID del dispositivo:', deviceIdInfo.identifier);
+      this.deviceId = deviceIdInfo.identifier || this.deviceId;
+      console.log('ID del dispositivo:', this.deviceId);
+    } catch (error) {
+      console.error('Error al obtener el identificador del dispositivo:', error);
+    }
+  }
+  
+  async shareContent(tipo: 'gato' | 'perro') {
+    if (!this.perro) {
+      console.error('No hay datos del perfil para compartir.');
+      return;
+    }
+  
+    const perfilId = this.perro.id;
+    const truncatedHistory = this.truncateText(this.perro.Historia, 250);
+    const shareTitle = `¡Conoce a ${this.perro.Raza}!`;
+    const imageUrl = this.perro.imgPerfil; // URL pública de la imagen
+    const shareText = `${tipo === 'perro' ? '🐱' : '🐶'} **${this.perro.Raza}**\n\n` +
+                      `🌟 **Historia:** ${truncatedHistory}\n` +
+                      `🌍 **Origen:** ${this.perro.Origen}\n\n` +
+                      `¡Descubre más sobre este increíble ${tipo} y muchos otros en nuestra app!`;
+    const shareUrl = `https://play.google.com/store/apps/details?id=com.nexgentech.petpaloozaa`;
+  
+    try {
+      await Share.share({
+        title: shareTitle,
+        text: `${shareText}\n\nMás información: ${shareUrl}`,
+        url: imageUrl,
+        dialogTitle: 'Compartir con',
+      });
+    } catch (error) {
+      console.error('Error al compartir contenido:', error);
+    }
+  }  
+  
+  truncateText(text: string, maxLength: number = 40): string {
+    if (text.length > maxLength) {
+      return text.substring(0, maxLength) + '...';
+    }
+    return text;
   }
 
   async showLoading() {
     const loading = await this.loadingController.create({
-      message: 'Cargando datos del perro...',
+      duration: 5000,
+      mode:'ios'
     });
     await loading.present();
     return loading;
@@ -246,32 +299,44 @@ export class PerfilPerroPage implements OnInit {
   }
 
   async addToFavorites(animal: any, type: string) {
+    this.interactionService.triggerLike(); 
     await this.favoritesService.addToFavorites(animal, type);
-    this.loadFavorites();  // Actualizar la lista de favoritos después de agregar o eliminar
+    this.loadFavorites();
   }
 
-  /*Anuncio Banner  */
-  async showAdaptiveBanner() {
-    try {
-      await AdmobAds.showBannerAd({
-        adId: environment.AdmobAds.APP_ID, // ID de tu anuncio de AdMob
-        isTesting: false, // Configuración de prueba
-        adSize: BannerSize.BANNER, // Tamaño de banner adaptable
-        adPosition: BannerPosition.TOP // Posición del banner
-      });
-      console.log('Banner adaptable (Banner) mostrado correctamente');
+  async toggleLike(imgUser: ImgUser) {
+    imgUser.likedDevices = imgUser.likedDevices || [];
+    const hasAlreadyLiked = imgUser.likedDevices.includes(this.deviceId);
 
-      // Cerrar el banner después de cierto tiempo o evento
-      setTimeout(async () => {
-        try {
-          await AdmobAds.removeBannerAd();
-          console.log('Banner adaptable (Banner) cerrado correctamente');
-        } catch (error) {
-          console.error('Error al cerrar el banner adaptable (Banner)', error);
-        }
-      }, 20000); // Ejemplo: cerrar el banner después de 10 segundos
-    } catch (error) {
-      console.error('Error al mostrar el banner adaptable (Banner)', error);
+    if (!hasAlreadyLiked) {
+      imgUser.likedDevices.push(this.deviceId);
+      imgUser.likeCount = (imgUser.likeCount || 0) + 1;
+    } else {
+      imgUser.likedDevices = imgUser.likedDevices.filter(id => id !== this.deviceId);
+      imgUser.likeCount = (imgUser.likeCount || 0) - 1;
     }
+
+    await this.firebaseService.updateImgUserInPerro(this.perro.id, imgUser.url, { 
+      likedDevices: imgUser.likedDevices,
+      likeCount: imgUser.likeCount
+    });
   }
+
+  async toggleSmile(imgUser: ImgUser) {
+    imgUser.reactedDevices = imgUser.reactedDevices || [];
+    const hasAlreadyReacted = imgUser.reactedDevices.includes(this.deviceId);
+
+    if (!hasAlreadyReacted) {
+      imgUser.reactedDevices.push(this.deviceId);
+      imgUser.smileCount = (imgUser.smileCount || 0) + 1;
+    } else {
+      imgUser.reactedDevices = imgUser.reactedDevices.filter(id => id !== this.deviceId);
+      imgUser.smileCount = (imgUser.smileCount || 0) - 1;
+    }
+
+    await this.firebaseService.updateImgUserInPerro(this.perro.id, imgUser.url, { 
+      reactedDevices: imgUser.reactedDevices,
+      smileCount: imgUser.smileCount
+    });
+  }  
 }

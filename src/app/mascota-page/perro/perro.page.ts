@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { InfoPerro } from '../../interface/InfoPerro.models';
 import { QuirkyFacts } from '../../interface/QuirkyFacts.models';
 import { FirestoreService } from '../../service/firestore.service';
@@ -10,7 +10,7 @@ import { StorageService } from 'src/app/service/storage.service';
   templateUrl: 'perro.page.html',
   styleUrls: ['perro.page.scss']
 })
-export class perroPage {
+export class perroPage implements OnDestroy {
 
   perros: InfoPerro[] = [];
   DatosFreak: QuirkyFacts[] = [];
@@ -19,32 +19,38 @@ export class perroPage {
   currentDatoIndex: number = 0;
   searchTerm: string = '';
   perroId: string | null = null;
-
+  isLoading = true;
+  private factInterval: any;
 
   constructor(
     private firestores: FirestoreService,
     private router: Router,
     private favoritesService: StorageService,
-  ) {
-    this.loadData();
-  }
-
+  ) {}
 
   ngOnInit(): void {
-    this.getQuirkyFacts();
-    setInterval(() => {
-      this.showRandomQuirkyFact();
-    }, 10000);
     this.loadData();
+    this.getQuirkyFacts();
+    this.factInterval = setInterval(() => {
+      this.showRandomQuirkyFact();
+    }, 10000);  // Cambia el dato curioso cada 10 segundos
+  }
+
+  ngOnDestroy(): void {
+    // Cancelar el intervalo para evitar fugas de memoria
+    if (this.factInterval) {
+      clearInterval(this.factInterval);
+    }
   }
 
   loadData() {
     this.firestores.getCollectionChanges<InfoPerro>('InfoPerros').subscribe(perro => {
       if (perro) {
-        this.perros = perro
+        this.perros = perro;
         this.filteredPerros = [...this.perros];
+        this.isLoading = false;
       }
-    })
+    });
   }
 
   getQuirkyFacts() {
@@ -65,7 +71,7 @@ export class perroPage {
       const randomIndex = perroIndices[Math.floor(Math.random() * perroIndices.length)];
       this.currentDatoIndex = randomIndex;
     } else {
-      console.log("No hay datos disponibles con la categoría Gato");
+      console.log("No hay datos disponibles con la categoría 'perro'.");
     }
   }
 
@@ -74,18 +80,24 @@ export class perroPage {
   }
 
   filterPerros() {
-    this.filteredPerros = this.perros.filter(perro =>
-      perro.Raza.toLowerCase().includes(this.searchTerm.toLowerCase())
-    );
+    const term = this.searchTerm.trim();
+    if (term) {
+      const regex = new RegExp(term, 'i');
+      this.filteredPerros = this.perros.filter(perro => regex.test(perro.Raza));
+    } else {
+      this.filteredPerros = [...this.perros];
+    }
   }
 
-  isInFavorites(animal: any, type: string): boolean {
+  isInFavorites(animal: InfoPerro, type: string): boolean {
     return this.favoritesService.isInFavorites(animal, type);
   }
 
-  async addToFavorites(animal: any, type: string) {
-    await this.favoritesService.addToFavorites(animal, type);
-    this.loadFavorites();
+  async addToFavorites(animal: InfoPerro, type: string) {
+    if (!this.isInFavorites(animal, type)) {
+      await this.favoritesService.addToFavorites(animal, type);
+      this.loadFavorites();
+    }
   }
 
   private loadFavorites() {

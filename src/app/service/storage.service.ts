@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ToastController } from '@ionic/angular';
+import { Observable, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -25,6 +26,11 @@ export class StorageService {
     return this.favorites;
   }
 
+  getFavoritesByType(type: string): Observable<any[]> {
+    const filteredFavorites = this.favorites.filter(favorite => favorite.type === type);
+    return of(filteredFavorites); // Convert to Observable
+  }
+
   isInFavorites(animal: any, type: string): boolean {
     return this.favorites.some(favorite => favorite.id === animal.id && favorite.type === type);
   }
@@ -47,6 +53,7 @@ export class StorageService {
       message: message,
       duration: 2000,
       position: 'top',
+      mode:'ios',
       color: color,
       buttons: [
         {

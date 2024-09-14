@@ -3,9 +3,7 @@ import { InfoGato } from '../../interface/InfoGato.models';
 import { QuirkyFacts } from '../../interface/QuirkyFacts.models';
 import { FirestoreService } from '../../service/firestore.service';
 import { Router } from '@angular/router';
-import { Platform, ToastController } from '@ionic/angular';
 import { StorageService } from 'src/app/service/storage.service';
-import { ActionPerformed, PushNotifications } from '@capacitor/push-notifications';
 
 @Component({
   selector: 'app-gato',
@@ -21,13 +19,14 @@ export class gatoPage implements OnInit {
   currentDatoIndex: number = 0;
   searchTerm: string = '';
   gatoId: string | null = null;
+  isLoading = true;
+  private factInterval: any;
 
 
   constructor(
     private firestores: FirestoreService,
     private router: Router,
     private favoritesService: StorageService,
-    private platform: Platform
   ) {
     this.loadData();
   }
@@ -35,10 +34,16 @@ export class gatoPage implements OnInit {
 
   ngOnInit(): void {
     this.getQuirkyFacts();
-    setInterval(() => {
+    this.factInterval = setInterval(() => {
       this.showRandomQuirkyFact();
     }, 10000);
     this.loadData();
+  }
+
+  ngOnDestroy(): void {
+    if (this.factInterval) {
+      clearInterval(this.factInterval);
+    }
   }
 
   loadData() {
@@ -46,6 +51,7 @@ export class gatoPage implements OnInit {
       if (gato) {
         this.gatos = gato
         this.filteredGatos = [...this.gatos];
+        this.isLoading = false;
       }
     })
   }
@@ -88,7 +94,7 @@ export class gatoPage implements OnInit {
 
   async addToFavorites(animal: any, type: string) {
     await this.favoritesService.addToFavorites(animal, type);
-    this.loadFavorites();  // Actualizar la lista de favoritos después de agregar o eliminar
+    this.loadFavorites();
   }
 
   private loadFavorites() {

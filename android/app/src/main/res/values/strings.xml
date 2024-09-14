@@ -4,5 +4,4 @@
     <string name="title_activity_main">PetPalooza</string>
     <string name="package_name">com.nexgentech.petpaloozaa</string>
     <string name="custom_url_scheme">com.nexgentech.petpaloozaa</string>
-    <string name="admob_app_id">ca-app-pub-6309294666517022~9387947306</string>
 </resources>

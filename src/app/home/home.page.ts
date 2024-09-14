@@ -10,10 +10,8 @@ import { ModalController } from '@ionic/angular';
 import { InfoAve } from '../interface/InfoAve.models';
 import { ImgModalPage } from '../components/img-modal/img-modal.page';
 import { InfoImage } from '../interface/InfoImage.models';
-import { AdmobAds, BannerPosition, BannerSize, } from 'capacitor-admob-ads';
 import { StorageService } from '../service/storage.service';
 import { NotificationsService } from '../service/notifications.service';
-import { environment } from '../../environments/environment.prod';
 
 @Component({
   selector: 'app-home',
@@ -55,6 +53,7 @@ export class homePage implements OnInit {
 
   originalGatosSlice: InfoGato[] = [];
   originalPerrosSlice: InfoPerro[] = [];
+  isLoading = true;
 
   breakpointsRegisteredAnimals = {
     0: { slidesPerView: 1.15 },
@@ -75,7 +74,6 @@ export class homePage implements OnInit {
   }
 
   ionViewDidEnter() {
-    this.showAdaptiveBanner();
   }
 
   ngOnInit(): void {
@@ -150,6 +148,7 @@ export class homePage implements OnInit {
       if (img) {
         this.originalImg = img;
         this.img = img
+        this.isLoading = false;
       }
     });
   }
@@ -255,30 +254,9 @@ export class homePage implements OnInit {
     return await modal.present();
   }
 
-  /*Anuncio Banner  */
-  async showAdaptiveBanner() {
-    try {
-      await AdmobAds.showBannerAd({
-        adId: environment.AdmobAds.APP_ID, // ID de tu anuncio de AdMob
-        isTesting: false, // Configuración de prueba
-        adSize: BannerSize.FULL_BANNER, // Tamaño de banner adaptable
-        adPosition: BannerPosition.TOP // Posición del banner
-      });
-      console.log('Banner adaptable (Full Banner) mostrado correctamente');
-
-      // Cerrar el banner después de cierto tiempo o evento
-      setTimeout(async () => {
-        try {
-          await AdmobAds.removeBannerAd();
-          console.log('Banner adaptable (Full Banner) cerrado correctamente');
-        } catch (error) {
-          console.error('Error al cerrar el banner adaptable (Full Banner)', error);
-        }
-      }, 10000); // Ejemplo: cerrar el banner después de 10 segundos
-    } catch (error) {
-      console.error('Error al mostrar el banner adaptable (Full Banner)', error);
-    }
-  }
+  navigateToFavoriteMatch() {
+    this.router.navigate(['/favoritos/match-favorite']);
+  }  
 }
 
 
