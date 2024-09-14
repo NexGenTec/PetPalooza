@@ -2,6 +2,8 @@ import { Component, ElementRef, AfterViewInit, ViewChild } from '@angular/core';
 import { GoogleMap } from '@capacitor/google-maps';
 import { ModalController } from '@ionic/angular';
 import { environment } from 'src/environments/environment';
+import { Veterinarias } from '../interface/Veterinarias.model';
+import { FirestoreService } from '../service/firestore.service';
 
 @Component({
   selector: 'app-maps',
@@ -12,11 +14,30 @@ export class MapsPage implements AfterViewInit {
 
   @ViewChild('mapContainer', { static: false }) mapRef: ElementRef<HTMLElement>;
   newMap: GoogleMap;
+  originalVeterinarias: Veterinarias[] = [];
+  veterinariaMarkers: Veterinarias[] = [];
 
-  constructor(private modalController: ModalController) { }
+  constructor(
+    private modalController: ModalController,
+    private firestores: FirestoreService,
+  ) { }
 
   async ngAfterViewInit() {
     await this.createMap();
+    this.loadData();
+  }
+
+  /*/
+  Se llaman la coleccion de veterinaris
+  */
+  async loadData() {
+    this.firestores.getCollectionChanges<Veterinarias>('Maps').subscribe(veterinarias => {
+      if (veterinarias) {
+        this.originalVeterinarias = veterinarias;
+        console.log(veterinarias)
+        this.addVeterinarias(veterinarias);
+      }
+    });
   }
 
   async createMap() {
@@ -184,36 +205,26 @@ export class MapsPage implements AfterViewInit {
           ],
         },
       });
-
-      this.addCustomMarkers();
+      this.loadData();      
 
     } catch (error) {
       console.error('Error creating the map', error);
     }
   }
 
-  private async addCustomMarkers() {
-    const petvet = [
-      { position: { lat: -33.4643, lng: -70.6010 }, title: "Veterinaria San Jorge", },
-      { position: { lat: -33.4594, lng: -70.6434 }, title: "Pet Shop Animales del Sur", },
-      { position: { lat: -33.4340, lng: -70.6065 }, title: "Veterinaria VetCare", },
-      { position: { lat: -33.4382, lng: -70.6345 }, title: "Pet Shop Gato & Perro",},
-      { position: { lat: -33.4727, lng: -70.6176 }, title: "Veterinaria Santiago Norte", },
-      { position: { lat: -33.4586, lng: -70.6303 }, title: "Pet Shop La Mascota Feliz", },
-      { position: { lat: -33.4102, lng: -70.5569 }, title: "Veterinaria VetPlus", },
-      { position: { lat: -33.4344, lng: -70.6140 }, title: "Pet Shop Mundo Animal" },
-      { position: { lat: -33.4054, lng: -70.5718 }, title: "Veterinaria San Francisco", },
-      { position: { lat: -33.4934, lng: -70.7784 }, title: "Pet Shop Animalia",}
-    ];
-    for (const marker of petvet) {
-      await this.newMap.addMarker({
-        coordinate: marker.position,
-        title: marker.title,
-        snippet: marker.title,
+  private async addVeterinarias(veterinarias: Veterinarias[]) {
+    for (const vet of veterinarias) {
+      const vetsId = await this.newMap.addMarker({
+        coordinate: {
+          lat: parseFloat(vet.Localizacion.Latitud), 
+          lng: parseFloat(vet.Localizacion.Longitud)
+        },
+        title: vet.Nombre,
+        snippet: `Dirección: ${vet.Direccion}\nDescripción: ${vet.Descripcion}`,
       });
+      this.veterinariaMarkers[vetsId] = vet;
     }
   }
-
   dismiss() {
     this.modalController.dismiss();
   }
