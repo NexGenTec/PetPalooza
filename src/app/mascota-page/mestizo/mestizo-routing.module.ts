@@ -7,7 +7,11 @@ const routes: Routes = [
   {
     path: '',
     component: MestizoPage
+  },  {
+    path: 'perfil-mestizo',
+    loadChildren: () => import('./perfil-mestizo/perfil-mestizo.module').then( m => m.PerfilMestizoPageModule)
   }
+
 ];
 
 @NgModule({

@@ -1,0 +1,63 @@
+<ion-content [fullscreen]="true" mode="md">
+  <div class="background"></div>
+  <ion-toolbar class="border-b border-gray-200">
+    <div class="flex gap-2 items-center justify-center mx-3">
+      <img 
+        class="max-h-14 my-1"
+        alt="logo PetPalooza" 
+        src="assets/img/logo/PetPalooza.png" 
+      />
+    </div>
+  </ion-toolbar>
+
+  <div class="bg-gray-50">
+    <div class="bg-blue-100 pt-20 pb-6 px-3 min-h-[93vh]">
+      <div class="relative mx-auto md:max-w-2xl min-w-0 break-words bg-white w-full shadow-lg rounded-xl pb-3">
+        <ng-container>
+          <div class="relative px-6">
+            <ion-buttons class="absolute left-2 top-4 md:left-2 md:top-5" slot="start">
+              <ion-back-button defaultHref="/"></ion-back-button>
+            </ion-buttons>
+            <div class="absolute top-5 right-16 md:top-5 md:right-32">
+              <button 
+              class="text-[#60a5fa] rounded-full w-8 h-8 md:w-10 md:h-10 p-1.5 md:p-2.5 drop-shadow-md hover:scale-105 duration-200">
+                <ion-icon name="share-social-outline" 
+                class="text-xl font-semibold md:text-2xl"></ion-icon>
+              </button>              
+            </div>
+            <div class="absolute top-4 right-5 md:top-5 md:right-8 w-10 h-10 rounded-full bg-white flex justify-center items-center text-red-400 ">
+                <button 
+                type="button" 
+                >
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8 md:w-10 md:h-10">
+                  <path d="m11.645 20.91-.007-.003-.022-.012a15.247 15.247 0 0 1-.383-.218 25.18 25.18 0 0 1-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0 1 12 5.052 5.5 5.5 0 0 1 16.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 0 1-4.244 3.17 15.247 15.247 0 0 1-.383.219l-.022.012-.007.004-.003.001a.752.752 0 0 1-.704 0l-.003-.001Z"/>
+                </svg>
+              </button>
+            </div>
+            <div class="flex flex-wrap justify-center">
+              <div class="w-full flex justify-center">
+                <div class="relative">
+                  <img 
+                  src="https://cdn.prod.website-files.com/63634f4a7b868a399577cf37/6501b771566d48417a6c2ad9_perros%20pastores.jpg" 
+                  class="shadow-xl rounded-full align-middle border-none absolute -m-16 -ml-20 lg:-ml-16 max-w-[150px] max-h-[150px] h-[150px] w-[150px] object-cover object-center"/>
+                </div>
+              </div>
+              <div class="w-full text-center mt-24">
+                <h3 class="text-2xl text-slate-700 font-bold leading-normal mb-1">Mestizo 1</h3>
+                <div class="text-xs mt-0 mb-2 text-slate-400 font-bold uppercase">Chile, Quilicura</div>
+              </div>
+              <div class="mt-6 py-6 border-t border-slate-200 text-center">
+                <div class="flex flex-wrap justify-center">
+                  <div class="w-full px-4">
+                    <p class="font-light text-sm leading-relaxed text-slate-600 mb-4">Llego a nuestra vida hace 3 años, lo encontramos en la esquina de nuestra calle, dentro de una caja</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>  
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</ion-content>
