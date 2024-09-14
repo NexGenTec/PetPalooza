@@ -19,6 +19,10 @@ const routes: Routes = [
     loadChildren: () => import('./mascota-page/perro/perfil-perro/perfil-perro.module').then(m => m.PerfilPerroPageModule)
   },
   {
+    path: 'perfil-mestizo/:id',
+    loadChildren: () => import('./mascota-page/mestizo/perfil-mestizo/perfil-mestizo.module').then(m => m.PerfilMestizoPageModule)
+  },
+  {
     path: 'page-ave/:categoria',
     loadChildren: () => import('./mascota-page/aves/page-ave/page-ave.module').then(m => m.PageAvePageModule)
   },
