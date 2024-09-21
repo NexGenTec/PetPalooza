@@ -16,7 +16,6 @@ export class FunFactsPage implements OnInit {
     descripcion: '',
   };
   quirkyFactsList: ({ id: string } & QuirkyFacts)[] = [];
-  editingFactId: string;
 
   constructor(
     private firestoreService: FirestoreService,
@@ -32,17 +31,6 @@ export class FunFactsPage implements OnInit {
       this.presentToast('Por favor, completa todos los campos obligatorios.');
       return;
     }
-
-    // console.log('Datos del formulario:', this.formData);
-    // this.firestoreService.addDocument('QuirkyFacts', this.formData)
-    //   .then(() => {
-    //     this.presentToast('Datos subidos exitosamente a Firebase');
-    //     this.resetForm(form);
-    //     this.loadQuirkyFacts();
-    //   })
-    //   .catch((error) => {
-    //     this.presentToast('Error al subir los datos a Firebase');
-    //   });
   }
 
   resetForm(form: NgForm) {

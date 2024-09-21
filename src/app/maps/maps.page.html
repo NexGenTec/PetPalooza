@@ -1,0 +1,25 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Mapa</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-list *ngIf="maps && maps.length > 0">
+    <ion-item *ngFor="let map of maps">
+      <ion-thumbnail slot="start">
+        <img [src]="map.Img" alt="{{map.Nombre}}">
+      </ion-thumbnail>
+      <ion-label>
+        <h2>{{ map.Nombre }}</h2>
+        <p>{{ map.Descripcion }}</p>
+        <p><strong>Dirección:</strong> {{ map.Direccion }}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+  <!-- Mensaje cuando no hay datos -->
+  <ion-item *ngIf="!maps || maps.length === 0">
+    <ion-label>No hay veterinarias disponibles.</ion-label>
+  </ion-item>
+</ion-content>

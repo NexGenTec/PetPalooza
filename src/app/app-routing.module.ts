@@ -39,6 +39,15 @@ const routes: Routes = [
     redirectTo: 'pets',
     pathMatch: 'full'
   },
+  {
+    path: 'maps',
+    loadChildren: () => import('./maps/maps.module').then( m => m.MapsPageModule)
+  },
+  {
+    path: 'img-users',
+    loadChildren: () => import('./img-users/img-users.module').then( m => m.ImgUsersPageModule)
+  },
+
 ];
 
 @NgModule({
