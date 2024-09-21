@@ -14,7 +14,7 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
     CommonModule,
     FormsModule,
     IonicModule,
-    MapsPageRoutingModule
+    MapsPageRoutingModule,
   ],
   declarations: [MapsPage],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]

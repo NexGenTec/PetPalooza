@@ -1,4 +1,4 @@
-import { Component, ElementRef, AfterViewInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, AfterViewInit, ViewChild, OnInit } from '@angular/core';
 import { GoogleMap } from '@capacitor/google-maps';
 import { ModalController } from '@ionic/angular';
 import { environment } from 'src/environments/environment';
@@ -10,17 +10,23 @@ import { FirestoreService } from '../service/firestore.service';
   templateUrl: './maps.page.html',
   styleUrls: ['./maps.page.scss'],
 })
-export class MapsPage implements AfterViewInit {
+export class MapsPage implements AfterViewInit, OnInit {
 
   @ViewChild('mapContainer', { static: false }) mapRef: ElementRef<HTMLElement>;
   newMap: GoogleMap;
   originalVeterinarias: Veterinarias[] = [];
   veterinariaMarkers: Veterinarias[] = [];
+  isLoading = true;
+  veterinariasGroupedByCategoria: { [key: string]: Veterinarias[] } = {};
+  skeletonMap = Array(2); 
 
   constructor(
     private modalController: ModalController,
     private firestores: FirestoreService,
   ) { }
+
+  ngOnInit() {
+  }
 
   async ngAfterViewInit() {
     await this.createMap();
@@ -34,8 +40,10 @@ export class MapsPage implements AfterViewInit {
     this.firestores.getCollectionChanges<Veterinarias>('Maps').subscribe(veterinarias => {
       if (veterinarias) {
         this.originalVeterinarias = veterinarias;
-        console.log(veterinarias)
+        this.veterinariasGroupedByCategoria = this.groupVeterinariasByCategoria(this.originalVeterinarias);
         this.addVeterinarias(veterinarias);
+        console.log('Veterinarias agrupadas por categoría:', this.veterinariasGroupedByCategoria);
+        this.isLoading = false;
       }
     });
   }
@@ -214,18 +222,39 @@ export class MapsPage implements AfterViewInit {
 
   private async addVeterinarias(veterinarias: Veterinarias[]) {
     for (const vet of veterinarias) {
-      const vetsId = await this.newMap.addMarker({
-        coordinate: {
-          lat: parseFloat(vet.Localizacion.Latitud), 
-          lng: parseFloat(vet.Localizacion.Longitud)
-        },
-        title: vet.Nombre,
-        snippet: `Dirección: ${vet.Direccion}\nDescripción: ${vet.Descripcion}`,
-      });
-      this.veterinariaMarkers[vetsId] = vet;
+      if (vet.Localizacion && vet.Localizacion.Latitud && vet.Localizacion.Longitud) {
+        const vetsId = await this.newMap.addMarker({
+          coordinate: {
+            lat: parseFloat(vet.Localizacion.Latitud),
+            lng: parseFloat(vet.Localizacion.Longitud),
+          },
+          title: vet.Nombre,
+          snippet: `Dirección: ${vet.Direccion}\nDescripción: ${vet.Descripcion}`,
+        });
+        this.veterinariaMarkers[vetsId] = vet;
+      } else {
+        console.warn(`Localización no válida para la veterinaria: ${vet.Nombre}`, vet);
+      }
     }
   }
+
   dismiss() {
     this.modalController.dismiss();
+  }
+
+  groupVeterinariasByCategoria(veterinarias: Veterinarias[]): { [key: string]: Veterinarias[] } {
+    return veterinarias.reduce((grouped, veterinaria) => {
+      const categoria = veterinaria.Categoria;
+      console.log('Categoría:', categoria);
+      if (!grouped[categoria]) {
+        grouped[categoria] = [];
+      }
+      grouped[categoria].push(veterinaria);
+      return grouped;
+    }, {});
+  }
+
+  getObjectKeys(obj: any): string[] {
+    return Object.keys(obj);
   }
 }
