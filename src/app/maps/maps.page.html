@@ -12,112 +12,88 @@
     [backdropBreakpoint]="0.5"
     [breakpoints]="[0, 0.1, 0.4, 0.5, 0.95]">
     <ng-template>
-      <ion-content
-      [scrollEvents]="true"
-      class="ion-padding" >
+      <ion-content [scrollEvents]="true" class="ion-padding">
         <button class="absolute top-2 right-0 w-12 text-gray-700 z-50" (click)="dismiss()">
           <ion-icon class="bg-gray-50 text-gray-700 rounded-full text-xl" slot="icon-only" name="close"></ion-icon>
         </button>
         <div class="py-8 px-3">
           <ng-container *ngIf="!isLoading; else skeletonTemplate">
-            <ng-container *ngFor="let categoria of getObjectKeys(veterinariasGroupedByCategoria)">
-              <swiper-container [slidesPerView]="1.3" [loop]="false" [scrollbar]="true">
-                <swiper-slide *ngFor="let veterinaria of veterinariasGroupedByCategoria[categoria]">
-                  <ng-container>
-                    <div class="px-3">
-                      <h1 class="pb-2 text-2xl font-medium">{{ veterinaria.Categoria }}</h1>
-                      <span class="bg-blue-400 mx-auto mb-4 inline-block h-1 w-[90px] rounded"></span>
-          
-                      <div class="w-full bg-white rounded-3xl flex flex-col items-start justify-between gap-3 border border-gray-200">
-                        <div class="w-full">
-                          <div class="w-full h-52 rounded-tl-2xl rounded-tr-2xl overflow-hidden relative">
-                            <ion-img class="w-full h-full object-cover object-center" [src]="veterinaria.Img" alt="Imagen de Veterinaria"></ion-img>
-                            <div class="absolute bottom-2 left-3">
-                              <span
-                                class="text-xs font-medium me-2 px-2.5 py-0.5 rounded-full text-white"
-                                [ngClass]="{
-                                  'bg-blue-700': veterinaria.Categoria === 'Veterinarias Movil',
-                                  'bg-yellow-700': veterinaria.Categoria === 'Clinicas',
-                                  'bg-green-700': veterinaria.Categoria === 'PetShops',
-                                  'bg-red-700': veterinaria.Categoria === 'Peluquerias',
-                                  'bg-blue-400': veterinaria.Categoria === 'Veterinarias'
-                                }"
-                              >
-                                {{ veterinaria.Categoria }}
-                              </span>
+            <ng-container *ngIf="getObjectKeys(veterinariasGroupedByCategoria).length; else noDataTemplate">
+              <ng-container *ngFor="let categoria of getObjectKeys(veterinariasGroupedByCategoria)">
+                <swiper-container [slidesPerView]="1.3" [loop]="false" [scrollbar]="true">
+                  <swiper-slide *ngFor="let veterinaria of veterinariasGroupedByCategoria[categoria]">
+                    <ng-container>
+                      <div class="px-3">
+                        <h1 class="pb-2 text-2xl font-medium">{{ veterinaria.Categoria }}</h1>
+                        <span class="bg-blue-400 mx-auto mb-4 inline-block h-1 w-[90px] rounded"></span>
+
+                        <div class="w-full bg-white rounded-3xl flex flex-col items-start justify-between gap-3 border border-gray-200">
+                          <div class="w-full">
+                            <div class="w-full h-52 rounded-tl-2xl rounded-tr-2xl overflow-hidden relative">
+                              <ion-img class="w-full h-full object-cover object-center" [src]="veterinaria.Img" alt="Imagen de Veterinaria"></ion-img>
+                              <div class="absolute bottom-2 left-3">
+                                <span
+                                  class="text-xs font-medium me-2 px-2.5 py-0.5 rounded-full text-white"
+                                  [ngClass]="{
+                                    'bg-blue-700': veterinaria.Categoria === 'Veterinarias Movil',
+                                    'bg-yellow-700': veterinaria.Categoria === 'Clinicas',
+                                    'bg-green-700': veterinaria.Categoria === 'PetShops',
+                                    'bg-red-700': veterinaria.Categoria === 'Peluquerias',
+                                    'bg-blue-400': veterinaria.Categoria === 'Veterinarias'
+                                  }"
+                                >
+                                  {{ veterinaria.Categoria }}
+                                </span>
+                              </div>
                             </div>
                           </div>
                         </div>
-                      </div>
-                      <div class="my-4 px-2">
-                        <div class="text-center">
-                          <p class="text-black font-medium text-lg mb-1">{{ veterinaria.Nombre }}</p>
-                          <span class="bg-blue-400 mx-auto mb-4 inline-block h-1 w-[90px] rounded"></span>
-                          <p class="text-gray-500">{{ veterinaria.Descripcion }}</p>
-                        </div>
-                        <div class="flex gap-3 justify-center mt-4 flex-wrap">
-                          <button class="text-gray-600 col-span-1 flex justify-center items-center rounded-lg p-2 duration-300 bg-slate-100 hover:shadow-md hover:text-blue-400">
-                            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-brand-whatsapp">
-                              <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                              <path d="M3 21l1.65 -3.8a9 9 0 1 1 3.4 2.9l-5.05 .9" />
-                              <path d="M9 10a.5 .5 0 0 0 1 0v-1a.5 .5 0 0 0 -1 0v1a5 5 0 0 0 5 5h1a.5 .5 0 0 0 0 -1h-1a.5 .5 0 0 0 0 1" />
-                            </svg>
-                          </button>
-
-                          <button class="text-gray-600 col-span-1 flex justify-center items-center rounded-lg p-2 duration-300 bg-slate-100 hover:shadow-md hover:text-blue-400">
-                            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-brand-instagram">
-                              <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                              <path d="M4 4m0 4a4 4 0 0 1 4 -4h8a4 4 0 0 1 4 4v8a4 4 0 0 1 -4 4h-8a4 4 0 0 1 -4 -4z" />
-                              <path d="M12 12m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />
-                              <path d="M16.5 7.5l0 .01" />
-                            </svg>
-                          </button>
-
-                          <button class="text-gray-600 col-span-1 flex justify-center items-center rounded-lg p-2 duration-300 bg-slate-100 hover:shadow-md hover:text-blue-400">
-                            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-world">
-                              <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                              <path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0" />
-                              <path d="M3.6 9h16.8" />
-                              <path d="M3.6 15h16.8" />
-                              <path d="M11.5 3a17 17 0 0 0 0 18" />
-                              <path d="M12.5 3a17 17 0 0 1 0 18" />
-                            </svg>
-                          </button>
-
-                          <button class="text-gray-600 col-span-1 flex justify-center items-center rounded-lg p-2 duration-300 bg-slate-100 hover:shadow-md hover:text-blue-400">
-                            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-brand-facebook">
-                              <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                              <path d="M7 10v4h3v7h4v-7h3l1 -4h-4v-2a1 1 0 0 1 1 -1h3v-4h-3a5 5 0 0 0 -5 5v2h-3" />
-                            </svg>
-                          </button>
+                        <div class="my-4 px-2">
+                          <div class="text-center">
+                            <p class="text-black font-medium text-lg mb-1">{{ veterinaria.Nombre }}</p>
+                            <span class="bg-blue-400 mx-auto mb-4 inline-block h-1 w-[90px] rounded"></span>
+                            <p class="text-gray-500">{{ veterinaria.Descripcion }}</p>
+                          </div>
+                          <div class="flex gap-3 justify-center mt-4 flex-wrap">
+                            <button class="text-gray-600 col-span-1 flex justify-center items-center rounded-lg p-2 duration-300 bg-slate-100 hover:shadow-md hover:text-blue-400">
+                              <ion-icon name="logo-whatsapp"></ion-icon>
+                            </button>
+                            <button class="text-gray-600 col-span-1 flex justify-center items-center rounded-lg p-2 duration-300 bg-slate-100 hover:shadow-md hover:text-blue-400">
+                              <ion-icon name="logo-instagram"></ion-icon>
+                            </button>
+                            <button class="text-gray-600 col-span-1 flex justify-center items-center rounded-lg p-2 duration-300 bg-slate-100 hover:shadow-md hover:text-blue-400">
+                              <ion-icon name="globe"></ion-icon>
+                            </button>
+                            <button class="text-gray-600 col-span-1 flex justify-center items-center rounded-lg p-2 duration-300 bg-slate-100 hover:shadow-md hover:text-blue-400">
+                              <ion-icon name="logo-facebook"></ion-icon>
+                            </button>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  </ng-container>
-                </swiper-slide>
-              </swiper-container>
+                    </ng-container>
+                  </swiper-slide>
+                </swiper-container>
+              </ng-container>
             </ng-container>
+            <ng-template #noDataTemplate>
+              <div class="text-center py-8">
+                <p class="text-lg font-medium text-gray-600">No hay lugares disponibles.</p>
+              </div>
+            </ng-template>
           </ng-container>
           <ng-template #skeletonTemplate>
             <ng-container>
               <swiper-container [slidesPerView]="1.3" [loop]="false" [scrollbar]="true" *ngFor="let item of skeletonMap">
                 <swiper-slide>
-                  <!-- Skeleton para categoría -->
                   <ion-skeleton-text animated style="width: 50%; height: 24px;"></ion-skeleton-text>
                   <span class="bg-blue-400 mx-auto mb-4 inline-block h-1 w-[90px] rounded"></span>
-            
                   <div class="w-full bg-white rounded-3xl flex flex-col items-start justify-between gap-3 border-gray-200">
                     <div class="w-full">
-                      <!-- Skeleton para la imagen -->
                       <ion-skeleton-text animated style="width: 100%; height: 208px;"></ion-skeleton-text>
                       <div class="my-4 px-2">
-                        <!-- Skeleton para el nombre -->
                         <ion-skeleton-text animated style="width: 70%; height: 18px;"></ion-skeleton-text>
                         <span class="bg-blue-400 mx-auto mb-4 inline-block h-1 w-[90px] rounded"></span>
-                        <!-- Skeleton para la descripción -->
                         <ion-skeleton-text animated style="width: 90%; height: 14px;"></ion-skeleton-text>
-            
-                        <!-- Skeleton para los botones -->
                         <div class="flex gap-3 justify-center mt-4 flex-wrap">
                           <ion-skeleton-text animated style="width: 24px; height: 24px; border-radius: 50%;"></ion-skeleton-text>
                           <ion-skeleton-text animated style="width: 24px; height: 24px; border-radius: 50%;"></ion-skeleton-text>
