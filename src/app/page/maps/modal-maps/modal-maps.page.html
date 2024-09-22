@@ -73,6 +73,10 @@
         <ion-select-option value="Veterinarias">Veterinarias</ion-select-option>
       </ion-select>
     </ion-item>
+    <ion-item *ngIf="mapsForm.get('Categoria').touched && mapsForm.get('Categoria').invalid">
+      <ion-label color="danger">Categoría es requerida</ion-label>
+    </ion-item>
+    
 
     <ion-button expand="full" type="submit" [disabled]="mapsForm.invalid">Guardar</ion-button>
   </form>

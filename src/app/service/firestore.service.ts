@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AngularFirestore, DocumentReference } from '@angular/fire/compat/firestore';
 import { map } from 'rxjs/operators';
-import { AngularFireStorage } from '@angular/fire/compat/storage';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +9,6 @@ import { AngularFireStorage } from '@angular/fire/compat/storage';
 export class FirestoreService {
 
   constructor(private firestore: AngularFirestore,
-    private storage: AngularFireStorage
   ) { }
 
   // Obtener cambios en una colección con IDs

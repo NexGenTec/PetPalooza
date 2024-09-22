@@ -12,6 +12,6 @@ export interface Maps {
   Direccion: string;
   Nombre: string;
   Categoria:String
-  id: string;
+  id?: string;
 }
   

@@ -49,7 +49,7 @@ const routes: Routes = [
   },
   {
     path: 'modal-maps',
-    loadChildren: () => import('./components/modal-maps/modal-maps.module').then( m => m.ModalMapsPageModule)
+    loadChildren: () => import('./page/maps/modal-maps/modal-maps.module').then( m => m.ModalMapsPageModule)
   },
 
 

@@ -18,6 +18,14 @@
         <p>{{ map.Descripcion }}</p>
         <p><strong>Dirección:</strong> {{ map.Direccion }}</p>
       </ion-label>
+      <ion-buttons slot="end">
+        <ion-button (click)="openModal(true, map)">
+          <ion-icon name="create"></ion-icon>
+        </ion-button>
+        <ion-button color="danger" (click)="presentAlertConfirm(map.id)">
+          <ion-icon name="trash"></ion-icon>
+        </ion-button>
+      </ion-buttons>
     </ion-item>
   </ion-list>
 
