@@ -1,9 +1,10 @@
 import { Component, ElementRef, AfterViewInit, ViewChild, OnInit } from '@angular/core';
 import { GoogleMap } from '@capacitor/google-maps';
-import { ModalController } from '@ionic/angular';
+import { AlertController, ModalController } from '@ionic/angular';
 import { environment } from 'src/environments/environment';
 import { Veterinarias } from '../interface/Veterinarias.model';
 import { FirestoreService } from '../service/firestore.service';
+import { Clipboard } from '@capacitor/clipboard'; // Importar el plugin Clipboard de Capacitor
 
 @Component({
   selector: 'app-maps',
@@ -23,6 +24,7 @@ export class MapsPage implements AfterViewInit, OnInit {
   constructor(
     private modalController: ModalController,
     private firestores: FirestoreService,
+    private alertController: AlertController 
   ) { }
 
   ngOnInit() {
@@ -30,23 +32,28 @@ export class MapsPage implements AfterViewInit, OnInit {
 
   async ngAfterViewInit() {
     await this.createMap();
-    this.loadData();
+    this.setMarkerClickListener();
   }
 
   /*/
   Se llaman la coleccion de veterinaris
   */
   async loadData() {
-    this.firestores.getCollectionChanges<Veterinarias>('Maps').subscribe(veterinarias => {
+    await this.firestores.getCollectionChanges<Veterinarias>('Maps').subscribe(veterinarias => {
       if (veterinarias) {
         this.originalVeterinarias = veterinarias;
         this.veterinariasGroupedByCategoria = this.groupVeterinariasByCategoria(this.originalVeterinarias);
-        this.addVeterinarias(veterinarias);
+        if (this.newMap) {
+          this.addVeterinarias(veterinarias);
+        } else {
+          console.warn('El mapa no está listo para añadir veterinarias.');
+        }
+  
         console.log('Veterinarias agrupadas por categoría:', this.veterinariasGroupedByCategoria);
         this.isLoading = false;
       }
     });
-  }
+  }  
 
   async createMap() {
     try {
@@ -220,23 +227,71 @@ export class MapsPage implements AfterViewInit, OnInit {
     }
   }
 
-  private async addVeterinarias(veterinarias: Veterinarias[]) {
+  async addVeterinarias(veterinarias: Veterinarias[]) {
+    if (!this.newMap) {
+      console.warn('El mapa no está listo para añadir veterinarias.');
+      return;
+    }
     for (const vet of veterinarias) {
-      if (vet.Localizacion && vet.Localizacion.Latitud && vet.Localizacion.Longitud) {
-        const vetsId = await this.newMap.addMarker({
-          coordinate: {
-            lat: parseFloat(vet.Localizacion.Latitud),
-            lng: parseFloat(vet.Localizacion.Longitud),
-          },
-          title: vet.Nombre,
-          snippet: `Dirección: ${vet.Direccion}\nDescripción: ${vet.Descripcion}`,
-        });
-        this.veterinariaMarkers[vetsId] = vet;
+      if (vet.Latitud && vet.Longitud) {
+        const lat = parseFloat(vet.Latitud);
+        const lng = parseFloat(vet.Longitud);
+  
+        if (!isNaN(lat) && !isNaN(lng)) {
+          try {
+            const vetsId = await this.newMap.addMarker({
+              coordinate: { lat, lng },
+              title: vet.Nombre,
+              snippet: `Dirección: ${vet.Direccion}\nDescripción: ${vet.Descripcion}`,
+            });
+            this.veterinariaMarkers[vetsId] = vet;
+            console.log(`Añadiendo marcador para ${vet.Nombre} en (${lat}, ${lng})`);
+          } catch (error) {
+            console.error(`Error al añadir marcador para ${vet.Nombre}:`, error);
+          }
+        } else {
+          console.warn(`Coordenadas no válidas para la veterinaria: ${vet.Nombre}`, vet);
+        }
       } else {
-        console.warn(`Localización no válida para la veterinaria: ${vet.Nombre}`, vet);
+        console.warn(`Localización no definida para la veterinaria: ${vet.Nombre}`, vet);
       }
     }
+  
+    console.log('Marcadores actuales:', this.veterinariaMarkers); 
   }
+
+  setMarkerClickListener() {
+    this.newMap.setOnMarkerClickListener(async (data) => {
+      const vet = this.veterinariaMarkers[data.markerId];
+      if (vet) {
+        const alert = await this.alertController.create({
+          mode: 'ios',
+          header: vet.Nombre,
+          message: `Dirección: ${vet.Direccion}`,
+          buttons: [
+            {
+              text: 'OK',
+              role: 'cancel',
+              handler: () => {
+                console.log('El usuario ha cerrado el alerta');
+              }
+            },
+            {
+              text: 'Copiar',
+              handler: async () => {
+                await Clipboard.write({
+                  string: `Nombre: ${vet.Nombre}\nDirección: ${vet.Direccion}`
+                });
+                console.log('Datos copiados al portapapeles');
+              }
+            }
+          ]
+        });
+        await alert.present();
+      }
+    });
+  }
+    
 
   dismiss() {
     this.modalController.dismiss();
