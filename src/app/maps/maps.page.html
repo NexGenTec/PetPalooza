@@ -22,4 +22,10 @@
   <ion-item *ngIf="!maps || maps.length === 0">
     <ion-label>No hay veterinarias disponibles.</ion-label>
   </ion-item>
+
+  <ion-fab horizontal="end" vertical="bottom" slot="fixed">
+    <ion-fab-button (click)="openModal(false)">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </ion-content>

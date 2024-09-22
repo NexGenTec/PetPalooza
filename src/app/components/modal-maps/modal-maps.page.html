@@ -1,0 +1,74 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Agregar/Editar Veterinaria</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <form [formGroup]="mapsForm" (ngSubmit)="submitForm()">
+    <ion-item>
+      <ion-label position="stacked">Nombre</ion-label>
+      <ion-input formControlName="Nombre" type="text" placeholder="Nombre de la veterinaria"></ion-input>
+    </ion-item>
+    <ion-item *ngIf="mapsForm.get('Nombre').touched && mapsForm.get('Nombre').invalid">
+      <ion-label color="danger">Nombre es requerido</ion-label>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Descripción</ion-label>
+      <ion-textarea formControlName="Descripcion" placeholder="Escribe una breve descripción"></ion-textarea>
+    </ion-item>
+    
+    <ion-item>
+      <ion-label position="stacked">Imagen URL</ion-label>
+      <ion-input formControlName="Img" type="url" placeholder="URL de la imagen"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">WhatsApp</ion-label>
+      <ion-input formControlName="Whatsapp" type="text" placeholder="Número de WhatsApp"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Web</ion-label>
+      <ion-input formControlName="Web" type="url" placeholder="URL del sitio web"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Facebook</ion-label>
+      <ion-input formControlName="Facebook" type="url" placeholder="URL de Facebook"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Instagram</ion-label>
+      <ion-input formControlName="Instagram" type="url" placeholder="URL de Instagram"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Dirección</ion-label>
+      <ion-textarea formControlName="Direccion" placeholder="Dirección completa"></ion-textarea>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Latitud</ion-label>
+      <ion-input formControlName="Latitud" type="text" placeholder="Latitud"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Longitud</ion-label>
+      <ion-input formControlName="Longitud" type="text" placeholder="Longitud"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Categoría</ion-label>
+      <ion-select formControlName="Categoria" placeholder="Selecciona la categoría">
+        <ion-select-option value="Veterinaria Movil">Veterinaria Movil</ion-select-option>
+        <ion-select-option value="PetShops">PetShops</ion-select-option>
+        <ion-select-option value="Guarderias">Guarderías</ion-select-option>
+        <ion-select-option value="Veterinarias">Veterinarias</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-button expand="full" type="submit" [disabled]="mapsForm.invalid">Guardar</ion-button>
+  </form>
+</ion-content>

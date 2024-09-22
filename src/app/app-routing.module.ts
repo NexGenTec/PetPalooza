@@ -46,7 +46,11 @@ const routes: Routes = [
   {
     path: 'img-users',
     loadChildren: () => import('./img-users/img-users.module').then( m => m.ImgUsersPageModule)
+  },  {
+    path: 'modal-maps',
+    loadChildren: () => import('./components/modal-maps/modal-maps.module').then( m => m.ModalMapsPageModule)
   },
+
 
 ];
 
