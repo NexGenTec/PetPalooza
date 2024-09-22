@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { InfoPerro } from '../../interface/InfoPerro.models';
-import { FirestoreService } from '../../service/firestore.service';
+import { InfoPerro } from '../../../interface/InfoPerro.models';
+import { FirestoreService } from '../../../service/firestore.service';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { AlertController, ModalController, ToastController, LoadingController } from '@ionic/angular';
 import { Clipboard } from '@capacitor/clipboard';

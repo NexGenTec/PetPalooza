@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FirestoreService } from 'src/app/service/firestore.service';
-import { QuirkyFacts } from '../interface/QuirkyFacts.models';
+import { QuirkyFacts } from '../../interface/QuirkyFacts.models';
 import { ToastController } from '@ionic/angular';
 import { NgForm } from '@angular/forms';
 

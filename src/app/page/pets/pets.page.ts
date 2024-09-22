@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { FirestoreService } from '../service/firestore.service';
-import { InfoGato } from '../interface/InfoGato.models';
-import { InfoPerro } from '../interface/InfoPerro.models';
+import { FirestoreService } from '../../service/firestore.service';
+import { InfoGato } from '../../interface/InfoGato.models';
+import { InfoPerro } from '../../interface/InfoPerro.models';
 
 @Component({
   selector: 'app-pets',

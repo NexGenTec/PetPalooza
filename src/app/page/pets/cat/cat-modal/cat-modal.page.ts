@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { InfoGato } from '../../../interface/InfoGato.models';
+import { InfoGato } from '../../../../interface/InfoGato.models';
 
 @Component({
   selector: 'app-cat-modal',

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { ImgModalPage } from 'src/app/img-modal/img-modal.page';
+import { ImgModalPage } from 'src/app/components/img-modal/img-modal.page';
 import { InfoGato, Temperamento, Cuidado, CaracteristicasFisicas } from 'src/app/interface/InfoGato.models';
-import { ModalSwiperPage } from 'src/app/modal-swiper/modal-swiper.page';
+import { ModalSwiperPage } from 'src/app/components/modal-swiper/modal-swiper.page';
 
 @Component({
   selector: 'app-profile-cat',

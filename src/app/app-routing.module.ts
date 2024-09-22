@@ -4,35 +4,35 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {
     path: 'fun-facts',
-    loadChildren: () => import('./fun-facts/fun-facts.module').then( m => m.FunFactsPageModule)
+    loadChildren: () => import('./page/fun-facts/fun-facts.module').then( m => m.FunFactsPageModule)
   },
   {
     path: 'foundations',
-    loadChildren: () => import('./foundations/foundations.module').then( m => m.FoundationsPageModule)
+    loadChildren: () => import('./page/foundations/foundations.module').then( m => m.FoundationsPageModule)
   },
   {
     path: 'pets',
-    loadChildren: () => import('./pets/pets.module').then( m => m.PetsPageModule)
+    loadChildren: () => import('./page/pets/pets.module').then( m => m.PetsPageModule)
   },
   {
     path: 'profile-dog/:id',
-    loadChildren: () => import('../app/pets/dog/profile-dog/profile-dog.module').then( m => m.ProfileDogPageModule)
+    loadChildren: () => import('../app/page/pets/dog/profile-dog/profile-dog.module').then( m => m.ProfileDogPageModule)
   },
   {
     path: 'profile-cat/:id',
-    loadChildren: () => import('../app/pets/cat/profile-cat/profile-cat.module').then( m => m.ProfileCatPageModule)
+    loadChildren: () => import('../app/page/pets/cat/profile-cat/profile-cat.module').then( m => m.ProfileCatPageModule)
   },
   {
     path: 'img-modal',
-    loadChildren: () => import('./img-modal/img-modal.module').then(m => m.ImgModalPageModule)
+    loadChildren: () => import('./components/img-modal/img-modal.module').then(m => m.ImgModalPageModule)
   },
   {
     path: 'modal-swiper',
-    loadChildren: () => import('./modal-swiper/modal-swiper.module').then( m => m.ModalSwiperPageModule)
+    loadChildren: () => import('./components/modal-swiper/modal-swiper.module').then( m => m.ModalSwiperPageModule)
   },
   {
     path: 'welcome-modal',
-    loadChildren: () => import('./welcome-modal/welcome-modal.module').then(m => m.WelcomeModalPageModule)
+    loadChildren: () => import('./components/welcome-modal/welcome-modal.module').then(m => m.WelcomeModalPageModule)
   },
   {
     path: '',
@@ -41,12 +41,13 @@ const routes: Routes = [
   },
   {
     path: 'maps',
-    loadChildren: () => import('./maps/maps.module').then( m => m.MapsPageModule)
+    loadChildren: () => import('./page/maps/maps.module').then( m => m.MapsPageModule)
   },
   {
     path: 'img-users',
-    loadChildren: () => import('./img-users/img-users.module').then( m => m.ImgUsersPageModule)
-  },  {
+    loadChildren: () => import('./page/img-users/img-users.module').then( m => m.ImgUsersPageModule)
+  },
+  {
     path: 'modal-maps',
     loadChildren: () => import('./components/modal-maps/modal-maps.module').then( m => m.ModalMapsPageModule)
   },

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FirestoreService } from '../service/firestore.service';
-import { Maps } from '../interface/Maps.model';
+import { FirestoreService } from '../../service/firestore.service';
+import { Maps } from '../../interface/Maps.model';
 import { ModalController } from '@ionic/angular';
-import { ModalMapsPage } from '../components/modal-maps/modal-maps.page';
+import { ModalMapsPage } from '../../components/modal-maps/modal-maps.page';
 
 @Component({
   selector: 'app-maps',

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FirestoreService } from '../service/firestore.service';
-import { ImgUsers } from '../interface/ImgUsers.model';
+import { FirestoreService } from '../../service/firestore.service';
+import { ImgUsers } from '../../interface/ImgUsers.model';
 
 @Component({
   selector: 'app-img-users',
