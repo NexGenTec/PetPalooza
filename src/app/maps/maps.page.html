@@ -1,31 +1,55 @@
 <ion-content [fullscreen]="true">
+  <!-- <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)" mode="ios">
+    <ion-refresher-content
+      pullingIcon="chevron-down-circle-outline"
+      refreshingSpinner="circles"
+      refreshingText="Refrescando" >
+    </ion-refresher-content>
+  </ion-refresher>   -->
   <div class="map-container" id="open-modal">
     <div #mapContainer class="map"></div>
   </div>
-
   <ion-modal 
     #modal
     trigger="open-modal"
-    [isOpen]="true"
+    [isOpen]="isModalOpen"
     [initialBreakpoint]="0.2"
     [backdropDismiss]="false"
     [backdropBreakpoint]="0.5"
-    [breakpoints]="[0, 0.1, 0.4, 0.5, 0.95]">
+    [breakpoints]="[0, 0.1, 0.4, 0.5, 0.98]">
     <ng-template>
       <ion-content [scrollEvents]="true" class="ion-padding">
         <button class="absolute top-2 right-0 w-12 text-gray-700 z-50" (click)="dismiss()">
           <ion-icon class="bg-gray-50 text-gray-700 rounded-full text-xl" slot="icon-only" name="close"></ion-icon>
         </button>
-        <div class="py-8 px-3">
+
+        <!-- Mostrar botón de retroceso si se están viendo los detalles -->
+        <ng-container *ngIf="isShowingDetails; else originalData">
+          <button class="absolute top-2 left-0 w-12 text-gray-700 z-50" (click)="goBackToList()">
+            <ion-icon class="bg-gray-50 text-gray-700 rounded-full text-xl" slot="icon-only" name="arrow-back"></ion-icon>
+          </button>
+
+          <!-- Vista de detalles de la veterinaria -->
+          <div *ngIf="selectedPlace">
+            <ion-img [src]="selectedPlace.Img" alt="Imagen de Veterinaria"></ion-img>
+            <h1>{{ selectedPlace.Nombre }}</h1>
+            <p>{{ selectedPlace.Descripcion }}</p>
+            <p><strong>Dirección:</strong> {{ selectedPlace.Direccion }}</p>
+            <p><strong>Sitio Web:</strong> <a [href]="selectedPlace.Web">{{ selectedPlace.Web }}</a></p>
+          </div>
+        </ng-container>
+
+        <!-- Plantilla de la lista original agrupada por categorías -->
+        <ng-template #originalData>
           <ng-container *ngIf="!isLoading; else skeletonTemplate">
-            <ng-container *ngIf="getObjectKeys(veterinariasGroupedByCategoria).length; else noDataTemplate">
-              <ng-container *ngFor="let categoria of getObjectKeys(veterinariasGroupedByCategoria)">
+            <ng-container *ngIf="getObjectKeys(placeGroupedByCategoria).length; else noDataTemplate">
+              <ng-container *ngFor="let categoria of getObjectKeys(placeGroupedByCategoria)">
                 <h1 class="pb-2 text-2xl font-medium">{{ categoria }}</h1>
                 <span class="bg-blue-400 mx-auto mb-4 inline-block h-1 w-[90px] rounded"></span>
                 <swiper-container [slidesPerView]="1.3" [loop]="false">
-                  <swiper-slide *ngFor="let veterinaria of veterinariasGroupedByCategoria[categoria]">
+                  <swiper-slide *ngFor="let veterinaria of placeGroupedByCategoria[categoria]">
                     <ng-container>
-                      <div class="px-3">
+                      <div class="px-3" (click)="goToVeterinariaDetails(veterinaria)">
                         <div class="w-full bg-white rounded-3xl flex flex-col items-start justify-between gap-3 border border-gray-100">
                           <div class="w-full">
                             <div class="w-full h-52 rounded-tl-2xl rounded-tr-2xl overflow-hidden relative">
@@ -74,11 +98,6 @@
                 </swiper-container>
               </ng-container>
             </ng-container>
-            <ng-template #noDataTemplate>
-              <div class="text-center py-8">
-                <p class="text-lg font-medium text-gray-600">No hay lugares disponibles.</p>
-              </div>
-            </ng-template>
           </ng-container>
           <ng-template #skeletonTemplate>
             <ng-container>
@@ -105,8 +124,13 @@
                 </swiper-slide>
               </swiper-container>
             </ng-container>
-          </ng-template>          
-        </div>
+          </ng-template>         
+          <ng-template #noDataTemplate>
+            <div class="text-center py-8">
+              <p class="text-lg font-medium text-gray-600">No hay lugares disponibles.</p>
+            </div>
+          </ng-template>
+        </ng-template>
       </ion-content>
     </ng-template>
   </ion-modal>

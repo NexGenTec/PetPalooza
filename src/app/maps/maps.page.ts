@@ -4,7 +4,7 @@ import { AlertController, ModalController } from '@ionic/angular';
 import { environment } from 'src/environments/environment';
 import { Veterinarias } from '../interface/Veterinarias.model';
 import { FirestoreService } from '../service/firestore.service';
-import { Clipboard } from '@capacitor/clipboard'; // Importar el plugin Clipboard de Capacitor
+import { Clipboard } from '@capacitor/clipboard';
 
 @Component({
   selector: 'app-maps',
@@ -12,13 +12,16 @@ import { Clipboard } from '@capacitor/clipboard'; // Importar el plugin Clipboar
   styleUrls: ['./maps.page.scss'],
 })
 export class MapsPage implements AfterViewInit, OnInit {
+  isShowingDetails: boolean = false;
+  selectedPlace: Veterinarias | null = null;
+  isModalOpen: boolean = false;
 
   @ViewChild('mapContainer', { static: false }) mapRef: ElementRef<HTMLElement>;
   newMap: GoogleMap;
   originalVeterinarias: Veterinarias[] = [];
-  veterinariaMarkers: Veterinarias[] = [];
+  placeMarkers: Veterinarias[] = [];
   isLoading = true;
-  veterinariasGroupedByCategoria: { [key: string]: Veterinarias[] } = {};
+  placeGroupedByCategoria: { [key: string]: Veterinarias[] } = {};
   skeletonMap = Array(2); 
 
   constructor(
@@ -35,21 +38,26 @@ export class MapsPage implements AfterViewInit, OnInit {
     this.setMarkerClickListener();
   }
 
+  async doRefresh(event: any) {
+    console.log('Recargando datos...');
+    await this.loadData();
+    event.target.complete();
+  }
+
   /*/
   Se llaman la coleccion de veterinaris
   */
   async loadData() {
+    this.isLoading = true;
     await this.firestores.getCollectionChanges<Veterinarias>('Maps').subscribe(veterinarias => {
       if (veterinarias) {
         this.originalVeterinarias = veterinarias;
-        this.veterinariasGroupedByCategoria = this.groupVeterinariasByCategoria(this.originalVeterinarias);
+        this.placeGroupedByCategoria = this.groupPlacesByCategoria(this.originalVeterinarias);
         if (this.newMap) {
           this.addVeterinarias(veterinarias);
         } else {
           console.warn('El mapa no está listo para añadir veterinarias.');
         }
-  
-        console.log('Veterinarias agrupadas por categoría:', this.veterinariasGroupedByCategoria);
         this.isLoading = false;
       }
     });
@@ -229,7 +237,6 @@ export class MapsPage implements AfterViewInit, OnInit {
 
   async addVeterinarias(veterinarias: Veterinarias[]) {
     if (!this.newMap) {
-      console.warn('El mapa no está listo para añadir veterinarias.');
       return;
     }
     for (const vet of veterinarias) {
@@ -244,8 +251,7 @@ export class MapsPage implements AfterViewInit, OnInit {
               title: vet.Nombre,
               snippet: `Dirección: ${vet.Direccion}\nDescripción: ${vet.Descripcion}`,
             });
-            this.veterinariaMarkers[vetsId] = vet;
-            console.log(`Añadiendo marcador para ${vet.Nombre} en (${lat}, ${lng})`);
+            this.placeMarkers[vetsId] = vet;
           } catch (error) {
             console.error(`Error al añadir marcador para ${vet.Nombre}:`, error);
           }
@@ -256,24 +262,28 @@ export class MapsPage implements AfterViewInit, OnInit {
         console.warn(`Localización no definida para la veterinaria: ${vet.Nombre}`, vet);
       }
     }
-  
-    console.log('Marcadores actuales:', this.veterinariaMarkers); 
   }
 
   setMarkerClickListener() {
     this.newMap.setOnMarkerClickListener(async (data) => {
-      const vet = this.veterinariaMarkers[data.markerId];
+      const vet = this.placeMarkers[data.markerId];
       if (vet) {
         const alert = await this.alertController.create({
           mode: 'ios',
           header: vet.Nombre,
           message: `Dirección: ${vet.Direccion}`,
           buttons: [
+            // {
+            //   text: 'OK',
+            //   role: 'cancel',
+            //   handler: () => {
+            //     console.log('El usuario ha cerrado el alerta');
+            //   }
+            // },
             {
-              text: 'OK',
-              role: 'cancel',
+              text: 'Ir al lugar',
               handler: () => {
-                console.log('El usuario ha cerrado el alerta');
+                this.goToVeterinariaDetails(vet);
               }
             },
             {
@@ -282,25 +292,34 @@ export class MapsPage implements AfterViewInit, OnInit {
                 await Clipboard.write({
                   string: `Nombre: ${vet.Nombre}\nDirección: ${vet.Direccion}`
                 });
-                console.log('Datos copiados al portapapeles');
               }
-            }
+            },
           ]
         });
         await alert.present();
       }
     });
   }
-    
+
+  goToVeterinariaDetails(veterinaria: Veterinarias) {
+    this.selectedPlace = veterinaria;
+    this.isModalOpen = true;
+    this.isShowingDetails = true;
+  }
+
+  goBackToList() {
+    this.isShowingDetails = false;
+    this.selectedPlace = null;
+  }
 
   dismiss() {
     this.modalController.dismiss();
+    this.goBackToList();
   }
-
-  groupVeterinariasByCategoria(veterinarias: Veterinarias[]): { [key: string]: Veterinarias[] } {
+  
+  groupPlacesByCategoria(veterinarias: Veterinarias[]): { [key: string]: Veterinarias[] } {
     return veterinarias.reduce((grouped, veterinaria) => {
       const categoria = veterinaria.Categoria;
-      console.log('Categoría:', categoria);
       if (!grouped[categoria]) {
         grouped[categoria] = [];
       }
