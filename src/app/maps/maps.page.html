@@ -32,10 +32,46 @@
           <!-- Vista de detalles de la veterinaria -->
           <div *ngIf="selectedPlace">
             <ion-img [src]="selectedPlace.Img" alt="Imagen de Veterinaria"></ion-img>
-            <h1>{{ selectedPlace.Nombre }}</h1>
+            <!-- <h1>{{ selectedPlace.Nombre }}</h1>
             <p>{{ selectedPlace.Descripcion }}</p>
             <p><strong>Dirección:</strong> {{ selectedPlace.Direccion }}</p>
-            <p><strong>Sitio Web:</strong> <a [href]="selectedPlace.Web">{{ selectedPlace.Web }}</a></p>
+            <p><strong>Sitio Web:</strong> <a [href]="selectedPlace.Web">{{ selectedPlace.Web }}</a></p> -->
+            <h2 class="mt-4 text-2xl font-medium text-black">{{ selectedPlace.Nombre }}</h2>
+            <div class="flex mb-10 gap-3">
+              <p class="text-gray-500 text-base leading-relaxed">{{ selectedPlace.Direccion }}</p>
+              <div>
+                <p class="text-sky-400 text-base flex bg-sky-100 rounded-full py-1 px-3">
+                  <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="currentColor"  class="icon icon-tabler icons-tabler-filled icon-tabler-map-pin"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M18.364 4.636a9 9 0 0 1 .203 12.519l-.203 .21l-4.243 4.242a3 3 0 0 1 -4.097 .135l-.144 -.135l-4.244 -4.243a9 9 0 0 1 12.728 -12.728zm-6.364 3.364a3 3 0 1 0 0 6a3 3 0 0 0 0 -6z" /></svg>
+                  9:00 AM
+                </p>
+              </div>
+              
+            </div>
+            
+
+            <div class="flex flex-wrap">
+              <div class="w-1/2">
+                <p class="text-gray-700 text-lg leading-relaxed">Hora Inicio</p>
+                <p class="text-gray-400 text-base leading-relaxed flex">
+                  <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-calendar-month"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z" /><path d="M16 3v4" /><path d="M8 3v4" /><path d="M4 11h16" /><path d="M7 14h.013" /><path d="M10.01 14h.005" /><path d="M13.01 14h.005" /><path d="M16.015 14h.005" /><path d="M13.015 17h.005" /><path d="M7.01 17h.005" /><path d="M10.01 17h.005" /></svg>
+                  15.06.2019
+                </p>
+              </div>
+              <div>
+                <p class="text-gray-700 text-lg leading-relaxed">Hora Termino</p>
+                <p class="text-green-500 text-base flex bg-green-100 rounded-full py-1 px-3">
+                  <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-clock-hour-4"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" /><path d="M12 12l3 2" /><path d="M12 7v5" /></svg>
+                  9:00 AM
+                </p>
+              </div>
+            </div>
+            <div class="mt-4">
+              <p class="text-gray-700 text-lg leading-relaxed">Descripción</p>
+              <p class="text-gray-400 text-base leading-relaxed flex">
+                {{ selectedPlace.Descripcion }}
+              </p>
+            </div>
+            
           </div>
         </ng-container>
 
