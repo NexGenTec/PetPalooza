@@ -11,6 +11,9 @@ const config: CapacitorConfig = {
     PushNotifications: {
       presentationOptions: ["badge", "sound", "alert"],
     },
+    GoogleMaps: {
+      apiKey: 'AIzaSyCqA3bYv-K0j6KPVberqM2i88bT0zd7XZU',
+    },
   },
 };
 

@@ -27,6 +27,7 @@
     "@capacitor/clipboard": "^6.0.1",
     "@capacitor/core": "5.7.4",
     "@capacitor/device": "^6.0.1",
+    "@capacitor/geolocation": "^6.0.1",
     "@capacitor/google-maps": "^6.0.1",
     "@capacitor/haptics": "5.0.7",
     "@capacitor/keyboard": "5.0.8",

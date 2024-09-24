@@ -1,13 +1,15 @@
 <ion-content [fullscreen]="true">
-  <div class="map-container" id="open-modal">
-    <div #mapContainer class="map"></div>
+  <div class="map-container">
+    <!-- <div #mapContainer class="map"></div> -->
+    <capacitor-google-map #mapContainer class="map" id="open-modal" (click)="openModal()"></capacitor-google-map>
   </div>
+  <ion-spinner *ngIf="isLoading" color="primary" class="loading-spinner"></ion-spinner>
   <ion-modal 
     #modal
     trigger="open-modal"
     [isOpen]="isModalOpen"
     [initialBreakpoint]="0.2"
-    [backdropDismiss]="false"
+    [backdropDismiss]="true"
     [backdropBreakpoint]="0.5"
     [breakpoints]="[0, 0.1,0.5,0.98]">
     <ng-template>

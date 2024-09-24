@@ -4,5 +4,5 @@
     <string name="title_activity_main">PetPalooza</string>
     <string name="package_name">com.nexgentech.petpaloozaa</string>
     <string name="custom_url_scheme">com.nexgentech.petpaloozaa</string>
-     <string name="API_KEY">AIzaSyCqA3bYv-K0j6KPVberqM2i88bT0zd7XZU</string>
+    <string name="API_KEY">AIzaSyCqA3bYv-K0j6KPVberqM2i88bT0zd7XZU</string>
 </resources>

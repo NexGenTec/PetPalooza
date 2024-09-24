@@ -1,6 +1,6 @@
-export const environment = {
-  apiKey: 'AIzaSyCqA3bYv-K0j6KPVberqM2i88bT0zd7XZU',
+export const environment = {  
   production: false,
+  apiKey: 'AIzaSyCqA3bYv-K0j6KPVberqM2i88bT0zd7XZU',
   firebase: {
     apiKey: "AIzaSyAwCHFzKYwBLRbSScpOzvgivUBcN4WZIGs",
     authDomain: "petpalooza-63384.firebaseapp.com",

@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy, RouterModule, Routes } from '@angular/router';
 import { faCoffee } from '@fortawesome/free-solid-svg-icons';
-
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 
 import {
@@ -34,6 +34,7 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [AppComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   imports: [BrowserModule, IonicModule.forRoot(),
     AngularFireModule.initializeApp(environment.firebase),
     IonicStorageModule.forRoot(),
