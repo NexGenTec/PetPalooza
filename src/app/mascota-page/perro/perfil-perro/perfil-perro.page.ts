@@ -10,6 +10,10 @@ import { AddImagePage } from '../add-image/add-image.page';
 import { StorageService } from '../../../service/storage.service';
 import { ModalswiperUsersPage } from 'src/app/components/modalswiper-users/modalswiper-users.page';
 import { Share } from '@capacitor/share';
+import { ReactionService } from 'src/app/service/reaction.service';
+import { Device } from '@capacitor/device';
+import { v4 as uuidv4 } from 'uuid';
+import { InteractionService } from 'src/app/service/interaction.service';
 
 @Component({
   selector: 'app-perfil-perro',
@@ -37,6 +41,7 @@ export class PerfilPerroPage implements OnInit {
 
   isLoading: boolean = true;
   isLoadingImg: boolean = true;
+  deviceId: string;
 
   constructor(
     private modalController: ModalController,
@@ -45,9 +50,14 @@ export class PerfilPerroPage implements OnInit {
     private route: ActivatedRoute,
     private ofline: DataOflineService,
     private favoritesService: StorageService,
-    private loadingController: LoadingController) { }
+    private loadingController: LoadingController,
+    private firebaseService: ReactionService,
+    private interactionService: InteractionService) {
+      this.deviceId = localStorage.getItem('deviceId') || uuidv4();
+      localStorage.setItem('deviceId', this.deviceId);
+    }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.platform.ready().then(() => {
       PushNotifications.addListener('pushNotificationActionPerformed', async (notification: ActionPerformed) => {
         const data = notification.notification.data;
@@ -78,6 +88,14 @@ export class PerfilPerroPage implements OnInit {
     } else if (history.state.data) {
       this.perro = history.state.data;
       this.populatePerroData();
+    }
+    try {
+      const deviceIdInfo = await Device.getId();
+      console.log('ID del dispositivo:', deviceIdInfo.identifier);
+      this.deviceId = deviceIdInfo.identifier || this.deviceId;
+      console.log('ID del dispositivo:', this.deviceId);
+    } catch (error) {
+      console.error('Error al obtener el identificador del dispositivo:', error);
     }
   }
   
@@ -118,7 +136,8 @@ export class PerfilPerroPage implements OnInit {
 
   async showLoading() {
     const loading = await this.loadingController.create({
-      message: 'Cargando datos del perro...',
+      duration: 5000,
+      mode:'ios'
     });
     await loading.present();
     return loading;
@@ -280,7 +299,44 @@ export class PerfilPerroPage implements OnInit {
   }
 
   async addToFavorites(animal: any, type: string) {
+    this.interactionService.triggerLike(); 
     await this.favoritesService.addToFavorites(animal, type);
-    this.loadFavorites();  // Actualizar la lista de favoritos después de agregar o eliminar
+    this.loadFavorites();
   }
+
+  async toggleLike(imgUser: ImgUser) {
+    imgUser.likedDevices = imgUser.likedDevices || [];
+    const hasAlreadyLiked = imgUser.likedDevices.includes(this.deviceId);
+
+    if (!hasAlreadyLiked) {
+      imgUser.likedDevices.push(this.deviceId);
+      imgUser.likeCount = (imgUser.likeCount || 0) + 1;
+    } else {
+      imgUser.likedDevices = imgUser.likedDevices.filter(id => id !== this.deviceId);
+      imgUser.likeCount = (imgUser.likeCount || 0) - 1;
+    }
+
+    await this.firebaseService.updateImgUserInPerro(this.perro.id, imgUser.url, { 
+      likedDevices: imgUser.likedDevices,
+      likeCount: imgUser.likeCount
+    });
+  }
+
+  async toggleSmile(imgUser: ImgUser) {
+    imgUser.reactedDevices = imgUser.reactedDevices || [];
+    const hasAlreadyReacted = imgUser.reactedDevices.includes(this.deviceId);
+
+    if (!hasAlreadyReacted) {
+      imgUser.reactedDevices.push(this.deviceId);
+      imgUser.smileCount = (imgUser.smileCount || 0) + 1;
+    } else {
+      imgUser.reactedDevices = imgUser.reactedDevices.filter(id => id !== this.deviceId);
+      imgUser.smileCount = (imgUser.smileCount || 0) - 1;
+    }
+
+    await this.firebaseService.updateImgUserInPerro(this.perro.id, imgUser.url, { 
+      reactedDevices: imgUser.reactedDevices,
+      smileCount: imgUser.smileCount
+    });
+  }  
 }

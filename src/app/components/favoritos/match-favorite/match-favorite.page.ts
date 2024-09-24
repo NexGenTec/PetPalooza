@@ -4,8 +4,9 @@ import { InfoPerro } from 'src/app/interface/InfoPerro.models';
 import { FirestoreService } from 'src/app/service/firestore.service';
 import { StorageService } from 'src/app/service/storage.service';
 import { firstValueFrom } from 'rxjs';
-import { Router } from '@angular/router';
+import { NavigationExtras, Router } from '@angular/router';
 import { ConfettiService } from 'src/app/animaciones/confetti.service';
+import { InteractionService } from 'src/app/service/interaction.service';
 @Component({
   selector: 'app-match-favorite',
   templateUrl: './match-favorite.page.html',
@@ -20,19 +21,37 @@ export class MatchFavoritePage implements OnInit {
   currentIndex: number = 0;
   isLoading: boolean = true;
   isExpanded: boolean = false;
+  hasLikedAnimal: boolean = false;
 
   constructor(
     private router: Router,
     private firestores: FirestoreService,
     private favoritesService: StorageService,
-    private confettiService: ConfettiService
+    private confettiService: ConfettiService,
+    private interactionService: InteractionService 
   ) {}
 
   ngOnInit() {
     this.loadAnimals();
+    this.interactionService.likeAction$.subscribe((hasLiked) => {
+      if (hasLiked) {
+        this.loadAnimals();
+        this.interactionService.resetLike();
+      }
+    });
+  }
+
+  ionViewWillEnter() {
+    if (this.hasLikedAnimal) {
+      this.loadAnimals();
+      this.hasLikedAnimal = false;
+    }
   }
 
   navigateToAnimalProfile(animal: any) {
+    const navigationExtras: NavigationExtras = {
+      state: { animal: animal, hasLiked: this.hasLikedAnimal }
+    };
     if (animal.type === 'perro') {
       this.router.navigate(['/perfil-perro', animal.id], { state: { data: animal } });
     } else if (animal.type === 'gato') {
@@ -69,24 +88,32 @@ export class MatchFavoritePage implements OnInit {
 
   intercalate(gatos: any[], perros: any[]): any[] {
     const result = [];
-    const maxLength = Math.max(gatos.length, perros.length);
-
-    for (let i = 0; i < maxLength; i++) {
-      if (gatos[i]) {
-        gatos[i].type = 'gato';
-        result.push(gatos[i]);
-      }
-      if (perros[i]) {
-        perros[i].type = 'perro';
-        result.push(perros[i]);
+    const remainingGatos = [...gatos];  // Copia de la lista original de gatos
+    const remainingPerros = [...perros]; // Copia de la lista original de perros
+  
+    while (remainingGatos.length > 0 || remainingPerros.length > 0) {
+      const shouldPickGato = Math.random() < 0.5; // 50% de probabilidad para gatos o perros
+  
+      if (shouldPickGato && remainingGatos.length > 0) {
+        const randomIndex = Math.floor(Math.random() * remainingGatos.length);
+        const gato = remainingGatos.splice(randomIndex, 1)[0]; // Eliminar el gato seleccionado
+        gato.type = 'gato';
+        result.push(gato);
+      } else if (remainingPerros.length > 0) {
+        const randomIndex = Math.floor(Math.random() * remainingPerros.length);
+        const perro = remainingPerros.splice(randomIndex, 1)[0]; // Eliminar el perro seleccionado
+        perro.type = 'perro';
+        result.push(perro);
       }
     }
+  
     return result;
-  }
+  }  
 
   async onLike(animal: any) {
+    this.interactionService.triggerLike(); 
     await this.favoritesService.addToFavorites(animal, animal.type);
-    this.confettiService.triggerHeartConfetti(); // Trigger heart confetti animation
+    this.confettiService.triggerHeartConfetti();
     this.moveToNextAnimal();
   }
 

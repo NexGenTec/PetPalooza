@@ -10,6 +10,10 @@ import { AddImagePage } from '../add-image/add-image.page';
 import { StorageService } from '../../../service/storage.service';
 import { ModalswiperUsersPage } from 'src/app/components/modalswiper-users/modalswiper-users.page';
 import { Share } from '@capacitor/share';
+import { ReactionService } from 'src/app/service/reaction.service';
+import { Device } from '@capacitor/device';
+import { v4 as uuidv4 } from 'uuid';
+import { InteractionService } from 'src/app/service/interaction.service';
 
 @Component({
   selector: 'app-perfil-gato',
@@ -35,9 +39,9 @@ export class PerfilGatoPage implements OnInit {
   showImagesContainer: boolean = false;
   temperamentoChips: Temperamento[] = [];
   id: string;
-
   isLoading: boolean = true;
   isLoadingImg: boolean = true;
+  deviceId: string;
 
   constructor(
     private modalController: ModalController,
@@ -46,10 +50,15 @@ export class PerfilGatoPage implements OnInit {
     private route: ActivatedRoute,
     private ofline: DataOflineService,
     private favoritesService: StorageService,
-    private loadingController: LoadingController) { }
+    private loadingController: LoadingController,
+    private firebaseService: ReactionService,
+    private interactionService: InteractionService) {
+      this.deviceId = localStorage.getItem('deviceId') || uuidv4();
+      localStorage.setItem('deviceId', this.deviceId);
+    }
 
 
-  ngOnInit() {
+  async ngOnInit() {
     this.platform.ready().then(() => {
       PushNotifications.addListener('pushNotificationActionPerformed', async (notification: ActionPerformed) => {
         const data = notification.notification.data;
@@ -58,11 +67,8 @@ export class PerfilGatoPage implements OnInit {
           const route = data.Route.split('/');
           this.id = route[1];
           const loading = await this.showLoading();
-
-          // Navigate to the route and load data
           this.router.navigate([data.Route]).then(() => {
             this.loadGatoData().finally(() => {
-              // Dismiss loading spinner
               loading.dismiss();
             });
           });
@@ -79,6 +85,14 @@ export class PerfilGatoPage implements OnInit {
     } else if (history.state.data) {
       this.gato = history.state.data;
       this.populateGatoData();
+    }
+    try {
+      const deviceIdInfo = await Device.getId();
+      console.log('ID del dispositivo:', deviceIdInfo.identifier);
+      this.deviceId = deviceIdInfo.identifier || this.deviceId;
+      console.log('ID del dispositivo:', this.deviceId);
+    } catch (error) {
+      console.error('Error al obtener el identificador del dispositivo:', error);
     }
   }
 
@@ -103,7 +117,7 @@ export class PerfilGatoPage implements OnInit {
         await Share.share({
           title: shareTitle,
             text: `${shareText}\n\nMás información: ${shareUrl}`,
-            url: imageUrl, // Enlace a la imagen
+            url: imageUrl,
             dialogTitle: 'Compartir con',
         });
     } catch (error) {
@@ -120,11 +134,13 @@ export class PerfilGatoPage implements OnInit {
 
   async showLoading() {
     const loading = await this.loadingController.create({
-      message: 'Cargando datos del gato...',
+      duration: 5000,
+      mode:'ios'
     });
     await loading.present();
     return loading;
   }
+    
 
   async loadGatoData() {
     const loading = await this.showLoading();
@@ -238,7 +254,7 @@ export class PerfilGatoPage implements OnInit {
     });
     await modal.present();
   }
-  // Like button
+
   private loadFavorites() {
     this.favorites = this.favoritesService.getFavorites();
   }
@@ -247,24 +263,22 @@ export class PerfilGatoPage implements OnInit {
   }
 
   async addToFavorites(animal: any, type: string) {
+    this.interactionService.triggerLike(); 
     await this.favoritesService.addToFavorites(animal, type);
-    this.loadFavorites();  // Actualizar la lista de favoritos después de agregar o eliminar
+    this.loadFavorites();
   }
 
   async openModalSwiperUser(gato: InfoGato, selectedImage: ImgUser) {
     try {
-      // Obtén el array completo de imágenes para el swiper
       const images: ImgUser[] = this.getImageUsersArray(gato);
 
-      // Encuentra el índice de la imagen seleccionada
       const initialSlideIndex = images.findIndex(img => img.url === selectedImage.url);
 
-      // Crea el modal y pasa las imágenes y el índice inicial
       const modal = await this.modalController.create({
         component: ModalswiperUsersPage,
         componentProps: {
           images,
-          initialSlide: initialSlideIndex // Configura el índice inicial al de la imagen seleccionada
+          initialSlide: initialSlideIndex
         }
       });
 
@@ -280,4 +294,40 @@ export class PerfilGatoPage implements OnInit {
     });
     await modal.present();
   }
+
+  async toggleLike(imgUser: ImgUser) {
+    imgUser.likedDevices = imgUser.likedDevices || [];
+    const hasAlreadyLiked = imgUser.likedDevices.includes(this.deviceId);
+
+    if (!hasAlreadyLiked) {
+      imgUser.likedDevices.push(this.deviceId);
+      imgUser.likeCount = (imgUser.likeCount || 0) + 1;
+    } else {
+      imgUser.likedDevices = imgUser.likedDevices.filter(id => id !== this.deviceId);
+      imgUser.likeCount = (imgUser.likeCount || 0) - 1;
+    }
+
+    await this.firebaseService.updateImgUserInGato(this.gato.id, imgUser.url, { 
+      likedDevices: imgUser.likedDevices,
+      likeCount: imgUser.likeCount
+    });
+  }
+
+  async toggleSmile(imgUser: ImgUser) {
+    imgUser.reactedDevices = imgUser.reactedDevices || [];
+    const hasAlreadyReacted = imgUser.reactedDevices.includes(this.deviceId);
+
+    if (!hasAlreadyReacted) {
+      imgUser.reactedDevices.push(this.deviceId);
+      imgUser.smileCount = (imgUser.smileCount || 0) + 1;
+    } else {
+      imgUser.reactedDevices = imgUser.reactedDevices.filter(id => id !== this.deviceId);
+      imgUser.smileCount = (imgUser.smileCount || 0) - 1;
+    }
+
+    await this.firebaseService.updateImgUserInGato(this.gato.id, imgUser.url, { 
+      reactedDevices: imgUser.reactedDevices,
+      smileCount: imgUser.smileCount
+    });
+  }  
 }

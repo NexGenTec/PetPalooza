@@ -10,8 +10,8 @@ import { Router } from '@angular/router';
 export class FavoritosPage implements OnInit {
   favoriteAnimals = [];
   isLoading: boolean = true;
-  skeletonCategories = Array(2);
-  skeletonFavorites = Array(4); 
+  skeletonCategories = Array(4);
+  skeletonFavorites = Array(6); 
   favorites: any[] = [];
   loaded: boolean = false;
 
