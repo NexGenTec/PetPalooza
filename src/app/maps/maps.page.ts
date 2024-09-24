@@ -22,7 +22,7 @@ export class MapsPage implements AfterViewInit, OnInit {
   placeMarkers: Veterinarias[] = [];
   isLoading = true;
   placeGroupedByCategoria: { [key: string]: Veterinarias[] } = {};
-  skeletonMap = Array(2); 
+  skeletonMap = Array(2);
 
   constructor(
     private modalController: ModalController,
