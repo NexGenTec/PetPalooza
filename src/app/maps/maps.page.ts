@@ -1,6 +1,6 @@
 import { Component, ElementRef, AfterViewInit, ViewChild, OnInit } from '@angular/core';
 import { GoogleMap } from '@capacitor/google-maps';
-import { AlertController, ModalController } from '@ionic/angular';
+import { AlertController, IonModal, ModalController, Platform } from '@ionic/angular';
 import { environment } from 'src/environments/environment.prod';
 import { Veterinarias } from '../interface/Veterinarias.model';
 import { FirestoreService } from '../service/firestore.service';
@@ -19,7 +19,7 @@ export class MapsPage implements AfterViewInit, OnInit {
   isShowingDetails: boolean = false;
   selectedPlace: Veterinarias | null = null;
   isModalOpen: boolean = false;
-
+  @ViewChild('modal', { static: false }) modal: IonModal;
   @ViewChild('mapContainer', { static: false }) mapRef: ElementRef<HTMLElement>;
   newMap: GoogleMap;
   originalVeterinarias: Veterinarias[] = [];
@@ -27,34 +27,55 @@ export class MapsPage implements AfterViewInit, OnInit {
   isLoading = true;
   placeGroupedByCategoria: { [key: string]: Veterinarias[] } = {};
   skeletonMap = Array(2);
+  presentingElement = null;
+  fabPosition: { vertical: string; horizontal: string };
 
   constructor(
     private modalController: ModalController,
     private firestores: FirestoreService,
-    private alertController: AlertController 
+    private alertController: AlertController,
+    private platform: Platform
   ) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.openModal();
+    this.setFabPosition();
+  }
+
+  ionViewWillEnter() {
+    this.openModal();
+    this.setFabPosition();
+  }
 
   async ngAfterViewInit() {
     if (Capacitor.getPlatform() !== 'web') {
       const hasPermission = await Geolocation.checkPermissions();
-      if (hasPermission.location !== 'granted') {
+      if (hasPermission.location === 'granted') {
+        // Obtener la posición actual
+        const position = await Geolocation.getCurrentPosition();
+        this.lat = position.coords.latitude;
+        this.lng = position.coords.longitude;
+      } else {
         const requestResult = await Geolocation.requestPermissions();
         if (requestResult.location !== 'granted') {
           const alert = await this.alertController.create({
+            mode:'ios',
             header: 'Permiso de Localización Denegado',
-            message: 'Para usar el mapa, necesitas permitir el acceso a tu ubicación.',
+            message: 'Para usar el mapa, necesitas permitir el acceso a tu ubicación. Se utilizarán coordenadas por defecto.',
             buttons: ['OK']
           });
           await alert.present();
-          return;
+        } else {
+          // Si se concede el permiso después de la solicitud
+          const position = await Geolocation.getCurrentPosition();
+          this.lat = position.coords.latitude;
+          this.lng = position.coords.longitude;
         }
       }
     }
     await this.createMap();
     this.setMarkerClickListener();
-  }   
+  }     
 
   async doRefresh(event: any) {
     console.log('Recargando datos...');
@@ -316,6 +337,7 @@ export class MapsPage implements AfterViewInit, OnInit {
               text: 'Ir al lugar',
               handler: () => {
                 this.goToVeterinariaDetails(vet);
+                this.modal.setCurrentBreakpoint(0.98);
               }
             },
             {
@@ -335,6 +357,7 @@ export class MapsPage implements AfterViewInit, OnInit {
 
   goToVeterinariaDetails(veterinaria: Veterinarias) {
     this.selectedPlace = veterinaria;
+    this.modal.setCurrentBreakpoint(0.98);
     this.isModalOpen = true;
     this.isShowingDetails = true;
   }
@@ -367,5 +390,18 @@ export class MapsPage implements AfterViewInit, OnInit {
 
   getObjectKeys(obj: any): string[] {
     return Object.keys(obj);
+  }
+
+  onFabClick() {
+    this.openModal();
+    this.modal.setCurrentBreakpoint(0.70);
+  }
+
+  setFabPosition() {
+    if (this.platform.is('mobile')) {
+      this.fabPosition = { vertical: 'top', horizontal: 'start' };
+    } else {
+      this.fabPosition = { vertical: 'top', horizontal: 'center' };
+    }
   }
 }
