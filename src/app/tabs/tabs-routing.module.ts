@@ -40,6 +40,10 @@ const routes: Routes = [
         loadChildren: () => import('../cuidados/cuidados.module').then(m => m.CuidadosPageModule)
       },
       {
+        path: 'maps',
+        loadChildren: () => import('../maps/maps.module').then(m => m.MapsPageModule)
+      },
+      {
         path: '',
         redirectTo: '/tabs/home',
         pathMatch: 'full'
