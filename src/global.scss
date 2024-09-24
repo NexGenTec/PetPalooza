@@ -54,3 +54,11 @@
 * {
   font-family: "CustomFontMedium";
 }
+
+html, body {
+  background: transparent !important;
+}
+
+ion-content {
+  --background: transparent !important;
+}

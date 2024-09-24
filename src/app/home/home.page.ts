@@ -19,8 +19,9 @@ import { NotificationsService } from '../service/notifications.service';
   styleUrls: ['home.page.scss']
 })
 export class homePage implements OnInit {
-  
 
+  lat = -33.4489; // Coordenadas por defecto (Santiago, Chile)
+  lng = -70.6693;
   gatos: InfoGato[] = [];
   perros: InfoPerro[] = [];
   aves: InfoAve[] = [];
@@ -73,9 +74,6 @@ export class homePage implements OnInit {
   ) {
   }
 
-  ionViewDidEnter() {
-  }
-
   ngOnInit(): void {
     this.getQuirkyFacts();
     this.loadData();
@@ -98,6 +96,8 @@ export class homePage implements OnInit {
     }, 3000);
     this.pushNotificationService.initPushNotifications();
   }
+
+
   /*/
   Se llama la data de Perros y Gatos
   */
@@ -133,17 +133,6 @@ export class homePage implements OnInit {
           .slice(0, 4);
       }
     });
-
-    // this.firestores.getCollectionChanges<InfoAve>('InfoAve').subscribe(aves => {
-    //   if (aves) {
-    //     this.originalAves = aves;
-    //     this.aves = aves
-    //       .filter(ave => ave.fechaCreacion && ave.fechaCreacion.seconds)
-    //       .sort((a, b) => b.fechaCreacion.seconds - a.fechaCreacion.seconds)
-    //       //Cantida de Perros en ultimos
-    //       .slice(0, 2);
-    //   }
-    // });
     this.firestores.getCollectionChanges<InfoImage>('InfoImage').subscribe(img => {
       if (img) {
         this.originalImg = img;

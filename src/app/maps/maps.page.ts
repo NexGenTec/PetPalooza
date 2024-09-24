@@ -1,12 +1,12 @@
 import { Component, ElementRef, AfterViewInit, ViewChild, OnInit } from '@angular/core';
 import { GoogleMap } from '@capacitor/google-maps';
 import { AlertController, IonModal, ModalController, Platform } from '@ionic/angular';
-import { environment } from 'src/environments/environment.prod';
+import { environment } from 'src/environments/environment';
 import { Veterinarias } from '../interface/Veterinarias.model';
 import { FirestoreService } from '../service/firestore.service';
 import { Clipboard } from '@capacitor/clipboard';
-import { Geolocation } from '@capacitor/geolocation';
 import { Capacitor } from '@capacitor/core';
+import { LocationpermitsService } from '../service/locationpermits.service';
 
 @Component({
   selector: 'app-maps',
@@ -34,84 +34,72 @@ export class MapsPage implements AfterViewInit, OnInit {
     private modalController: ModalController,
     private firestores: FirestoreService,
     private alertController: AlertController,
-    private platform: Platform
+    private platform: Platform,
+    private locationPermitsService: LocationpermitsService 
   ) { }
 
   ngOnInit() {
-    this.openModal();
     this.setFabPosition();
+    this.onFabClick();
+    this.permisionLocation();
   }
 
-  ionViewWillEnter() {
-    this.openModal();
-    this.setFabPosition();
+  async ionViewWillEnter() {
+    await this.createMap();
+    if (this.newMap) {
+        await this.newMap.setCamera({
+            coordinate: {
+                lat: this.mapState.lat,
+                lng: this.mapState.lng
+            },
+            zoom: this.mapState.zoom,
+            bearing: 0,
+            angle: 0,
+            animate: true
+        });
+    }
   }
+
+
 
   async ngAfterViewInit() {
-    if (Capacitor.getPlatform() !== 'web') {
-      const hasPermission = await Geolocation.checkPermissions();
-      if (hasPermission.location === 'granted') {
-        // Obtener la posición actual
-        const position = await Geolocation.getCurrentPosition();
-        this.lat = position.coords.latitude;
-        this.lng = position.coords.longitude;
-      } else {
-        const requestResult = await Geolocation.requestPermissions();
-        if (requestResult.location !== 'granted') {
-          const alert = await this.alertController.create({
-            mode:'ios',
-            header: 'Permiso de Localización Denegado',
-            message: 'Para usar el mapa, necesitas permitir el acceso a tu ubicación. Se utilizarán coordenadas por defecto.',
-            buttons: ['OK']
-          });
-          await alert.present();
-        } else {
-          // Si se concede el permiso después de la solicitud
-          const position = await Geolocation.getCurrentPosition();
-          this.lat = position.coords.latitude;
-          this.lng = position.coords.longitude;
-        }
-      }
-    }
     await this.createMap();
     this.setMarkerClickListener();
   }     
 
   async doRefresh(event: any) {
     console.log('Recargando datos...');
-    await this.loadData();
+    await this.loadData(); 
+    if (this.newMap) {
+      await this.addVeterinarias(this.originalVeterinarias); 
+    }
     event.target.complete();
   }
-
-  // Llamar a la colección de veterinarias en Firestore
-  async loadData() {
-    this.isLoading = true;
-    try {
-        this.firestores.getCollectionChanges<Veterinarias>('Maps').subscribe(async veterinarias => {
-            if (veterinarias) {
-                this.originalVeterinarias = veterinarias;
-                this.placeGroupedByCategoria = this.groupPlacesByCategoria(this.originalVeterinarias);
-                if (this.newMap) {
-                    await this.addVeterinarias(veterinarias);
-                } else {
-                    console.warn('El mapa no está listo para añadir veterinarias.');
-                }
-                this.isLoading = false;
-            }
-        });
-    } catch (error) {
-        this.isLoading = false;
-        const alert = await this.alertController.create({
-            mode:'ios',
-            header: 'Error',
-            message: 'No se pudo cargar los datos de veterinarias. Intenta nuevamente más tarde.',
-            buttons: ['OK']
-        });
-        await alert.present();
-        console.error('Error cargando datos de Firestore', error);
-    }
+  
+  refreshMap() {
+    this.loadData();
   }
 
+  /*/
+  Se llaman la coleccion de veterinaris
+  */
+  async loadData() {
+    this.isLoading = true;
+    await this.firestores.getCollectionChanges<Veterinarias>('Maps').subscribe(veterinarias => {
+      if (veterinarias) {
+        this.originalVeterinarias = veterinarias;
+        this.placeGroupedByCategoria = this.groupPlacesByCategoria(this.originalVeterinarias);
+        if (this.newMap) {
+          this.addVeterinarias(veterinarias);
+        } else {
+          console.warn('El mapa no está listo para añadir veterinarias.');
+        }
+        this.isLoading = false;
+      }
+    });
+  }
+  
+  mapState = { lat: this.lat, lng: this.lng, zoom: 11 };
   async createMap() {
     try {
       this.newMap = await GoogleMap.create({
@@ -119,7 +107,6 @@ export class MapsPage implements AfterViewInit, OnInit {
         element: this.mapRef.nativeElement,
         apiKey: environment.apiKey,
         config: this.getMapConfig(),
-        forceCreate:true
       });
       await this.loadData(); 
     } catch (error) {
@@ -137,10 +124,10 @@ export class MapsPage implements AfterViewInit, OnInit {
   private getMapConfig() {
     return {
       center: {
-        lat: this.lat,
-        lng: this.lng,
+        lat: this.mapState.lat,
+        lng: this.mapState.lng,
       },
-      zoom: 11,
+      zoom: this.mapState.zoom,
       styles: [
         {
           "elementType": "geometry",
@@ -295,6 +282,11 @@ export class MapsPage implements AfterViewInit, OnInit {
     };
   }
 
+  ngOnDestroy() {
+    this.mapState.lat = this.lat;
+    this.mapState.lng = this.lng; 
+  }
+
   async addVeterinarias(veterinarias: Veterinarias[]) {
     if (!this.newMap) {
       return;
@@ -367,10 +359,6 @@ export class MapsPage implements AfterViewInit, OnInit {
     this.selectedPlace = null;
   }
 
-  openModal() {
-    this.isModalOpen = true;
-  }
-
   dismiss() {
     this.modalController.dismiss();
     this.isModalOpen = false;
@@ -393,15 +381,26 @@ export class MapsPage implements AfterViewInit, OnInit {
   }
 
   onFabClick() {
-    this.openModal();
-    this.modal.setCurrentBreakpoint(0.70);
+    this.isModalOpen = true;
   }
 
   setFabPosition() {
     if (this.platform.is('mobile')) {
-      this.fabPosition = { vertical: 'top', horizontal: 'start' };
+      this.fabPosition = { vertical: 'top', horizontal: 'center' };
     } else {
       this.fabPosition = { vertical: 'top', horizontal: 'center' };
+    }
+  }
+
+  async permisionLocation() {
+    if (Capacitor.getPlatform() !== 'web') {
+      const position = await this.locationPermitsService.getCurrentPosition();
+      if (position) {
+        this.lat = position.lat;
+        this.lng = position.lng;
+      } else {
+        console.log('Se usaron coordenadas por defecto');
+      }
     }
   }
 }
