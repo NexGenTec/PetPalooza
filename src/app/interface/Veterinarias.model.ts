@@ -1,4 +1,6 @@
-export interface Veterinarias {
+import { Timestamp } from "firebase/firestore";
+export interface Maps {
+  id: string;
   Descripcion: string;
   Img: string;
   Web: string;
@@ -8,7 +10,8 @@ export interface Veterinarias {
   Direccion: string;
   Nombre: string;
   Categoria: string;
-  id: string;
-  Latitud: string; // Include these two properties directly
-  Longitud: string; // Include these two properties directly
+  Latitud: string;
+  Longitud: string;
+  Departure_time:Timestamp;
+  Opening_time:Timestamp;
 }

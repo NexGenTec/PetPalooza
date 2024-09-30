@@ -1,6 +1,12 @@
-<ion-header>
-  <ion-toolbar mode="ios">
-    <ion-title>Mapa</ion-title>
+<ion-header class="bg-white shadow-none border-b border-gray-200">
+  <ion-toolbar>
+    <a href="/" class="flex gap-2 items-center mx-3 my-2">
+      <img 
+        class="max-h-14 mx-auto"
+        alt="logo PetPalooza" 
+        src="assets/img/logo/PetPalooza.png" 
+      />
+    </a>
     <ion-buttons slot="end">
       <ion-button (click)="refreshMap()">
         <ion-icon name="refresh-circle-outline"></ion-icon>
@@ -47,14 +53,14 @@
                 <p class="text-gray-700 text-lg leading-relaxed">Hora de apertura</p>
                 <p class="text-green-500 text-base leading-relaxed flex py-1 px-3">
                   <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-clock-hour-4"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" /><path d="M12 12l3 2" /><path d="M12 7v5" /></svg>
-                  09:00 AM
+                  {{ formatTimestampToTime(selectedPlace.Opening_time) }}
                 </p>
               </div>
               <div>
                 <p class="text-gray-700 text-lg leading-relaxed">Hora de cierre</p>
                 <p class="text-gray-400 text-base leading-relaxed flex py-1 px-3">
                   <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-clock-hour-4"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" /><path d="M12 12l3 2" /><path d="M12 7v5" /></svg>
-                  06:00 PM
+                  {{ formatTimestampToTime(selectedPlace.Departure_time) }}
                 </p>
               </div>
             </div>

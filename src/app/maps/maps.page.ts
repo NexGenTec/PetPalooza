@@ -2,11 +2,12 @@ import { Component, ElementRef, AfterViewInit, ViewChild, OnInit } from '@angula
 import { GoogleMap } from '@capacitor/google-maps';
 import { AlertController, IonModal, ModalController, Platform } from '@ionic/angular';
 import { environment } from 'src/environments/environment';
-import { Veterinarias } from '../interface/Veterinarias.model';
+import { Maps } from '../interface/Veterinarias.model';
 import { FirestoreService } from '../service/firestore.service';
 import { Clipboard } from '@capacitor/clipboard';
 import { Capacitor } from '@capacitor/core';
 import { LocationpermitsService } from '../service/locationpermits.service';
+import { Timestamp } from "firebase/firestore";
 
 @Component({
   selector: 'app-maps',
@@ -17,15 +18,15 @@ export class MapsPage implements AfterViewInit, OnInit {
   lat = -33.4489;
   lng = -70.6693;
   isShowingDetails: boolean = false;
-  selectedPlace: Veterinarias | null = null;
+  selectedPlace: Maps | null = null;
   isModalOpen: boolean = false;
   @ViewChild('modal', { static: false }) modal: IonModal;
   @ViewChild('mapContainer', { static: false }) mapRef: ElementRef<HTMLElement>;
   newMap: GoogleMap;
-  originalVeterinarias: Veterinarias[] = [];
-  placeMarkers: Veterinarias[] = [];
+  originalVeterinarias: Maps[] = [];
+  placeMarkers: Maps[] = [];
   isLoading = true;
-  placeGroupedByCategoria: { [key: string]: Veterinarias[] } = {};
+  placeGroupedByCategoria: { [key: string]: Maps[] } = {};
   skeletonMap = Array(2);
   presentingElement = null;
   fabPosition: { vertical: string; horizontal: string };
@@ -72,12 +73,14 @@ export class MapsPage implements AfterViewInit, OnInit {
     await this.loadData(); 
     if (this.newMap) {
       await this.addVeterinarias(this.originalVeterinarias); 
+      this.createMap();
     }
     event.target.complete();
   }
   
   refreshMap() {
     this.loadData();
+    this.createMap();
   }
 
   /*/
@@ -85,7 +88,7 @@ export class MapsPage implements AfterViewInit, OnInit {
   */
   async loadData() {
     this.isLoading = true;
-    await this.firestores.getCollectionChanges<Veterinarias>('Maps').subscribe(veterinarias => {
+    await this.firestores.getCollectionChanges<Maps>('Maps').subscribe(veterinarias => {
       if (veterinarias) {
         this.originalVeterinarias = veterinarias;
         this.placeGroupedByCategoria = this.groupPlacesByCategoria(this.originalVeterinarias);
@@ -287,7 +290,7 @@ export class MapsPage implements AfterViewInit, OnInit {
     this.mapState.lng = this.lng; 
   }
 
-  async addVeterinarias(veterinarias: Veterinarias[]) {
+  async addVeterinarias(veterinarias: Maps[]) {
     if (!this.newMap) {
       return;
     }
@@ -329,7 +332,6 @@ export class MapsPage implements AfterViewInit, OnInit {
               text: 'Ir al lugar',
               handler: () => {
                 this.goToVeterinariaDetails(vet);
-                this.modal.setCurrentBreakpoint(0.98);
               }
             },
             {
@@ -347,11 +349,11 @@ export class MapsPage implements AfterViewInit, OnInit {
     });
   }
 
-  goToVeterinariaDetails(veterinaria: Veterinarias) {
+  goToVeterinariaDetails(veterinaria: Maps) {
     this.selectedPlace = veterinaria;
-    this.modal.setCurrentBreakpoint(0.98);
     this.isModalOpen = true;
     this.isShowingDetails = true;
+    this.modal.setCurrentBreakpoint(0.98);
   }
 
   goBackToList() {
@@ -365,7 +367,7 @@ export class MapsPage implements AfterViewInit, OnInit {
     this.goBackToList();
   }
   
-  groupPlacesByCategoria(veterinarias: Veterinarias[]): { [key: string]: Veterinarias[] } {
+  groupPlacesByCategoria(veterinarias: Maps[]): { [key: string]: Maps[] } {
     return veterinarias.reduce((grouped, veterinaria) => {
       const categoria = veterinaria.Categoria;
       if (!grouped[categoria]) {
@@ -402,5 +404,10 @@ export class MapsPage implements AfterViewInit, OnInit {
         console.log('Se usaron coordenadas por defecto');
       }
     }
+  }
+
+  formatTimestampToTime(timestamp: Timestamp): string {
+    const date = timestamp.toDate();
+    return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
   }
 }
