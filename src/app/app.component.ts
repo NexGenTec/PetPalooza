@@ -36,7 +36,9 @@ export class AppComponent {
     });
   }
 
+
   async alertExit() {
+    console.log('alert');
     const alert = await this.alertCtrl.create({
       header: 'Salir de la aplicación',
       subHeader: 'Confirmar',
@@ -54,7 +56,7 @@ export class AppComponent {
           handler: () => { App.exitApp(); }
         }
       ],
-      mode: 'ios'
+      mode: 'ios' // Establecer el modo iOS para el alert
     });
     await alert.present();
   }

@@ -14,3 +14,5 @@ ext {
     androidxEspressoCoreVersion = '3.5.1'
     cordovaAndroidVersion = '10.1.1'
 }
+    playServicesLocationVersion ='20.0.0'
+}
