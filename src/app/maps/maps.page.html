@@ -1,27 +1,17 @@
 <ion-header class="bg-white shadow-none border-b border-gray-200">
-  <ion-toolbar>
-    <a href="/" class="flex gap-2 items-center mx-3 my-2">
-      <img 
-        class="max-h-14 mx-auto"
-        alt="logo PetPalooza" 
-        src="assets/img/logo/PetPalooza.png" 
-      />
-    </a>
-    <ion-buttons slot="end">
-      <ion-button (click)="refreshMap()">
-        <ion-icon name="refresh-circle-outline"></ion-icon>
-      </ion-button>
-    </ion-buttons>
-  </ion-toolbar>
+  <a href="/" class="flex gap-2 items-center mx-3 my-2">
+    <img 
+      class="max-h-14 mx-auto"
+      alt="logo PetPalooza" 
+      src="assets/img/logo/PetPalooza.png" 
+    />
+  </a>
 </ion-header>
-<ion-content [fullscreen]="true">
-  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
-    <ion-refresher-content></ion-refresher-content>
-  </ion-refresher>
+<ion-content [fullscreen]="true"> 
+  <ion-spinner *ngIf="isLoading" color="primary" class="loading-spinner"></ion-spinner>
   <div class="map-container">
     <capacitor-google-map #mapContainer class="map"></capacitor-google-map>
   </div>
-  <ion-spinner *ngIf="isLoading" color="primary" class="loading-spinner"></ion-spinner>
   <ion-modal 
     #modal
     mode="ios"
@@ -108,22 +98,24 @@
                           <div class="text-center">
                             <p class="text-black font-medium text-lg mb-1">{{ veterinaria.Nombre }}</p>
                             <span class="bg-blue-400 mx-auto mb-4 inline-block h-1 w-[90px] rounded"></span>
-                            <p class="text-gray-500">{{ veterinaria.Descripcion }}</p>
+                            <p class="text-gray-500">
+                              {{ truncateText(veterinaria.Descripcion, 30) }}
+                            </p>
                           </div>
                           <div class="flex gap-3 justify-center mt-4 flex-wrap">
-                            <button class="text-gray-600 col-span-1 flex justify-center items-center rounded-lg p-2 duration-300 bg-slate-100 hover:shadow-md hover:text-blue-400">
-                              <ion-icon name="logo-whatsapp"></ion-icon>
-                            </button>
-                            <button class="text-gray-600 col-span-1 flex justify-center items-center rounded-lg p-2 duration-300 bg-slate-100 hover:shadow-md hover:text-blue-400">
-                              <ion-icon name="logo-instagram"></ion-icon>
-                            </button>
-                            <button class="text-gray-600 col-span-1 flex justify-center items-center rounded-lg p-2 duration-300 bg-slate-100 hover:shadow-md hover:text-blue-400">
-                              <ion-icon name="globe"></ion-icon>
-                            </button>
-                            <button class="text-gray-600 col-span-1 flex justify-center items-center rounded-lg p-2 duration-300 bg-slate-100 hover:shadow-md hover:text-blue-400">
+                            <a href="https://wa.me/{{ veterinaria.Whatsapp }}" target="_blank" class="text-gray-600 col-span-1 flex justify-center items-center rounded-lg p-2 duration-300 bg-slate-100 hover:shadow-md hover:text-blue-400">
+                              <ion-icon name="logo-whatsapp"></ion-icon>   
+                            </a>
+                            <a href="https://www.instagram.com/{{ veterinaria.Instagram }}" target="_blank" class="text-gray-600 col-span-1 flex justify-center items-center rounded-lg p-2 duration-300 bg-slate-100 hover:shadow-md hover:text-blue-400">
+                              <ion-icon name="logo-instagram"></ion-icon> 
+                            </a>
+                            <a href="{{ veterinaria.Web }}" target="_blank" class="text-gray-600 col-span-1 flex justify-center items-center rounded-lg p-2 duration-300 bg-slate-100 hover:shadow-md hover:text-blue-400">
+                              <ion-icon name="globe"></ion-icon>    
+                            </a>
+                            <a href="https://www.facebook.com/{{ veterinaria.Facebook }}" target="_blank" class="text-gray-600 col-span-1 flex justify-center items-center rounded-lg p-2 duration-300 bg-slate-100 hover:shadow-md hover:text-blue-400">
                               <ion-icon name="logo-facebook"></ion-icon>
-                            </button>
-                          </div>
+                            </a>                            
+                          </div>                          
                         </div>
                       </div>
                     </ng-container>
@@ -167,9 +159,17 @@
       </ion-content>
     </ng-template>
   </ion-modal>
-  <ion-fab slot="fixed" [vertical]="fabPosition.vertical" [horizontal]="fabPosition.horizontal">
-    <ion-fab-button size="small" (click)="onFabClick()" mode="ios" id="open-modal">
-      <ion-icon name="list-outline"></ion-icon>
+  <ion-fab horizontal="start" vertical="bottom" slot="fixed">
+    <ion-fab-button>
+      <ion-icon name="locate-outline"></ion-icon>
     </ion-fab-button>
+    <ion-fab-list side="end">
+      <ion-fab-button (click)="onFabClick()">
+        <ion-icon name="browsers-outline"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button (click)="checkPermissionAndLocation()">
+        <ion-icon [name]="userPosition ? 'location' : 'help'"></ion-icon>
+      </ion-fab-button>
+    </ion-fab-list>
   </ion-fab>
 </ion-content>
