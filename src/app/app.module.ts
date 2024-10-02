@@ -2,11 +2,10 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy, RouterModule, Routes } from '@angular/router';
 import { faCoffee } from '@fortawesome/free-solid-svg-icons';
-
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 
 import {
-  FontAwesomeModule,
   FaIconLibrary,
 } from '@fortawesome/angular-fontawesome';
 import { faSquare, faCheckSquare } from '@fortawesome/free-solid-svg-icons';
@@ -14,48 +13,39 @@ import {
   faSquare as farSquare,
   faCheckSquare as farCheckSquare,
 } from '@fortawesome/free-regular-svg-icons';
-import {
-  faStackOverflow,
-  faGithub,
-  faMedium,
-} from '@fortawesome/free-brands-svg-icons';
 
-import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HttpClientModule } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
+import { AppRoutingModule } from './app-routing.module';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
-import { getAnalytics, provideAnalytics, ScreenTrackingService } from '@angular/fire/analytics';
-import { initializeAppCheck, ReCaptchaEnterpriseProvider, provideAppCheck } from '@angular/fire/app-check';
+import { getAuth, provideAuth } from '@angular/fire/auth';
+import { getAnalytics, provideAnalytics, ScreenTrackingService, UserTrackingService } from '@angular/fire/analytics';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { getDatabase, provideDatabase } from '@angular/fire/database';
-import { getMessaging, provideMessaging } from '@angular/fire/messaging';
 import { getStorage, provideStorage } from '@angular/fire/storage';
-import { environment } from '../environments/environment.prod';
+import { HttpClientModule } from '@angular/common/http';
+import { AngularFireModule } from '@angular/fire/compat';
+import { environment } from 'src/environments/environment';
 import { IonicStorageModule } from '@ionic/storage-angular';
+if (!environment.production) { (self as any).FIREBASE_APPCHECK_DEBUG_TOKEN = false; }
 
 const routes: Routes = [
 
 ]
 
-
 @NgModule({
   declarations: [AppComponent],
-  imports: [HttpClientModule, BrowserModule, IonicStorageModule.forRoot(), IonicModule.forRoot(), AppRoutingModule, FontAwesomeModule, FormsModule,
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  imports: [BrowserModule, IonicModule.forRoot(),
+    AngularFireModule.initializeApp(environment.firebase),
+    IonicStorageModule.forRoot(),
+    AppRoutingModule,
+    HttpClientModule,
     RouterModule.forRoot(routes, { useHash: true }),
     provideFirebaseApp(() => initializeApp(environment.firebase)),
-    provideAnalytics(() => getAnalytics()),
-    provideAppCheck(() => {
-      // TODO get a reCAPTCHA Enterprise here https://console.cloud.google.com/security/recaptcha?project=_
-      const provider = new ReCaptchaEnterpriseProvider('6LdiFLopAAAAAOh3uyVWi17fjeWE1xgVcIDI7hl7');
-      return initializeAppCheck(undefined, { provider, isTokenAutoRefreshEnabled: true });
-    }),
-    provideFirestore(() => getFirestore()),
-    provideDatabase(() => getDatabase()),
-    provideMessaging(() => getMessaging()),
-    provideStorage(() => getStorage()),
+    provideAuth(() => getAuth()), provideAnalytics(() => getAnalytics()), provideFirestore(() => getFirestore()), provideDatabase(() => getDatabase()), provideStorage(() => getStorage()),
   ],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, ScreenTrackingService,],
+  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, ScreenTrackingService, UserTrackingService,
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {
@@ -66,9 +56,6 @@ export class AppModule {
       faCheckSquare,
       farSquare,
       farCheckSquare,
-      faStackOverflow,
-      faGithub,
-      faMedium,
     );
   }
 }

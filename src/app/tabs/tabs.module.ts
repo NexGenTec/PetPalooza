@@ -17,7 +17,7 @@ import { TabsPage } from './tabs.page';
     TabsPageRoutingModule,
     FontAwesomeModule
   ],
-  declarations: [TabsPage]
+  declarations: [TabsPage],
 })
 export class TabsPageModule {
   faCoffee = faCoffee;

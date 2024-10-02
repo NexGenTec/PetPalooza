@@ -1,0 +1,217 @@
+<ion-content [fullscreen]="true" mode="md">
+  <div class="background"></div>
+
+  <ion-toolbar class="border-b border-gray-200">
+    <div class="flex gap-2 items-center justify-center mx-3">
+      <img 
+        class="max-h-14 my-1"
+        alt="logo PetPalooza" 
+        src="assets/img/logo/PetPalooza.png" />
+    </div>
+  </ion-toolbar>
+
+  <div class="bg-gray-50">
+    <!-- profile 1 -->
+    <div class="bg-blue-100 pt-20 pb-6 px-3 min-h-[93vh]">
+      <div class="relative mx-auto md:max-w-2xl min-w-0 break-words bg-white w-full shadow-lg rounded-xl pb-3">
+        <ng-container *ngIf="!isLoading; else loadingSkeleton">
+          <div class="relative px-6">
+            <ion-buttons class="absolute left-2 top-4 md:left-2 md:top-5" slot="start">
+              <ion-back-button defaultHref="/"></ion-back-button>
+            </ion-buttons>
+            <div class="absolute top-5 right-16 md:top-5 md:right-32">
+              <button (click)="shareContent('perro')" class="text-[#60a5fa] rounded-full w-8 h-8 md:w-10 md:h-10 p-1.5 md:p-2.5 drop-shadow-md hover:scale-105 duration-200">
+                <ion-icon name="share-social-outline" class="text-xl font-semibold md:text-2xl"></ion-icon>
+              </button>    
+            </div>
+            <div class="absolute top-4 right-3 md:top-5 md:right-8 w-10 h-10 rounded-full bg-white flex justify-center items-center text-red-400">
+              <button type="button" 
+              [class.animate]="isInFavorites(perro, 'perro')"
+               [class.animate-pulse]="!isInFavorites(perro, 'perro')" 
+               (click)="addToFavorites(perro, 'perro')"
+               >
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8 md:w-10 md:h-10">
+                  <path d="m11.645 20.91-.007-.003-.022-.012a15.247 15.247 0 0 1-.383-.218 25.18 25.18 0 0 1-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0 1 12 5.052 5.5 5.5 0 0 1 16.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 0 1-4.244 3.17 15.247 15.247 0 0 1-.383.219l-.022.012-.007.004-.003.001a.752.752 0 0 1-.704 0l-.003-.001Z"/>
+                </svg>
+              </button>                      
+            </div>
+            <div class="flex flex-wrap justify-center">
+              <div class="w-full flex justify-center" (click)="openModal(infoImage)">
+                <div class="relative">
+                  <img src="{{infoImage}}" class="shadow-xl rounded-full align-middle border-none absolute -m-16 -ml-20 lg:-ml-16 max-w-[150px] max-h-[150px] h-[150px] w-[150px] object-cover object-center"/>
+                </div>
+              </div>
+              <div class="w-full text-center mt-24">
+                <h3 class="text-2xl text-slate-700 font-bold leading-normal mb-1">{{ infoName }}</h3>
+                <div class="text-xs mt-0 mb-2 text-slate-400 font-bold uppercase">{{ infoOrigin }}</div>
+              </div>
+              <div class="mt-6 py-6 border-t border-slate-200 text-center">
+                <div class="flex flex-wrap justify-center">
+                  <div class="w-full px-4">
+                    <p class="font-light text-sm leading-relaxed text-slate-600 mb-4">{{ infoHistory }}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>  
+          <div class="border-b border-gray-200 pb-2 bg-white mx-3">
+            <ion-segment mode="ios" [(ngModel)]="selectedSegmentValue" (ionChange)="changeCardContent(selectedSegmentValue)">
+              <ion-segment-button value="caracteristicas" [checked]="selectedSegmentValue === 'caracteristicas'">
+                <ion-icon name="paw-outline"></ion-icon>
+              </ion-segment-button>
+              <ion-segment-button value="temperamento" [checked]="selectedSegmentValue === 'temperamento'">
+                <ion-icon name="leaf-outline"></ion-icon>
+              </ion-segment-button>
+              <ion-segment-button value="cuidado" [checked]="selectedSegmentValue === 'cuidado'">
+                <ion-icon name="fitness-outline"></ion-icon>
+              </ion-segment-button>
+              <ion-segment-button value="images" [checked]="selectedSegmentValue === 'images'">
+                <ion-icon name="images-outline"></ion-icon>
+              </ion-segment-button>
+            </ion-segment>
+          </div>
+
+          <ion-card class="shadow-none">
+            <ion-card-content class="flex text-center flex-col">
+              <h6>{{ cardHeading }}</h6>
+              <small>{{ cardSubtitle }}</small>
+            </ion-card-content>
+            <div class="flex justify-center flex-wrap">
+              <ion-chip *ngFor="let chip of temperamentoChips" color="secondary">
+                {{ chip.tipo }}
+              </ion-chip>
+            </div>
+            <ion-card-content *ngIf="!showImagesContainer" class="ion-text-start" [innerHTML]="cardContent">
+            </ion-card-content>
+          </ion-card>
+
+          <ng-container *ngIf="showImagesContainer && perro">
+            <ng-container *ngIf="!isLoadingImg; else loadingImagesSkeleton" >
+              <div class="container mx-auto p-4 ">
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 max-w-xl mx-auto">
+                  <div *ngFor="let imgUrl of getImagesArray(perro)">
+                    <div class="max-w-full rounded-lg overflow-hidden">
+                      <ion-img [src]="imgUrl" alt="Imagen de {{ perro.Raza }}" (click)="openModalSwiper(perro)">
+                      </ion-img>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+            <ng-template #loadingImagesSkeleton>
+              <div class="container mx-auto p-4">
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 max-w-xl mx-auto">
+                  <div *ngFor="let i of [1, 2, 3, 4]">
+                    <div class="max-w-full rounded-lg overflow-hidden bg-gray-200 animate-pulse h-48 w-full"></div>
+                  </div>
+                </div>
+              </div>
+            </ng-template>
+          </ng-container>
+          <ng-container *ngIf="showImagesContainer && perro">
+            <ng-container *ngIf="!isLoadingImg; else loadingImagesSkeleton">       
+              <div class="container mx-auto p-4 overflow-y-auto h-70">
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 max-w-xl mx-auto">
+                  <div *ngIf="getImageUsersArray(perro).length" class="col-span-full text-center my-4">
+                    <h2 class="text-lg font-semibold">{{perro.Raza}} de usuarios</h2>
+                  </div>
+                  <div *ngFor="let imgUser of getImageUsersArray(perro)" class="">
+                    <div class="relative mb-0.5">     
+                         <div class="max-w-full rounded-lg overflow-y-hidden">
+                          <div class="relative overflow-hidden">
+                            <p class="absolute bottom-0 left-0 w-full text-gray-100 bg-gradient-to-t from-black/90 to-transparent p-1 px-2" >{{ imgUser.nombre }}</p>
+                            <ion-img [src]="imgUser.url" alt="Imagen de {{ imgUser.nombre }}" (click)="openModalSwiperUser(perro, imgUser)" >
+                            </ion-img>
+                          </div>
+                        </div>              
+                    </div>
+                    <div class="flex flex-row justify-end items-center gap-2 mx-1">
+                      <div class="flex items-center">
+                        <!-- Botón de "like" -->
+                        <div [ngClass]="imgUser.likedDevices?.includes(deviceId) ? 'bg-rose-400' : 'bg-gray-400'"
+                             class="rounded-full flex justify-center items-center text-white p-1 z-50">
+                          <button type="button" (click)="toggleLike(imgUser)">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" class="icon icon-tabler icons-tabler-filled icon-tabler-heart">
+                              <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                              <path d="M6.979 3.074a6 6 0 0 1 4.988 1.425l.037 .033l.034 -.03a6 6 0 0 1 4.733 -1.44l.246 .036a6 6 0 0 1 3.364 10.008l-.18 .185l-.048 .041l-7.45 7.379a1 1 0 0 1 -1.313 .082l-.094 -.082l-7.493 -7.422a6 6 0 0 1 3.176 -10.215z" />
+                            </svg>
+                          </button>
+                        </div>
+                        <!-- Mostrar el estado del "like" -->
+                        <small class="text-[11px] ml-0.5">
+                          {{ imgUser.likeCount || 0 }}
+                        </small>
+                      </div>
+                      <div class="flex items-center">
+                        <!-- Botón de "smile" -->
+                        <div [ngClass]="imgUser.reactedDevices?.includes(deviceId) ? 'bg-yellow-400' : 'bg-gray-400'"
+                             class="rounded-full flex justify-center items-center text-white p-1 z-50">
+                          <button type="button" (click)="toggleSmile(imgUser)">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="feather feather-smile">
+                              <circle cx="12" cy="12" r="10"/>
+                              <path d="M8 14s1.5 2 4 2 4-2 4-2"/>
+                              <line x1="9" y1="9" x2="9.01" y2="9"/>
+                              <line x1="15" y1="9" x2="15.01" y2="9"/>
+                            </svg>
+                          </button>
+                        </div>
+                        <small class="text-[11px] ml-0.5">
+                          {{ imgUser.smileCount || 0 }}
+                        </small>
+                      </div>
+                    </div>
+                  </div>                  
+                </div>
+              </div>
+            <ion-fab vertical="bottom" slot="fixed" class="fixed right-6">
+              <ion-fab-button (click)="onAddImage()" color="secondary">
+                <ion-icon name="add-outline" color="light"></ion-icon>
+              </ion-fab-button>
+            </ion-fab>  
+            </ng-container>
+            <ng-template #loadingImagesSkeleton>
+              <div class="container mx-auto p-4">
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 max-w-xl mx-auto">
+                  <div *ngFor="let i of [1, 2, 3, 4]">
+                    <div class="max-w-full rounded-lg overflow-hidden bg-gray-200 animate-pulse h-48 w-full"></div>
+                  </div>
+                </div>
+              </div>
+            </ng-template>
+          </ng-container>
+        </ng-container>
+        <ng-template #loadingSkeleton>
+          <div class="px-6">
+            <div class="flex flex-wrap justify-center">
+              <div class="w-full flex justify-center">
+                <div class="relative">
+                  <div class="shadow-xl rounded-full align-middle border-none absolute -m-16 -ml-20 lg:-ml-16 max-w-[150px] max-h-[150px] h-[150px] w-[150px] bg-gray-200 animate-pulse"></div>
+                </div>
+              </div>
+              <div class="w-full text-center mt-24">
+                <div class="text-2xl text-slate-700 font-bold leading-normal mb-1 bg-gray-200 animate-pulse h-6 w-3/4 mx-auto"></div>
+                <div class="text-xs mt-0 mb-2 text-slate-400 font-bold uppercase bg-gray-200 animate-pulse h-4 w-1/2 mx-auto"></div>
+              </div>
+              <div class="mt-6 py-6 border-t border-slate-200 text-center">
+                <div class="flex flex-wrap justify-center">
+                  <div class="w-full px-4">
+                    <div class="font-light text-sm leading-relaxed text-slate-600 mb-4 bg-gray-200 animate-pulse h-4 w-full"></div>
+                    <div class="font-light text-sm leading-relaxed text-slate-600 mb-4 bg-gray-200 animate-pulse h-4 w-full"></div>
+                    <div class="font-light text-sm leading-relaxed text-slate-600 mb-4 bg-gray-200 animate-pulse h-4 w-full"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+        <ng-container>
+          <div class="px-2 mt-6 py-6 border-t border-slate-200 text-center ">
+            <div class="w-full px-4">
+              <p class="font-light text-sm leading-relaxed text-slate-500 mb-4">{{Longevidad}}</p>
+            </div>
+          </div>
+        </ng-container>      
+      </div>
+    </div>
+  </div>
+</ion-content>

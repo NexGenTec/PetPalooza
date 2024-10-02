@@ -1,0 +1,20 @@
+<ion-content class="relative">
+  <button class="absolute top-2 right-2 w-12 text-gray-700 z-50" (click)="dismiss()">
+    <ion-icon class="bg-gray-50 text-gray-700 rounded-full text-xl" slot="icon-only" name="close"></ion-icon>
+  </button>
+
+  <!-- Contenedor Swiper -->
+  <swiper-container 
+    class="swiper-container"
+    [slidesPerView]="1" 
+    [spaceBetween]="10" 
+    [navigation]="true" 
+    [pagination]="{ clickable: true }"
+    [initialSlide]="initialSlide">
+    
+    <swiper-slide *ngFor="let img of images">
+      <ion-img [src]="img.url" [alt]="img.nombre" class="swiper-img"></ion-img>
+    </swiper-slide>
+    
+  </swiper-container>
+</ion-content>

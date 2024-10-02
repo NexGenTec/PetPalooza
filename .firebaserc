@@ -6,9 +6,16 @@
           "petpalooza"
         ]
       }
+    },
+    "petpalooza-63384": {
+      "hosting": {
+        "app": [
+          "petpalooza-63384"
+        ]
+      }
     }
   },
   "projects": {
-    "default": "petpalooza-e50e0"
+    "default": "petpalooza-63384"
   }
 }

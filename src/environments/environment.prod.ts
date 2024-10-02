@@ -1,12 +1,13 @@
-export const environment = {
-  production: true,
+export const environment = {  
+  production: false,
+  apiKey: 'AIzaSyCqA3bYv-K0j6KPVberqM2i88bT0zd7XZU',
   firebase: {
-    apiKey: "AIzaSyAVlLgeIMwuZRg8Z9m-mSLgdzYAf2O9xW8",
-    authDomain: "petpalooza-e50e0.firebaseapp.com",
-    projectId: "petpalooza-e50e0",
-    storageBucket: "petpalooza-e50e0.appspot.com",
-    messagingSenderId: "341355020747",
-    appId: "1:341355020747:web:4147b09871022cd0d1b64e",
-    measurementId: "G-87L2E1YE75"
-  }
+    apiKey: "AIzaSyAwCHFzKYwBLRbSScpOzvgivUBcN4WZIGs",
+    authDomain: "petpalooza-63384.firebaseapp.com",
+    projectId: "petpalooza-63384",
+    storageBucket: "petpalooza-63384.appspot.com",
+    messagingSenderId: "587700782700",
+    appId: "1:587700782700:web:12aed096379283c4b13a49",
+    experimentalForceLongPolling: true
+  },
 };

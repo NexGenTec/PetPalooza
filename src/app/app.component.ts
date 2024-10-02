@@ -1,6 +1,8 @@
 import { Component, Optional } from '@angular/core';
 import { AlertController, IonRouterOutlet, Platform } from '@ionic/angular';
 import { App } from '@capacitor/app';
+import { NavigationEnd, Router } from '@angular/router';
+import { filter } from 'rxjs';
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -14,6 +16,7 @@ export class AppComponent {
   constructor(
     private platform: Platform,
     private alertCtrl: AlertController,
+    private router: Router,
     @Optional() private routerOutlet?: IonRouterOutlet
   ) {
     this.platform.backButton.subscribeWithPriority(-1, () => {
@@ -25,7 +28,14 @@ export class AppComponent {
         }
       }
     });
+    this.router.events.pipe(
+      filter((event) => event instanceof NavigationEnd)
+    ).subscribe((event: NavigationEnd) => {
+      console.log('Navegación a:', event.urlAfterRedirects);
+      // Aquí puedes manejar la navegación basada en el URL
+    });
   }
+
 
   async alertExit() {
     console.log('alert');

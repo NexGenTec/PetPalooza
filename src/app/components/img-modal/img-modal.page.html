@@ -1,0 +1,10 @@
+<ion-content mode="md" class="flex items-center justify-center">
+  <button class="absolute top-2 right-0 w-12 text-gray-700 z-50" (click)="closeModal()">
+    <ion-icon class="bg-gray-50 text-gray-700 rounded-full text-xl" slot="icon-only" name="close"></ion-icon>
+  </button>
+  <div class="fixed inset-0 flex items-center justify-center">
+    <div class="max-w-screen-lg mx-auto bg-white rounded-lg overflow-hidden shadow-xl border border-blue-100">
+      <img [src]="imageUrl" alt="Image in modal" class="w-full h-auto">
+    </div>
+  </div>
+</ion-content>

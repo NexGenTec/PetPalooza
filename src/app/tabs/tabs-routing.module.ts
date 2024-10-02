@@ -8,16 +8,40 @@ const routes: Routes = [
     component: TabsPage,
     children: [
       {
+        path: 'ave',
+        loadChildren: () => import('../mascota-page/aves/aves.module').then(m => m.AvesPageModule)
+      },
+      {
+        path: 'reptil',
+        loadChildren: () => import('../mascota-page/reptiles/reptiles.module').then(m => m.ReptilesPageModule)
+      },
+      {
+        path: 'roedor',
+        loadChildren: () => import('../mascota-page/roedores/roedores.module').then(m => m.RoedoresPageModule)
+      },
+      {
         path: 'gato',
-        loadChildren: () => import('../gato/gato.module').then(m => m.gatoPageModule)
+        loadChildren: () => import('../mascota-page/gato/gato.module').then(m => m.gatoPageModule)
+      },
+      {
+        path: 'perro',
+        loadChildren: () => import('../mascota-page/perro/perro.module').then(m => m.perroPageModule)
       },
       {
         path: 'home',
         loadChildren: () => import('../home/home.module').then(m => m.homePageModule)
       },
       {
-        path: 'perro',
-        loadChildren: () => import('../perro/perro.module').then(m => m.perroPageModule)
+        path: 'adoptame',
+        loadChildren: () => import('../adoptame/adoptame.module').then(m => m.AdoptamePageModule)
+      },
+      {
+        path: 'cuidados',
+        loadChildren: () => import('../cuidados/cuidados.module').then(m => m.CuidadosPageModule)
+      },
+      {
+        path: 'maps',
+        loadChildren: () => import('../maps/maps.module').then(m => m.MapsPageModule)
       },
       {
         path: '',
