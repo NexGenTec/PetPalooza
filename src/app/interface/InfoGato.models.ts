@@ -19,6 +19,15 @@ export interface CaracteristicasFisicas {
   descripcion: string;
 }
 
+export interface ImgUser {
+  id?: string; 
+  nombre: string;
+  url: string;
+  likeCount: number;
+  likedDevices: string[];
+  reactedDevices: string[];
+}
+
 export interface InfoGato {
   Historia: string;
   Anio: string;
@@ -31,5 +40,6 @@ export interface InfoGato {
   caracteristicasFisicas: CaracteristicasFisicas[];
   imgPerfil: string;
   Origen: string;
-  id?: string; // Propiedad id opcional
+  ImgUsers?: ImgUser[];
+  id?: string;
 }

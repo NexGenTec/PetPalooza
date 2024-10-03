@@ -18,6 +18,15 @@ export interface FechaCreacion {
     tipo: string;
     descripcion: string;
   }
+
+  export interface ImgUser {
+    id?: string; 
+    nombre: string;
+    url: string;
+    likeCount: number;
+    likedDevices: string[];
+    reactedDevices: string[];
+  }
   
   export interface InfoPerro {
     Historia: string;
@@ -31,6 +40,7 @@ export interface FechaCreacion {
     caracteristicasFisicas: CaracteristicasFisicas[];
     imgPerfil: string;
     Origen: string;
-    id?: string; // Propiedad id opcional
+    ImgUsers?: ImgUser[];
+    id?: string;
   }
   

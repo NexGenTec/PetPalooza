@@ -8,5 +8,61 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-</ion-content>
+  <!-- Imágenes de Gatos -->
+  <ion-grid>
+    <ion-row>
+      <!-- Iterar sobre los gatos -->
+      <ion-col size="12" size-md="6" *ngFor="let gato of infoGatos">
+        <!-- Iterar sobre ImgUsers de cada gato -->
+        <ion-col size="12" size-md="6" *ngFor="let imgUser of gato.ImgUsers">
+          <ion-card>
+            <ion-img [src]="imgUser.url" class="pet-image"></ion-img>
+            <ion-card-header>
+              <ion-card-title class="text-center">{{ imgUser.nombre }}</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+              <div class="icon-row">
+                <ion-icon name="heart" class="like-icon"></ion-icon>
+                <span>{{ imgUser.likeCount }}</span>
+                <ion-icon name="happy" class="reaction-icon"></ion-icon>
+                <span>{{ imgUser.reactedDevices.length }}</span>
+              </div>
+              <!-- <ion-button color="danger" expand="block" (click)="DeleteAlert(gato.id, imgUser.id, 'gato')">
+                <ion-icon name="trash"></ion-icon>
+              </ion-button> -->
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 
+  <!-- Imágenes de Perros -->
+  <ion-grid>
+    <ion-row>
+      <!-- Iterar sobre los perros -->
+      <ion-col size="12" size-md="6" *ngFor="let perro of infoPerros">
+        <!-- Iterar sobre ImgUsers de cada perro -->
+        <ion-col size="12" size-md="6" *ngFor="let imgUser of perro.ImgUsers">
+          <ion-card>
+            <ion-img [src]="imgUser.url" class="pet-image"></ion-img>
+            <ion-card-header>
+              <ion-card-title class="text-center">{{ imgUser.nombre }}</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+              <div class="icon-row">
+                <ion-icon name="heart" class="like-icon"></ion-icon>
+                <span>{{ imgUser.likeCount }}</span>
+                <ion-icon name="happy" class="reaction-icon"></ion-icon>
+                <span>{{ imgUser.reactedDevices.length }}</span>
+              </div>
+              <!-- <ion-button color="danger" expand="block" (click)="DeleteAlert(perro.id, imgUser.id, 'perro')">
+                <ion-icon name="trash"></ion-icon>
+              </ion-button> -->
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
