@@ -7,6 +7,7 @@ import { homePage } from './home.page';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { homePageRoutingModule } from './home-routing.module';
 import { register } from 'swiper/element/bundle';
+import { TranslateModule } from '@ngx-translate/core';
 register();
 
 @NgModule({
@@ -14,6 +15,7 @@ register();
     IonicModule,
     CommonModule,
     FormsModule,
+    TranslateModule,
     homePageRoutingModule
   ],
   declarations: [homePage],

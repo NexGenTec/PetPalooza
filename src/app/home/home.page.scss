@@ -162,3 +162,13 @@ ion-card-content {
     padding: 10px;
 }
 
+ion-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 60px;
+}
+
+ion-select {
+  min-width: 120px;
+}

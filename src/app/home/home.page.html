@@ -1,11 +1,21 @@
-<ion-header class="bg-white shadow-none border-b border-gray-200">
-  <a href="/" class="flex gap-2 items-center mx-3 my-2">
+<ion-header class="bg-white shadow-none border-b border-gray-200 flex items-center justify-between px-4">
+  <!-- Logo centrado -->
+  <a href="/" class="absolute left-1/2 transform -translate-x-1/2">
     <img 
-      class="max-h-14 mx-auto"
+      class="max-h-14" 
       alt="logo PetPalooza" 
       src="assets/img/logo/PetPalooza.png" 
     />
   </a>
+  <ion-select 
+    (ionChange)="changeLanguage($event.detail.value)" 
+    placeholder="Idioma" 
+    mode="ios" 
+    class="text-sm flex items-center">
+    <ion-icon name="globe-outline" slot="start"></ion-icon>
+    <ion-select-option value="es">Español</ion-select-option>
+    <ion-select-option value="en">English</ion-select-option>
+  </ion-select>
 </ion-header>
 
 <ion-content [fullscreen]="true">
@@ -106,6 +116,7 @@
         <ng-template #contenido>
           <!-- Contenido real -->
           <h1 class="pb-2 text-2xl font-medium">Animales Registrados</h1>
+          <h1>{{ 'HELLO' | translate }}</h1>
         </ng-template>
         
         <span class="bg-blue-400 inline-block h-1 w-[90px] rounded"></span>

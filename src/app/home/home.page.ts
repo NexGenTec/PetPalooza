@@ -12,6 +12,7 @@ import { ImgModalPage } from '../components/img-modal/img-modal.page';
 import { InfoImage } from '../interface/InfoImage.models';
 import { StorageService } from '../service/storage.service';
 import { NotificationsService } from '../service/notifications.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-home',
@@ -71,7 +72,11 @@ export class homePage implements OnInit {
     private modalController: ModalController,
     private favoritesService: StorageService,
     private pushNotificationService: NotificationsService,
+    private translate: TranslateService
   ) {
+     // Idioma predeterminado
+     this.translate.setDefaultLang('es');
+     this.translate.use('es');
   }
 
   ngOnInit(): void {
@@ -245,6 +250,11 @@ export class homePage implements OnInit {
 
   navigateToFavoriteMatch() {
     this.router.navigate(['/favoritos/match-favorite']);
-  }  
+  }
+
+  // Cambiar idioma
+  changeLanguage(lang: string) {
+    this.translate.use(lang);
+  }
 }
 
