@@ -1,4 +1,13 @@
 {
-  "HELLO": "Hello",
-  "WELCOME": "Welcome"
+    "TITULO_ANIMALES_REGISTRADOS": "Registered Animals",
+    "FELINOS": "Felines",
+    "CANINOS": "Canines",
+    "ULTIMOS": "Latest",
+    "FAVORITOS": "Favorites",
+    "VER_PERFIL": "View Profile",
+    "NO_ANIMALES_DISPONIBLES": "No animals available currently.",
+    "VER_FAVORITOS": "View favorites",
+    "NO_FAVORITOS": "No favorites yet.",
+    "VER_MAS": "See more",
+    "MATCHEA_FAVORITOS": "Match to your favorites"
 }
