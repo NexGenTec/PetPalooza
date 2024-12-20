@@ -9,7 +9,7 @@ import { ActionPerformed, PushNotifications } from '@capacitor/push-notification
 import { AddImagePage } from '../add-image/add-image.page';
 import { StorageService } from '../../../service/storage.service';
 import { ModalswiperUsersPage } from 'src/app/components/modalswiper-users/modalswiper-users.page';
-import { Share } from '@capacitor/share';
+// import { Share } from '@capacitor/share';
 import { ReactionService } from 'src/app/service/reaction.service';
 import { Device } from '@capacitor/device';
 import { v4 as uuidv4 } from 'uuid';
