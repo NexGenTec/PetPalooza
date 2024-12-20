@@ -10,4 +10,5 @@ export const environment = {
     appId: "1:587700782700:web:12aed096379283c4b13a49",
     experimentalForceLongPolling: true
   },
+  adId: 'ca-app-pub-6309294666517022/1128036107',
 };

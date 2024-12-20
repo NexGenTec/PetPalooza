@@ -16,7 +16,7 @@ import {
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
+import { initializeApp, provideFirebaseApp, FirebaseApp } from '@angular/fire/app';
 import { getAuth, provideAuth } from '@angular/fire/auth';
 import { getAnalytics, provideAnalytics, ScreenTrackingService, UserTrackingService } from '@angular/fire/analytics';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
@@ -26,6 +26,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { AngularFireModule } from '@angular/fire/compat';
 import { environment } from 'src/environments/environment';
 import { IonicStorageModule } from '@ionic/storage-angular';
+import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 if (!environment.production) { (self as any).FIREBASE_APPCHECK_DEBUG_TOKEN = false; }
 
 const routes: Routes = [
@@ -35,16 +36,20 @@ const routes: Routes = [
 @NgModule({
   declarations: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  imports: [BrowserModule, IonicModule.forRoot(),
+  imports: [
+    BrowserModule, 
+    IonicModule.forRoot(),
     AngularFireModule.initializeApp(environment.firebase),
     IonicStorageModule.forRoot(),
     AppRoutingModule,
     HttpClientModule,
     RouterModule.forRoot(routes, { useHash: true }),
+    AngularFirestoreModule,
+  ],
+  providers: [{ 
+    provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, ScreenTrackingService, UserTrackingService,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()), provideAnalytics(() => getAnalytics()), provideFirestore(() => getFirestore()), provideDatabase(() => getDatabase()), provideStorage(() => getStorage()),
-  ],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, ScreenTrackingService, UserTrackingService,
   ],
   bootstrap: [AppComponent],
 })

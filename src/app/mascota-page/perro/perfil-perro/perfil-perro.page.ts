@@ -99,33 +99,33 @@ export class PerfilPerroPage implements OnInit {
     }
   }
   
-  async shareContent(tipo: 'gato' | 'perro') {
-    if (!this.perro) {
-      console.error('No hay datos del perfil para compartir.');
-      return;
-    }
+  // async shareContent(tipo: 'gato' | 'perro') {
+  //   if (!this.perro) {
+  //     console.error('No hay datos del perfil para compartir.');
+  //     return;
+  //   }
   
-    const perfilId = this.perro.id;
-    const truncatedHistory = this.truncateText(this.perro.Historia, 250);
-    const shareTitle = `¡Conoce a ${this.perro.Raza}!`;
-    const imageUrl = this.perro.imgPerfil; // URL pública de la imagen
-    const shareText = `${tipo === 'perro' ? '🐱' : '🐶'} **${this.perro.Raza}**\n\n` +
-                      `🌟 **Historia:** ${truncatedHistory}\n` +
-                      `🌍 **Origen:** ${this.perro.Origen}\n\n` +
-                      `¡Descubre más sobre este increíble ${tipo} y muchos otros en nuestra app!`;
-    const shareUrl = `https://play.google.com/store/apps/details?id=com.nexgentech.petpaloozaa`;
+  //   const perfilId = this.perro.id;
+  //   const truncatedHistory = this.truncateText(this.perro.Historia, 250);
+  //   const shareTitle = `¡Conoce a ${this.perro.Raza}!`;
+  //   const imageUrl = this.perro.imgPerfil; // URL pública de la imagen
+  //   const shareText = `${tipo === 'perro' ? '🐱' : '🐶'} **${this.perro.Raza}**\n\n` +
+  //                     `🌟 **Historia:** ${truncatedHistory}\n` +
+  //                     `🌍 **Origen:** ${this.perro.Origen}\n\n` +
+  //                     `¡Descubre más sobre este increíble ${tipo} y muchos otros en nuestra app!`;
+  //   const shareUrl = `https://play.google.com/store/apps/details?id=com.nexgentech.petpaloozaa`;
   
-    try {
-      await Share.share({
-        title: shareTitle,
-        text: `${shareText}\n\nMás información: ${shareUrl}`,
-        url: imageUrl,
-        dialogTitle: 'Compartir con',
-      });
-    } catch (error) {
-      console.error('Error al compartir contenido:', error);
-    }
-  }  
+  //   try {
+  //     await Share.share({
+  //       title: shareTitle,
+  //       text: `${shareText}\n\nMás información: ${shareUrl}`,
+  //       url: imageUrl,
+  //       dialogTitle: 'Compartir con',
+  //     });
+  //   } catch (error) {
+  //     console.error('Error al compartir contenido:', error);
+  //   }
+  // }  
   
   truncateText(text: string, maxLength: number = 40): string {
     if (text.length > maxLength) {

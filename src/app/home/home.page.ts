@@ -12,6 +12,8 @@ import { ImgModalPage } from '../components/img-modal/img-modal.page';
 import { InfoImage } from '../interface/InfoImage.models';
 import { StorageService } from '../service/storage.service';
 import { NotificationsService } from '../service/notifications.service';
+import { AdmobAds, BannerPosition, BannerSize, } from 'capacitor-admob-ads';
+import { environment } from 'src/environments/environment.prod';
 
 @Component({
   selector: 'app-home',
@@ -95,6 +97,10 @@ export class homePage implements OnInit {
       this.showSkeletonPerros = false;
     }, 3000);
     this.pushNotificationService.initPushNotifications();
+  }
+
+  ionViewDidEnter() {
+    this.showAdaptiveBanner();
   }
 
 
@@ -245,6 +251,31 @@ export class homePage implements OnInit {
 
   navigateToFavoriteMatch() {
     this.router.navigate(['/favoritos/match-favorite']);
-  }  
+  }
+
+  /*Anuncio Banner  */
+  async showAdaptiveBanner() {
+    try {
+      await AdmobAds.showBannerAd({
+        adId: environment.adId,
+        isTesting: false,
+        adSize: BannerSize.FULL_BANNER,
+        adPosition: BannerPosition.TOP
+      });
+      console.log('Banner adaptable (Full Banner) mostrado correctamente');
+
+      // Cerrar el banner después de cierto tiempo o evento
+      setTimeout(async () => {
+        try {
+          await AdmobAds.removeBannerAd();
+          console.log('Banner adaptable (Full Banner) cerrado correctamente');
+        } catch (error) {
+          console.error('Error al cerrar el banner adaptable (Full Banner)', error);
+        }
+      }, 10000); // Ejemplo: cerrar el banner después de 10 segundos
+    } catch (error) {
+      console.error('Error al mostrar el banner adaptable (Full Banner)', error);
+    }
+  }
 }
 

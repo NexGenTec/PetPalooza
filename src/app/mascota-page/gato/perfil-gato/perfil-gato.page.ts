@@ -9,7 +9,7 @@ import { DataOflineService } from 'src/app/service/data-ofline.service';
 import { AddImagePage } from '../add-image/add-image.page';
 import { StorageService } from '../../../service/storage.service';
 import { ModalswiperUsersPage } from 'src/app/components/modalswiper-users/modalswiper-users.page';
-import { Share } from '@capacitor/share';
+// import { Share } from '@capacitor/share';
 import { ReactionService } from 'src/app/service/reaction.service';
 import { Device } from '@capacitor/device';
 import { v4 as uuidv4 } from 'uuid';
@@ -96,34 +96,34 @@ export class PerfilGatoPage implements OnInit {
     }
   }
 
-  async shareContent(tipo: 'gato' | 'perro') {
-    if (!this.gato) {
-        console.error('No hay datos del perfil para compartir.');
-        return;
-    }
+  // async shareContent(tipo: 'gato' | 'perro') {
+  //   if (!this.gato) {
+  //       console.error('No hay datos del perfil para compartir.');
+  //       return;
+  //   }
 
-    const perfilId = this.gato.id;
-    const truncatedHistory = this.truncateText(this.gato.Historia, 250);
-    const shareTitle = `¡Conoce a ${this.gato.Raza}!`;
-    const imageUrl = this.gato.imgPerfil; // URL pública de la imagen
-    const shareText = `${tipo === 'gato' ? '🐱' : '🐶'} **${this.gato.Raza}**\n\n` +
-                      `🌟 **Historia:** ${truncatedHistory}\n` +
-                      `🌍 **Origen:** ${this.gato.Origen}\n\n` +
-                      `¡Descubre más sobre este increíble ${tipo} y muchos otros en nuestra app!`;
+  //   const perfilId = this.gato.id;
+  //   const truncatedHistory = this.truncateText(this.gato.Historia, 250);
+  //   const shareTitle = `¡Conoce a ${this.gato.Raza}!`;
+  //   const imageUrl = this.gato.imgPerfil; // URL pública de la imagen
+  //   const shareText = `${tipo === 'gato' ? '🐱' : '🐶'} **${this.gato.Raza}**\n\n` +
+  //                     `🌟 **Historia:** ${truncatedHistory}\n` +
+  //                     `🌍 **Origen:** ${this.gato.Origen}\n\n` +
+  //                     `¡Descubre más sobre este increíble ${tipo} y muchos otros en nuestra app!`;
 
-    const shareUrl = `https://play.google.com/store/apps/details?id=com.nexgentech.petpaloozaa`;
+  //   const shareUrl = `https://play.google.com/store/apps/details?id=com.nexgentech.petpaloozaa`;
 
-    try {
-        await Share.share({
-          title: shareTitle,
-            text: `${shareText}\n\nMás información: ${shareUrl}`,
-            url: imageUrl,
-            dialogTitle: 'Compartir con',
-        });
-    } catch (error) {
-        console.error('Error al compartir contenido:', error);
-    }
-  }  
+  //   try {
+  //       await Share.share({
+  //         title: shareTitle,
+  //           text: `${shareText}\n\nMás información: ${shareUrl}`,
+  //           url: imageUrl,
+  //           dialogTitle: 'Compartir con',
+  //       });
+  //   } catch (error) {
+  //       console.error('Error al compartir contenido:', error);
+  //   }
+  // }  
   
   truncateText(text: string, maxLength: number = 40): string {
     if (text.length > maxLength) {

@@ -14,7 +14,7 @@ register();
     IonicModule,
     CommonModule,
     FormsModule,
-    homePageRoutingModule
+    homePageRoutingModule,
   ],
   declarations: [homePage],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]

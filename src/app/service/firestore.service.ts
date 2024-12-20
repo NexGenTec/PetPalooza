@@ -1,25 +1,17 @@
-import { inject, Injectable } from '@angular/core';
-import {
-  Firestore,
-  collectionData, collection,
-  doc, docData, getDoc, setDoc,
-  DocumentReference
-} from '@angular/fire/firestore';
-
-const { v4: uuidv4 } = require('uuid');
-
+import { Injectable } from '@angular/core';
+import { collection, collectionData, doc, docData, DocumentReference, Firestore, getDoc, setDoc } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
+import {v4 as uuidv4} from 'uuid';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FirestoreService {
-  private firestore: Firestore = inject(Firestore);
+  constructor(private firestore: Firestore) { }
 
-  constructor() { }
   getDocument<tipo>(enlace: string) {
-    const document = doc(this.firestore, enlace) as DocumentReference<tipo, any>;
-    return getDoc<tipo, any>(document)
+    const document = doc(this.firestore, enlace) as DocumentReference<tipo>;
+    return getDoc(document);
   }
 
   getDocumentChanges<tipo>(enlace: string) {
