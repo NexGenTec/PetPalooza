@@ -7,7 +7,11 @@ const routes: Routes = [
   {
     path: '',
     component: MestizoPage
+  },  {
+    path: 'mestizo-form',
+    loadChildren: () => import('./mestizo-form/mestizo-form.module').then( m => m.MestizoFormPageModule)
   }
+
 ];
 
 @NgModule({
