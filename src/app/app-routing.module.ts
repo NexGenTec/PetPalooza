@@ -42,6 +42,10 @@ const routes: Routes = [
     path: 'modalswiper-users',
     loadChildren: () => import('./components/modalswiper-users/modalswiper-users.module').then(m => m.ModalswiperUsersPageModule)
   },
+  {
+    path: 'mestizo',
+    loadChildren: () => import('./mestizo/mestizo.module').then( m => m.MestizoPageModule)
+  },
 ];
 @NgModule({
   imports: [
