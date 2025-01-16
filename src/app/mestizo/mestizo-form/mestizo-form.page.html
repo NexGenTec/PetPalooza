@@ -1,0 +1,294 @@
+<ion-header [translucent]="true">
+  <ion-toolbar class="border-b border-gray-200">
+    <div class="flex gap-2 items-center justify-center mx-3">
+      <img 
+        class="max-h-14 my-1"
+        alt="logo PetPalooza" 
+        src="assets/img/logo/PetPalooza.png" />
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="bg-gray-50">
+    <!-- profile mestiz -->
+    <div class="bg-blue-100 pt-4 pb-6 px-3 min-h-[93vh]">
+      <div class="relative mx-auto md:max-w-2xl min-w-0 break-words bg-white w-full shadow-lg rounded-xl pb-3">
+        <div class="relative">
+          <ion-buttons class="absolute right-2 top-2 md:left-2 md:top-5" slot="end">
+            <ion-back-button defaultHref="/"></ion-back-button>
+          </ion-buttons>
+          <div class="py-3 px-4">
+            <!-- form user -->
+            <div class="mt-14 sm:mt-16">
+              <h4 class="my-2 mb-4 text-slate-600 font-bold uppercase text-base text-start">Registrate como Dueño</h4>
+                <form class="">
+                  <div class="flex flex-row gap-2 items-center mb-3">
+                    <!-- Name user -->
+                    <label for="name-input" class="drop flex flex-col w-full">
+                      <span class="drop-title text-slate-600">Nombre</span>
+                      <input 
+                      type="text" 
+                      id="name-user" 
+                      name="userName" 
+                      class="border bg-slate-50 rounded-md p-2 w-full my-1" 
+                      required />
+                    </label>
+                    <!-- lastName user -->
+                    <label for="name-input" class="drop flex flex-col w-full">
+                      <span class="drop-title text-slate-600">Apellido</span>
+                          <input 
+                          type="text" 
+                          id="name-user" 
+                          name="userName" 
+                          class="border bg-slate-50 rounded-md p-2 w-full my-1" 
+                          required />
+                    </label>
+                  </div>
+                  <div class="my-4">
+                    <!-- Imagen user -->
+                    <label for="file-input" class="drop-container flex flex-col">
+                      <span class="drop-title text-slate-600">Imagen de portada</span>
+                      <input type="file" class="border bg-slate-50 rounded-md p-2 w-full my-1" accept="image/*" id="file-input" 
+                      />
+                    </label>
+                    <small class="my-3 mb-5 text-xs italic text-slate-500">Solamente puede subir una imagen</small>
+                    <!-- Previsualización de imagen -->
+                    <!-- <div *ngIf="imageUrl" class="image-preview">
+                      <img [src]="imageUrl" alt="Image preview" />
+                    </div> -->
+                  </div>
+            
+                </form>
+                <div class="flex flex-wrap justify-end items-center gap-2">
+                  <ion-buttons 
+                  type="submit"
+                  class="font-light text-sm leading-relaxed rounded-xl text-slate-600 mb-4 p-2 px-3 border-2 border-primary cursor-pointer" 
+                  >Guardar
+                  </ion-buttons>
+              </div>
+            </div>
+          <!-- end form user -->
+          </div>
+          <!-- Register pets -->
+          <div class="py-3 px-4">
+            <div class=" mt-8 mb-4">
+              <h4 class="text-slate-600 font-bold uppercase ">Registra a tu mascota</h4>
+            </div>
+            <form class="">
+              <div class="flex flex-row gap-2 items-center mb-3">
+                <!-- Name user -->
+                <label for="name-input" class="drop flex flex-col w-full">
+                  <span class="drop-title text-slate-600">Nombre</span>
+                  <input 
+                  type="text" 
+                  id="name-pet" 
+                  name="petName" 
+                  class="border bg-slate-50 rounded-md p-2 w-full my-1" 
+                  required />
+                </label>
+                <!-- lastName user -->
+                <label for="name-input" class="drop flex flex-col w-full">
+                  <span class="drop-title text-slate-600">Apellido</span>
+                      <input 
+                      type="text" 
+                      id="lastname-user" 
+                      name="lastName" 
+                      class="border bg-slate-50 rounded-md p-2 w-full my-1" 
+                      required />
+                </label>
+              </div>
+              <div class="">
+                <label for="name-input" class="drop flex flex-col w-full mb-2">
+                <span class="drop-title text-slate-600">Apodo</span>
+                      <input 
+                      type="text" 
+                      id="lastname-user" 
+                      name="lastName" 
+                      class="border bg-slate-50 rounded-md p-2 w-full my-1" 
+                      required />
+                </label>
+                <label for="name-input" class="drop flex flex-col w-full mb-2">
+                  <span class="drop-title text-slate-600">Especie</span>
+                        <input 
+                        type="text" 
+                        id="lastname-user" 
+                        name="lastName" 
+                        class="border bg-slate-50 rounded-md p-2 w-full my-1" 
+                        required />
+                  </label>
+                  <label for="name-input" class="drop flex flex-col w-full mb-2">
+                    <span class="drop-title text-slate-600">Sexo</span>
+                          <input 
+                          type="text" 
+                          id="lastname-user" 
+                          name="lastName" 
+                          class="border bg-slate-50 rounded-md p-2 w-full my-1" 
+                          required />
+                  </label>
+                  <label for="name-input" class="drop flex flex-col w-full mb-2">
+                      <span class="drop-title text-slate-600">Edad</span>
+                            <input 
+                            type="text" 
+                            id="lastname-user" 
+                            name="lastName" 
+                            class="border bg-slate-50 rounded-md p-2 w-full my-1" 
+                            required />
+                  </label>
+                  <label for="name-input" class="drop flex flex-col w-full mb-2">
+                    <span class="drop-title text-slate-600">Nacionalidad</span>
+                        <input 
+                              type="text" 
+                              id="lastname-user" 
+                              name="lastName" 
+                              class="border bg-slate-50 rounded-md p-2 w-full my-1" 
+                              required />
+                  </label>
+              </div>
+        
+            </form>
+            <div class="flex flex-wrap justify-end items-center gap-2">
+              <ion-buttons 
+              type="submit"
+              class="font-light text-sm leading-relaxed rounded-xl text-slate-600 mb-4 p-2 px-3 border-2 border-primary cursor-pointer" 
+              >Siguiente
+              </ion-buttons>
+          </div>
+          </div>
+
+           <!-- Register pets step 2-->
+           <div class="py-3 px-4">
+            <div class=" mt-8 mb-4">
+              <h4 class="text-slate-600 font-bold uppercase ">Caracteristicas fisicas de tu mascota</h4>
+            </div>
+            <form class="">
+              <div class="flex flex-row gap-2 items-center mb-3">
+                <!-- Name user -->
+                <label for="name-input" class="drop flex flex-col w-full">
+                  <span class="drop-title text-slate-600">Tamaño</span>
+                  <input 
+                  type="text" 
+                  id="name-pet" 
+                  name="petName" 
+                  class="border bg-slate-50 rounded-md p-2 w-full my-1" 
+                  required />
+                </label>
+                <!-- lastName user -->
+                <label for="name-input" class="drop flex flex-col w-full">
+                  <span class="drop-title text-slate-600">Peso</span>
+                      <input 
+                      type="text" 
+                      id="lastname-user" 
+                      name="lastName" 
+                      class="border bg-slate-50 rounded-md p-2 w-full my-1" 
+                      required />
+                </label>
+              </div>
+              <div class="">
+                <label for="name-input" class="drop flex flex-col w-full mb-2">
+                <span class="drop-title text-slate-600">Pelaje</span>
+                      <input 
+                      type="text" 
+                      id="lastname-user" 
+                      name="lastName" 
+                      class="border bg-slate-50 rounded-md p-2 w-full my-1" 
+                      required />
+                </label>
+                <label for="name-input" class="drop flex flex-col w-full mb-2">
+                  <span class="drop-title text-slate-600">Color</span>
+                        <input 
+                        type="text" 
+                        id="lastname-user" 
+                        name="lastName" 
+                        class="border bg-slate-50 rounded-md p-2 w-full my-1" 
+                        required />
+                  </label>
+                  <label for="name-input" class="drop flex flex-col w-full mb-2">
+                    <span class="drop-title text-slate-600">Ojos</span>
+                          <input 
+                          type="text" 
+                          id="lastname-user" 
+                          name="lastName" 
+                          class="border bg-slate-50 rounded-md p-2 w-full my-1" 
+                          required />
+                  </label>
+              </div>       
+            </form>
+          </div>
+          <div class="py-3 px-4">
+            <div class=" mt-8 mb-4">
+              <h4 class="text-slate-600 font-bold uppercase ">Temperamento de tu mascota</h4>
+            </div>
+            <form class="">
+              <div class="mb-2">
+                <label for="name-input" class="drop flex flex-col w-full">
+                <span class="drop-title text-slate-600">Temperamentos</span>
+                      <input 
+                      type="text" 
+                      id="lastname-user" 
+                      name="lastName" 
+                      class="border bg-slate-50 rounded-md p-2 w-full my-1" 
+                      required />
+                </label>
+                <small class=" italic text-slate-500">Debes elegir al menos 3 temperamentos, max. 5</small>
+              </div>       
+            </form>
+            <div class="flex flex-wrap justify-end items-center gap-2">
+              <ion-buttons 
+              type="submit"
+              class="font-light text-sm leading-relaxed rounded-xl text-slate-600 mb-4 p-2 px-3 border-2 border-primary cursor-pointer" 
+              >Siguiente
+              </ion-buttons>
+            </div>
+          </div>
+
+           <!-- Register pets step 3 -->
+           <div class="py-3 px-4">
+            <div class=" mt-8 mb-4">
+              <h4 class="text-slate-600 font-bold uppercase ">Historia de tu mascota</h4>
+            </div>
+            <form class="">
+              <div class="">
+                <label for="name-input" class="drop flex flex-col w-full mb-2">
+                <span class="drop-title text-slate-600">Historia de tu mascota</span>
+                <ion-textarea
+                label="" 
+                name=""
+                class="border bg-slate-50 rounded-md p-1 w-full my-1"
+                placeholder="Cuentanos, ¿Cómo conociste a tu mascota?, ¿Cómo llego a tu vida?"></ion-textarea>
+                      <!-- <input 
+                      type="text" 
+                      id="lastname-user" 
+                      name="lastName" 
+                      placeholder="Cuentanos, ¿Cómo conociste a tu mascota?, ¿Cómo llego a tu vida?"
+                      class="border bg-slate-50 rounded-md p-2 w-full my-1" 
+                      required /> -->
+                </label>
+                <div class="my-4">
+                  <!-- Imagen user -->
+                  <label for="file-input" class="drop-container flex flex-col">
+                    <span class="drop-title text-slate-600">Imagen de mascota</span>
+                    <input type="file" class="border bg-slate-50 rounded-md p-2 w-full my-1" accept="image/*" id="file-input" 
+                    />
+                  </label>
+                  <small class="my-3 mb-5 text-xs italic text-slate-500">Debe subir al menos 4 imagenes, max 6.</small>
+                  <!-- Previsualización de imagen -->
+                  <!-- <div *ngIf="imageUrl" class="image-preview">
+                    <img [src]="imageUrl" alt="Image preview" />
+                  </div> -->
+                </div>
+              </div>       
+            </form>
+            <div class="flex flex-wrap justify-end items-center gap-2">
+              <ion-buttons 
+              type="submit"
+              class="font-light text-sm leading-relaxed rounded-xl text-slate-600 mb-4 p-2 px-3 border-2 border-primary cursor-pointer" 
+              >Guardar mascota
+              </ion-buttons>
+            </div>
+          </div>
+        </div>  
+      </div>
+    </div>
+  </div>
+</ion-content>

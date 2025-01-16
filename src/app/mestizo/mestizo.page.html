@@ -1,13 +1,95 @@
 <ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>mestizo</ion-title>
+  <ion-toolbar class="border-b border-gray-200">
+    <div class="flex gap-2 items-center justify-center mx-3">
+      <img 
+        class="max-h-14 my-1"
+        alt="logo PetPalooza" 
+        src="assets/img/logo/PetPalooza.png" />
+    </div>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">mestizo</ion-title>
-    </ion-toolbar>
-  </ion-header>
-</ion-content>
+  <div class="bg-gray-50">
+    <!-- profile mestiz -->
+    <div class="bg-blue-100 pt-20 pb-6 px-3 min-h-[93vh]">
+      <div class="relative mx-auto md:max-w-2xl min-w-0 break-words bg-white w-full shadow-lg rounded-xl pb-3">
+        <div class="relative">
+          <ion-buttons class="absolute left-2 top-4 md:left-2 md:top-5" slot="start">
+            <ion-back-button defaultHref="/"></ion-back-button>
+          </ion-buttons>
+          <!-- <div class="absolute top-5 right-16 md:top-5 md:right-32">
+            <button (click)="shareContent('perro')" class="text-[#60a5fa] rounded-full w-8 h-8 md:w-10 md:h-10 p-1.5 md:p-2.5 drop-shadow-md hover:scale-105 duration-200">
+              <ion-icon name="share-social-outline" class="text-xl font-semibold md:text-2xl"></ion-icon>
+            </button>    
+          </div> -->
+          <!-- <div class="absolute z-50 top-5 right-8 md:top-6 md:right-20">
+            <button type="button" class="bg-gray-200 p-2 text-gray-500 rounded-full">
+             <ion-icon name="pencil-outline" class="w-9 h-7"></ion-icon>
+            </button>                      
+          </div> -->
+          <!-- <div class="absolute top-4 right-3 md:top-5 md:right-8 w-10 h-10 rounded-full bg-white flex justify-center items-center text-red-400">
+            <button type="button" 
+             >
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8 md:w-10 md:h-10">
+                <path d="m11.645 20.91-.007-.003-.022-.012a15.247 15.247 0 0 1-.383-.218 25.18 25.18 0 0 1-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0 1 12 5.052 5.5 5.5 0 0 1 16.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 0 1-4.244 3.17 15.247 15.247 0 0 1-.383.219l-.022.012-.007.004-.003.001a.752.752 0 0 1-.704 0l-.003-.001Z"/>
+              </svg>
+            </button>                      
+          </div> -->
+          <div class="flex flex-wrap justify-center">
+            <div class="w-full flex justify-center" >
+              <div class="relative">
+                <img src="https://firebasestorage.googleapis.com/v0/b/petpalooza-63384.appspot.com/o/Perro%2FBulldog%20franc%C3%A9s%2Fimagenes%2FBgFrances6.webp?alt=media&token=fa99ca55-b265-4fbf-9c04-c0b3456b1c2e"
+                 class="shadow-xl rounded-full align-middle border-none absolute -m-16 -ml-20 lg:-ml-16 max-w-[150px] max-h-[150px] h-[150px] w-[150px] object-cover object-center"/>
+              </div>
+            </div>
+            <div class="w-full text-center mt-24">
+              <h3 class="text-2xl text-slate-700 font-bold leading-normal mb-1">Max</h3>
+              <div class="text-xs mt-0 mb-2 text-slate-400 font-bold uppercase">Chile</div>
+            </div>
+          </div>
+          <div class="mt-2 py-3 text-center px-2">
+            <div class="flex flex-wrap justify-center items-center gap-2">
+                <ion-buttons class="font-light text-sm leading-relaxed rounded-xl text-slate-600 mb-4 p-2 px-3 border-2 border-primary cursor-pointer" 
+                >Agregar 
+                  <ion-icon name="paw" class="text-base m-1"></ion-icon>
+                </ion-buttons>
+            </div>
+          </div>
+          <div class="bg-blue-100 text-center flex flex-row items-center max-h-36 p-4 px-6"> 
+              <div class="relative text-center flex justify-center">
+                <img src="https://cdn.icon-icons.com/icons2/1999/PNG/512/avatar_man_people_person_profile_user_icon_123385.png"
+                 class="shadow-xl rounded-full align-middle border-none  max-w-[150px] max-h-[150px] h-[80px] w-[80px] object-cover object-center"/>
+              </div>     
+              <div class="w-full">
+                <p class="text-xl font-semibold leading-relaxed text-slate-700">Fabian Astete</p>
+                <small class="font-light leading-relaxed text-slate-400 text-sm">Dueño</small>
+              </div>      
+          </div>
+          <div>
+            <div class=" mt-8 m-2 mx-4">
+              <h4 class="text-slate-600 font-bold uppercase ">Todas mis mascotas</h4>
+            </div>
+            <div class="grid grid-cols-2 gap-3 py-3 px-4 w-full">
+              <!-- Skeleton for each card -->
+              <div class="h-max rounded-xl overflow-hidden border border-gray-300 shadow-lg" *ngFor="let item of [1, 2, 3, 4]">
+                <ion-card class="m-0 h-44 relative">
+                  <!-- Imagen skeleton -->
+                  <ion-skeleton-text class="h-full w-full"></ion-skeleton-text>
+                  <ion-card-header class="p-2 h-full w-full bg-gradient-to-b from-transparent from-40% via-black/50 to-black/80">
+                    <!-- Skeleton text for title -->
+                    <ion-skeleton-text animated style="width: 80%; height: 16px;"></ion-skeleton-text>
+                    <!-- Skeleton text for subtitle -->
+                    <ion-skeleton-text animated style="width: 60%; height: 12px;" class="mt-1"></ion-skeleton-text>
+                  </ion-card-header>
+                </ion-card>
+              
+              </div>
+            </div>
+          </div>
+       
+        </div>  
+      </div>
+    </div>
+  </div>
+</ion-content> 

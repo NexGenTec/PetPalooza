@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-mestizo',
@@ -7,7 +8,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MestizoPage implements OnInit {
 
-  constructor() { }
+
+
+  constructor(
+    private router: Router
+  ) {
+
+   }
+
+  //  navigateToTargetPageForm(segment: string) {
+  //   this.router.navigate([segment]);
+  // }
 
   ngOnInit() {
   }
