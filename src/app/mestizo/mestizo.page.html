@@ -9,33 +9,17 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
+<ion-content [fullscreen]="true" aria-hidden="false">
   <div class="bg-gray-50">
     <!-- profile mestiz -->
     <div class="bg-blue-100 pt-20 pb-6 px-3 min-h-[93vh]">
       <div class="relative mx-auto md:max-w-2xl min-w-0 break-words bg-white w-full shadow-lg rounded-xl pb-3">
         <div class="relative">
-          <ion-buttons class="absolute left-2 top-4 md:left-2 md:top-5" slot="start">
-            <ion-back-button defaultHref="/"></ion-back-button>
-          </ion-buttons>
-          <!-- <div class="absolute top-5 right-16 md:top-5 md:right-32">
-            <button (click)="shareContent('perro')" class="text-[#60a5fa] rounded-full w-8 h-8 md:w-10 md:h-10 p-1.5 md:p-2.5 drop-shadow-md hover:scale-105 duration-200">
-              <ion-icon name="share-social-outline" class="text-xl font-semibold md:text-2xl"></ion-icon>
-            </button>    
-          </div> -->
-          <!-- <div class="absolute z-50 top-5 right-8 md:top-6 md:right-20">
+          <div class="absolute z-50 top-5 right-8 md:top-6 md:right-20">
             <button type="button" class="bg-gray-200 p-2 text-gray-500 rounded-full">
-             <ion-icon name="pencil-outline" class="w-9 h-7"></ion-icon>
+              <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-pencil"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" /><path d="M13.5 6.5l4 4" /></svg>
             </button>                      
-          </div> -->
-          <!-- <div class="absolute top-4 right-3 md:top-5 md:right-8 w-10 h-10 rounded-full bg-white flex justify-center items-center text-red-400">
-            <button type="button" 
-             >
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8 md:w-10 md:h-10">
-                <path d="m11.645 20.91-.007-.003-.022-.012a15.247 15.247 0 0 1-.383-.218 25.18 25.18 0 0 1-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0 1 12 5.052 5.5 5.5 0 0 1 16.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 0 1-4.244 3.17 15.247 15.247 0 0 1-.383.219l-.022.012-.007.004-.003.001a.752.752 0 0 1-.704 0l-.003-.001Z"/>
-              </svg>
-            </button>                      
-          </div> -->
+          </div>
           <div class="flex flex-wrap justify-center">
             <div class="w-full flex justify-center" >
               <div class="relative">
@@ -50,8 +34,7 @@
           </div>
           <div class="mt-2 py-3 text-center px-2">
             <div class="flex flex-wrap justify-center items-center gap-2">
-                <ion-buttons class="font-light text-sm leading-relaxed rounded-xl text-slate-600 mb-4 p-2 px-3 border-2 border-primary cursor-pointer" 
-                >Agregar 
+                <ion-buttons class="font-light text-sm leading-relaxed rounded-xl text-slate-600 mb-4 p-2 px-3 border-2 border-primary cursor-pointer" routerLink="/mestizo-form" >Agregar 
                   <ion-icon name="paw" class="text-base m-1"></ion-icon>
                 </ion-buttons>
             </div>
@@ -68,7 +51,7 @@
           </div>
           <div>
             <div class=" mt-8 m-2 mx-4">
-              <h4 class="text-slate-600 font-bold uppercase ">Todas mis mascotas</h4>
+              <h4 class="text-slate-600 font-bold uppercase ">Mis mascotas</h4>
             </div>
             <div class="grid grid-cols-2 gap-3 py-3 px-4 w-full">
               <!-- Skeleton for each card -->

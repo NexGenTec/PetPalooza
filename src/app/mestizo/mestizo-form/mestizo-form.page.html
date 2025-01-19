@@ -11,7 +11,6 @@
 
 <ion-content [fullscreen]="true">
   <div class="bg-gray-50">
-    <!-- profile mestiz -->
     <div class="bg-blue-100 pt-4 pb-6 px-3 min-h-[93vh]">
       <div class="relative mx-auto md:max-w-2xl min-w-0 break-words bg-white w-full shadow-lg rounded-xl pb-3">
         <div class="relative">
@@ -19,273 +18,434 @@
             <ion-back-button defaultHref="/"></ion-back-button>
           </ion-buttons>
           <div class="py-3 px-4">
-            <!-- form user -->
             <div class="mt-14 sm:mt-16">
-              <h4 class="my-2 mb-4 text-slate-600 font-bold uppercase text-base text-start">Registrate como Dueño</h4>
-                <form class="">
-                  <div class="flex flex-row gap-2 items-center mb-3">
-                    <!-- Name user -->
-                    <label for="name-input" class="drop flex flex-col w-full">
-                      <span class="drop-title text-slate-600">Nombre</span>
-                      <input 
-                      type="text" 
-                      id="name-user" 
-                      name="userName" 
-                      class="border bg-slate-50 rounded-md p-2 w-full my-1" 
-                      required />
-                    </label>
-                    <!-- lastName user -->
-                    <label for="name-input" class="drop flex flex-col w-full">
-                      <span class="drop-title text-slate-600">Apellido</span>
-                          <input 
-                          type="text" 
-                          id="name-user" 
-                          name="userName" 
-                          class="border bg-slate-50 rounded-md p-2 w-full my-1" 
-                          required />
-                    </label>
+              <h4 class="my-2 mb-4 text-slate-600 font-bold uppercase text-base text-start">Regístrate como Dueño</h4>
+              <form *ngIf="!isFormCompleted" [formGroup]="userForm" (ngSubmit)="onSubmit()">
+                <div class="flex flex-row gap-2 items-center mb-3">
+                  <label for="name-input" class="drop flex flex-col w-full">
+                    <span class="drop-title text-slate-600">Nombre</span>
+                    <input
+                      type="text"
+                      id="name-user"
+                      formControlName="nombre"
+                      class="border bg-slate-50 rounded-md p-2 w-full my-1"
+                      [disabled]="isFormCompleted || isSubmitting"
+                      required
+                    />
+                  </label>
+                  <label for="lastname-input" class="drop flex flex-col w-full">
+                    <span class="drop-title text-slate-600">Apellido</span>
+                    <input
+                      type="text"
+                      id="lastName-user"
+                      formControlName="apellido"
+                      class="border bg-slate-50 rounded-md p-2 w-full my-1"
+                      [disabled]="isFormCompleted || isSubmitting"
+                      required
+                    />
+                  </label>
+                </div>
+                <div class="my-4">
+                  <div class="col-span-full">
+                    <label for="cover-photo" class="block text-sm/6 font-medium text-gray-900">Imagen de Portada</label>
+                    <div
+                      class="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10"
+                      (drop)="onFileDrop($event)"
+                      (dragover)="onDragOver($event)"
+                      (dragleave)="onDragLeave($event)"
+                      [class.bg-gray-100]="dragging"
+                    >
+                      <div class="text-center">
+                        <label
+                          for="file-upload"
+                          class="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500"
+                        >
+                          <span>Subir un archivo</span>
+                          <input
+                            id="file-upload"
+                            formControlName="imagen"
+                            type="file"
+                            class="sr-only"
+                            [disabled]="isFormCompleted || isSubmitting"
+                            (change)="onFileSelected($event)"
+                          />
+                        </label>
+                        <p class="text-xs/5 text-gray-600">PNG, JPG, GIF de hasta 10MB</p>
+                        <!-- Image Preview Section -->
+                        <div *ngIf="imagePreview" class="mt-4 text-center relative">
+                          <button
+                            type="button"
+                            (click)="removeImage()">
+                            <ion-icon name="close-outline" color="danger"></ion-icon>
+                          </button>
+                          <img
+                            [src]="imagePreview"
+                            alt="Vista previa de la imagen"
+                            class="w-40 h-40 object-cover mx-auto rounded-lg shadow-md"
+                          />
+                        </div>
+                        <!-- Validation Messages -->
+                        <div *ngIf="userForm.get('imagen')?.errors" class="text-xs text-red-500 mt-2">
+                          <p *ngIf="userForm.get('imagen')?.hasError('invalidFileType')">Tipo de archivo no válido. Solo imágenes PNG, JPG, GIF.</p>
+                          <p *ngIf="userForm.get('imagen')?.hasError('fileTooLarge')">El archivo debe ser menor a 10MB.</p>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                  <div class="my-4">
-                    <!-- Imagen user -->
-                    <label for="file-input" class="drop-container flex flex-col">
-                      <span class="drop-title text-slate-600">Imagen de portada</span>
-                      <input type="file" class="border bg-slate-50 rounded-md p-2 w-full my-1" accept="image/*" id="file-input" 
-                      />
-                    </label>
-                    <small class="my-3 mb-5 text-xs italic text-slate-500">Solamente puede subir una imagen</small>
-                    <!-- Previsualización de imagen -->
-                    <!-- <div *ngIf="imageUrl" class="image-preview">
-                      <img [src]="imageUrl" alt="Image preview" />
-                    </div> -->
-                  </div>
-            
-                </form>
+                </div>
                 <div class="flex flex-wrap justify-end items-center gap-2">
-                  <ion-buttons 
-                  type="submit"
-                  class="font-light text-sm leading-relaxed rounded-xl text-slate-600 mb-4 p-2 px-3 border-2 border-primary cursor-pointer" 
-                  >Guardar
-                  </ion-buttons>
-              </div>
+                  <button
+                    type="submit"
+                    class="font-light text-sm leading-relaxed rounded-xl text-slate-600 mb-4 p-2 px-3 border-2 border-primary cursor-pointer"
+                    [disabled]="isSubmitting || isFormCompleted"
+                  >
+                  <span *ngIf="isSubmitting">Enviando...</span>
+                  <span *ngIf="!isSubmitting">Enviar</span>
+                  </button>
+                </div>
+              </form>
+              <div *ngIf="isFormCompleted" class="text-center text-blue-600 font-bold">
+                ¡Gracias por registrarte! Tu información ha sido guardada.
+              </div>             
             </div>
-          <!-- end form user -->
-          </div>
-          <!-- Register pets -->
-          <div class="py-3 px-4">
-            <div class=" mt-8 mb-4">
-              <h4 class="text-slate-600 font-bold uppercase ">Registra a tu mascota</h4>
+          </div>           
+          <div class="py-3 px-4" *ngIf="currentForm === 1">
+            <div class="mt-8 mb-4">
+              <h4 class="text-slate-600 font-bold uppercase">Registra a tu mascota</h4>
             </div>
-            <form class="">
+            <form [formGroup]="mestizoForm" (ngSubmit)="onSubmitMestizo()">
               <div class="flex flex-row gap-2 items-center mb-3">
                 <!-- Name user -->
                 <label for="name-input" class="drop flex flex-col w-full">
                   <span class="drop-title text-slate-600">Nombre</span>
                   <input 
-                  type="text" 
-                  id="name-pet" 
-                  name="petName" 
-                  class="border bg-slate-50 rounded-md p-2 w-full my-1" 
-                  required />
+                    type="text" 
+                    id="name-pet" 
+                    formControlName="nombre" 
+                    class="border bg-slate-50 rounded-md p-2 w-full my-1" 
+                  />
+                  <div *ngIf="mestizoForm.get('nombre').invalid && mestizoForm.get('nombre').touched" class="text-red-500 text-sm">
+                    El nombre es obligatorio.
+                  </div>
                 </label>
-                <!-- lastName user -->
-                <label for="name-input" class="drop flex flex-col w-full">
+                <!-- Last name user -->
+                <label for="lastname-input" class="drop flex flex-col w-full">
                   <span class="drop-title text-slate-600">Apellido</span>
-                      <input 
-                      type="text" 
-                      id="lastname-user" 
-                      name="lastName" 
-                      class="border bg-slate-50 rounded-md p-2 w-full my-1" 
-                      required />
-                </label>
-              </div>
-              <div class="">
-                <label for="name-input" class="drop flex flex-col w-full mb-2">
-                <span class="drop-title text-slate-600">Apodo</span>
-                      <input 
-                      type="text" 
-                      id="lastname-user" 
-                      name="lastName" 
-                      class="border bg-slate-50 rounded-md p-2 w-full my-1" 
-                      required />
-                </label>
-                <label for="name-input" class="drop flex flex-col w-full mb-2">
-                  <span class="drop-title text-slate-600">Especie</span>
-                        <input 
-                        type="text" 
-                        id="lastname-user" 
-                        name="lastName" 
-                        class="border bg-slate-50 rounded-md p-2 w-full my-1" 
-                        required />
-                  </label>
-                  <label for="name-input" class="drop flex flex-col w-full mb-2">
-                    <span class="drop-title text-slate-600">Sexo</span>
-                          <input 
-                          type="text" 
-                          id="lastname-user" 
-                          name="lastName" 
-                          class="border bg-slate-50 rounded-md p-2 w-full my-1" 
-                          required />
-                  </label>
-                  <label for="name-input" class="drop flex flex-col w-full mb-2">
-                      <span class="drop-title text-slate-600">Edad</span>
-                            <input 
-                            type="text" 
-                            id="lastname-user" 
-                            name="lastName" 
-                            class="border bg-slate-50 rounded-md p-2 w-full my-1" 
-                            required />
-                  </label>
-                  <label for="name-input" class="drop flex flex-col w-full mb-2">
-                    <span class="drop-title text-slate-600">Nacionalidad</span>
-                        <input 
-                              type="text" 
-                              id="lastname-user" 
-                              name="lastName" 
-                              class="border bg-slate-50 rounded-md p-2 w-full my-1" 
-                              required />
-                  </label>
-              </div>
-        
-            </form>
-            <div class="flex flex-wrap justify-end items-center gap-2">
-              <ion-buttons 
-              type="submit"
-              class="font-light text-sm leading-relaxed rounded-xl text-slate-600 mb-4 p-2 px-3 border-2 border-primary cursor-pointer" 
-              >Siguiente
-              </ion-buttons>
-          </div>
-          </div>
-
-           <!-- Register pets step 2-->
-           <div class="py-3 px-4">
-            <div class=" mt-8 mb-4">
-              <h4 class="text-slate-600 font-bold uppercase ">Caracteristicas fisicas de tu mascota</h4>
-            </div>
-            <form class="">
-              <div class="flex flex-row gap-2 items-center mb-3">
-                <!-- Name user -->
-                <label for="name-input" class="drop flex flex-col w-full">
-                  <span class="drop-title text-slate-600">Tamaño</span>
                   <input 
-                  type="text" 
-                  id="name-pet" 
-                  name="petName" 
-                  class="border bg-slate-50 rounded-md p-2 w-full my-1" 
-                  required />
-                </label>
-                <!-- lastName user -->
-                <label for="name-input" class="drop flex flex-col w-full">
-                  <span class="drop-title text-slate-600">Peso</span>
-                      <input 
-                      type="text" 
-                      id="lastname-user" 
-                      name="lastName" 
-                      class="border bg-slate-50 rounded-md p-2 w-full my-1" 
-                      required />
+                    type="text" 
+                    id="lastname-user" 
+                    formControlName="apellido" 
+                    class="border bg-slate-50 rounded-md p-2 w-full my-1" 
+                  />
+                  <div *ngIf="mestizoForm.get('apellido').invalid && mestizoForm.get('apellido').touched" class="text-red-500 text-sm">
+                    El apellido es obligatorio.
+                  </div>
                 </label>
               </div>
-              <div class="">
-                <label for="name-input" class="drop flex flex-col w-full mb-2">
-                <span class="drop-title text-slate-600">Pelaje</span>
-                      <input 
-                      type="text" 
-                      id="lastname-user" 
-                      name="lastName" 
-                      class="border bg-slate-50 rounded-md p-2 w-full my-1" 
-                      required />
+              <div>
+                <!-- Nickname -->
+                <label for="nickname-input" class="drop flex flex-col w-full mb-2">
+                  <span class="drop-title text-slate-600">Apodo</span>
+                  <input 
+                    type="text" 
+                    id="nickname-input" 
+                    formControlName="apodo" 
+                    class="border bg-slate-50 rounded-md p-2 w-full my-1" 
+                  />
+                  <div *ngIf="mestizoForm.get('apodo').invalid && mestizoForm.get('apodo').touched" class="text-red-500 text-sm">
+                    El apodo es obligatorio.
+                  </div>
                 </label>
-                <label for="name-input" class="drop flex flex-col w-full mb-2">
+                <!-- Species -->
+                <label for="species-input" class="drop flex flex-col w-full mb-2">
+                  <span class="drop-title text-slate-600">Especie</span>
+                  <input 
+                    type="text" 
+                    id="species-input" 
+                    formControlName="especie" 
+                    class="border bg-slate-50 rounded-md p-2 w-full my-1" 
+                  />
+                  <div *ngIf="mestizoForm.get('especie').invalid && mestizoForm.get('especie').touched" class="text-red-500 text-sm">
+                    La especie es obligatoria.
+                  </div>
+                </label>
+                <!-- Gender -->
+                <label for="sexo" class="drop flex flex-col w-full mb-2">
+                  <span class="drop-title text-slate-600">Sexo</span>
+                  <select 
+                    id="sexo" 
+                    formControlName="sexo" 
+                    class="border bg-slate-50 rounded-md p-2 w-full my-1">
+                    <option value="Macho">Macho</option>
+                    <option value="Hembra">Hembra</option>
+                  </select>
+                  <div *ngIf="mestizoForm.get('sexo').invalid && mestizoForm.get('sexo').touched" class="text-red-500 text-sm">
+                    El sexo es obligatorio.
+                  </div>
+                </label>
+                <!-- Age -->
+                <label for="age-input" class="drop flex flex-col w-full mb-2">
+                  <span class="drop-title text-slate-600">Edad</span>
+                  <input 
+                    type="number" 
+                    id="age-input" 
+                    formControlName="edad" 
+                    class="border bg-slate-50 rounded-md p-2 w-full my-1" 
+                  />
+                  <div *ngIf="mestizoForm.get('edad').invalid && mestizoForm.get('edad').touched" class="text-red-500 text-sm">
+                    La edad es obligatoria y debe ser un número válido.
+                  </div>
+                </label>
+                <!-- Nationality -->
+                <label for="nationality-input" class="drop flex flex-col w-full mb-2">
+                  <span class="drop-title text-slate-600">Nacionalidad</span>
+                  <input 
+                    type="text" 
+                    id="nationality-input" 
+                    formControlName="nacionalidad" 
+                    class="border bg-slate-50 rounded-md p-2 w-full my-1" 
+                  />
+                  <div *ngIf="mestizoForm.get('nacionalidad').invalid && mestizoForm.get('nacionalidad').touched" class="text-red-500 text-sm">
+                    La nacionalidad es obligatoria.
+                  </div>
+                </label>
+              </div>
+            </form>
+            <div class="flex flex-wrap justify-end items-center gap-2">
+              <ion-buttons 
+                type="submit"
+                [disabled]="mestizoForm.invalid"
+                (click)="nextForm()"
+                class="font-light text-sm leading-relaxed rounded-xl text-slate-600 mb-4 p-2 px-3 border-2 border-primary cursor-pointer">
+                Siguiente
+              </ion-buttons>
+            </div>
+          </div>          
+          <div class="py-3 px-4" *ngIf="currentForm === 2">
+            <div class="mt-8 mb-4">
+              <h4 class="text-slate-600 font-bold uppercase">Características físicas de tu mascota</h4>
+            </div>
+          
+            <!-- Formulario -->
+            <form [formGroup]="caracteristicasForm" (ngSubmit)="onSubmitCaracteristicas()">
+              <!-- Tamaño y Peso -->
+              <div class="flex flex-row gap-2 items-center mb-3">
+                <label for="tamano" class="drop flex flex-col w-full">
+                  <span class="drop-title text-slate-600">Tamaño</span>
+                  <input
+                    type="text"
+                    id="tamano"
+                    formControlName="tamano"
+                    class="border bg-slate-50 rounded-md p-2 w-full my-1"
+                    required
+                  />
+                  <div *ngIf="caracteristicasForm.get('tamano').invalid && caracteristicasForm.get('tamano').touched" class="text-red-500 text-sm">
+                    El tamaño es obligatorio.
+                  </div>
+                </label>
+                <label for="peso" class="drop flex flex-col w-full">
+                  <span class="drop-title text-slate-600">Peso</span>
+                  <input
+                    type="text"
+                    id="peso"
+                    formControlName="peso"
+                    class="border bg-slate-50 rounded-md p-2 w-full my-1"
+                    required
+                  />
+                  <div *ngIf="caracteristicasForm.get('peso').invalid && caracteristicasForm.get('peso').touched" class="text-red-500 text-sm">
+                    El peso es obligatorio.
+                  </div>
+                </label>
+              </div>
+          
+              <!-- Pelaje, Color y Ojos -->
+              <div>
+                <label for="pelaje" class="drop flex flex-col w-full mb-2">
+                  <span class="drop-title text-slate-600">Pelaje</span>
+                  <input
+                    type="text"
+                    id="pelaje"
+                    formControlName="pelaje"
+                    class="border bg-slate-50 rounded-md p-2 w-full my-1"
+                    required
+                  />
+                  <div *ngIf="caracteristicasForm.get('pelaje').invalid && caracteristicasForm.get('pelaje').touched" class="text-red-500 text-sm">
+                    El pelaje es obligatorio.
+                  </div>
+                </label>
+                <label for="color" class="drop flex flex-col w-full mb-2">
                   <span class="drop-title text-slate-600">Color</span>
-                        <input 
-                        type="text" 
-                        id="lastname-user" 
-                        name="lastName" 
-                        class="border bg-slate-50 rounded-md p-2 w-full my-1" 
-                        required />
-                  </label>
-                  <label for="name-input" class="drop flex flex-col w-full mb-2">
-                    <span class="drop-title text-slate-600">Ojos</span>
-                          <input 
-                          type="text" 
-                          id="lastname-user" 
-                          name="lastName" 
-                          class="border bg-slate-50 rounded-md p-2 w-full my-1" 
-                          required />
-                  </label>
-              </div>       
+                  <input
+                    type="text"
+                    id="color"
+                    formControlName="color"
+                    class="border bg-slate-50 rounded-md p-2 w-full my-1"
+                    required
+                  />
+                  <div *ngIf="caracteristicasForm.get('color').invalid && caracteristicasForm.get('color').touched" class="text-red-500 text-sm">
+                    El color es obligatorio.
+                  </div>
+                </label>
+                <label for="ojos" class="drop flex flex-col w-full mb-2">
+                  <span class="drop-title text-slate-600">Ojos</span>
+                  <input
+                    type="text"
+                    id="ojos"
+                    formControlName="ojos"
+                    class="border bg-slate-50 rounded-md p-2 w-full my-1"
+                    required
+                  />
+                  <div *ngIf="caracteristicasForm.get('ojos').invalid && caracteristicasForm.get('ojos').touched" class="text-red-500 text-sm">
+                    Los ojos son obligatorios.
+                  </div>
+                </label>
+              </div>
             </form>
-          </div>
-          <div class="py-3 px-4">
-            <div class=" mt-8 mb-4">
-              <h4 class="text-slate-600 font-bold uppercase ">Temperamento de tu mascota</h4>
+            <!-- Botones de navegación -->
+            <div class="flex flex-wrap justify-between items-center gap-2">
+              <ion-buttons
+                type="button"
+                (click)="previousForm()"
+                class="font-light text-sm leading-relaxed rounded-xl text-slate-600 mb-4 p-2 px-3 border-2 border-primary cursor-pointer"
+              >
+                Anterior
+              </ion-buttons>
+              <ion-buttons
+                type="submit"
+                [disabled]="caracteristicasForm.invalid"
+                (click)="nextForm()"
+                class="font-light text-sm leading-relaxed rounded-xl text-slate-600 mb-4 p-2 px-3 border-2 border-primary cursor-pointer"
+              >
+                Siguiente
+              </ion-buttons>
             </div>
-            <form class="">
+          </div>          
+          <div class="py-3 px-4" *ngIf="currentForm === 3">
+            <div class="mt-8 mb-4">
+              <h4 class="text-slate-600 font-bold uppercase">Temperamento de tu mascota</h4>
+            </div>
+          
+            <!-- Formulario -->
+            <form [formGroup]="temperamentoForm" (ngSubmit)="onSubmitTemperamento()">
               <div class="mb-2">
-                <label for="name-input" class="drop flex flex-col w-full">
-                <span class="drop-title text-slate-600">Temperamentos</span>
-                      <input 
-                      type="text" 
-                      id="lastname-user" 
-                      name="lastName" 
-                      class="border bg-slate-50 rounded-md p-2 w-full my-1" 
-                      required />
+                <label for="temperamentos" class="drop flex flex-col w-full">
+                  <span class="drop-title text-slate-600">Temperamentos</span>
+                  <input
+                    type="text"
+                    id="temperamentos"
+                    formControlName="temperamentos"
+                    class="border bg-slate-50 rounded-md p-2 w-full my-1"
+                    required
+                  />
                 </label>
-                <small class=" italic text-slate-500">Debes elegir al menos 3 temperamentos, max. 5</small>
-              </div>       
-            </form>
-            <div class="flex flex-wrap justify-end items-center gap-2">
-              <ion-buttons 
-              type="submit"
-              class="font-light text-sm leading-relaxed rounded-xl text-slate-600 mb-4 p-2 px-3 border-2 border-primary cursor-pointer" 
-              >Siguiente
-              </ion-buttons>
-            </div>
-          </div>
-
-           <!-- Register pets step 3 -->
-           <div class="py-3 px-4">
-            <div class=" mt-8 mb-4">
-              <h4 class="text-slate-600 font-bold uppercase ">Historia de tu mascota</h4>
-            </div>
-            <form class="">
-              <div class="">
-                <label for="name-input" class="drop flex flex-col w-full mb-2">
-                <span class="drop-title text-slate-600">Historia de tu mascota</span>
-                <ion-textarea
-                label="" 
-                name=""
-                class="border bg-slate-50 rounded-md p-1 w-full my-1"
-                placeholder="Cuentanos, ¿Cómo conociste a tu mascota?, ¿Cómo llego a tu vida?"></ion-textarea>
-                      <!-- <input 
-                      type="text" 
-                      id="lastname-user" 
-                      name="lastName" 
-                      placeholder="Cuentanos, ¿Cómo conociste a tu mascota?, ¿Cómo llego a tu vida?"
-                      class="border bg-slate-50 rounded-md p-2 w-full my-1" 
-                      required /> -->
-                </label>
-                <div class="my-4">
-                  <!-- Imagen user -->
-                  <label for="file-input" class="drop-container flex flex-col">
-                    <span class="drop-title text-slate-600">Imagen de mascota</span>
-                    <input type="file" class="border bg-slate-50 rounded-md p-2 w-full my-1" accept="image/*" id="file-input" 
-                    />
-                  </label>
-                  <small class="my-3 mb-5 text-xs italic text-slate-500">Debe subir al menos 4 imagenes, max 6.</small>
-                  <!-- Previsualización de imagen -->
-                  <!-- <div *ngIf="imageUrl" class="image-preview">
-                    <img [src]="imageUrl" alt="Image preview" />
-                  </div> -->
+          
+                <!-- Mensaje de ayuda -->
+                <small class="italic text-slate-500">
+                  Debes elegir al menos 3 temperamentos, max. 5
+                </small>
+          
+                <!-- Mensajes de error -->
+                <div *ngIf="temperamentoForm.get('temperamentos').hasError('minLength') && temperamentoForm.get('temperamentos').touched" class="text-red-500 text-sm">
+                  Debes seleccionar al menos 3 temperamentos.
                 </div>
-              </div>       
+                <div *ngIf="temperamentoForm.get('temperamentos').hasError('maxLength') && temperamentoForm.get('temperamentos').touched" class="text-red-500 text-sm">
+                  No puedes seleccionar más de 5 temperamentos.
+                </div>
+              </div>
             </form>
-            <div class="flex flex-wrap justify-end items-center gap-2">
-              <ion-buttons 
-              type="submit"
-              class="font-light text-sm leading-relaxed rounded-xl text-slate-600 mb-4 p-2 px-3 border-2 border-primary cursor-pointer" 
-              >Guardar mascota
+          
+            <!-- Botones de navegación -->
+            <div class="flex flex-wrap justify-between items-center gap-2">
+              <ion-buttons
+                type="button"
+                (click)="previousForm()"
+                class="font-light text-sm leading-relaxed rounded-xl text-slate-600 mb-4 p-2 px-3 border-2 border-primary cursor-pointer"
+              >
+                Anterior
+              </ion-buttons>
+              <ion-buttons
+                type="submit"
+                [disabled]="temperamentoForm.invalid"
+                (click)="nextForm()"
+                class="font-light text-sm leading-relaxed rounded-xl text-slate-600 mb-4 p-2 px-3 border-2 border-primary cursor-pointer"
+              >
+                Siguiente
               </ion-buttons>
             </div>
+          </div>          
+          <div class="py-3 px-4" *ngIf="currentForm === 4">
+            <div class="mt-8 mb-4">
+              <h4 class="text-slate-600 font-bold uppercase">Historia de tu mascota</h4>
+            </div>
+          
+            <!-- Formulario -->
+            <form [formGroup]="historiaForm" (ngSubmit)="onSubmitHistoria()">
+              <!-- Historia -->
+              <div class="mb-4">
+                <label for="historia" class="drop flex flex-col w-full mb-2">
+                  <span class="drop-title text-slate-600">Historia de tu mascota</span>
+                  <ion-textarea
+                    id="historia"
+                    formControlName="historia"
+                    class="border bg-slate-50 rounded-md p-1 w-full my-1"
+                    placeholder="Cuéntanos, ¿Cómo conociste a tu mascota?, ¿Cómo llegó a tu vida?"
+                  ></ion-textarea>
+                </label>
+                <!-- Mensaje de error para la historia -->
+                <div *ngIf="historiaForm.get('historia').invalid && historiaForm.get('historia').touched" class="text-red-500 text-sm">
+                  La historia debe tener entre 50 y 500 caracteres.
+                </div>
+              </div>
+          
+              <!-- Subida de imágenes -->
+              <div class="mb-4">
+                <div class="col-span-full">
+                  <label for="file-upload" class="block text-sm font-medium text-gray-900">Imágenes de tu mascota</label>
+                  <div class="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
+                    <div class="text-center">
+                      <svg class="mx-auto size-12 text-gray-300" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                        <path fill-rule="evenodd" d="M1.5 6a2.25 2.25 0 0 1 2.25-2.25h16.5A2.25 2.25 0 0 1 22.5 6v12a2.25 2.25 0 0 1-2.25 2.25H3.75A2.25 2.25 0 0 1 1.5 18V6ZM3 16.06V18c0 .414.336.75.75.75h16.5A.75.75 0 0 0 21 18v-1.94l-2.69-2.689a1.5 1.5 0 0 0-2.12 0l-.88.879.97.97a.75.75 0 1 1-1.06 1.06l-5.16-5.159a1.5 1.5 0 0 0-2.12 0L3 16.061Zm10.125-7.81a1.125 1.125 0 1 1 2.25 0 1.125 1.125 0 0 1-2.25 0Z" clip-rule="evenodd" />
+                      </svg>
+                      <div class="mt-4 flex text-sm text-gray-600">
+                        <label for="file-upload" class="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500">
+                          <span>Subir archivos</span>
+                          <input
+                            id="file-upload"
+                            type="file"
+                            formControlName="imagenes"
+                            multiple
+                            class="sr-only"
+                            (change)="onFileChange($event)"
+                            accept=".jpg, .jpeg, .png, .gif"
+                          />
+                        </label>
+                      </div>
+                      <p class="text-xs text-gray-600">PNG, JPG, GIF de hasta 10MB. Debes subir entre 4 y 6 imágenes.</p>
+                    </div>
+                  </div>
+                  <!-- Mensajes de error para imágenes -->
+                  <div *ngIf="historiaForm.get('imagenes').invalid && historiaForm.get('imagenes').touched" class="text-red-500 text-sm">
+                    Debes subir al menos 4 imágenes y no más de 6.
+                  </div>
+                </div>
+              </div>
+          
+              <!-- Botones de navegación -->
+              <div class="flex flex-wrap justify-between items-center gap-2">
+                <ion-buttons
+                  type="button"
+                  (click)="previousForm()"
+                  class="font-light text-sm leading-relaxed rounded-xl text-slate-600 mb-4 p-2 px-3 border-2 border-primary cursor-pointer">
+                  Anterior
+                </ion-buttons>
+                <ion-buttons
+                  type="submit"
+                  [disabled]="historiaForm.invalid"
+                  class="font-light text-sm leading-relaxed rounded-xl text-slate-600 mb-4 p-2 px-3 border-2 border-primary cursor-pointer">
+                  Guardar mascota
+                </ion-buttons>
+              </div>
+            </form>
           </div>
         </div>  
       </div>

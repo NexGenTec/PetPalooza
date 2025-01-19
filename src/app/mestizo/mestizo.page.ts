@@ -16,10 +16,6 @@ export class MestizoPage implements OnInit {
 
    }
 
-  //  navigateToTargetPageForm(segment: string) {
-  //   this.router.navigate([segment]);
-  // }
-
   ngOnInit() {
   }
 
