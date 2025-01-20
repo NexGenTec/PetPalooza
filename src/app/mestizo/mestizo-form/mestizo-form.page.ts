@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ToastController, LoadingController, ModalController } from '@ionic/angular';
 import { MestizosService } from '../service/mestizos.service';
 import { UsersService } from '../service/users.service';
@@ -23,7 +23,10 @@ export class MestizoFormPage implements OnInit {
   temperamentoForm: FormGroup;
   historiaForm: FormGroup;
   currentForm: number = 1;
+  newTemperamento: string = '';
   temperamentos: FormArray;
+  newTemperamentoControl: FormControl;
+  selectedImages: string[] = [];
 
   constructor(
     private _formBuilder: FormBuilder,
@@ -31,7 +34,6 @@ export class MestizoFormPage implements OnInit {
     private loadingController: LoadingController,
     private mestizosService: MestizosService,
     private userService: UsersService,
-    private modalController: ModalController
   ) {}
 
   ngOnInit() {
@@ -39,6 +41,69 @@ export class MestizoFormPage implements OnInit {
     this.initializeUserForm();
     this.checkUserSession();
   }  
+
+  initializeForm() {
+    this.mestizoForm = this._formBuilder.group({
+      nombre: ['Max', Validators.required],
+      apellido: ['Doe', Validators.required],
+      apodo: ['Fido', Validators.required],
+      especie: ['Perro', Validators.required],
+      sexo: ['Macho', Validators.required],
+      edad: [3, Validators.required],
+      nacionalidad: ['Chilena', Validators.required]
+    });
+    this.caracteristicasForm = this._formBuilder.group({
+      tamano: ['Mediano', Validators.required],
+      peso: ['15 kg', Validators.required],
+      pelaje: ['Corto', Validators.required],
+      color: ['Marrón', Validators.required],
+      ojos: ['Cafés', Validators.required]
+    });
+    this.newTemperamentoControl = this._formBuilder.control('', Validators.required);
+    this.temperamentos = this._formBuilder.array([], [Validators.minLength(3), Validators.maxLength(5)]);
+
+    this.temperamentoForm = this._formBuilder.group({
+      temperamentos: this.temperamentos,
+    });
+    this.historiaForm = this._formBuilder.group({
+      historia: ['', Validators.required],
+      imagenes: [[], [Validators.required, this.imageValidator]],
+    });
+  }
+
+  submitForms() {
+    if (this.mestizoForm.valid && this.caracteristicasForm.valid && this.temperamentoForm && this.historiaForm) {
+      this.isSubmitting = true;
+  
+      const mascotaData = {
+        ...this.mestizoForm.value,
+        ...this.caracteristicasForm.value,
+        ...this.temperamentoForm.value,
+        ...this.historiaForm.value
+      };
+  
+      console.log('Enviando formulario:', mascotaData);
+  
+      this.mestizosService.addMestizos(mascotaData)
+        .then((docRef) => {
+          console.log('Mascota registrada con ID:', docRef.id);
+          sessionStorage.setItem('mascotaData', JSON.stringify(mascotaData));
+          alert('¡Mascota registrada con éxito!');
+          this.mestizoForm.reset();
+          this.caracteristicasForm.reset();
+          this.temperamentoForm.reset();
+          this.currentForm = 1;
+        })
+        .catch((error) => {
+          console.error('Error al registrar la mascota:', error);
+        })
+        .finally(() => {
+          this.isSubmitting = false;
+        });
+    } else {
+      this.showToast('Completa todos los campos correctamente antes de enviar', 'success');
+    }
+  }
 
   async showToast(message: string, type: 'success' | 'danger') {
     const toast = await this.toastController.create({
@@ -61,39 +126,69 @@ export class MestizoFormPage implements OnInit {
     toast.present();
   }
 
+  onImageSelect(event: any) {
+    const files = event.target.files;
+    if (files.length > 0) {
+      if (files.length < 4 || files.length > 6) {
+        alert('Debes subir entre 4 y 6 imágenes.');
+        return;
+      }
 
-  initializeForm() {
-    this.mestizoForm = this._formBuilder.group({
-      nombre: ['Max', Validators.required],
-      apellido: ['Doe', Validators.required],
-      apodo: ['Fido', Validators.required],
-      especie: ['Perro', Validators.required],
-      sexo: ['Macho', Validators.required],
-      edad: [3, Validators.required],
-      nacionalidad: ['Chilena', Validators.required]
-    });    
+      const newImages = Array.from(files).map((file: File) => URL.createObjectURL(file));
+      this.selectedImages = [...newImages];
+    }
   }
 
-  submitForm() {
-    console.log('Intentando registrar mascota...');
-    
-    if (this.mestizoForm.valid) {
-      const mascotaData = this.mestizoForm.value;
-      console.log('Formulario válido:', mascotaData);
+  removeImages(index: number) {
+    this.selectedImages.splice(index, 1);
+  }
+
+  imageValidator(control: FormControl) {
+    const images = control.value;
+    if (images.length < 4) {
+      return { minLength: true };
+    }
+    if (images.length > 6) {
+      return { maxLength: true };
+    }
+    return null;
+  }
+
+  addTemperamento() {
+    if (this.newTemperamentoControl.value.trim() && this.temperamentos.length < 6) {
+      this.temperamentos.push(this._formBuilder.control(this.newTemperamentoControl.value.trim()));
+      this.newTemperamentoControl.setValue('');
+    }
+  }
+
   
-      this.mestizosService.addMestizos(mascotaData)
-        .then((docRef) => {
-          console.log('Mascota registrada con ID:', docRef.id);
-          sessionStorage.setItem('mascotaData', JSON.stringify(mascotaData));
-          alert('¡Mascota registrada con éxito!');
-          this.mestizoForm.reset();
-        })
-        .catch((error) => {
-          console.error('Error al registrar la mascota:', error);
-        });
-    } else {
-      console.log('Formulario inválido:', this.mestizoForm.errors);
-      alert('Por favor, completa todos los campos correctamente.');
+  removeTemperamento(index: number) {
+    this.temperamentos.removeAt(index);
+  }
+
+  validateTemperamento() {
+    if (this.newTemperamento.trim()) {
+      this.temperamentoForm.get('temperamentos').setValidators([Validators.minLength(3), Validators.maxLength(6)]);
+    }
+  }
+
+  nextForm() {
+    if (this.currentForm === 1 && this.mestizoForm.valid) {
+      this.currentForm = 2;
+    } else if (this.currentForm === 2 && this.caracteristicasForm.valid) {
+      this.currentForm = 3;
+    } else if (this.currentForm === 3 && this.temperamentoForm.valid) {
+      this.currentForm = 4;
+    } else if (this.currentForm === 4 && this.historiaForm.valid) {
+
+    }
+  }
+  
+  prevForm() {
+    if (this.currentForm === 2) {
+      this.currentForm = 1;
+    } else if (this.currentForm === 3) {
+      this.currentForm = 2;
     }
   }
 
@@ -190,7 +285,7 @@ export class MestizoFormPage implements OnInit {
         imagen: '',
         createdAt: new Date(),
       };
-      
+
       this.userService.addUser(user, this.selectedFile!).then((userData) => {
         this.isSubmitting = false;
         this.userForm.reset();
