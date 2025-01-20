@@ -38,29 +38,29 @@ export class UsersService {
     });
   }
 
-  async addUser(user: Users, file: File): Promise<void> {
+  async addUser(user: Users, file: File): Promise<Users> {
     const imagePath = `user/${user.nombre}/${new Date().getTime()}_${file.name}`;
     try {
       // Subir la imagen y obtener la URL
       const imageUrl = await this.uploadImage(file, imagePath);
-
+  
       // Añadir los datos del formulario a Firestore
       const userData: Users = {
         ...user,
         imagen: imageUrl, // Asignar la URL de la imagen
         createdAt: new Date(), // Fecha de creación
       };
-
+  
       // Guardar el documento en la colección 'users'
       await this.firestore.collection('users').add(userData);
-
-      // Mostrar un mensaje de éxito
-      this.showToast('Formulario enviado con éxito.');
+  
+      // Retornar el objeto del usuario con la URL de la imagen
+      return userData;
     } catch (error) {
       console.error('Error al subir los datos:', error);
-      this.showToast('Hubo un error al subir la información.');
+      throw new Error('Error al subir los datos');
     }
-  }
+  }  
 
   private async showToast(message: string) {
     const toast = await this.toastController.create({

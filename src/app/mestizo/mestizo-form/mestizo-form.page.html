@@ -14,13 +14,14 @@
     <div class="bg-blue-100 pt-4 pb-6 px-3 min-h-[93vh]">
       <div class="relative mx-auto md:max-w-2xl min-w-0 break-words bg-white w-full shadow-lg rounded-xl pb-3">
         <div class="relative">
-          <ion-buttons class="absolute right-2 top-2 md:left-2 md:top-5" slot="end">
-            <ion-back-button defaultHref="/"></ion-back-button>
-          </ion-buttons>
-          <div class="py-3 px-4">
+          <div class="py-3 px-4">          
             <div class="mt-14 sm:mt-16">
-              <h4 class="my-2 mb-4 text-slate-600 font-bold uppercase text-base text-start">Regístrate como Dueño</h4>
-              <form *ngIf="!isFormCompleted" [formGroup]="userForm" (ngSubmit)="onSubmit()">
+              <div *ngIf="isFormCompleted" class="text-center p-4 rounded-lg bg-blue-100 text-blue-700 font-semibold shadow-md">
+                <h2 class="text-lg font-bold mb-2">¡Registro exitoso! 🎉</h2>
+                <p>Hemos guardado tu información correctamente</p>
+              </div>  
+              <form  *ngIf="!isFormCompleted" [formGroup]="userForm" (ngSubmit)="onSubmit()">
+                <h4 class="my-2 mb-4 text-slate-600 font-bold uppercase text-base text-start">Regístrate como Dueño</h4>
                 <div class="flex flex-row gap-2 items-center mb-3">
                   <label for="name-input" class="drop flex flex-col w-full">
                     <span class="drop-title text-slate-600">Nombre</span>
@@ -29,7 +30,6 @@
                       id="name-user"
                       formControlName="nombre"
                       class="border bg-slate-50 rounded-md p-2 w-full my-1"
-                      [disabled]="isFormCompleted || isSubmitting"
                       required
                     />
                   </label>
@@ -40,7 +40,6 @@
                       id="lastName-user"
                       formControlName="apellido"
                       class="border bg-slate-50 rounded-md p-2 w-full my-1"
-                      [disabled]="isFormCompleted || isSubmitting"
                       required
                     />
                   </label>
@@ -66,12 +65,10 @@
                             formControlName="imagen"
                             type="file"
                             class="sr-only"
-                            [disabled]="isFormCompleted || isSubmitting"
                             (change)="onFileSelected($event)"
                           />
                         </label>
                         <p class="text-xs/5 text-gray-600">PNG, JPG, GIF de hasta 10MB</p>
-                        <!-- Image Preview Section -->
                         <div *ngIf="imagePreview" class="mt-4 text-center relative">
                           <button
                             type="button"
@@ -84,38 +81,19 @@
                             class="w-40 h-40 object-cover mx-auto rounded-lg shadow-md"
                           />
                         </div>
-                        <!-- Validation Messages -->
-                        <div *ngIf="userForm.get('imagen')?.errors" class="text-xs text-red-500 mt-2">
-                          <p *ngIf="userForm.get('imagen')?.hasError('invalidFileType')">Tipo de archivo no válido. Solo imágenes PNG, JPG, GIF.</p>
-                          <p *ngIf="userForm.get('imagen')?.hasError('fileTooLarge')">El archivo debe ser menor a 10MB.</p>
-                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
-                <div class="flex flex-wrap justify-end items-center gap-2">
-                  <button
-                    type="submit"
-                    class="font-light text-sm leading-relaxed rounded-xl text-slate-600 mb-4 p-2 px-3 border-2 border-primary cursor-pointer"
-                    [disabled]="isSubmitting || isFormCompleted"
-                  >
-                  <span *ngIf="isSubmitting">Enviando...</span>
-                  <span *ngIf="!isSubmitting">Enviar</span>
-                  </button>
-                </div>
-              </form>
-              <div *ngIf="isFormCompleted" class="text-center text-blue-600 font-bold">
-                ¡Gracias por registrarte! Tu información ha sido guardada.
-              </div>             
-            </div>
-          </div>           
+              </form>         
+            </div>    
+          </div>
           <div class="py-3 px-4" *ngIf="currentForm === 1">
             <div class="mt-8 mb-4">
               <h4 class="text-slate-600 font-bold uppercase">Registra a tu mascota</h4>
             </div>
-            <form [formGroup]="mestizoForm" (ngSubmit)="onSubmitMestizo()">
+            <form [formGroup]="mestizoForm" (ngSubmit)="submitForm()">
               <div class="flex flex-row gap-2 items-center mb-3">
-                <!-- Name user -->
                 <label for="name-input" class="drop flex flex-col w-full">
                   <span class="drop-title text-slate-600">Nombre</span>
                   <input 
@@ -128,7 +106,6 @@
                     El nombre es obligatorio.
                   </div>
                 </label>
-                <!-- Last name user -->
                 <label for="lastname-input" class="drop flex flex-col w-full">
                   <span class="drop-title text-slate-600">Apellido</span>
                   <input 
@@ -143,7 +120,6 @@
                 </label>
               </div>
               <div>
-                <!-- Nickname -->
                 <label for="nickname-input" class="drop flex flex-col w-full mb-2">
                   <span class="drop-title text-slate-600">Apodo</span>
                   <input 
@@ -156,7 +132,6 @@
                     El apodo es obligatorio.
                   </div>
                 </label>
-                <!-- Species -->
                 <label for="species-input" class="drop flex flex-col w-full mb-2">
                   <span class="drop-title text-slate-600">Especie</span>
                   <input 
@@ -169,7 +144,6 @@
                     La especie es obligatoria.
                   </div>
                 </label>
-                <!-- Gender -->
                 <label for="sexo" class="drop flex flex-col w-full mb-2">
                   <span class="drop-title text-slate-600">Sexo</span>
                   <select 
@@ -183,7 +157,6 @@
                     El sexo es obligatorio.
                   </div>
                 </label>
-                <!-- Age -->
                 <label for="age-input" class="drop flex flex-col w-full mb-2">
                   <span class="drop-title text-slate-600">Edad</span>
                   <input 
@@ -196,7 +169,6 @@
                     La edad es obligatoria y debe ser un número válido.
                   </div>
                 </label>
-                <!-- Nationality -->
                 <label for="nationality-input" class="drop flex flex-col w-full mb-2">
                   <span class="drop-title text-slate-600">Nacionalidad</span>
                   <input 
@@ -210,25 +182,29 @@
                   </div>
                 </label>
               </div>
+              <ion-buttons
+              type="submit"
+              [disabled]="caracteristicasForm.invalid"
+              class="font-light text-sm leading-relaxed rounded-xl text-slate-600 mb-4 p-2 px-3 border-2 border-primary cursor-pointer">
+              Siguiente
+            </ion-buttons>
+              <!-- <div class="flex flex-wrap justify-end items-center gap-2">
+                <button
+                  type="submit"
+                  class="font-light text-sm leading-relaxed rounded-xl text-slate-600 mb-4 p-2 px-3 border-2 border-primary cursor-pointer"
+                  [disabled]="mestizoForm.invalid"
+                >
+                <span *ngIf="isSubmitting">Guardando...</span>
+                <span *ngIf="!isSubmitting">Guardar</span>
+                </button>
+              </div> -->
             </form>
-            <div class="flex flex-wrap justify-end items-center gap-2">
-              <ion-buttons 
-                type="submit"
-                [disabled]="mestizoForm.invalid"
-                (click)="nextForm()"
-                class="font-light text-sm leading-relaxed rounded-xl text-slate-600 mb-4 p-2 px-3 border-2 border-primary cursor-pointer">
-                Siguiente
-              </ion-buttons>
-            </div>
-          </div>          
+          </div> 
           <div class="py-3 px-4" *ngIf="currentForm === 2">
             <div class="mt-8 mb-4">
               <h4 class="text-slate-600 font-bold uppercase">Características físicas de tu mascota</h4>
             </div>
-          
-            <!-- Formulario -->
-            <form [formGroup]="caracteristicasForm" (ngSubmit)="onSubmitCaracteristicas()">
-              <!-- Tamaño y Peso -->
+            <form [formGroup]="caracteristicasForm">
               <div class="flex flex-row gap-2 items-center mb-3">
                 <label for="tamano" class="drop flex flex-col w-full">
                   <span class="drop-title text-slate-600">Tamaño</span>
@@ -257,8 +233,6 @@
                   </div>
                 </label>
               </div>
-          
-              <!-- Pelaje, Color y Ojos -->
               <div>
                 <label for="pelaje" class="drop flex flex-col w-full mb-2">
                   <span class="drop-title text-slate-600">Pelaje</span>
@@ -300,61 +274,61 @@
                   </div>
                 </label>
               </div>
-            </form>
-            <!-- Botones de navegación -->
             <div class="flex flex-wrap justify-between items-center gap-2">
               <ion-buttons
                 type="button"
-                (click)="previousForm()"
-                class="font-light text-sm leading-relaxed rounded-xl text-slate-600 mb-4 p-2 px-3 border-2 border-primary cursor-pointer"
-              >
+                class="font-light text-sm leading-relaxed rounded-xl text-slate-600 mb-4 p-2 px-3 border-2 border-primary cursor-pointer">
                 Anterior
               </ion-buttons>
-              <ion-buttons
-                type="submit"
-                [disabled]="caracteristicasForm.invalid"
-                (click)="nextForm()"
-                class="font-light text-sm leading-relaxed rounded-xl text-slate-600 mb-4 p-2 px-3 border-2 border-primary cursor-pointer"
-              >
-                Siguiente
-              </ion-buttons>
+              <div class="flex flex-wrap justify-end items-center gap-2">
+                <button
+                  type="submit"
+                  class="font-light text-sm leading-relaxed rounded-xl text-slate-600 mb-4 p-2 px-3 border-2 border-primary cursor-pointer"
+                  [disabled]="isSubmitting || isFormCompleted"
+                >
+                <span *ngIf="isSubmitting">Enviando...</span>
+                <span *ngIf="!isSubmitting">Enviar</span>
+                </button>
+              </div>
             </div>
+            </form>
           </div>          
-          <div class="py-3 px-4" *ngIf="currentForm === 3">
+          <!-- <div class="py-3 px-4" *ngIf="currentForm === 3">
             <div class="mt-8 mb-4">
               <h4 class="text-slate-600 font-bold uppercase">Temperamento de tu mascota</h4>
             </div>
-          
-            <!-- Formulario -->
             <form [formGroup]="temperamentoForm" (ngSubmit)="onSubmitTemperamento()">
               <div class="mb-2">
                 <label for="temperamentos" class="drop flex flex-col w-full">
                   <span class="drop-title text-slate-600">Temperamentos</span>
-                  <input
-                    type="text"
-                    id="temperamentos"
-                    formControlName="temperamentos"
-                    class="border bg-slate-50 rounded-md p-2 w-full my-1"
-                    required
-                  />
+                  <div *ngFor="let temperamento of temperamentos.controls; let i = index">
+                    <input
+                      *ngIf="temperamento.value !== ''"
+                      type="text"
+                      [formControlName]="i"
+                      class="border bg-slate-50 rounded-md p-2 w-full my-1"
+                      required
+                    />
+                    <button *ngIf="temperamento.value !== ''" type="button" (click)="removeTemperamento(i)" class="text-red-500">
+                      Eliminar
+                    </button>
+                  </div>
+                  <button *ngIf="temperamentos.length < 5" type="button" (click)="addTemperamento()" class="text-blue-500">
+                    Agregar temperamento
+                  </button>
+            
+                  <small class="italic text-slate-500">
+                    Debes elegir al menos 3 temperamentos, máximo 5.
+                  </small>
+                  <div *ngIf="temperamentoForm.get('temperamentos').hasError('minLength') && temperamentoForm.get('temperamentos').touched" class="text-red-500 text-sm">
+                    Debes seleccionar al menos 3 temperamentos.
+                  </div>
+                  <div *ngIf="temperamentoForm.get('temperamentos').hasError('maxLength') && temperamentoForm.get('temperamentos').touched" class="text-red-500 text-sm">
+                    No puedes seleccionar más de 5 temperamentos.
+                  </div>
                 </label>
-          
-                <!-- Mensaje de ayuda -->
-                <small class="italic text-slate-500">
-                  Debes elegir al menos 3 temperamentos, max. 5
-                </small>
-          
-                <!-- Mensajes de error -->
-                <div *ngIf="temperamentoForm.get('temperamentos').hasError('minLength') && temperamentoForm.get('temperamentos').touched" class="text-red-500 text-sm">
-                  Debes seleccionar al menos 3 temperamentos.
-                </div>
-                <div *ngIf="temperamentoForm.get('temperamentos').hasError('maxLength') && temperamentoForm.get('temperamentos').touched" class="text-red-500 text-sm">
-                  No puedes seleccionar más de 5 temperamentos.
-                </div>
               </div>
             </form>
-          
-            <!-- Botones de navegación -->
             <div class="flex flex-wrap justify-between items-center gap-2">
               <ion-buttons
                 type="button"
@@ -372,15 +346,12 @@
                 Siguiente
               </ion-buttons>
             </div>
-          </div>          
-          <div class="py-3 px-4" *ngIf="currentForm === 4">
+          </div>           -->
+          <!-- <div class="py-3 px-4" *ngIf="currentForm === 4">
             <div class="mt-8 mb-4">
               <h4 class="text-slate-600 font-bold uppercase">Historia de tu mascota</h4>
             </div>
-          
-            <!-- Formulario -->
             <form [formGroup]="historiaForm" (ngSubmit)="onSubmitHistoria()">
-              <!-- Historia -->
               <div class="mb-4">
                 <label for="historia" class="drop flex flex-col w-full mb-2">
                   <span class="drop-title text-slate-600">Historia de tu mascota</span>
@@ -391,13 +362,10 @@
                     placeholder="Cuéntanos, ¿Cómo conociste a tu mascota?, ¿Cómo llegó a tu vida?"
                   ></ion-textarea>
                 </label>
-                <!-- Mensaje de error para la historia -->
                 <div *ngIf="historiaForm.get('historia').invalid && historiaForm.get('historia').touched" class="text-red-500 text-sm">
                   La historia debe tener entre 50 y 500 caracteres.
                 </div>
               </div>
-          
-              <!-- Subida de imágenes -->
               <div class="mb-4">
                 <div class="col-span-full">
                   <label for="file-upload" class="block text-sm font-medium text-gray-900">Imágenes de tu mascota</label>
@@ -423,14 +391,11 @@
                       <p class="text-xs text-gray-600">PNG, JPG, GIF de hasta 10MB. Debes subir entre 4 y 6 imágenes.</p>
                     </div>
                   </div>
-                  <!-- Mensajes de error para imágenes -->
                   <div *ngIf="historiaForm.get('imagenes').invalid && historiaForm.get('imagenes').touched" class="text-red-500 text-sm">
                     Debes subir al menos 4 imágenes y no más de 6.
                   </div>
                 </div>
               </div>
-          
-              <!-- Botones de navegación -->
               <div class="flex flex-wrap justify-between items-center gap-2">
                 <ion-buttons
                   type="button"
@@ -446,7 +411,7 @@
                 </ion-buttons>
               </div>
             </form>
-          </div>
+          </div> -->
         </div>  
       </div>
     </div>

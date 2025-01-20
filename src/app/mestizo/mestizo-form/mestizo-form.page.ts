@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ToastController, LoadingController } from '@ionic/angular';
-import { Mestizos } from '../models/mestizo.models';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ToastController, LoadingController, ModalController } from '@ionic/angular';
 import { MestizosService } from '../service/mestizos.service';
 import { UsersService } from '../service/users.service';
 import { Users } from '../models/users.models';
@@ -12,135 +11,115 @@ import { Users } from '../models/users.models';
   styleUrls: ['./mestizo-form.page.scss'],
 })
 export class MestizoFormPage implements OnInit {
-  userForm!: FormGroup;
+  userForm: FormGroup;
   isSubmitting = false;
   selectedFile: File | null = null;
   imagePreview: string | null = null;
   dragging = false;
   isFormCompleted = false; 
 
-  mestizoForm!: FormGroup;
+  mestizoForm: FormGroup;
   caracteristicasForm: FormGroup;
   temperamentoForm: FormGroup;
   historiaForm: FormGroup;
   currentForm: number = 1;
+  temperamentos: FormArray;
 
   constructor(
-    private fb: FormBuilder,
+    private _formBuilder: FormBuilder,
     private toastController: ToastController,
     private loadingController: LoadingController,
     private mestizosService: MestizosService,
-    private userService: UsersService
+    private userService: UsersService,
+    private modalController: ModalController
   ) {}
-  
 
   ngOnInit() {
-    this.userForm = this.fb.group({
-      nombre: ['', [Validators.required, Validators.minLength(2)]],
-      apellido: ['', [Validators.required, Validators.minLength(2)]],
-      imagen: ['', Validators.required],
-    });
-    this.isFormCompleted = localStorage.getItem('formCompleted') === 'true';
-    if (this.isFormCompleted) {
-      this.userForm.disable();
-    }
     this.initializeForm();
-  }
+    this.initializeUserForm();
+    this.checkUserSession();
+  }  
 
-  initializeForm() {
-    this.mestizoForm = this.fb.group({
-      nombre: ['', Validators.required],
-      apellido: ['', Validators.required],
-      apodo: ['', Validators.required],
-      especie: ['', Validators.required],
-      sexo: ['', Validators.required],
-      edad: ['', [Validators.required, Validators.pattern('^[0-9]+$')]],
-      nacionalidad: ['', Validators.required],
-    });
-    this.caracteristicasForm = this.fb.group({
-      tamano: ['', Validators.required],
-      peso: ['', Validators.required],
-      pelaje: ['', Validators.required],
-      color: ['', Validators.required],
-      ojos: ['', Validators.required],
-    });
-    this.temperamentoForm = this.fb.group({
-      temperamentos: [
-        '',
-        [Validators.required, Validators.minLength(3), Validators.maxLength(5)],
+  async showToast(message: string, type: 'success' | 'danger') {
+    const toast = await this.toastController.create({
+      message: message,
+      duration: 2000,
+      position: 'top',
+      mode: 'ios',
+      color: type === 'success' ? 'success' : 'danger',
+      buttons: [
+        {
+          side: 'end',
+          icon: 'close',
+          role: 'cancel',
+          handler: () => {
+            toast.dismiss();
+          },
+        },
       ],
     });
-  }
-
-  nextForm() {
-    if (this.currentForm === 1 && this.mestizoForm.valid) {
-      this.currentForm++;
-    } else if (this.currentForm === 2 && this.caracteristicasForm.valid) {
-      this.currentForm++;
-    } else if (this.currentForm === 3 && this.temperamentoForm.valid) {
-      this.currentForm++;
-    } else {
-      this.showToast('Formulario inválido. Por favor, completa todos los campos.');
-    }
+    toast.present();
   }
 
 
-  previousForm() {
-    this.currentForm -= 1;
+  initializeForm() {
+    this.mestizoForm = this._formBuilder.group({
+      nombre: ['Max', Validators.required],
+      apellido: ['Doe', Validators.required],
+      apodo: ['Fido', Validators.required],
+      especie: ['Perro', Validators.required],
+      sexo: ['Macho', Validators.required],
+      edad: [3, Validators.required],
+      nacionalidad: ['Chilena', Validators.required]
+    });    
   }
 
-  onSubmitMestizo() {
+  submitForm() {
+    console.log('Intentando registrar mascota...');
+    
     if (this.mestizoForm.valid) {
-      console.log('Datos del mestizo:', this.mestizoForm.value);
+      const mascotaData = this.mestizoForm.value;
+      console.log('Formulario válido:', mascotaData);
+  
+      this.mestizosService.addMestizos(mascotaData)
+        .then((docRef) => {
+          console.log('Mascota registrada con ID:', docRef.id);
+          sessionStorage.setItem('mascotaData', JSON.stringify(mascotaData));
+          alert('¡Mascota registrada con éxito!');
+          this.mestizoForm.reset();
+        })
+        .catch((error) => {
+          console.error('Error al registrar la mascota:', error);
+        });
     } else {
-      console.log('Formulario inválido');
+      console.log('Formulario inválido:', this.mestizoForm.errors);
+      alert('Por favor, completa todos los campos correctamente.');
     }
   }
 
-  onSubmitCaracteristicas() {
-    if (this.caracteristicasForm.valid) {
-      console.log('Datos de características físicas:', this.caracteristicasForm.value);
-    }
+  private checkUserSession() {
+    this.isFormCompleted = !!sessionStorage.getItem('user');
   }
 
-  onSubmitTemperamento() {
-    if (this.temperamentoForm.valid) {
-      console.log('Temperamentos seleccionados:', this.temperamentoForm.value);
-    }
-  }
-
-  onFileChange(event: Event) {
-    const input = event.target as HTMLInputElement;
-    if (input.files) {
-      const files = Array.from(input.files);
-      this.historiaForm.patchValue({ imagenes: files });
-    }
-  }
-
-  validateImageCount(control: any): { [key: string]: boolean } | null {
-    const files = control.value;
-    if (files && (files.length < 4 || files.length > 6)) {
-      return { invalidCount: true };
-    }
-    return null;
-  }
-
-  onSubmitHistoria() {
-    if (this.historiaForm.valid) {
-      console.log('Formulario válido:', this.historiaForm.value);
-    } else {
-      this.historiaForm.markAllAsTouched();
-    }
-  }
-
-  async showToast(message: string) {
-    const toast = await this.toastController.create({
-      message,
-      duration: 3000,
-      position: 'top',
+  initializeUserForm() {
+    this.userForm = this._formBuilder.group({
+      nombre: ['', [Validators.required]],
+      apellido: ['', [Validators.required]],
+      imagen: [null, [Validators.required]],
     });
-    await toast.present();
   }
+  
+  disableForm() {
+    this.userForm.controls['nombre'].disable();
+    this.userForm.controls['apellido'].disable();
+    this.userForm.controls['imagen'].disable();
+  }
+  
+  enableForm() {
+    this.userForm.controls['nombre'].enable();
+    this.userForm.controls['apellido'].enable();
+    this.userForm.controls['imagen'].enable();
+  }  
 
   onFileSelected(event: Event) {
     const fileInput = event.target as HTMLInputElement;
@@ -170,19 +149,15 @@ export class MestizoFormPage implements OnInit {
     const validTypes = ['image/png', 'image/jpeg', 'image/jpg', 'image/gif'];
 
     if (!validTypes.includes(file.type)) {
-      this.showToast('Solo se pueden subir imágenes (PNG, JPG, GIF).');
       this.userForm.get('imagen')?.setErrors({ invalidFileType: true });
       return;
     }
 
     if (file.size > 10 * 1024 * 1024) { // 10 MB
-      this.showToast('El archivo debe ser menor a 10MB.');
       this.userForm.get('imagen')?.setErrors({ fileTooLarge: true });
       return;
     }
-
     this.selectedFile = file;
-    this.userForm.get('imagen')?.setErrors(null);
 
     const reader = new FileReader();
     reader.onload = () => {
@@ -202,31 +177,123 @@ export class MestizoFormPage implements OnInit {
     if (this.userForm.valid && this.selectedFile) {
       this.isSubmitting = true;
       this.userForm.disable();
-
+  
       const loading = await this.loadingController.create({
         message: 'Guardando información...',
+        mode: 'ios',
       });
       await loading.present();
-
-      // Crear el objeto mestizo con los datos del formulario
+  
       const user: Users = {
         nombre: this.userForm.get('nombre')?.value,
         apellido: this.userForm.get('apellido')?.value,
-        imagen: '', // La URL de la imagen se asignará después
+        imagen: '',
         createdAt: new Date(),
       };
-
-      this.userService.addUser(user, this.selectedFile!).then(() => {
+      
+      this.userService.addUser(user, this.selectedFile!).then((userData) => {
         this.isSubmitting = false;
         this.userForm.reset();
         this.imagePreview = null;
         this.selectedFile = null;
         loading.dismiss();
-
-        // Marca que el formulario fue completado
-        localStorage.setItem('formCompleted', 'true');
-        this.isFormCompleted = true; // Cambia el estado a completado
+  
+        // Guardamos la información del usuario con la URL de la imagen en sessionStorage
+        sessionStorage.setItem('user', JSON.stringify(userData));
+  
+        // Marcamos que el formulario fue completado
+        sessionStorage.setItem('formCompleted', 'true');
+        this.isFormCompleted = true;
+  
+        // Mostrar mensaje de éxito
+        this.showToast('Formulario enviado correctamente', 'success');
+      }).catch(() => {
+        this.isSubmitting = false;
+        loading.dismiss();
+        this.showToast('Hubo un error al guardar la información', 'danger');
       });
     }
   }
+  
+  // nextForm() {
+  //   if (this.currentForm === 1 && this.mestizoForm.valid) {
+  //     localStorage.setItem('mestizoFormData', JSON.stringify(this.mestizoForm.value));
+  //     this.currentForm++;
+  //   } else if (this.currentForm === 2 && this.caracteristicasForm.valid) {
+  //     localStorage.setItem('caracteristicasFormData', JSON.stringify(this.caracteristicasForm.value));
+  //     this.currentForm++;
+  //   } else {
+  //     console.log();
+  //   }
+  // }
+
+  // previousForm() {
+  //   if (this.currentForm > 1) {
+  //     this.currentForm--;
+  //   }
+  // }
+
+
+  // onSubmitCaracteristicas() {
+  //   if (this.caracteristicasForm.valid) {
+  //     console.log('Datos de características físicas:', this.caracteristicasForm.value);
+  //   }
+  // }
+
+  // onSubmitTemperamento() {
+  //   if (this.temperamentoForm.valid) {
+  //     console.log('Temperamentos seleccionados:', this.temperamentoForm.value);
+  //   }
+  // }
+
+  // validateImageCount(control: FormArray): { [key: string]: boolean } | null {
+  //   const images = control.value || [];
+  //   if (images.length < 4 || images.length > 6) {
+  //     return { invalidImageCount: true };
+  //   }
+  //   return null;
+  // }
+
+  // addTemperamento() {
+  //   const newTemperamento = this.temperamentoForm.get('newTemperamento')?.value;
+  //   if (newTemperamento) {
+  //     this.temperamentos.push(this.fb.control(newTemperamento));
+  //     this.temperamentoForm.get('newTemperamento')?.reset();
+  //   }
+  // }
+
+  // onSubmitHistoria(){
+
+  // }
+
+  // removeTemperamento(index: number) {
+  //   this.temperamentos.removeAt(index);
+  // }
+
+  // minTemperamentosValidator(control: FormArray): { [key: string]: boolean } | null {
+  //   if (control.length < 1) {
+  //     return { minTemperamentos: true };
+  //   }
+  //   return null;
+  // }
+
+  // maxTemperamentosValidator(control: FormArray): { [key: string]: boolean } | null {
+  //   if (control.length > 5) {
+  //     return { maxTemperamentos: true };
+  //   }
+  //   return null;
+  // }
+
+  // onFileChange(event: Event): void {
+  //   const input = event.target as HTMLInputElement;
+  //   if (input?.files && input.files.length > 0) {
+  //     this.selectedFile = input.files[0];
+  //     const reader = new FileReader();
+  //     reader.onload = () => {
+  //       this.imagePreview = reader.result as string;
+  //     };
+  //     reader.readAsDataURL(this.selectedFile);
+  //   }
+  // }
+
 }

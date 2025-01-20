@@ -34,21 +34,29 @@
           </div>
           <div class="mt-2 py-3 text-center px-2">
             <div class="flex flex-wrap justify-center items-center gap-2">
-                <ion-buttons class="font-light text-sm leading-relaxed rounded-xl text-slate-600 mb-4 p-2 px-3 border-2 border-primary cursor-pointer" routerLink="/mestizo-form" >Agregar 
-                  <ion-icon name="paw" class="text-base m-1"></ion-icon>
-                </ion-buttons>
+              <ion-buttons class="font-light text-sm leading-relaxed rounded-xl text-slate-600 mb-4 p-2 px-3 border-2 border-primary cursor-pointer" (click)="openModal()">
+                Agregar 
+                <ion-icon name="paw" class="text-base m-1"></ion-icon>
+              </ion-buttons>              
             </div>
           </div>
-          <div class="bg-blue-100 text-center flex flex-row items-center max-h-36 p-4 px-6"> 
-              <div class="relative text-center flex justify-center">
+          <div class="bg-blue-100 text-center flex flex-row items-center max-h-36 p-4 px-6">
+            <div class="relative text-center flex justify-center">
+              <!-- Use the user's image URL if available, otherwise show a default image -->
+              <img *ngIf="user?.imagen; else defaultImage"
+                   [src]="user?.imagen"
+                   class="shadow-xl rounded-full align-middle border-none max-w-[150px] max-h-[150px] h-[80px] w-[80px] object-cover object-center"/>
+              <ng-template #defaultImage>
                 <img src="https://cdn.icon-icons.com/icons2/1999/PNG/512/avatar_man_people_person_profile_user_icon_123385.png"
-                 class="shadow-xl rounded-full align-middle border-none  max-w-[150px] max-h-[150px] h-[80px] w-[80px] object-cover object-center"/>
-              </div>     
-              <div class="w-full">
-                <p class="text-xl font-semibold leading-relaxed text-slate-700">Fabian Astete</p>
-                <small class="font-light leading-relaxed text-slate-400 text-sm">Dueño</small>
-              </div>      
-          </div>
+                     class="shadow-xl rounded-full align-middle border-none max-w-[150px] max-h-[150px] h-[80px] w-[80px] object-cover object-center"/>
+              </ng-template>
+            </div>
+            <div class="w-full">
+              <!-- Display the user's name if available -->
+              <p class="text-xl font-semibold leading-relaxed text-slate-700">{{ user?.nombre }} {{ user?.apellido }}</p>
+              <small class="font-light leading-relaxed text-slate-400 text-sm">Dueño</small>
+            </div>
+          </div>          
           <div>
             <div class=" mt-8 m-2 mx-4">
               <h4 class="text-slate-600 font-bold uppercase ">Mis mascotas</h4>

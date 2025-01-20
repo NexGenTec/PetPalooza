@@ -1,6 +1,4 @@
 import { Injectable } from '@angular/core';
-import { ToastController } from '@ionic/angular';
-import { finalize } from 'rxjs';
 import { Mestizos } from '../models/mestizo.models';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
@@ -10,10 +8,14 @@ import { AngularFireStorage } from '@angular/fire/compat/storage';
 })
 export class MestizosService {
 
+  private readonly collectionName = ' Mestizo';
+
   constructor(
     private firestore: AngularFirestore,
-    private storage: AngularFireStorage,
-    private toastController: ToastController
-  ) {
-   }
+    private storage: AngularFireStorage
+  ) {}
+
+  addMestizos(data: Mestizos) {
+    return this.firestore.collection(this.collectionName).add(data);
+  }
 }
