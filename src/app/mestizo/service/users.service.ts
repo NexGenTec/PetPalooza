@@ -14,7 +14,6 @@ export class UsersService {
   constructor(
     private firestore: AngularFirestore,
     private storage: AngularFireStorage,
-    private toastController: ToastController
   ) {
    }
 
@@ -60,14 +59,5 @@ export class UsersService {
       console.error('Error al subir los datos:', error);
       throw new Error('Error al subir los datos');
     }
-  }  
-
-  private async showToast(message: string) {
-    const toast = await this.toastController.create({
-      message,
-      duration: 3000,
-      position: 'top',
-    });
-    await toast.present();
   }
 }

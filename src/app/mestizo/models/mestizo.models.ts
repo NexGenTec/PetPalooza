@@ -15,9 +15,6 @@ export interface Mestizos {
   };
   temperamentos: string[];
   historia: string;
-  imagenMascota: {
-    url: string;
-    nombreArchivo?: string;
-  };
+  imagenMascota: string[]
   createdAt: Date;
 }

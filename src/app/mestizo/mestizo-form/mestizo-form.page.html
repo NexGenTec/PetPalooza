@@ -285,21 +285,25 @@
             </form>
           </div>          
           <div class="py-3 px-4" *ngIf="currentForm === 3">
-            <div class="mt-8 mb-4">
+            <!-- <div class="mt-8 mb-4">
               <h4 class="text-slate-600 font-bold uppercase">Temperamento de tu mascota</h4>
-            </div>
+            </div> -->
             <form [formGroup]="temperamentoForm" (ngSubmit)="submitForms()">
               <div class="mb-2">
                 <label for="temperamentos" class="drop flex flex-col w-full">
                   <span class="drop-title text-slate-600">Temperamentos</span>
-            
-                  <div *ngFor="let temperamento of temperamentos.controls; let i = index">
-                    <ion-chip *ngIf="temperamento.value !== ''" class="mb-2">
-                      <ion-label>{{ temperamento.value }}</ion-label>
-                      <ion-icon name="close-circle" slot="end" (click)="removeTemperamento(i)"></ion-icon>
-                    </ion-chip>
-                  </div>
-            
+                  <!-- Lista de temperamentos alineados a la derecha -->
+                  <div class="flex justify-start flex-wrap gap-2">
+                    <div *ngFor="let temperamento of temperamentos.controls; let i = index">
+                      <ion-chip *ngIf="temperamento.value !== ''" color="primary" class="mb-2">
+                        <ion-label>{{ temperamento.value }}</ion-label>
+                        <ion-icon 
+                          name="close-circle" 
+                          (click)="removeTemperamento(i)">
+                        </ion-icon>
+                      </ion-chip>
+                    </div>
+                  </div>                  
                   <!-- Botón para agregar un temperamento -->
                   <div class="flex items-center gap-2">
                     <input
@@ -309,23 +313,35 @@
                       placeholder="Agregar un temperamento"
                     />
                     <button type="button" (click)="addTemperamento()" class="text-blue-500">
-                      Agregar
+                      <svg  
+                        xmlns="http://www.w3.org/2000/svg"  
+                        width="24"  
+                        height="24"  
+                        viewBox="0 0 24 24"  
+                        fill="none"  
+                        stroke="currentColor"  
+                        stroke-width="2"  
+                        stroke-linecap="round"  
+                        stroke-linejoin="round"  
+                        class="icon icon-tabler icons-tabler-outline icon-tabler-plus">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M12 5l0 14" />
+                        <path d="M5 12l14 0" />
+                      </svg>
                     </button>
                   </div>
-            
                   <small class="italic text-slate-500">
                     Debes elegir al menos 3 temperamentos, máximo 5.
                   </small>
                   <!-- Errores de validación -->
-                  <div *ngIf="temperamentoForm.get('temperamentos').hasError('minLength') && temperamentoForm.get('temperamentos').touched" class="text-red-500 text-sm">
+                  <div *ngIf="temperamentoForm.get('temperamentos').hasError('minlength') && temperamentoForm.touched" class="text-red-500 text-sm">
                     Debes seleccionar al menos 3 temperamentos.
                   </div>
-                  <div *ngIf="temperamentoForm.get('temperamentos').hasError('maxLength') && temperamentoForm.get('temperamentos').touched" class="text-red-500 text-sm">
+                  <div *ngIf="temperamentoForm.get('temperamentos').hasError('maxlength') && temperamentoForm.touched" class="text-red-500 text-sm">
                     No puedes seleccionar más de 5 temperamentos.
-                  </div>
+                  </div>                  
                 </label>
               </div>
-            
               <div class="flex flex-wrap justify-between items-center gap-2">
                 <ion-buttons
                   type="button"
@@ -334,11 +350,11 @@
                   Anterior
                 </ion-buttons>
                 <ion-buttons
-                  [disabled]="temperamentoForm.invalid"
+                  [disabled]="temperamentoForm.get('temperamentos').value.length < 3 || temperamentoForm.invalid"
                   (click)="nextForm()"
                   class="font-light text-sm leading-relaxed rounded-xl text-slate-600 mb-4 p-2 px-3 border-2 border-primary cursor-pointer">
                   Siguiente
-                </ion-buttons>
+                </ion-buttons>           
               </div>
             </form>            
           </div>          

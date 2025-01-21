@@ -4,6 +4,7 @@ import { ToastController, LoadingController, ModalController } from '@ionic/angu
 import { MestizosService } from '../service/mestizos.service';
 import { UsersService } from '../service/users.service';
 import { Users } from '../models/users.models';
+import { AngularFireStorage } from '@angular/fire/compat/storage';
 
 @Component({
   selector: 'app-mestizo-form',
@@ -34,6 +35,7 @@ export class MestizoFormPage implements OnInit {
     private loadingController: LoadingController,
     private mestizosService: MestizosService,
     private userService: UsersService,
+    private storage: AngularFireStorage,
   ) {}
 
   ngOnInit() {
@@ -67,12 +69,49 @@ export class MestizoFormPage implements OnInit {
     });
     this.historiaForm = this._formBuilder.group({
       historia: ['', Validators.required],
-      imagenes: [[], [Validators.required, this.imageValidator]],
+      imagenes: [, [Validators.required]],
     });
   }
 
+  onImageSelect(event: any) {
+    const files: FileList = event.target.files;
+  
+    if (files.length < 4 || files.length > 6) {
+      this.showToast('Debes subir entre 4 y 6 imágenes.', 'danger');
+      return;
+    }
+  
+    this.selectedImages = [];
+  
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
+  
+      if (!['image/jpeg', 'image/png', 'image/gif'].includes(file.type)) {
+        this.showToast('Formato de archivo no permitido. Solo se aceptan PNG, JPG, y GIF.', 'danger');
+        continue;
+      }
+  
+      if (file.size > 10 * 1024 * 1024) {
+        this.showToast('El archivo excede el tamaño máximo de 10MB.', 'danger');
+        continue;
+      }
+  
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        this.selectedImages.push(e.target.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  
+    event.target.value = '';
+  } 
+
+  removeImages(index: number) {
+    this.selectedImages.splice(index, 1);
+  }
+
   submitForms() {
-    if (this.mestizoForm.valid && this.caracteristicasForm.valid && this.temperamentoForm && this.historiaForm) {
+    if (this.mestizoForm.valid && this.caracteristicasForm.valid && this.temperamentoForm.valid && this.historiaForm.valid) {
       this.isSubmitting = true;
   
       const mascotaData = {
@@ -82,28 +121,42 @@ export class MestizoFormPage implements OnInit {
         ...this.historiaForm.value
       };
   
-      console.log('Enviando formulario:', mascotaData);
-  
-      this.mestizosService.addMestizos(mascotaData)
-        .then((docRef) => {
-          console.log('Mascota registrada con ID:', docRef.id);
-          sessionStorage.setItem('mascotaData', JSON.stringify(mascotaData));
-          alert('¡Mascota registrada con éxito!');
-          this.mestizoForm.reset();
-          this.caracteristicasForm.reset();
-          this.temperamentoForm.reset();
-          this.currentForm = 1;
-        })
-        .catch((error) => {
-          console.error('Error al registrar la mascota:', error);
-        })
-        .finally(() => {
-          this.isSubmitting = false;
+      if (this.selectedImages.length > 0) {
+        this.mestizosService.uploadImages(this.selectedImages).then((imageUrls) => {
+          mascotaData.imagenes = imageUrls;
+          this.mestizosService.addMestizos(mascotaData, imageUrls)
+            .then(() => {
+              console.log('Mascota registrada con éxito');
+              sessionStorage.setItem('mascotaData', JSON.stringify(mascotaData));
+              this.resetForms();
+            })
+            .catch((error) => {
+              console.error('Error al registrar la mascota:', error);
+              alert('Hubo un problema al registrar la mascota.');
+            })
+            .finally(() => {
+              this.isSubmitting = false;
+            });
+        }).catch((error) => {
+          console.error('Error al subir las imágenes:', error);
+          alert('Hubo un problema al subir las imágenes.');
         });
+      } else {
+        alert('Debes seleccionar imágenes para subir');
+      }
     } else {
-      this.showToast('Completa todos los campos correctamente antes de enviar', 'success');
+      this.showToast('Completa todos los campos correctamente antes de enviar', 'danger');
     }
   }
+  
+  resetForms() {
+    this.mestizoForm.reset();
+    this.caracteristicasForm.reset();
+    this.temperamentoForm.reset();
+    this.historiaForm.reset();
+    this.currentForm = 1;
+    this.selectedImages = [];
+  }  
 
   async showToast(message: string, type: 'success' | 'danger') {
     const toast = await this.toastController.create({
@@ -126,71 +179,45 @@ export class MestizoFormPage implements OnInit {
     toast.present();
   }
 
-  onImageSelect(event: any) {
-    const files = event.target.files;
-    if (files.length > 0) {
-      if (files.length < 4 || files.length > 6) {
-        alert('Debes subir entre 4 y 6 imágenes.');
-        return;
-      }
-
-      const newImages = Array.from(files).map((file: File) => URL.createObjectURL(file));
-      this.selectedImages = [...newImages];
-    }
-  }
-
-  removeImages(index: number) {
-    this.selectedImages.splice(index, 1);
-  }
-
-  imageValidator(control: FormControl) {
-    const images = control.value;
-    if (images.length < 4) {
-      return { minLength: true };
-    }
-    if (images.length > 6) {
-      return { maxLength: true };
-    }
-    return null;
-  }
-
   addTemperamento() {
-    if (this.newTemperamentoControl.value.trim() && this.temperamentos.length < 6) {
+    if (this.newTemperamentoControl.value.trim() && this.temperamentos.controls.length < 5) {
       this.temperamentos.push(this._formBuilder.control(this.newTemperamentoControl.value.trim()));
       this.newTemperamentoControl.setValue('');
+      this.temperamentoForm.updateValueAndValidity();
     }
   }
 
   
   removeTemperamento(index: number) {
     this.temperamentos.removeAt(index);
+    this.temperamentoForm.updateValueAndValidity();
   }
 
   validateTemperamento() {
-    if (this.newTemperamento.trim()) {
-      this.temperamentoForm.get('temperamentos').setValidators([Validators.minLength(3), Validators.maxLength(6)]);
+    if (this.newTemperamentoControl.value.trim()) {
+      this.temperamentoForm.get('temperamentos')?.setValidators([Validators.minLength(3), Validators.maxLength(5)]);
+      this.temperamentoForm.get('temperamentos')?.updateValueAndValidity();
     }
-  }
+  }  
 
   nextForm() {
-    if (this.currentForm === 1 && this.mestizoForm.valid) {
-      this.currentForm = 2;
-    } else if (this.currentForm === 2 && this.caracteristicasForm.valid) {
-      this.currentForm = 3;
-    } else if (this.currentForm === 3 && this.temperamentoForm.valid) {
-      this.currentForm = 4;
-    } else if (this.currentForm === 4 && this.historiaForm.valid) {
-
+    const forms = [
+      this.mestizoForm,
+      this.caracteristicasForm,
+      this.temperamentoForm,
+      this.historiaForm
+    ];
+  
+    if (this.currentForm < forms.length && forms[this.currentForm - 1]?.valid) {
+      this.currentForm++;
     }
   }
   
   prevForm() {
-    if (this.currentForm === 2) {
-      this.currentForm = 1;
-    } else if (this.currentForm === 3) {
-      this.currentForm = 2;
+    if (this.currentForm > 1) {
+      this.currentForm--;
     }
-  }
+  }  
 
   private checkUserSession() {
     this.isFormCompleted = !!sessionStorage.getItem('user');
