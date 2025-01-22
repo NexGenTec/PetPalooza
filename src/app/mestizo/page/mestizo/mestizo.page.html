@@ -21,9 +21,9 @@
           <div class="flex flex-wrap justify-center">
             <div class="w-full flex justify-center">
               <div class="relative">
-                <img *ngIf="mestizos.length > 0"
-                     [src]="mestizos[0].imagenMascota[0]" 
-                     class="shadow-xl rounded-full align-middle border-none absolute -m-16 -ml-20 lg:-ml-16 max-w-[150px] max-h-[150px] h-[150px] w-[150px] object-cover object-center"/>
+                <img 
+                [src]="mestizos.length > 0 && mestizos[0].imagenMascota?.length > 0 ? mestizos[0].imagenMascota[0] : 'https://firebasestorage.googleapis.com/v0/b/petpalooza-63384.appspot.com/o/Logos%2FPetPalooza.png?alt=media&token=39645dd8-2e86-4806-b8bf-e04d16088841'" 
+                class="shadow-xl rounded-full align-middle border-none absolute -m-16 -ml-20 lg:-ml-16 max-w-[150px] max-h-[150px] h-[150px] w-[150px] object-cover object-center"/>
               </div>
             </div>
             <div class="w-full text-center mt-24">

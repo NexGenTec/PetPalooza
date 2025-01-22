@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Mestizos } from './models/users.models';
 import { MestizosService } from './service/mestizos.service';
+import { Mestizos, Users } from './models/users.models';
 
 @Component({
   selector: 'app-mestizos-list',
@@ -8,29 +8,26 @@ import { MestizosService } from './service/mestizos.service';
   styleUrls: ['./mestizos-list.page.scss'],
 })
 export class MestizosListPage implements OnInit {
-  
-  mestizos: Mestizos[] = [];
-  filteredMestizos: Mestizos[] = [];
+
   searchTerm: string = '';
   isLoading = true;
-
+  usersWithMestizos: { user: Users, mestizos: Mestizos[] }[] = [];
 
   constructor(private mestizosService: MestizosService) {}
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.loadMestizos();
   }
-
   loadMestizos(): void {
-    this.mestizosService.getAllMestizos().subscribe({
-      next: (mestizos: Mestizos[]) => {
-        this.mestizos = mestizos;
+    this.mestizosService.getAllUsersWithMestizos().subscribe({
+      next: (data) => {
+        this.usersWithMestizos = data;
         this.isLoading = false;
       },
-      error: (error) => {
-        console.error('Error loading mestizos:', error);
+      error: (err) => {
+        console.error('Error al cargar los datos:', err);
         this.isLoading = false;
-      },
+      }
     });
-  }  
+  }
 }

@@ -47,10 +47,11 @@
 
       <!-- Actual content loaded from the database -->
       <ng-template #contentLoaded>
-        <div>
+        <div  *ngFor="let userItem of usersWithMestizos">
           <hr class="my-5 border-blue-500/30">
+          <!-- <h2>{{ userItem.user.nombre }}</h2> -->
           <div class="grid grid-cols-2 gap-3 py-3 w-full">
-            <div class="h-max rounded-xl overflow-hidden border border-blue-300 shadow-lg relative" *ngFor="let mestizo of mestizos">
+            <div class="h-max rounded-xl overflow-hidden border border-blue-300 shadow-lg relative" *ngFor="let mestizo of userItem.mestizos">
               <ion-card class="m-0 h-44 relative group" mode="md">
                 <img 
                   class="h-full w-full object-cover object-center absolute top-0 left-0 transition-all duration-300 group-hover:scale-110" 
@@ -65,7 +66,7 @@
             </div>
           </div>
         </div>
-      </ng-template>
+      </ng-template> 
     </section>
   </div>
 </ion-content>
