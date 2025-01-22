@@ -1,7 +1,30 @@
 export interface Users {
-    id?: string; // El ID se autogenera en Firestore
+    id?: string;
     nombre: string;
     apellido: string;
-    imagen: string; // URL de la imagen almacenada en Firebase Storage
-    createdAt: Date; // Fecha de creación (Timestamp)
+    imagen: string;
+    createdAt: Date;
+    mascotas?: Mestizos[];
+}
+
+
+export interface Mestizos {
+    nombre: string;
+    apellido: string;
+    apodo: string;
+    especie: string;
+    sexo: string;
+    edad: string;
+    nacionalidad: string;
+    caracteristicasFisicas: {
+    tamano: string;
+    peso: string;
+    pelaje: string;
+    color: string;
+    ojos: string;
+    };
+    temperamentos: string[];
+    historia: string;
+    imagenMascota: string[]
+    createdAt: Date;
 }

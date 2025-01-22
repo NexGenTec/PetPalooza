@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ToastController, LoadingController, ModalController } from '@ionic/angular';
-import { MestizosService } from '../service/mestizos.service';
-import { UsersService } from '../service/users.service';
-import { Users } from '../models/users.models';
-import { AngularFireStorage } from '@angular/fire/compat/storage';
+import { MestizosService } from '../../service/mestizos.service';
+import { UsersService } from '../../service/users.service';
+import { Users } from '../../models/users.models';
 
 @Component({
   selector: 'app-mestizo-form',
@@ -35,7 +34,6 @@ export class MestizoFormPage implements OnInit {
     private loadingController: LoadingController,
     private mestizosService: MestizosService,
     private userService: UsersService,
-    private storage: AngularFireStorage,
   ) {}
 
   ngOnInit() {
@@ -126,20 +124,18 @@ export class MestizoFormPage implements OnInit {
           mascotaData.imagenes = imageUrls;
           this.mestizosService.addMestizos(mascotaData, imageUrls)
             .then(() => {
-              console.log('Mascota registrada con éxito');
-              sessionStorage.setItem('mascotaData', JSON.stringify(mascotaData));
+              console.log('Mascota registrada con éxito',mascotaData);
+              // sessionStorage.setItem('mascotaData', JSON.stringify(mascotaData));
               this.resetForms();
             })
             .catch((error) => {
               console.error('Error al registrar la mascota:', error);
-              alert('Hubo un problema al registrar la mascota.');
             })
             .finally(() => {
               this.isSubmitting = false;
             });
         }).catch((error) => {
           console.error('Error al subir las imágenes:', error);
-          alert('Hubo un problema al subir las imágenes.');
         });
       } else {
         alert('Debes seleccionar imágenes para subir');
@@ -336,86 +332,4 @@ export class MestizoFormPage implements OnInit {
       });
     }
   }
-  
-  // nextForm() {
-  //   if (this.currentForm === 1 && this.mestizoForm.valid) {
-  //     localStorage.setItem('mestizoFormData', JSON.stringify(this.mestizoForm.value));
-  //     this.currentForm++;
-  //   } else if (this.currentForm === 2 && this.caracteristicasForm.valid) {
-  //     localStorage.setItem('caracteristicasFormData', JSON.stringify(this.caracteristicasForm.value));
-  //     this.currentForm++;
-  //   } else {
-  //     console.log();
-  //   }
-  // }
-
-  // previousForm() {
-  //   if (this.currentForm > 1) {
-  //     this.currentForm--;
-  //   }
-  // }
-
-
-  // onSubmitCaracteristicas() {
-  //   if (this.caracteristicasForm.valid) {
-  //     console.log('Datos de características físicas:', this.caracteristicasForm.value);
-  //   }
-  // }
-
-  // onSubmitTemperamento() {
-  //   if (this.temperamentoForm.valid) {
-  //     console.log('Temperamentos seleccionados:', this.temperamentoForm.value);
-  //   }
-  // }
-
-  // validateImageCount(control: FormArray): { [key: string]: boolean } | null {
-  //   const images = control.value || [];
-  //   if (images.length < 4 || images.length > 6) {
-  //     return { invalidImageCount: true };
-  //   }
-  //   return null;
-  // }
-
-  // addTemperamento() {
-  //   const newTemperamento = this.temperamentoForm.get('newTemperamento')?.value;
-  //   if (newTemperamento) {
-  //     this.temperamentos.push(this.fb.control(newTemperamento));
-  //     this.temperamentoForm.get('newTemperamento')?.reset();
-  //   }
-  // }
-
-  // onSubmitHistoria(){
-
-  // }
-
-  // removeTemperamento(index: number) {
-  //   this.temperamentos.removeAt(index);
-  // }
-
-  // minTemperamentosValidator(control: FormArray): { [key: string]: boolean } | null {
-  //   if (control.length < 1) {
-  //     return { minTemperamentos: true };
-  //   }
-  //   return null;
-  // }
-
-  // maxTemperamentosValidator(control: FormArray): { [key: string]: boolean } | null {
-  //   if (control.length > 5) {
-  //     return { maxTemperamentos: true };
-  //   }
-  //   return null;
-  // }
-
-  // onFileChange(event: Event): void {
-  //   const input = event.target as HTMLInputElement;
-  //   if (input?.files && input.files.length > 0) {
-  //     this.selectedFile = input.files[0];
-  //     const reader = new FileReader();
-  //     reader.onload = () => {
-  //       this.imagePreview = reader.result as string;
-  //     };
-  //     reader.readAsDataURL(this.selectedFile);
-  //   }
-  // }
-
 }

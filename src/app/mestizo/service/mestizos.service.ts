@@ -3,13 +3,14 @@ import { Mestizos } from '../models/mestizo.models';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { finalize } from 'rxjs';
+import { Users } from '../models/users.models';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MestizosService {
 
-  private readonly collectionName = 'Mestizo';
+  private readonly collectionName = 'users';
 
   constructor(
     private firestore: AngularFirestore,

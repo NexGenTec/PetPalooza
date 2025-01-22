@@ -15,11 +15,9 @@
     <div class="bg-blue-100 pt-20 pb-6 px-3 min-h-[93vh]">
       <div class="relative mx-auto md:max-w-2xl min-w-0 break-words bg-white w-full shadow-lg rounded-xl pb-3">
         <div class="relative">
-          <div class="absolute z-50 top-5 right-8 md:top-6 md:right-20">
-            <button type="button" class="bg-gray-200 p-2 text-gray-500 rounded-full">
-              <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-pencil"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" /><path d="M13.5 6.5l4 4" /></svg>
-            </button>                      
-          </div>
+          <ion-buttons slot="start">
+            <ion-back-button defaultHref="/"></ion-back-button>
+          </ion-buttons>
           <div class="flex flex-wrap justify-center">
             <div class="w-full flex justify-center" >
               <div class="relative">
@@ -42,7 +40,6 @@
           </div>
           <div class="bg-blue-100 text-center flex flex-row items-center max-h-36 p-4 px-6">
             <div class="relative text-center flex justify-center">
-              <!-- Use the user's image URL if available, otherwise show a default image -->
               <img *ngIf="user?.imagen; else defaultImage"
                    [src]="user?.imagen"
                    class="shadow-xl rounded-full align-middle border-none max-w-[150px] max-h-[150px] h-[80px] w-[80px] object-cover object-center"/>
@@ -52,7 +49,6 @@
               </ng-template>
             </div>
             <div class="w-full">
-              <!-- Display the user's name if available -->
               <p class="text-xl font-semibold leading-relaxed text-slate-700">{{ user?.nombre }} {{ user?.apellido }}</p>
               <small class="font-light leading-relaxed text-slate-400 text-sm">Dueño</small>
             </div>
@@ -62,23 +58,17 @@
               <h4 class="text-slate-600 font-bold uppercase ">Mis mascotas</h4>
             </div>
             <div class="grid grid-cols-2 gap-3 py-3 px-4 w-full">
-              <!-- Skeleton for each card -->
               <div class="h-max rounded-xl overflow-hidden border border-gray-300 shadow-lg" *ngFor="let item of [1, 2, 3, 4]">
                 <ion-card class="m-0 h-44 relative">
-                  <!-- Imagen skeleton -->
                   <ion-skeleton-text class="h-full w-full"></ion-skeleton-text>
                   <ion-card-header class="p-2 h-full w-full bg-gradient-to-b from-transparent from-40% via-black/50 to-black/80">
-                    <!-- Skeleton text for title -->
                     <ion-skeleton-text animated style="width: 80%; height: 16px;"></ion-skeleton-text>
-                    <!-- Skeleton text for subtitle -->
                     <ion-skeleton-text animated style="width: 60%; height: 12px;" class="mt-1"></ion-skeleton-text>
                   </ion-card-header>
                 </ion-card>
-              
               </div>
             </div>
           </div>
-       
         </div>  
       </div>
     </div>
