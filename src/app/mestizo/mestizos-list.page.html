@@ -1,16 +1,23 @@
 <ion-header class="bg-white shadow-none border-b border-gray-200">
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button defaultHref="/"></ion-back-button>
-    </ion-buttons>
-    <ion-title class="mx-auto">
-      <ion-searchbar class="custom my-3" placeholder="Buscar" mode="ios"></ion-searchbar>
-    </ion-title>
-  </ion-toolbar>
+  <a href="/" class="flex gap-2 items-center mx-3 my-2">
+    <img 
+      class="max-h-14 mx-auto"
+      alt="logo PetPalooza" 
+      src="assets/img/logo/PetPalooza.png" 
+    />
+  </a>
 </ion-header>
 
-<ion-content [fullscreen]="true" aria-hidden="false">
-  <div class="px-3 pt-5 bg-gray-50">
+<ion-content [fullscreen]="true" aria-hidden="false" class="bg-gray-50">
+  <div class="px-3 pt-2 bg-gray-50">
+    <div class="flex flex-row items-center">
+      <ion-buttons slot="start">
+        <ion-back-button defaultHref="/"></ion-back-button>
+      </ion-buttons>
+      <ion-title class="mx-auto">
+        <ion-searchbar class="custom my-2 mt-3" placeholder="Buscar" mode="ios"></ion-searchbar>
+      </ion-title>
+    </div>
     <section class="w-full mx-auto">
       <!-- Skeleton loader when isLoading is true -->
       <div *ngIf="isLoading; else contentLoaded">
@@ -33,8 +40,9 @@
       <!-- Actual content loaded from the database -->
       <ng-template #contentLoaded>
         <div>
-          <hr class="my-5 border-blue-500/30">
+          <!-- <hr class="my-5 border-blue-500/30"> -->
           <!-- <h2>{{ userItem.user.nombre }}</h2> -->
+          <h1 class="pb-2 px-2 text-2xl font-medium text-slate-600">Mestizos Registrados</h1>
           <div class="grid grid-cols-2 gap-3 py-3 w-full">
             <div class="h-max rounded-xl overflow-hidden border border-blue-300 shadow-lg relative" *ngFor="let mestizo of mestizos">
               <ion-card class="m-0 h-44 relative group" mode="md">
