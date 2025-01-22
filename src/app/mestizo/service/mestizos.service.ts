@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
-import { Observable, finalize } from 'rxjs';
+import { Observable, finalize, merge, switchMap } from 'rxjs';
 import { Mestizos, Users } from '../models/users.models';
 
 @Injectable({
@@ -9,26 +9,26 @@ import { Mestizos, Users } from '../models/users.models';
 })
 export class MestizosService {
 
-  private readonly collectionName = 'users';
-
   constructor(
     private firestore: AngularFirestore,
     private storage: AngularFireStorage,
   ) {}
 
-  async uploadImages(files: string[]): Promise<string[]> {
-    const imageUploadPromises = files.map((image: string) => this.uploadImageToFirebase(image));
+  async uploadImages(files: string[], mestizo: Mestizos): Promise<string[]> {
+    const imageUploadPromises = files.map((image: string) => this.uploadImageToFirebase(image, mestizo));
     return Promise.all(imageUploadPromises);
   }
 
 
-  private uploadImageToFirebase(image: string,mestizo?: Mestizos,): Promise<string> {
+
+  private uploadImageToFirebase(image: string, mestizo: Mestizos): Promise<string> {
+    // Usamos el nombre del mestizo para definir la ruta
     const filePath = `Mestizo/${mestizo.nombre}/${new Date().getTime()}_${Math.random().toString(36).substring(2, 15)}`;
     const fileRef = this.storage.ref(filePath);
-
+  
     return new Promise((resolve, reject) => {
       const uploadTask = fileRef.putString(image, 'data_url');
-
+  
       uploadTask.snapshotChanges().pipe(
         finalize(() => {
           fileRef.getDownloadURL().subscribe(
@@ -38,7 +38,7 @@ export class MestizosService {
         })
       ).subscribe();
     });
-  }
+  }  
 
   async addMestizos(userId: string, mestizo: Mestizos, imageUrls: string[]): Promise<void> {
     try {
@@ -96,5 +96,20 @@ export class MestizosService {
 
   getMestizosByUserId(userId: string): Observable<Mestizos[]> {
     return this.firestore.collection<Mestizos>(`users/${userId}/mestizos`).valueChanges();
+  }
+
+  getAllMestizos(): Observable<Mestizos[]> {
+    return this.firestore.collection('users').snapshotChanges().pipe(
+      switchMap((usersSnapshot) => {
+        // Para cada usuario obtenemos los mestizos
+        const mestizosObservables = usersSnapshot.map(userDoc => {
+          const userId = userDoc.payload.doc.id;
+          return this.firestore.collection<Mestizos>(`users/${userId}/mestizos`).valueChanges();
+        });
+
+        // Merge los observables de mestizos de cada usuario
+        return merge(...mestizosObservables);
+      })
+    );
   }
 }

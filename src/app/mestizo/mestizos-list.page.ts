@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Mestizos } from './models/users.models';
+import { MestizosService } from './service/mestizos.service';
 
 @Component({
   selector: 'app-mestizos-list',
@@ -7,35 +9,28 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MestizosListPage implements OnInit {
   
-  // gatos: InfoGato[] = [];
-  // filteredGatos: InfoGato[] = [];
-  favorites: any[] = [];
-  currentDatoIndex: number = 0;
+  mestizos: Mestizos[] = [];
+  filteredMestizos: Mestizos[] = [];
   searchTerm: string = '';
   isLoading = true;
 
 
-  constructor(
-  ) {
-    this.loadData();
-  }
-
+  constructor(private mestizosService: MestizosService) {}
 
   ngOnInit(): void {
-
+    this.loadMestizos();
   }
 
-  ngOnDestroy(): void {
-
-  }
-
-  loadData() {
-    // this.firestores.getCollectionChanges<InfoGato>('InfoGatos').subscribe(gato => {
-    //   if (gato) {
-    //     this.gatos = gato
-    //     this.filteredGatos = [...this.gatos];
-    //     this.isLoading = false;
-    //   }
-    // })
-  }
+  loadMestizos(): void {
+    this.mestizosService.getAllMestizos().subscribe({
+      next: (mestizos: Mestizos[]) => {
+        this.mestizos = mestizos;
+        this.isLoading = false;
+      },
+      error: (error) => {
+        console.error('Error loading mestizos:', error);
+        this.isLoading = false;
+      },
+    });
+  }  
 }

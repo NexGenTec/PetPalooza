@@ -119,7 +119,7 @@ export class MestizoFormPage implements OnInit {
       };
   
       if (this.selectedImages.length > 0) {
-        this.mestizosService.uploadImages(this.selectedImages).then((imageUrls) => {
+        this.mestizosService.uploadImages(this.selectedImages, mascotaData).then((imageUrls) => {
           mascotaData.imagenes = imageUrls;
           this.mestizosService.addMestizos(userSession.id, mascotaData, imageUrls)
             .then(() => {

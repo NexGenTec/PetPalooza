@@ -22,7 +22,7 @@
             <div class="w-full flex justify-center">
               <div class="relative">
                 <img *ngIf="mestizos.length > 0"
-                     [src]="mestizos[1].imagenMascota[0]" 
+                     [src]="mestizos[0].imagenMascota[0]" 
                      class="shadow-xl rounded-full align-middle border-none absolute -m-16 -ml-20 lg:-ml-16 max-w-[150px] max-h-[150px] h-[150px] w-[150px] object-cover object-center"/>
               </div>
             </div>
@@ -57,25 +57,35 @@
             <div class="mt-8 m-2 mx-4">
               <h4 class="text-slate-600 font-bold uppercase">Mis mascotas</h4>
             </div>
-            <div class="grid grid-cols-2 gap-3 py-3 px-4 w-full">
-              <div *ngFor="let mestizo of mestizos" class="h-max rounded-xl overflow-hidden border border-gray-300 shadow-lg">
-                <ion-card class="m-0 h-44 relative">
-                  <!-- Skeleton Loader for when data is loading -->
-                  <ion-skeleton-text *ngIf="!mestizo.imagenMascota.length" class="h-full w-full"></ion-skeleton-text>
-          
-                  <!-- Display Pet Details when data is loaded -->
+            <div class="grid grid-cols-2 gap-3 py-3 w-full">
+              <!-- Skeleton Loader when mestizos is empty -->
+              <ng-container *ngIf="mestizos.length === 0">
+                <div *ngFor="let _ of [].constructor(4)" class="h-max rounded-xl overflow-hidden border border-blue-300 shadow-lg relative">
+                  <ion-card class="m-0 h-44 relative group" mode="ios">
+                    <ion-skeleton-text class="h-full w-full"></ion-skeleton-text>
+                    <ion-card-header class="p-2 h-full w-full bg-gradient-to-b from-transparent from-40% via-black/50 to-black/80">
+                      <ion-skeleton-text animated style="width: 80%; height: 20px;"></ion-skeleton-text>
+                      <ion-skeleton-text animated style="width: 60%; height: 15px;" class="mt-1"></ion-skeleton-text>
+                    </ion-card-header>
+                  </ion-card>
+                </div>
+              </ng-container>
+              <!-- Display Pet Details once data is loaded -->
+              <div *ngFor="let mestizo of mestizos" class="h-max rounded-xl overflow-hidden border border-blue-300 shadow-lg relative">
+                <ion-card class="m-0 h-44 relative group" mode="ios">
+                  <img 
+                    class="h-full w-full object-cover object-center absolute top-0 left-0 transition-all duration-300 group-hover:scale-110" 
+                    alt="Imagen de {{ mestizo.nombre }}" 
+                    [src]="mestizo.imagenMascota[0]" 
+                  />
                   <ion-card-header class="p-2 h-full w-full bg-gradient-to-b from-transparent from-40% via-black/50 to-black/80">
-                    <div *ngIf="mestizo.imagenMascota.length">
-                      <img [src]="mestizo.imagenMascota[0]" alt="{{ mestizo.apodo }}" class="w-full h-32 object-cover rounded-md" />
-                    </div>
-                    <div *ngIf="mestizo.nombre && mestizo.apodo">
-                      <h5 class="text-white font-semibold">{{ mestizo.nombre }} - {{ mestizo.apodo }}</h5>
-                    </div>
+                    <ion-card-title class="text-white">{{ mestizo.nombre }}</ion-card-title>
+                    <ion-card-subtitle class="text-gray-200">{{ mestizo.apodo }}</ion-card-subtitle>
                   </ion-card-header>
                 </ion-card>
               </div>
             </div>
-          </div>          
+          </div>              
         </div>  
       </div>
     </div>
