@@ -22,12 +22,12 @@
             <div class="w-full flex justify-center">
               <div class="relative">
                 <img 
-                [src]="mestizos.length > 0 && mestizos[0].imagenMascota?.length > 0 ? mestizos[0].imagenMascota[0] : 'https://firebasestorage.googleapis.com/v0/b/petpalooza-63384.appspot.com/o/Logos%2FPetPalooza.png?alt=media&token=39645dd8-2e86-4806-b8bf-e04d16088841'" 
-                class="shadow-xl rounded-full align-middle border-none absolute -m-16 -ml-20 lg:-ml-16 max-w-[150px] max-h-[150px] h-[150px] w-[150px] object-cover object-center"/>
+                [src]="mestizos.length > 0 && mestizos[0].imagenMascota?.length > 0 ? mestizos[0].imagenMascota[0] : 'https://firebasestorage.googleapis.com/v0/b/petpalooza-63384.appspot.com/o/Logos%2Fmascotas.png?alt=media&token=115d328b-4521-4d1b-9f84-d97fd722c6d9'" 
+                class="shadow-xl rounded-full align-middle border-none absolute -m-20 -ml-20 lg:-ml-16 max-w-[150px] max-h-[150px] h-[150px] w-[150px] object-cover object-center"/>
               </div>
             </div>
             <div class="w-full text-center mt-24">
-              <h3 *ngIf="mestizos.length > 0" class="text-2xl text-slate-700 font-bold leading-normal mb-1">{{ mestizos[0].nombre }}</h3>
+              <h3 *ngIf="mestizos.length > 0 && mestizos[0].nombre?.length > 0 ? mestizos[0].nombre : 'No haz registrado mascota'" class="text-2xl text-slate-700 font-bold leading-normal mb-1">{{ mestizos[0].nombre }}</h3>
             </div>
           </div>          
           <div class="mt-2 py-3 text-center px-2">

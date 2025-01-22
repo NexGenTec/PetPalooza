@@ -46,10 +46,11 @@ const routes: Routes = [
     path: 'mestizo-form',
     loadChildren: () => import('./mestizo/page/mestizo-form/mestizo-form.module').then( m => m.MestizoFormPageModule)
   },
-  {
-    path: 'mestizo',
-    loadChildren: () => import('./mestizo/page/mestizo/mestizo.module').then(m => m.MestizoPageModule)
-  },
+  // {
+  //   path: 'mestizo',
+  //   loadChildren: () => import('./mestizo/page/mestizo/mestizo.module').then(m => m.MestizoPageModule)
+  // },
+
 ];
 @NgModule({
   imports: [
