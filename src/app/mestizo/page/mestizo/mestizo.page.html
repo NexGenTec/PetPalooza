@@ -27,19 +27,20 @@
               </div>
             </div>
             <div class="w-full text-center mt-24">
-              <h3 *ngIf="mestizos.length > 0" class="text-2xl text-slate-700 font-bold leading-normal mb-1">{{ mestizos[0].nombre }}</h3>
+              <h3 *ngIf="mestizos.length > 0" class="text-2xl text-slate-700 font-bold leading-normal mb-1">{{ mestizos[0].nombre }} {{mestizos[0].apellido}}</h3>
+              <p *ngIf="mestizos.length > 0" class="text-base text-slate-500 font-light">{{mestizos[0].apodo}}</p>
             </div>
           </div>          
           <div class="mt-2 py-3 text-center px-2">
             <div class="flex flex-wrap justify-center items-center gap-2">
-              <ion-buttons class="font-light text-sm leading-relaxed rounded-xl text-slate-600 mb-4 p-2 px-3 border-2 border-primary cursor-pointer" routerLink="/mestizo-form">
+              <ion-buttons class="font-light text-sm leading-relaxed rounded-xl text-slate-600 hover:shadow-lg duration-200 mb-4 p-2 px-3 border-2 border-primary cursor-pointer" routerLink="/mestizo-form">
                 Agregar mi mestizo
                 <ion-icon name="paw" class="text-base m-1"></ion-icon>
               </ion-buttons>              
             </div>
           </div>
-          <div class="bg-blue-100 text-center flex flex-row items-center max-h-36 p-4 px-6">
-            <div class="relative text-center flex justify-center">
+          <div class="bg-blue-100 text-center flex flex-row items-center max-h-36 p-4 px-6 ">
+            <div class="relative text-center flex justify-center sm:mx-10">
               <img *ngIf="user?.imagen; else defaultImage"
                    [src]="user?.imagen"
                    class="shadow-xl rounded-full align-middle border-none max-w-[150px] max-h-[150px] h-[80px] w-[80px] object-cover object-center"/>
@@ -57,7 +58,7 @@
             <div class="mt-8 m-2 mx-4">
               <h4 class="text-slate-600 font-bold uppercase">Mis mascotas</h4>
             </div>
-            <div class="grid grid-cols-2 gap-3 py-3 w-full">
+            <div class="grid grid-cols-2 gap-3 py-3 w-full p-2 px-4">
               <!-- Skeleton Loader when mestizos is empty -->
               <ng-container *ngIf="mestizos.length === 0">
                 <div *ngFor="let _ of [].constructor(4)" class="h-max rounded-xl overflow-hidden border border-blue-300 shadow-lg relative">
