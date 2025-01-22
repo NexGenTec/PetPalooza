@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Mestizos } from '../models/mestizo.models';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
-import { finalize } from 'rxjs';
-import { Users } from '../models/users.models';
+import { Observable, finalize } from 'rxjs';
+import { Mestizos, Users } from '../models/users.models';
 
 @Injectable({
   providedIn: 'root'
@@ -23,8 +22,8 @@ export class MestizosService {
   }
 
 
-  private uploadImageToFirebase(image: string): Promise<string> {
-    const filePath = `Mestizo/${new Date().getTime()}_${Math.random().toString(36).substring(2, 15)}`;
+  private uploadImageToFirebase(image: string,mestizo?: Mestizos,): Promise<string> {
+    const filePath = `Mestizo/${mestizo.nombre}/${new Date().getTime()}_${Math.random().toString(36).substring(2, 15)}`;
     const fileRef = this.storage.ref(filePath);
 
     return new Promise((resolve, reject) => {
@@ -41,17 +40,61 @@ export class MestizosService {
     });
   }
 
-  async addMestizos(mestizo: Mestizos, imageUrls: string[]): Promise<void> {
+  async addMestizos(userId: string, mestizo: Mestizos, imageUrls: string[]): Promise<void> {
     try {
       const mestizoData: Mestizos = {
         ...mestizo,
         imagenMascota: imageUrls,
         createdAt: new Date(),
       };
-      await this.firestore.collection(this.collectionName).add(mestizoData);
+  
+      // Agregar el mestizo dentro de la subcolección 'mestizos' del usuario
+      await this.firestore.collection(`users/${userId}/mestizos`).add(mestizoData);
       console.log('Mascota registrada con éxito');
     } catch (error) {
       console.error('Error al subir las imágenes o los datos:', error);
     }
+  }
+  
+
+  async uploadImage(file: File, filePath: string): Promise<string> {
+    const fileRef = this.storage.ref(filePath);
+    const task = this.storage.upload(filePath, file);
+
+    return new Promise((resolve, reject) => {
+      task.snapshotChanges().pipe(
+        finalize(() => {
+          fileRef.getDownloadURL().subscribe(
+            (downloadURL) => {
+              resolve(downloadURL);
+            },
+            (error) => reject(error)
+          );
+        })
+      ).subscribe();
+    });
+  }
+
+  async addUser(user: Users, file: File): Promise<Users> {
+    const imagePath = `user/${user.nombre}/${new Date().getTime()}_${file.name}`;
+    try {
+      const imageUrl = await this.uploadImage(file, imagePath);
+      const userData: Users = {
+        ...user,
+        imagen: imageUrl,
+        createdAt: new Date(),
+      };
+      const userDocRef = await this.firestore.collection('users').add(userData);
+      userData.id = userDocRef.id;
+  
+      return userData;
+    } catch (error) {
+      console.error('Error al subir los datos:', error);
+      throw new Error('Error al subir los datos');
+    }
+  }  
+
+  getMestizosByUserId(userId: string): Observable<Mestizos[]> {
+    return this.firestore.collection<Mestizos>(`users/${userId}/mestizos`).valueChanges();
   }
 }
