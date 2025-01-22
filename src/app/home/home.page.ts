@@ -14,6 +14,8 @@ import { StorageService } from '../service/storage.service';
 import { NotificationsService } from '../service/notifications.service';
 import { AdmobAds, BannerPosition, BannerSize, } from 'capacitor-admob-ads';
 import { environment } from 'src/environments/environment.prod';
+import { Mestizos } from '../mestizo/models/users.models';
+import { MestizosService } from '../mestizo/service/mestizos.service';
 
 @Component({
   selector: 'app-home',
@@ -41,6 +43,7 @@ export class homePage implements OnInit {
   originalPerros: InfoPerro[] = [];
   originalAves: InfoAve[] = [];
   originalImg: InfoImage[] = [];
+  originalMestizos: Mestizos[] = [];
   loaded: boolean = false;
   showSkeletonUltimos: boolean = true;
   navigateToCatshowSkeleton: boolean = true;
@@ -73,12 +76,14 @@ export class homePage implements OnInit {
     private modalController: ModalController,
     private favoritesService: StorageService,
     private pushNotificationService: NotificationsService,
+    private mestizosService: MestizosService
   ) {
   }
 
   ngOnInit(): void {
     this.getQuirkyFacts();
     this.loadData();
+    this.loadMestizos();
     this.showImage = false;
     this.initStorage();
     setInterval(() => {
@@ -252,6 +257,19 @@ export class homePage implements OnInit {
   navigateToFavoriteMatch() {
     this.router.navigate(['/favoritos/match-favorite']);
   }
+
+  loadMestizos(): void {
+    this.mestizosService.getAllUsersWithMestizos().subscribe({
+      next: (data) => {
+        this.originalMestizos = data;
+        this.isLoading = false;
+      },
+      error: (err) => {
+        console.error('Error al cargar los datos:', err);
+        this.isLoading = false;
+      }
+    });
+  }  
 
   /*Anuncio Banner  */
   async showAdaptiveBanner() {
