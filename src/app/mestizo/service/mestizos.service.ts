@@ -98,24 +98,23 @@ export class MestizosService {
     return this.firestore.collection<Mestizos>(`users/${userId}/mestizos`).valueChanges();
   }
 
-  getAllUsersWithMestizos(): Observable<{ user: Users, mestizos: Mestizos[] }[]> {
+  getAllUsersWithMestizos(): Observable<Mestizos[]> {
     return this.firestore.collection<Users>('users').snapshotChanges().pipe(
       switchMap(usersSnapshot => {
-        const usersWithMestizos$ = usersSnapshot.map(userDoc => {
-          const userData = userDoc.payload.doc.data() as Users;
+        const mestizosObservables = usersSnapshot.map(userDoc => {
           const userId = userDoc.payload.doc.id;
-  
-          return this.firestore.collection<Mestizos>(`users/${userId}/mestizos`).valueChanges().pipe(
-            map(mestizos => ({
-              user: { ...userData, id: userId },
-              mestizos
-            }))
-          );
+          return this.firestore.collection<Mestizos>(`users/${userId}/mestizos`).valueChanges();
         });
-        return combineLatest(usersWithMestizos$);
+  
+        // Combinar todos los observables de mestizos en uno solo y aplanarlos en un solo array
+        return combineLatest(mestizosObservables).pipe(
+          map(mestizosArrays => 
+            mestizosArrays.reduce((acc, curr) => acc.concat(curr), [])  // Aplanar el array de arrays usando reduce y concat
+          )
+        );
       })
     );
-  }
+  }  
   
 
 }

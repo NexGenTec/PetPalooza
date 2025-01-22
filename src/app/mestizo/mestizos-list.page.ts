@@ -12,22 +12,25 @@ export class MestizosListPage implements OnInit {
   searchTerm: string = '';
   isLoading = true;
   usersWithMestizos: { user: Users, mestizos: Mestizos[] }[] = [];
+  mestizos: Mestizos[] = [];
 
   constructor(private mestizosService: MestizosService) {}
 
   ngOnInit() {
     this.loadMestizos();
   }
+
   loadMestizos(): void {
     this.mestizosService.getAllUsersWithMestizos().subscribe({
       next: (data) => {
-        this.usersWithMestizos = data;
-        this.isLoading = false;
+        this.mestizos = data; // Los datos ya están aplanados por la función getAllUsersWithMestizos()
+        console.log('Datos cargados:', this.mestizos);
+        this.isLoading = false; // Se detiene el indicador de carga
       },
       error: (err) => {
-        console.error('Error al cargar los datos:', err);
-        this.isLoading = false;
+        console.error('Error al cargar los datos:', err); // Manejo de errores
+        this.isLoading = false; // Se detiene el indicador de carga en caso de error
       }
     });
-  }
+  }  
 }
