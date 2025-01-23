@@ -27,8 +27,10 @@
               </div>
             </div>
             <div class="w-full text-center mt-24">
-              <h3 *ngIf="mestizos.length > 0" class="text-2xl text-slate-700 font-bold leading-normal mb-1">{{ mestizos[0].nombre }}</h3>
-            </div>
+              <h3 class="text-2xl text-slate-700 font-bold leading-normal mb-1">
+                {{ mestizos.length > 0 ? mestizos[0].nombre : 'Mestizos' }}
+              </h3>
+            </div>            
           </div>          
           <div class="mt-2 py-3 text-center px-2">
             <div class="flex flex-wrap justify-center items-center gap-2">
@@ -49,17 +51,26 @@
               </ng-template>
             </div>
             <div class="w-full">
-              <p class="text-xl font-semibold leading-relaxed text-slate-700">{{ user?.nombre }} {{ user?.apellido }}</p>
-              <small class="font-light leading-relaxed text-slate-400 text-sm">Dueño</small>
+              <p *ngIf="user?.nombre && user?.apellido; else noUser" class="text-xl font-semibold leading-relaxed text-slate-700">
+                {{ user?.nombre }} {{ user?.apellido }}
+              </p>
+              <small *ngIf="user?.nombre && user?.apellido" class="font-light leading-relaxed text-slate-400 text-sm">
+                Dueño
+              </small>
             </div>
+            <ng-template #noUser>
+              <div class="text-center py-6">
+                <p class="text-sm text-slate-500 mb-4">Para registrar una mascota, primero debes crear tu usuario.</p>
+              </div>
+            </ng-template>                      
           </div>          
           <div>
             <div class="mt-8 m-2 mx-4">
               <h4 class="text-slate-600 font-bold uppercase">Mis mascotas</h4>
             </div>
             <div class="grid grid-cols-2 gap-3 py-3 w-full">
-              <!-- Skeleton Loader when mestizos is empty -->
-              <ng-container *ngIf="mestizos.length === 0">
+              <!-- Skeleton Loader while loading -->
+              <ng-container *ngIf="loading">
                 <div *ngFor="let _ of [].constructor(4)" class="h-max rounded-xl overflow-hidden border border-blue-300 shadow-lg relative">
                   <ion-card class="m-0 h-44 relative group" mode="ios">
                     <ion-skeleton-text class="h-full w-full"></ion-skeleton-text>
@@ -70,21 +81,39 @@
                   </ion-card>
                 </div>
               </ng-container>
+            
               <!-- Display Pet Details once data is loaded -->
-              <div *ngFor="let mestizo of mestizos" class="h-max rounded-xl overflow-hidden border border-blue-300 shadow-lg relative">
-                <ion-card class="m-0 h-44 relative group" mode="ios">
-                  <img 
-                    class="h-full w-full object-cover object-center absolute top-0 left-0 transition-all duration-300 group-hover:scale-110" 
-                    alt="Imagen de {{ mestizo.nombre }}" 
-                    [src]="mestizo.imagenMascota[0]" 
-                  />
-                  <ion-card-header class="p-2 h-full w-full bg-gradient-to-b from-transparent from-40% via-black/50 to-black/80">
-                    <ion-card-title class="text-white">{{ mestizo.nombre }}</ion-card-title>
-                    <ion-card-subtitle class="text-gray-200">{{ mestizo.apodo }}</ion-card-subtitle>
-                  </ion-card-header>
-                </ion-card>
-              </div>
-            </div>
+              <ng-container *ngIf="!loading">
+                <ng-container *ngIf="mestizos.length > 0; else noMestizos">
+                  <div *ngFor="let mestizo of mestizos" class="h-max rounded-xl overflow-hidden border border-blue-300 shadow-lg relative">
+                    <ion-card class="m-0 h-44 relative group" mode="ios">
+                      <img 
+                        class="h-full w-full object-cover object-center absolute top-0 left-0 transition-all duration-300 group-hover:scale-110" 
+                        alt="Imagen de {{ mestizo.nombre }}" 
+                        [src]="mestizo.imagenMascota[0]" 
+                      />
+                      <ion-card-header class="p-2 h-full w-full bg-gradient-to-b from-transparent from-40% via-black/50 to-black/80">
+                        <ion-card-title class="text-white">{{ mestizo.nombre }}</ion-card-title>
+                        <ion-card-subtitle class="text-gray-200">{{ mestizo.apodo }}</ion-card-subtitle>
+                      </ion-card-header>
+                    </ion-card>
+                  </div>
+                </ng-container>
+              </ng-container>
+            
+              <!-- Informative message when no pets are available -->
+              <ng-template #noMestizos>
+                <div class="col-span-2 text-center py-6">
+                  <p class="text-lg text-slate-700 font-semibold">Aún no has registrado ninguna mascota.</p>
+                  <p class="text-sm text-slate-500 mb-4">Registra tu primera mascota para comenzar.</p>
+                  <a 
+                  routerLink="/mestizo-form" 
+                  class="text-primary font-semibold no-underline transition-colors hover:text-blue-700">
+                  Registra aquí tu mascota
+                </a>                
+                </div>
+              </ng-template>              
+            </div>            
           </div>              
         </div>  
       </div>

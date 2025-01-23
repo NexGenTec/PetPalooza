@@ -1,7 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { ModalController } from '@ionic/angular';
-import { MestizoFormPage } from '../mestizo-form/mestizo-form.page';
 import { Mestizos, Users } from '../../models/users.models';
 import { MestizosService } from '../../service/mestizos.service';
 
@@ -16,18 +13,18 @@ export class MestizoPage implements OnInit {
   loading: boolean = true;
 
   constructor(
-    private router: Router,
-    private modalController: ModalController,
     private mestizosService: MestizosService,
   ) {
 
    }
 
-  ngOnInit() {
+   ngOnInit() {
     const userSession = sessionStorage.getItem('user');
     if (userSession) {
       this.user = JSON.parse(userSession);
       this.loadMestizos();
+    } else {
+      this.loading = false;
     }
   }
 
@@ -40,19 +37,11 @@ export class MestizoPage implements OnInit {
         },
         (error) => {
           console.error('Error al cargar las mascotas:', error);
+          this.loading = false; 
         }
       );
+    } else {
+      this.loading = false; 
     }
   }
-
-  // async openModal() {
-  //   const modal = await this.modalController.create({
-  //     component: MestizoFormPage,
-  //   });
-  //   modal.onDidDismiss().then(() => {
-  //     this.loadMestizos();
-  //   });
-  //   return await modal.present();
-  // }
-
 }

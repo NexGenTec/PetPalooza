@@ -3,6 +3,7 @@ import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@ang
 import { ToastController, LoadingController, ModalController } from '@ionic/angular';
 import { MestizosService } from '../../service/mestizos.service';
 import { Users } from '../../models/users.models';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-mestizo-form',
@@ -27,11 +28,35 @@ export class MestizoFormPage implements OnInit {
   newTemperamentoControl: FormControl;
   selectedImages: string[] = [];
 
+
+  especies: string[] = [
+    'Perro', 'Gato', 'Conejo', 'Cerdo', 'Caballo', 'Pájaro', 'Reptil', 'Roedor', 'Pez',
+    'Tortuga', 'Loro', 'Pececito', 'Hámster', 'Erizo'
+  ];
+
+  tamanos: string[] = [
+    'Pequeño', 'Mediano', 'Grande', 'Enorme'
+  ];
+
+  pelajes: string[] = [
+    'Corto',
+    'Largo',
+    'Semi-largo',
+    'Rizado',
+    'Lacio',
+    'Doble capa',
+    'Ondulado',
+    'Suave',
+    'Espeso',
+    'Desgreñado'
+  ];
+
   constructor(
     private _formBuilder: FormBuilder,
     private toastController: ToastController,
     private loadingController: LoadingController,
     private mestizosService: MestizosService,
+    private router: Router,
   ) {}
 
   ngOnInit() {
@@ -42,20 +67,20 @@ export class MestizoFormPage implements OnInit {
 
   initializeForm() {
     this.mestizoForm = this._formBuilder.group({
-      nombre: ['Max', Validators.required],
-      apellido: ['Doe', Validators.required],
-      apodo: ['Fido', Validators.required],
-      especie: ['Perro', Validators.required],
-      sexo: ['Macho', Validators.required],
-      edad: [3, Validators.required],
-      nacionalidad: ['Chilena', Validators.required]
+      nombre: ['', Validators.required],
+      apellido: ['', Validators.required],
+      apodo: ['', Validators.required],
+      especie: ['', Validators.required],
+      sexo: ['', Validators.required],
+      edad: [, Validators.required],
+      nacionalidad: ['', Validators.required]
     });
     this.caracteristicasForm = this._formBuilder.group({
-      tamano: ['Mediano', Validators.required],
-      peso: ['15 kg', Validators.required],
-      pelaje: ['Corto', Validators.required],
-      color: ['Marrón', Validators.required],
-      ojos: ['Cafés', Validators.required]
+      tamano: ['', Validators.required],
+      peso: ['', Validators.required],
+      pelaje: ['', Validators.required],
+      color: ['', Validators.required],
+      ojos: ['', Validators.required]
     });
     this.newTemperamentoControl = this._formBuilder.control('', Validators.required);
     this.temperamentos = this._formBuilder.array([], [Validators.minLength(3), Validators.maxLength(5)]);
@@ -123,7 +148,8 @@ export class MestizoFormPage implements OnInit {
           mascotaData.imagenes = imageUrls;
           this.mestizosService.addMestizos(userSession.id, mascotaData, imageUrls)
             .then(() => {
-              console.log('Mascota registrada con éxito',mascotaData);
+              this.showToast('Mascota registrada con éxito', 'success');
+              this.router.navigateByUrl('/mestizo');
               this.resetForms();
             })
             .catch((error) => {
