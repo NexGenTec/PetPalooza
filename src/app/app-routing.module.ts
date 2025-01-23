@@ -50,6 +50,10 @@ const routes: Routes = [
     path: 'mestizo',
     loadChildren: () => import('./mestizo/page/mestizo/mestizo.module').then(m => m.MestizoPageModule)
   },
+  {
+    path: 'perfil-mestizo',
+    loadChildren: () => import('./mestizo/page/perfil-mestizo/perfil-mestizo.module').then(m => m.PerfilMestizoPageModule)
+  },
 ];
 @NgModule({
   imports: [
