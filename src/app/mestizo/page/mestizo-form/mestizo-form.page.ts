@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { ToastController, LoadingController, ModalController } from '@ionic/angular';
+import { ToastController, LoadingController, ModalController, AlertController } from '@ionic/angular';
 import { MestizosService } from '../../service/mestizos.service';
 import { Users } from '../../models/users.models';
 import { Router } from '@angular/router';
@@ -51,18 +51,25 @@ export class MestizoFormPage implements OnInit {
     'Desgreñado'
   ];
 
+  user: Users
   constructor(
     private _formBuilder: FormBuilder,
     private toastController: ToastController,
     private loadingController: LoadingController,
     private mestizosService: MestizosService,
     private router: Router,
+    private alertController: AlertController
   ) {}
 
   ngOnInit() {
     this.initializeForm();
     this.initializeUserForm();
     this.checkUserSession();
+    const savedUser = sessionStorage.getItem('user');
+    if (savedUser) {
+      this.user = JSON.parse(savedUser);
+      this.isFormCompleted = true;
+    }
   }  
 
   initializeForm() {
@@ -344,6 +351,7 @@ export class MestizoFormPage implements OnInit {
           this.isFormCompleted = true;
           this.showToast('Usuario registrado con éxito', 'success');
           this.resetUserForm();
+          this.showStorageAlert();
         })
         .catch(() => {
           this.showToast('Error al registrar usuario', 'danger');
@@ -353,6 +361,24 @@ export class MestizoFormPage implements OnInit {
           loading.dismiss();
         });
     }
+  }
+
+  async showStorageAlert() {
+    const alert = await this.alertController.create({
+      header: 'Atención',
+      message: 'Tu información ha sido guardada en la memoria de tu dispositivo. Evita borrar la memoria para no perder tus datos.',
+      buttons: [
+        {
+          text: 'Recargar',
+          handler: () => {
+            location.reload();
+          }
+        }
+      ],
+      mode: 'ios'
+    });
+  
+    await alert.present();
   }  
 
   resetUserForm() {
