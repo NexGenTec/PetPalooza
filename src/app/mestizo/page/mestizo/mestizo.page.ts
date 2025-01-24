@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Mestizos, Users } from '../../models/users.models';
 import { MestizosService } from '../../service/mestizos.service';
+import { UserSessionService } from '../../service/user-session.service';
 
 @Component({
   selector: 'app-mestizo',
@@ -14,18 +15,20 @@ export class MestizoPage implements OnInit {
 
   constructor(
     private mestizosService: MestizosService,
+    private userService: UserSessionService
   ) {
 
    }
 
    ngOnInit() {
-    const userSession = sessionStorage.getItem('user');
-    if (userSession) {
-      this.user = JSON.parse(userSession);
-      this.loadMestizos();
-    } else {
-      this.loading = false;
-    }
+    this.userService.user$.subscribe((user) => {
+      if (user) {
+        this.user = user;
+        this.loadMestizos();
+      } else {
+        this.loading = false;
+      }
+    });
   }
 
   loadMestizos() {

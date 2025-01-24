@@ -4,6 +4,7 @@ import { ToastController, LoadingController, ModalController, AlertController } 
 import { MestizosService } from '../../service/mestizos.service';
 import { Users } from '../../models/users.models';
 import { Router } from '@angular/router';
+import { UserSessionService } from '../../service/user-session.service';
 
 @Component({
   selector: 'app-mestizo-form',
@@ -51,14 +52,15 @@ export class MestizoFormPage implements OnInit {
     'Desgreñado'
   ];
 
-  user: Users
+  userData: Users
   constructor(
     private _formBuilder: FormBuilder,
     private toastController: ToastController,
     private loadingController: LoadingController,
     private mestizosService: MestizosService,
     private router: Router,
-    private alertController: AlertController
+    private alertController: AlertController,
+    private userService: UserSessionService
   ) {}
 
   ngOnInit() {
@@ -67,7 +69,7 @@ export class MestizoFormPage implements OnInit {
     this.checkUserSession();
     const savedUser = sessionStorage.getItem('user');
     if (savedUser) {
-      this.user = JSON.parse(savedUser);
+      this.userData = JSON.parse(savedUser);
       this.isFormCompleted = true;
     }
   }  
@@ -138,10 +140,17 @@ export class MestizoFormPage implements OnInit {
     this.selectedImages.splice(index, 1);
   }
 
-  submitForms() {
+  async submitForms() {
     const userSession = JSON.parse(sessionStorage.getItem('user') || '{}');
+  
     if (this.mestizoForm.valid && this.caracteristicasForm.valid && this.temperamentoForm.valid && this.historiaForm.valid) {
       this.isSubmitting = true;
+  
+      const loading = await this.loadingController.create({
+        message: 'Registrando mascota...',
+        mode: 'ios'
+      });
+      await loading.present();
   
       const mascotaData = {
         ...this.mestizoForm.value,
@@ -151,30 +160,33 @@ export class MestizoFormPage implements OnInit {
       };
   
       if (this.selectedImages.length > 0) {
-        this.mestizosService.uploadImages(this.selectedImages, mascotaData).then((imageUrls) => {
-          mascotaData.imagenes = imageUrls;
-          this.mestizosService.addMestizos(userSession.id, mascotaData, imageUrls)
-            .then(() => {
-              this.showToast('Mascota registrada con éxito', 'success');
-              this.router.navigateByUrl('/mestizo');
-              this.resetForms();
-            })
-            .catch((error) => {
-              console.error('Error al registrar la mascota:', error);
-            })
-            .finally(() => {
-              this.isSubmitting = false;
-            });
-        }).catch((error) => {
-          console.error('Error al subir las imágenes:', error);
-        });
+        this.mestizosService.uploadImages(this.selectedImages, mascotaData)
+          .then((imageUrls) => {
+            mascotaData.imagenes = imageUrls;
+            return this.mestizosService.addMestizos(userSession.id, mascotaData, imageUrls);
+          })
+          .then(() => {
+            this.showToast('Mascota registrada con éxito', 'success');
+            this.router.navigateByUrl('/mestizo');
+            this.resetForms();
+          })
+          .catch((error) => {
+            console.error('Error al registrar la mascota:', error);
+            this.showToast('Error al registrar la mascota', 'danger');
+          })
+          .finally(() => {
+            this.isSubmitting = false;
+            loading.dismiss();
+          });
       } else {
-        
+        loading.dismiss();
+        this.showToast('Debes seleccionar al menos una imagen', 'danger');
+        this.isSubmitting = false;
       }
     } else {
       this.showToast('Completa todos los campos correctamente antes de enviar', 'danger');
     }
-  }
+  }  
   
   resetForms() {
     this.mestizoForm.reset();
@@ -229,6 +241,7 @@ export class MestizoFormPage implements OnInit {
 
   nextForm() {
     if (!this.isFormCompleted) {
+      this.showToast('Aún no tiene un usuario registrado.', 'danger');
       return;
     }
     const forms = [this.mestizoForm, this.caracteristicasForm, this.temperamentoForm, this.historiaForm];
@@ -328,40 +341,43 @@ export class MestizoFormPage implements OnInit {
 
 
   async onSubmit() {
-    if (this.userForm.valid && this.selectedFile) {
-      this.isSubmitting = true;
-      this.userForm.disable();
-  
-      const loading = await this.loadingController.create({
-        message: 'Guardando información...',
-        mode: 'ios',
-      });
-      await loading.present();
-  
-      const user: Users = {
-        nombre: this.userForm.get('nombre')?.value,
-        apellido: this.userForm.get('apellido')?.value,
-        imagen: '',
-        createdAt: new Date(),
-      };
-  
-      this.mestizosService.addUser(user, this.selectedFile!)
-        .then((userData) => {
-          sessionStorage.setItem('user', JSON.stringify(userData));
-          this.isFormCompleted = true;
-          this.showToast('Usuario registrado con éxito', 'success');
-          this.resetUserForm();
-          this.showStorageAlert();
-        })
-        .catch(() => {
-          this.showToast('Error al registrar usuario', 'danger');
-        })
-        .finally(() => {
-          this.isSubmitting = false;
-          loading.dismiss();
-        });
+    if (!this.userForm.valid || !this.selectedFile) {
+      this.showToast('Debe completar el formulario de registro de usuario.', 'danger');
+      return;
     }
-  }
+    this.isSubmitting = true;
+    this.userForm.disable();
+  
+    const loading = await this.loadingController.create({
+      message: 'Guardando información...',
+      mode: 'ios',
+    });
+    await loading.present();
+  
+    const user: Users = {
+      nombre: this.userForm.get('nombre')?.value,
+      apellido: this.userForm.get('apellido')?.value,
+      imagen: '',
+      createdAt: new Date(),
+    };
+  
+    this.mestizosService.addUser(user, this.selectedFile!)
+      .then((userData) => {
+        this.userService.setUser(userData); 
+        this.userData = userData; 
+        this.isFormCompleted = true;
+        this.showToast('Usuario registrado con éxito', 'success');
+        this.resetUserForm();
+        this.showStorageAlert();
+      })
+      .catch(() => {
+        this.showToast('Error al registrar usuario', 'danger');
+      })
+      .finally(() => {
+        this.isSubmitting = false;
+        loading.dismiss();
+      });
+  }  
 
   async showStorageAlert() {
     const alert = await this.alertController.create({
@@ -369,10 +385,8 @@ export class MestizoFormPage implements OnInit {
       message: 'Tu información ha sido guardada en la memoria de tu dispositivo. Evita borrar la memoria para no perder tus datos.',
       buttons: [
         {
-          text: 'Recargar',
-          handler: () => {
-            location.reload();
-          }
+          text: 'Aceptar',
+          role: 'cancel'
         }
       ],
       mode: 'ios'

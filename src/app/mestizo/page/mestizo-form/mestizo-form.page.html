@@ -31,14 +31,14 @@
                 <div class="flex items-center gap-6">
                   <div class="flex-shrink-0">
                     <img 
-                      [src]="user?.imagen"
+                      [src]="userData?.imagen"
                       alt="Imagen de usuario"
                       class="rounded-full border-4 border-blue-500 object-cover w-20 h-20 sm:w-36 sm:h-36 shadow-md"
                     />
                   </div>
                   <div class="text-start text-slate-700">
                     <small class="italic text-blue-600">🎉¡Felicidades!🎉</small>
-                    <h4 class="text-2xl font-bold text-gray-800">{{ user?.nombre }} {{ user?.apellido }}</h4>
+                    <h4 class="text-2xl font-bold text-gray-800">{{ userData?.nombre }} {{ userData?.apellido }}</h4>
                     <p class="text-md font-light">Ya estás registrado como dueño</p>
                   </div>
                 </div>
@@ -490,6 +490,7 @@
                   Anterior
                 </button>
                 <button type="submit" class="bg-blue-500 text-white px-6 py-3 rounded-lg shadow-md hover:bg-blue-600 transition-all" [disabled]="isSubmitting">
+                  <ion-icon *ngIf="isSubmitting" name="reload-outline" class="animate-spin"></ion-icon>
                   <span *ngIf="isSubmitting">Enviando...</span>
                   <span *ngIf="!isSubmitting">Enviar</span>
                 </button>

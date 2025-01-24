@@ -206,6 +206,10 @@ export class homePage implements OnInit {
     this.router.navigate([segment, perro.id], { state: { data: perro } });
   }
 
+  navigateToMestizo() {
+    this.router.navigate(['/tabs/mestizos-list']);
+  }
+
   async initStorage() {
     await this.storage.create();
     const isFirstTime = await this.storage.get('isFirstTime');
