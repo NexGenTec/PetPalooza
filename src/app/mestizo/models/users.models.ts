@@ -9,6 +9,7 @@ export interface Users {
 
 
 export interface Mestizos {
+    id?:string;
     nombre: string;
     apellido: string;
     apodo: string;

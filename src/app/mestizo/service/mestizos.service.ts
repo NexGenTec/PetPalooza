@@ -8,7 +8,6 @@ import { Mestizos, Users } from '../models/users.models';
   providedIn: 'root'
 })
 export class MestizosService {
-
   constructor(
     private firestore: AngularFirestore,
     private storage: AngularFireStorage,
@@ -22,8 +21,7 @@ export class MestizosService {
 
 
   private uploadImageToFirebase(image: string, mestizo: Mestizos): Promise<string> {
-    // Usamos el nombre del mestizo para definir la ruta
-    const filePath = `Mestizo/${mestizo.nombre}/${new Date().getTime()}_${Math.random().toString(36).substring(2, 15)}`;
+    const filePath = `Mestizo/${mestizo.id}/${new Date().getTime()}_${Math.random().toString(36).substring(2, 15)}`;
     const fileRef = this.storage.ref(filePath);
   
     return new Promise((resolve, reject) => {
@@ -47,14 +45,14 @@ export class MestizosService {
         imagenMascota: imageUrls,
         createdAt: new Date(),
       };
+      const docRef = await this.firestore.collection(`users/${userId}/mestizos`).add(mestizoData);
+      await docRef.update({ id: docRef.id });
   
-      // Agregar el mestizo dentro de la subcolección 'mestizos' del usuario
-      await this.firestore.collection(`users/${userId}/mestizos`).add(mestizoData);
-      console.log('Mascota registrada con éxito');
+      console.log('Mestizo guardado con id:', docRef.id);
     } catch (error) {
       console.error('Error al subir las imágenes o los datos:', error);
     }
-  }
+  }  
   
 
   async uploadImage(file: File, filePath: string): Promise<string> {
@@ -76,7 +74,7 @@ export class MestizosService {
   }
 
   async addUser(user: Users, file: File): Promise<Users> {
-    const imagePath = `user/${user.nombre}/${new Date().getTime()}_${file.name}`;
+    const imagePath = `user/${user.id}/${new Date().getTime()}_${file.name}`;
     try {
       const imageUrl = await this.uploadImage(file, imagePath);
       const userData: Users = {
@@ -105,16 +103,33 @@ export class MestizosService {
           const userId = userDoc.payload.doc.id;
           return this.firestore.collection<Mestizos>(`users/${userId}/mestizos`).valueChanges();
         });
-  
-        // Combinar todos los observables de mestizos en uno solo y aplanarlos en un solo array
         return combineLatest(mestizosObservables).pipe(
           map(mestizosArrays => 
-            mestizosArrays.reduce((acc, curr) => acc.concat(curr), [])  // Aplanar el array de arrays usando reduce y concat
+            mestizosArrays.reduce((acc, curr) => acc.concat(curr), [])
           )
         );
       })
     );
-  }  
-  
+  }
 
+  getMestizoByIdAndUser(userId: string, mestizoId: string): Observable<Mestizos> {
+    return this.firestore.collection(`users/${userId}/mestizos`)
+      .doc<Mestizos>(mestizoId)
+      .valueChanges();
+  }
+
+  getMestizoByIdGlobal(mestizoId: string): Observable<Mestizos | undefined> {
+    return this.firestore.collection<Users>('users').snapshotChanges().pipe(
+      switchMap(usersSnapshot => {
+        const mestizoObservables = usersSnapshot.map(userDoc => {
+          const userId = userDoc.payload.doc.id;
+          return this.firestore.collection<Mestizos>(`users/${userId}/mestizos`).doc(mestizoId).valueChanges();
+        });
+        return combineLatest(mestizoObservables).pipe(
+          map(mestizos => mestizos.find(mestizo => mestizo !== undefined))
+        );
+      })
+    );
+  }
+  
 }

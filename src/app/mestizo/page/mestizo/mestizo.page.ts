@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Mestizos, Users } from '../../models/users.models';
 import { MestizosService } from '../../service/mestizos.service';
 import { UserSessionService } from '../../service/user-session.service';
+import { Router } from '@angular/router';
+import { LoadingController } from '@ionic/angular';
 
 @Component({
   selector: 'app-mestizo',
@@ -15,7 +17,9 @@ export class MestizoPage implements OnInit {
 
   constructor(
     private mestizosService: MestizosService,
-    private userService: UserSessionService
+    private userService: UserSessionService,
+    private router: Router,
+    private loadingController: LoadingController
   ) {
 
    }
@@ -46,5 +50,18 @@ export class MestizoPage implements OnInit {
     } else {
       this.loading = false; 
     }
+  }
+
+  async redirectToPerfil(mestizoId: string) {
+    const loading = await this.loadingController.create({
+      message: 'Cargando...',
+      spinner: 'bubbles',
+      duration: 500,
+      backdropDismiss: false,
+    });
+
+    await loading.present(); // Muestra el loading
+    await loading.dismiss();
+    this.router.navigate(['/perfil-mestizo', mestizoId]);
   }
 }

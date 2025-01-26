@@ -3,15 +3,11 @@
 
   <ion-toolbar class="border-b border-gray-200">
     <div class="flex gap-2 items-center justify-center mx-3">
-      <img 
-        class="max-h-14 my-1"
-        alt="logo PetPalooza" 
-        src="assets/img/logo/PetPalooza.png" />
+      <img class="max-h-14 my-1" alt="logo PetPalooza" src="assets/img/logo/PetPalooza.png" />
     </div>
   </ion-toolbar>
 
   <div class="bg-gray-50">
-    <!-- profile 1 -->
     <div class="bg-blue-100 pt-20 pb-6 px-3 min-h-[93vh]">
       <div class="relative mx-auto md:max-w-2xl min-w-0 break-words bg-white w-full shadow-lg rounded-xl pb-3">
         <ng-container *ngIf="!isLoading; else loadingSkeleton">
@@ -19,81 +15,58 @@
             <ion-buttons class="absolute left-2 top-4 md:left-2 md:top-5" slot="start">
               <ion-back-button defaultHref="/"></ion-back-button>
             </ion-buttons>
-            <!-- <div class="absolute top-5 right-16 md:top-5 md:right-32">
-              <button (click)="shareContent('perro')" class="text-[#60a5fa] rounded-full w-8 h-8 md:w-10 md:h-10 p-1.5 md:p-2.5 drop-shadow-md hover:scale-105 duration-200">
-                <ion-icon name="share-social-outline" class="text-xl font-semibold md:text-2xl"></ion-icon>
-              </button>    
-            </div> -->
             <div class="absolute top-4 right-3 md:top-5 md:right-8 w-10 h-10 rounded-full bg-white flex justify-center items-center text-red-400">
-              <!-- <button type="button" 
-              [class.animate]="isInFavorites(perro, 'perro')"
-               [class.animate-pulse]="!isInFavorites(perro, 'perro')" 
-               (click)="addToFavorites(perro, 'perro')"
-               >
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8 md:w-10 md:h-10">
-                  <path d="m11.645 20.91-.007-.003-.022-.012a15.247 15.247 0 0 1-.383-.218 25.18 25.18 0 0 1-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0 1 12 5.052 5.5 5.5 0 0 1 16.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 0 1-4.244 3.17 15.247 15.247 0 0 1-.383.219l-.022.012-.007.004-.003.001a.752.752 0 0 1-.704 0l-.003-.001Z"/>
-                </svg>
-              </button>                       -->
             </div>
             <div class="flex flex-wrap justify-center">
-              <div class="w-full flex justify-center" >
+              <div class="w-full flex justify-center">
                 <div class="relative">
-                  <img src="https://firebasestorage.googleapis.com/v0/b/petpalooza-63384.appspot.com/o/Logos%2Fmascotas.png?alt=media&token=115d328b-4521-4d1b-9f84-d97fd722c6d9" class="shadow-xl rounded-full align-middle border-none absolute -m-16 -ml-20 lg:-ml-16 max-w-[150px] max-h-[150px] h-[150px] w-[150px] object-cover object-center"/>
+                  <img *ngIf="mestizo?.imagenMascota?.[0]" [src]="mestizo.imagenMascota[0]" class="shadow-xl rounded-full align-middle border-none absolute -m-16 -ml-20 lg:-ml-16 max-w-[150px] max-h-[150px] h-[150px] w-[150px] object-cover object-center" />
                 </div>
               </div>
               <div class="w-full text-center mt-24">
-                <h3 class="text-2xl text-slate-700 font-bold leading-normal mb-1">NOMBRE DE  MASCOTA</h3>
-                <div class="text-xs mt-0 mb-2 text-slate-400 font-bold uppercase">AQUI VA EL PAIS DE ORIGIN</div>
+                <h3 class="text-2xl text-slate-700 font-bold leading-normal mb-1">{{ mestizo?.nombre }}</h3>
+                <div class="text-xs mt-0 mb-2 text-slate-400 font-bold uppercase">{{ mestizo?.especie }}</div>
               </div>
               <div class="mt-6 py-6 border-t border-slate-200 text-center">
                 <div class="flex flex-wrap justify-center">
                   <div class="w-full px-4">
-                    <p class="font-light text-sm leading-relaxed text-slate-600 mb-4">AQUI VA LA HISTORIA</p>
+                    <p class="font-light text-sm leading-relaxed text-slate-600 mb-4">{{ mestizo?.historia }}</p>
                   </div>
                 </div>
               </div>
             </div>
           </div>  
+
           <div class="border-b border-gray-200 pb-2 bg-white mx-3">
-            <ion-segment mode="ios" >
-              <ion-segment-button value="caracteristicas" >
+            <ion-segment mode="ios">
+              <ion-segment-button value="caracteristicas">
                 <ion-icon name="paw-outline"></ion-icon>
               </ion-segment-button>
-              <ion-segment-button value="temperamento" >
+              <ion-segment-button value="temperamento">
                 <ion-icon name="leaf-outline"></ion-icon>
               </ion-segment-button>
-              <ion-segment-button value="images" >
+              <ion-segment-button value="images">
                 <ion-icon name="images-outline"></ion-icon>
               </ion-segment-button>
             </ion-segment>
           </div>
 
           <ion-card class="shadow-none">
-            <ion-card-content class="flex text-center flex-col">
-              <h6>HOLA</h6>
-              <small>hola</small>
-            </ion-card-content>
+            <!-- <ion-card-content class="flex text-center flex-col">
+              <small>{{ user?.nombre }} {{ user?.apellido }}</small>
+            </ion-card-content> -->
             <div class="flex justify-center flex-wrap">
-              <ion-chip  color="secondary">
-                
+              <ion-chip color="secondary">
+                {{ mestizo?.apodo }}
               </ion-chip>
             </div>
-            <ion-card-content  class="ion-text-start" >
+            <ion-card-content class="ion-text-start">
             </ion-card-content>
           </ion-card>
 
-          <ng-container >
-            <ng-template #loadingImagesSkeleton>
-              <div class="container mx-auto p-4">
-                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 max-w-xl mx-auto">
-                  <div >
-                    <div class="max-w-full rounded-lg overflow-hidden bg-gray-200 animate-pulse h-48 w-full"></div>
-                  </div>
-                </div>
-              </div>
-            </ng-template>
-          </ng-container>
         </ng-container>
+
+        <!-- Skeleton de carga -->
         <ng-template #loadingSkeleton>
           <div class="px-6">
             <div class="flex flex-wrap justify-center">
@@ -117,9 +90,8 @@
               </div>
             </div>
           </div>
-        </ng-template>    
+        </ng-template>
       </div>
     </div>
   </div>
 </ion-content>
-

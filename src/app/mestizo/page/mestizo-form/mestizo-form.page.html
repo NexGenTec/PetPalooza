@@ -115,7 +115,6 @@
                     class="flex items-center gap-2 font-semibold text-white bg-blue-500 hover:bg-blue-600 transition rounded-lg py-3 px-6 shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
                     [disabled]="isSubmitting"
                   >
-                    <ion-icon *ngIf="isSubmitting" name="reload-outline" class="animate-spin"></ion-icon>
                     <span *ngIf="isSubmitting">Enviando...</span>
                     <span *ngIf="!isSubmitting">Enviar</span>
                   </button>
@@ -484,13 +483,19 @@
                 <p *ngIf="historiaForm.get('imagenes').hasError('minlength')">Debes subir al menos 4 imágenes.</p>
                 <p *ngIf="historiaForm.get('imagenes').hasError('maxlength')">No puedes subir más de 6 imágenes.</p>
               </div>
+
+              <div *ngIf="selectedImages.length < 4" class="text-red-600 text-sm mt-4">
+                <p>Debes subir al menos 4 imágenes para continuar.</p>
+              </div>
           
               <div class="flex justify-between mt-6">
                 <button type="button" (click)="prevForm()" class="bg-gray-500 text-white px-6 py-3 rounded-lg shadow-md hover:bg-gray-600 transition-all">
                   Anterior
                 </button>
-                <button type="submit" class="bg-blue-500 text-white px-6 py-3 rounded-lg shadow-md hover:bg-blue-600 transition-all" [disabled]="isSubmitting">
-                  <ion-icon *ngIf="isSubmitting" name="reload-outline" class="animate-spin"></ion-icon>
+                <button 
+                  type="submit" 
+                  class="bg-blue-500 text-white px-6 py-3 rounded-lg shadow-md hover:bg-blue-600 transition-all" 
+                  [disabled]="isSubmitting || selectedImages.length < 4 || selectedImages.length > 6">
                   <span *ngIf="isSubmitting">Enviando...</span>
                   <span *ngIf="!isSubmitting">Enviar</span>
                 </button>

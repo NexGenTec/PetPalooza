@@ -48,7 +48,7 @@ const routes: Routes = [
         loadChildren: () => import('../mestizo/mestizos-list.module').then( m => m.MestizosListPageModule)
       },
       {
-        path: 'mestizos',
+        path: 'mestizo',
         loadChildren: () => import('../mestizo/page/mestizo/mestizo.module').then( m => m.MestizoPageModule)
       },
       {

@@ -15,9 +15,9 @@
     <div class="bg-blue-100 pt-20 pb-6 px-3 min-h-[93vh]">
       <div class="relative mx-auto md:max-w-2xl min-w-0 break-words bg-white w-full shadow-lg rounded-xl pb-3">
         <div class="relative">
-          <ion-buttons class="absolute left-2 top-4 md:left-2 md:top-5" slot="start">
+          <!-- <ion-buttons class="absolute left-2 top-4 md:left-2 md:top-5" slot="start">
             <ion-back-button defaultHref="/"></ion-back-button>
-          </ion-buttons>
+          </ion-buttons> -->
           <div class="flex flex-wrap justify-center">
             <div class="w-full flex justify-center">
               <div class="relative">
@@ -46,7 +46,7 @@
                    [src]="user?.imagen"
                    class="shadow-xl rounded-full align-middle border-none max-w-[150px] max-h-[150px] h-[80px] w-[80px] object-cover object-center"/>
               <ng-template #defaultImage>
-                <img src="https://cdn.icon-icons.com/icons2/1999/PNG/512/avatar_man_people_person_profile_user_icon_123385.png"
+                <img src="https://img.freepik.com/vector-premium/icono-imagen-perfil-avatar-fondo-azul-estilo-diseno-plano-recursos-diseno-elementos-graficos_991720-653.jpg"
                      class="shadow-xl rounded-full align-middle border-none max-w-[150px] max-h-[150px] h-[80px] w-[80px] object-cover object-center"/>
               </ng-template>
             </div>
@@ -60,16 +60,15 @@
             </div>
             <ng-template #noUser>
               <div class="text-center py-6">
-                <p class="text-sm text-slate-500 mb-4">Para registrar una mascota, primero debes crear tu usuario.</p>
+                <p class="text-sm text-slate-500 mb-4">Antes de registrar tu mascota, por favor crea tu cuenta de usuario.</p>
               </div>
-            </ng-template>                      
+            </ng-template>                                
           </div>          
           <div>
             <div class="mt-8 m-2 mx-4">
               <h4 class="text-slate-600 font-bold uppercase">Mis mascotas</h4>
             </div>
-            <div class="grid grid-cols-2 gap-3 py-3 w-full">
-              <!-- Skeleton Loader while loading -->
+            <div class="grid grid-cols-2 gap-3 py-3 w-full">   
               <ng-container *ngIf="loading">
                 <div *ngFor="let _ of [].constructor(4)" class="h-max rounded-xl overflow-hidden border border-blue-300 shadow-lg relative">
                   <ion-card class="m-0 h-44 relative group" mode="ios">
@@ -82,11 +81,10 @@
                 </div>
               </ng-container>
             
-              <!-- Display Pet Details once data is loaded -->
               <ng-container *ngIf="!loading">
                 <ng-container *ngIf="mestizos.length > 0; else noMestizos">
                   <div *ngFor="let mestizo of mestizos" class="h-max rounded-xl overflow-hidden border border-blue-300 shadow-lg relative">
-                    <ion-card class="m-0 h-44 relative group" mode="ios">
+                    <ion-card class="m-0 h-44 relative group" mode="ios" (click)="redirectToPerfil(mestizo.id)">
                       <img 
                         class="h-full w-full object-cover object-center absolute top-0 left-0 transition-all duration-300 group-hover:scale-110" 
                         alt="Imagen de {{ mestizo.nombre }}" 
