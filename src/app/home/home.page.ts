@@ -206,7 +206,7 @@ export class homePage implements OnInit {
     this.router.navigate([segment, perro.id], { state: { data: perro } });
   }
 
-  navigateToMestizo() {
+  navigateToMestizo() { 
     this.router.navigate(['/tabs/mestizos-list']);
   }
 

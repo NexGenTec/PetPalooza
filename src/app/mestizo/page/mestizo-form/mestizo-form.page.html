@@ -344,46 +344,23 @@
           
             <form [formGroup]="temperamentoForm">
               <label class="flex flex-col mb-4">
-                <!-- <span class="text-blue-500 font-medium">Temperamentos</span> -->
                 <!-- Lista de temperamentos -->
                 <div *ngIf="temperamentos.controls.length > 0" class="flex flex-wrap gap-2 border border-gray-300 bg-gray-50 rounded-lg p-3 my-1">
                   <div *ngFor="let temperamento of temperamentos.controls; let i = index">
-                    <ion-chip 
-                      *ngIf="temperamento.value !== ''" 
-                      color="primary" 
-                      class="bg-blue-500 text-white font-medium shadow-md">
+                    <ion-chip *ngIf="temperamento.value !== ''" color="primary" class="bg-blue-500 text-white font-medium shadow-md">
                       <ion-label>{{ temperamento.value }}</ion-label>
-                      <ion-icon 
-                        name="close-circle" 
-                        class="cursor-pointer hover:text-red-500 transition-all"
-                        (click)="removeTemperamento(i)">
-                      </ion-icon>
+                      <ion-icon name="close-circle" class="cursor-pointer hover:text-red-500 transition-all" (click)="removeTemperamento(i)"></ion-icon>
                     </ion-chip>
                   </div>
                 </div>
-                <!-- Agregar temperamento -->
+          
+                <!-- Selector de temperamentos -->
                 <div class="flex items-center gap-2 mt-2">
-                  <input
-                    [formControl]="newTemperamentoControl"
-                    type="text"
-                    class="border border-gray-300 bg-gray-50 rounded-lg p-3 w-full focus:ring-2 focus:ring-blue-500 focus:outline-none"
-                    placeholder="Ej. Juguetón"
-                  />
-                  <button 
-                    type="button" 
-                    (click)="addTemperamento()" 
-                    class="bg-blue-500 text-white p-3 rounded-lg hover:bg-blue-600 transition-all shadow-md">
-                    <svg  
-                      xmlns="http://www.w3.org/2000/svg"  
-                      width="24"  
-                      height="24"  
-                      viewBox="0 0 24 24"  
-                      fill="none"  
-                      stroke="currentColor"  
-                      stroke-width="2"  
-                      stroke-linecap="round"  
-                      stroke-linejoin="round"  
-                      class="icon icon-tabler icon-tabler-plus">
+                  <select [formControl]="newTemperamentoControl" class="border border-gray-300 bg-gray-50 rounded-lg p-3 w-full focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                    <option *ngFor="let temperamento of TemperamentosMestizos" [value]="temperamento.nombre">{{ temperamento.nombre }}</option>
+                  </select>
+                  <button type="button" (click)="addTemperamento()" class="bg-blue-500 text-white p-3 rounded-lg hover:bg-blue-600 transition-all shadow-md">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icon-tabler-plus">
                       <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
                       <path d="M12 5l0 14" />
                       <path d="M5 12l14 0" />
@@ -391,9 +368,7 @@
                   </button>
                 </div>
           
-                <small class="italic text-gray-500 mt-1">
-                  Selecciona entre 3 y 5 temperamentos.
-                </small>
+                <small class="italic text-gray-500 mt-1">Selecciona entre 3 y 5 temperamentos.</small>
           
                 <!-- Mensajes de validación -->
                 <div *ngIf="temperamentoForm.get('temperamentos').touched">
@@ -408,22 +383,15 @@
           
               <!-- Botones de navegación -->
               <div class="flex justify-between items-center mt-6">
-                <button
-                  type="button"
-                  (click)="prevForm()"
-                  class="font-medium text-white bg-gray-500 hover:bg-gray-600 rounded-lg px-6 py-3 shadow-md transition-all">
+                <button type="button" (click)="prevForm()" class="font-medium text-white bg-gray-500 hover:bg-gray-600 rounded-lg px-6 py-3 shadow-md transition-all">
                   Anterior
                 </button>
-                <button
-                  type="submit"
-                  [disabled]="temperamentoForm.get('temperamentos').value.length < 3 || temperamentoForm.invalid"
-                  (click)="nextForm()"
-                  class="font-medium text-white bg-blue-500 hover:bg-blue-600 rounded-lg px-6 py-3 shadow-md transition-all disabled:opacity-50 disabled:cursor-not-allowed">
+                <button type="submit" [disabled]="temperamentoForm.get('temperamentos').value.length < 3 || temperamentoForm.invalid" (click)="nextForm()" class="font-medium text-white bg-blue-500 hover:bg-blue-600 rounded-lg px-6 py-3 shadow-md transition-all disabled:opacity-50 disabled:cursor-not-allowed">
                   Siguiente
                 </button>
               </div>
             </form>
-          </div>                          
+          </div>                                    
           <div class="py-4 px-6" *ngIf="currentForm === 4">
             <!-- <div class="mt-8 mb-4">
               <h4 class="text-blue-500 font-bold uppercase text-lg">Historia de tu mascota</h4>

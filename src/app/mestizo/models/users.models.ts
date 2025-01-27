@@ -17,13 +17,11 @@ export interface Mestizos {
     sexo: string;
     edad: string;
     nacionalidad: string;
-    caracteristicasFisicas: {
     tamano: string;
     peso: string;
     pelaje: string;
     color: string;
     ojos: string;
-    };
     temperamentos: string[];
     historia: string;
     imagenMascota: string[]

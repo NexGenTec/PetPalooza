@@ -4,31 +4,33 @@ import { MestizosService } from '../../service/mestizos.service';
 import { Mestizos, Users } from '../../models/users.models';
 import { UserSessionService } from '../../service/user-session.service';
 import { of, switchMap } from 'rxjs';
+import { TemperamentosMestizos } from '../../models/TemperamentosMestizos.models';
 
 @Component({
   selector: 'app-perfil-mestizo',
   templateUrl: './perfil-mestizo.page.html',
   styleUrls: ['./perfil-mestizo.page.scss'],
 })
-export class PerfilMestizoPage implements OnInit  {
-  isLoading: boolean = false;
+export class PerfilMestizoPage implements OnInit {
+  isLoading = true;
   mestizoId: string;
   mestizo: Mestizos;
   user: Users;
-  
+  isLoadingImg = true;
+  selectedSegmentValue = 'caracteristicas';
+  cardHeading = '';
+  cardSubtitle = '';
+  cardContent = '';
+  showImagesContainer = false;
 
   constructor(
     private route: ActivatedRoute,
     private mestizosService: MestizosService,
     private userSessionService: UserSessionService
-    
-  ) {
-
-  }
+  ) {}
 
   ngOnInit() {
-    this.getMestizoId();
-    this.route.paramMap.subscribe(params => {
+    this.route.paramMap.subscribe((params) => {
       this.mestizoId = params.get('id');
       if (this.mestizoId) {
         this.loadMestizoAndUser();
@@ -36,37 +38,115 @@ export class PerfilMestizoPage implements OnInit  {
     });
   }
 
-  private getMestizoId(): void {
-    this.route.paramMap.subscribe(params => {
-      this.mestizoId = params.get('id');
-    });
+  loadMestizoAndUser() {
+    this.userSessionService.user$
+      .pipe(
+        switchMap((user) => {
+          if (user) {
+            this.user = user;
+            return this.mestizosService.getMestizoByIdAndUser(user.id, this.mestizoId);
+          }
+          return of(null);
+        })
+      )
+      .subscribe({
+        next: (mestizo) => {
+          if (mestizo) {
+            this.mestizo = mestizo;
+            this.populateMestizoData();
+          } else {
+            console.error('Mestizo not found');
+          }
+          this.isLoading = false;
+        },
+        error: (error) => {
+          console.error('Error loading mestizo:', error);
+          this.isLoading = false;
+        },
+      });
   }
 
-  loadMestizoAndUser() {
-    this.userSessionService.user$.pipe(
-      switchMap(user => {
-        if (user) {
-          this.user = user;
-          return this.mestizosService.getMestizoByIdAndUser(user.id, this.mestizoId);
-        }
-        return of(null);
-      })
-    ).subscribe({
-      next: (mestizo) => {
-        if (mestizo) {
-          this.mestizo = mestizo;
-          console.log('Mestizo y usuario cargados:', this.mestizo, this.user);
-        } else {
-          console.log('Mestizo no encontrado');
-        }
-        this.isLoading = false;
-      },
-      error: (error) => {
-        console.error('Error al cargar el mestizo:', error);
-        this.isLoading = false;
-      },
-    });
+  getImagesArray(mestizo: Mestizos): string[] {
+    return Array.isArray(mestizo?.imagenMascota) ? Object.values(mestizo.imagenMascota) : [];
   }
+
+  populateMestizoData() {
+    if (this.mestizo) {
+      this.cardHeading = this.mestizo.nombre || 'Unnamed';
+      this.cardContent = this.mestizo.historia || 'No story available';
+      this.changeCardContent(this.selectedSegmentValue);
+    }
+  }
+
+  changeCardContent(segmentValue: string) {
+    if (!this.mestizo) return;
+    this.isLoadingImg = true;
+
+    switch (segmentValue) {
+      case 'caracteristicas':
+        this.setCardContent(
+          'Características Físicas',
+          this.mestizo.nombre,
+          this.formatCharacteristics(this.mestizo)
+        );
+        this.showImagesContainer = false;
+        break;
+      case 'temperamento':
+        this.setCardContent(
+          'Temperamento',
+          '',
+          this.formatTemperamento(this.mestizo.temperamentos)
+        );
+        this.showImagesContainer = false;
+        break;
+      case 'images':
+        this.setCardContent('Imágenes', this.mestizo.nombre, '');
+        this.showImagesContainer = true;
+        setTimeout(() => {
+          this.isLoadingImg = false;
+        }, 1000);
+        break;
+      default:
+        this.changeCardContent('caracteristicas');
+        break;
+    }
+  }
+
+  formatCharacteristics(characteristics: any): string {
+    if (!characteristics) {
+      return '<p>No se han proporcionado características.</p>';
+    }
   
+    const { tamano, peso, pelaje, color, ojos } = characteristics;
   
+    return `
+      <p><span class="font-bold">Tamaño:</span> ${tamano || 'N/A'}</p>
+      <p><span class="font-bold">Peso:</span> ${peso || 'N/A'}</p>
+      <p><span class="font-bold">Pelaje:</span> ${pelaje || 'N/A'}</p>
+      <p><span class="font-bold">Color:</span> ${color || 'N/A'}</p>
+      <p><span class="font-bold">Ojos:</span> ${ojos || 'N/A'}</p>
+      <hr class="my-3">
+    `;
+  }  
+
+  formatTemperamento(temperamento: any): string {
+    if (!temperamento || !Array.isArray(temperamento)) {
+      return '<p>No se ha proporcionado temperamento.</p>';
+    }
+  
+    return temperamento
+      .map((temp: any) => {
+        const foundTemperamento = TemperamentosMestizos.find(t => t.nombre === temp);
+        return foundTemperamento 
+          ? `<p><span class="font-bold">${foundTemperamento.nombre}:</span> ${foundTemperamento.descripcion}</p>` 
+          : '';
+      })
+      .join('<hr class="my-3">');
+  }
+
+  setCardContent(heading: string, subtitle: string, content: string) {
+    this.cardHeading = heading;
+    this.cardSubtitle = subtitle;
+    this.cardContent = content;
+  }
 }

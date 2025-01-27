@@ -5,6 +5,7 @@ import { MestizosService } from '../../service/mestizos.service';
 import { Users } from '../../models/users.models';
 import { Router } from '@angular/router';
 import { UserSessionService } from '../../service/user-session.service';
+import { TemperamentosMestizos } from '../../models/TemperamentosMestizos.models';
 
 @Component({
   selector: 'app-mestizo-form',
@@ -22,6 +23,7 @@ export class MestizoFormPage implements OnInit {
   mestizoForm: FormGroup;
   caracteristicasForm: FormGroup;
   temperamentoForm: FormGroup;
+  TemperamentosMestizos = TemperamentosMestizos;
   historiaForm: FormGroup;
   currentForm: number = 1;
   newTemperamento: string = '';
@@ -31,7 +33,7 @@ export class MestizoFormPage implements OnInit {
 
 
   especies: string[] = [
-    'Perro', 'Gato', 'Conejo', 'Cerdo', 'Caballo', 'Pájaro', 'Reptil', 'Roedor', 'Pez',
+    'Canino', 'Felino', 'Conejo', 'Cerdo', 'Caballo', 'Pájaro', 'Reptil', 'Roedor', 'Pez',
     'Tortuga', 'Loro', 'Pececito', 'Hámster', 'Erizo'
   ];
 
@@ -105,46 +107,31 @@ export class MestizoFormPage implements OnInit {
 
   onImageSelect(event: any) {
     const files: FileList = event.target.files;
-  
-    // Si no hay archivos seleccionados, no hacemos nada
     if (files.length === 0) {
       return;
     }
-  
-    // Comprobamos cuántas imágenes ya están en la lista
     const totalSelectedImages = this.selectedImages.length;
-  
-    // Si el número de imágenes seleccionadas + nuevas es mayor que 6, mostramos un mensaje de error
     if (totalSelectedImages + files.length > 6) {
       this.showToast('No puedes seleccionar más de 6 imágenes en total. El límite es 6.', 'danger');
       return;
     }
-    
-    // Procesamos los archivos seleccionados
     for (let i = 0; i < files.length; i++) {
       const file = files[i];
-  
-      // Validar el tipo de archivo
       if (!['image/jpeg', 'image/png', 'image/gif'].includes(file.type)) {
         this.showToast('Formato de archivo no permitido. Solo se aceptan imágenes PNG, JPG o GIF.', 'danger');
         continue;
       }
-  
-      // Validar el tamaño del archivo
       if (file.size > 10 * 1024 * 1024) {
         this.showToast('El archivo excede el tamaño máximo de 10MB. Por favor selecciona un archivo más pequeño.', 'danger');
         continue;
       }
-  
-      // Leer el archivo y añadirlo a la lista de imágenes seleccionadas
       const reader = new FileReader();
       reader.onload = (e: any) => {
         this.selectedImages.push(e.target.result);
       };
       reader.readAsDataURL(file);
     }
-  
-    event.target.value = ''; // Limpiar el input después de seleccionar los archivos
+    event.target.value = '';
   }  
   
 

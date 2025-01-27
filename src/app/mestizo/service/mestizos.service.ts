@@ -21,7 +21,7 @@ export class MestizosService {
 
 
   private uploadImageToFirebase(image: string, mestizo: Mestizos): Promise<string> {
-    const filePath = `Mestizo/${mestizo.id}/${new Date().getTime()}_${Math.random().toString(36).substring(2, 15)}`;
+    const filePath = `Mestizo/${mestizo.nombre}/${new Date().getTime()}_${Math.random().toString(36).substring(2, 15)}`;
     const fileRef = this.storage.ref(filePath);
   
     return new Promise((resolve, reject) => {
@@ -74,7 +74,7 @@ export class MestizosService {
   }
 
   async addUser(user: Users, file: File): Promise<Users> {
-    const imagePath = `user/${user.id}/${new Date().getTime()}_${file.name}`;
+    const imagePath = `user/${user.nombre}/${new Date().getTime()}_${file.name}`;
     try {
       const imageUrl = await this.uploadImage(file, imagePath);
       const userData: Users = {
