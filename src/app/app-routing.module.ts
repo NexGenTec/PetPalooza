@@ -47,6 +47,10 @@ const routes: Routes = [
     loadChildren: () => import('./mestizo/page/mestizo-form/mestizo-form.module').then( m => m.MestizoFormPageModule)
   },
   {
+    path: 'mestizo-form/:id',
+    loadChildren: () => import('./mestizo/page/mestizo-form/mestizo-form.module').then( m => m.MestizoFormPageModule)
+  },
+  {
     path: 'perfil-mestizo/:id',
     loadChildren: () => import('./mestizo/page/perfil-mestizo/perfil-mestizo.module').then(m => m.PerfilMestizoPageModule)
   },

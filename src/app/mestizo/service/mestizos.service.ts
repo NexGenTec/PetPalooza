@@ -131,5 +131,32 @@ export class MestizosService {
       })
     );
   }
+
+  getMestizoById(id: string) {
+    return this.firestore.collection<Users>('users').snapshotChanges().pipe(
+      switchMap(usersSnapshot => {
+        const mestizoObservables = usersSnapshot.map(userDoc => {
+          const userId = userDoc.payload.doc.id;
+          console.log('Fetching mestizo with ID:', id);
+          return this.firestore.collection<Mestizos>(`users/${userId}/mestizos`).doc(id).valueChanges();
+        });
+        return combineLatest(mestizoObservables).pipe(
+          map(mestizos => mestizos.find(mestizo => mestizo !== undefined))
+        );
+      })
+    );
+  }
   
+  
+
+  async updateMestizo(mestizo: Mestizos): Promise<void> {
+    try {
+      const docRef = this.firestore.collection('Mestizos').doc(mestizo.id);
+      await docRef.update(mestizo);
+      console.log('Mestizo actualizado correctamente.');
+    } catch (error) {
+      console.error('Error al actualizar el mestizo:', error);
+      throw new Error('No se pudo actualizar el mestizo');
+    }
+  }
 }

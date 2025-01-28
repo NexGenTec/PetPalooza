@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ToastController, LoadingController, ModalController, AlertController } from '@ionic/angular';
 import { MestizosService } from '../../service/mestizos.service';
-import { Users } from '../../models/users.models';
-import { Router } from '@angular/router';
+import { Mestizos, Users } from '../../models/users.models';
+import { ActivatedRoute, Router } from '@angular/router';
 import { UserSessionService } from '../../service/user-session.service';
 import { TemperamentosMestizos } from '../../models/TemperamentosMestizos.models';
 
@@ -55,6 +55,8 @@ export class MestizoFormPage implements OnInit {
   ];
 
   userData: Users
+  mestizoId: string | null = null;
+  mestizoName: string = '';
   constructor(
     private _formBuilder: FormBuilder,
     private toastController: ToastController,
@@ -62,21 +64,31 @@ export class MestizoFormPage implements OnInit {
     private mestizosService: MestizosService,
     private router: Router,
     private alertController: AlertController,
-    private userService: UserSessionService
+    private userService: UserSessionService,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit() {
     this.initializeForm();
     this.initializeUserForm();
     this.checkUserSession();
+    
     const savedUser = sessionStorage.getItem('user');
     if (savedUser) {
       this.userData = JSON.parse(savedUser);
       this.isFormCompleted = true;
     }
+    
+    this.mestizoId = this.route.snapshot.paramMap.get('id');
+    console.log('Mestizo ID from URL:', this.mestizoId);
+    if (this.mestizoId) {
+      this.loadMestizoData(this.mestizoId);
+    }
   }  
 
   initializeForm() {
+    this.mestizoName = ''; 
+    this.mestizoId = null;
     this.mestizoForm = this._formBuilder.group({
       nombre: ['', Validators.required],
       apellido: ['', Validators.required],
@@ -104,6 +116,55 @@ export class MestizoFormPage implements OnInit {
       imagenes: [, [Validators.required]],
     });
   }
+
+  async loadMestizoData(id: string) {
+    console.log('Loading mestizo data for ID:', id);
+    try {
+      this.mestizosService.getMestizoById(id).subscribe({
+        next: (mestizo) => {
+            this.mestizoName = mestizo.nombre;
+          console.log('Mestizo data loaded:', mestizo);
+          
+          if (mestizo) {
+            // Patch form with the data
+            this.mestizoForm.patchValue({
+              nombre: mestizo.nombre,
+              apellido: mestizo.apellido,
+              apodo: mestizo.apodo,
+              especie: mestizo.especie,
+              sexo: mestizo.sexo,
+              edad: mestizo.edad,
+              nacionalidad: mestizo.nacionalidad
+            });
+
+            this.caracteristicasForm.patchValue({
+              tamano: mestizo.tamano,
+              peso: mestizo.peso,
+              pelaje: mestizo.pelaje,
+              color: mestizo.color,
+              ojos: mestizo.ojos
+            });
+            this.temperamentos.clear();
+            mestizo.temperamentos.forEach((temperamento) => {
+              this.temperamentos.push(this._formBuilder.control(temperamento));
+            });
+            this.historiaForm.patchValue({
+              historia: mestizo.historia,
+              imagenes: mestizo.imagenMascota
+            });
+          } else {
+            console.log('No data found for the given ID');
+          }
+        },
+        error: (error) => {
+          console.error('Error loading mestizo data:', error);
+        }
+      });
+    } catch (error) {
+      console.error('Error in loadMestizoData method:', error);
+    }
+  }
+  
 
   onImageSelect(event: any) {
     const files: FileList = event.target.files;
@@ -147,7 +208,7 @@ export class MestizoFormPage implements OnInit {
   
       const loading = await this.loadingController.create({
         message: 'Registrando mascota...',
-        mode: 'ios'
+        mode: 'ios',
       });
       await loading.present();
   
@@ -155,37 +216,55 @@ export class MestizoFormPage implements OnInit {
         ...this.mestizoForm.value,
         ...this.caracteristicasForm.value,
         ...this.temperamentoForm.value,
-        ...this.historiaForm.value
+        ...this.historiaForm.value,
       };
-  
-      if (this.selectedImages.length > 0) {
-        this.mestizosService.uploadImages(this.selectedImages, mascotaData)
-          .then((imageUrls) => {
+      if (this.mestizoId) {
+        try {
+          if (this.selectedImages.length > 0) {
+            const imageUrls = await this.mestizosService.uploadImages(this.selectedImages, mascotaData);
             mascotaData.imagenes = imageUrls;
-            return this.mestizosService.addMestizos(userSession.id, mascotaData, imageUrls);
-          })
-          .then(() => {
+          }
+          await this.mestizosService.updateMestizo({
+            id: this.mestizoId,
+            ...mascotaData,
+          });
+          this.showToast('Mestizo actualizado con éxito', 'success');
+          this.router.navigateByUrl('/tabs/mestizo');
+          this.resetForms();
+        } catch (error) {
+          console.error('Error al actualizar la mascota:', error);
+          this.showToast('Error al actualizar la mascota', 'danger');
+        } finally {
+          this.isSubmitting = false;
+          loading.dismiss();
+        }
+      } else {
+        if (this.selectedImages.length > 0) {
+          try {
+            const imageUrls = await this.mestizosService.uploadImages(this.selectedImages, mascotaData);
+            mascotaData.imagenes = imageUrls;
+  
+            await this.mestizosService.addMestizos(userSession.id, mascotaData, imageUrls);
             this.showToast('Mascota registrada con éxito', 'success');
             this.router.navigateByUrl('/tabs/mestizo');
             this.resetForms();
-          })
-          .catch((error) => {
+          } catch (error) {
             console.error('Error al registrar la mascota:', error);
             this.showToast('Error al registrar la mascota', 'danger');
-          })
-          .finally(() => {
+          } finally {
             this.isSubmitting = false;
             loading.dismiss();
-          });
-      } else {
-        loading.dismiss();
-        this.showToast('Debes seleccionar al menos una imagen', 'danger');
-        this.isSubmitting = false;
+          }
+        } else {
+          loading.dismiss();
+          this.showToast('Debes seleccionar al menos una imagen', 'danger');
+          this.isSubmitting = false;
+        }
       }
     } else {
       this.showToast('Completa todos los campos correctamente antes de enviar', 'danger');
     }
-  }  
+  }    
   
   resetForms() {
     this.mestizoForm.reset();

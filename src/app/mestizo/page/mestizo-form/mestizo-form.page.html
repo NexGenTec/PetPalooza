@@ -460,16 +460,17 @@
                 <button type="button" (click)="prevForm()" class="bg-gray-500 text-white px-6 py-3 rounded-lg shadow-md hover:bg-gray-600 transition-all">
                   Anterior
                 </button>
+                
                 <button 
                   type="submit" 
                   class="bg-blue-500 text-white px-6 py-3 rounded-lg shadow-md hover:bg-blue-600 transition-all" 
                   [disabled]="isSubmitting || selectedImages.length < 4 || selectedImages.length > 6">
                   <span *ngIf="isSubmitting">Enviando...</span>
-                  <span *ngIf="!isSubmitting">Enviar</span>
+                  <span *ngIf="!isSubmitting">{{ mestizoId ? 'Actualizar' : 'Enviar' }}</span>
                 </button>
-              </div>
+              </div>                       
             </form>
-          </div>          
+          </div>         
         </div>  
       </div>
     </div>

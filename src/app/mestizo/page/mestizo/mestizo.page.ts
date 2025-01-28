@@ -60,8 +60,23 @@ export class MestizoPage implements OnInit {
       backdropDismiss: false,
     });
 
-    await loading.present(); // Muestra el loading
+    await loading.present();
     await loading.dismiss();
     this.router.navigate(['/perfil-mestizo', mestizoId]);
   }
+
+  async editMestizo(mestizo: Mestizos, event: Event) {
+    event.stopPropagation();
+    const loading = await this.loadingController.create({
+      message: 'Cargando...',
+      spinner: 'bubbles',
+      backdropDismiss: false,
+    });
+    await loading.present();
+  
+    this.router.navigate(['/mestizo-form', mestizo.id]);
+  
+    await loading.dismiss();
+  }  
+  
 }

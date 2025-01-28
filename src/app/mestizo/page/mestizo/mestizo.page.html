@@ -11,13 +11,9 @@
 
 <ion-content [fullscreen]="true" aria-hidden="false">
   <div class="bg-gray-50">
-    <!-- profile mestiz -->
     <div class="bg-blue-100 pt-20 pb-6 px-3 min-h-[93vh]">
       <div class="relative mx-auto md:max-w-2xl min-w-0 break-words bg-white w-full shadow-lg rounded-xl pb-3">
         <div class="relative">
-          <!-- <ion-buttons class="absolute left-2 top-4 md:left-2 md:top-5" slot="start">
-            <ion-back-button defaultHref="/"></ion-back-button>
-          </ion-buttons> -->
           <div class="flex flex-wrap justify-center">
             <div class="w-full flex justify-center">
               <div class="relative">
@@ -80,16 +76,42 @@
                   </ion-card>
                 </div>
               </ng-container>
-            
               <ng-container *ngIf="!loading">
                 <ng-container *ngIf="mestizos.length > 0; else noMestizos">
-                  <div *ngFor="let mestizo of mestizos" class="h-max rounded-xl overflow-hidden border border-blue-300 shadow-lg relative">
-                    <ion-card class="m-0 h-44 relative group" mode="ios" (click)="redirectToPerfil(mestizo.id)">
+                  <div 
+                    *ngFor="let mestizo of mestizos" 
+                    class="h-max rounded-xl overflow-hidden border border-blue-300 shadow-lg relative"
+                  >
+                    <ion-card 
+                      class="m-0 h-44 relative group" 
+                      mode="ios"
+                      (click)="editMestizo(mestizo, $event)" 
+                    >
                       <img 
                         class="h-full w-full object-cover object-center absolute top-0 left-0 transition-all duration-300 group-hover:scale-110" 
                         alt="Imagen de {{ mestizo.nombre }}" 
                         [src]="mestizo.imagenMascota[0]" 
                       />
+                      <button 
+                        type="button"
+                        class="absolute top-3 right-3 w-10 h-10 rounded-full bg-white shadow-md flex justify-center items-center hover:bg-gray-100 transition-all"
+                      >
+                        <svg  
+                          xmlns="http://www.w3.org/2000/svg"  
+                          width="24"  
+                          height="24"  
+                          viewBox="0 0 24 24"  
+                          fill="none"  
+                          stroke="currentColor"  
+                          stroke-width="2"  
+                          stroke-linecap="round"  
+                          stroke-linejoin="round"
+                        >
+                          <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                          <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+                          <path d="M13.5 6.5l4 4" />
+                        </svg>
+                      </button>
                       <ion-card-header class="p-2 h-full w-full bg-gradient-to-b from-transparent from-40% via-black/50 to-black/80">
                         <ion-card-title class="text-white">{{ mestizo.nombre }}</ion-card-title>
                         <ion-card-subtitle class="text-gray-200">{{ mestizo.apodo }}</ion-card-subtitle>
@@ -97,9 +119,7 @@
                     </ion-card>
                   </div>
                 </ng-container>
-              </ng-container>
-            
-              <!-- Informative message when no pets are available -->
+              </ng-container>              
               <ng-template #noMestizos>
                 <div class="col-span-2 text-center py-6">
                   <p class="text-lg text-slate-700 font-semibold">Aún no has registrado ninguna mascota.</p>
