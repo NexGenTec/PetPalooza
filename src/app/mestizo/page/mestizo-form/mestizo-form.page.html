@@ -198,23 +198,45 @@
                     <option value="Hembra">Hembra</option>
                   </select>
                   <div *ngIf="mestizoForm.get('sexo').invalid && mestizoForm.get('sexo').touched" class="text-red-500 text-sm">
-                    El sexo es obligatorio.
+                    Este campo es obligatorio.
                   </div>
                 </label>
           
-                <label for="age-input" class="drop flex flex-col w-full mb-3">
-                  <span class="drop-title text-blue-500 font-medium">Edad</span>
-                  <input 
-                    type="number" 
-                    id="age-input" 
-                    formControlName="edad" 
-                    class="border border-gray-300 bg-gray-50 rounded-lg p-3 w-full my-1 focus:ring-2 focus:ring-blue-500 focus:outline-none" 
-                    placeholder="Ingresa la edad"
-                  />
-                  <div *ngIf="mestizoForm.get('edad').invalid && mestizoForm.get('edad').touched" class="text-red-500 text-sm">
-                    La edad es obligatoria y debe ser un número válido.
-                  </div>
-                </label>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+                  <label for="age-input" class="drop flex flex-col w-full mb-3">
+                    <span class="drop-title text-blue-500 font-medium">Edad</span>
+                    <input 
+                      type="number" 
+                      id="age-input" 
+                      formControlName="edad" 
+                      class="border border-gray-300 bg-gray-50 rounded-lg p-3 w-full my-1 focus:ring-2 focus:ring-blue-500 focus:outline-none" 
+                      placeholder="Ingresa la edad"
+                    />
+                    <div *ngIf="mestizoForm.get('edad').invalid && mestizoForm.get('edad').touched" class="text-red-500 text-sm">
+                      La edad es obligatoria y debe ser un número válido.
+                    </div>
+                  </label>
+                  <label class="flex flex-col">
+                    <span class="text-blue-500 font-medium">Mes o años</span>
+                      <!-- <select
+                        id="mes_anio"
+                        formControlName="mes_anio"
+                        class="border border-gray-300 bg-gray-50 rounded-lg p-3 my-1 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                      >
+                        <option value="" disabled selected>Selecciona</option>
+                        <option value="mes">Mes(es)</option>
+                        <option value="anio">Año(s)</option>
+                      </select> -->
+                      <select
+                      id="mes_anio"
+                      class="border border-gray-300 bg-gray-50 rounded-lg p-3 my-1 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                    >
+                      <option value="" disabled selected>Selecciona</option>
+                      <option value="mes">Mes(es)</option>
+                      <option value="anio">Año(s)</option>
+                    </select>
+                  </label>
+              </div>
           
                 <label for="nationality-input" class="drop flex flex-col w-full mb-3">
                   <span class="drop-title text-blue-500 font-medium">Nacionalidad</span>
