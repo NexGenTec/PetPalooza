@@ -16,6 +16,7 @@ export interface Mestizos {
     especie: string;
     sexo: string;
     edad: string;
+    unidadEdad: 'mes' | 'anio';
     nacionalidad: string;
     tamano: string;
     peso: string;

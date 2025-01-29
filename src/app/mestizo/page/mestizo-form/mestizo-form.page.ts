@@ -96,6 +96,7 @@ export class MestizoFormPage implements OnInit {
       especie: ['', Validators.required],
       sexo: ['', Validators.required],
       edad: [, Validators.required],
+      unidadEdad: ['', Validators.required], 
       nacionalidad: ['', Validators.required]
     });
     this.caracteristicasForm = this._formBuilder.group({
@@ -134,6 +135,7 @@ export class MestizoFormPage implements OnInit {
               especie: mestizo.especie,
               sexo: mestizo.sexo,
               edad: mestizo.edad,
+              unidadEdad: mestizo.unidadEdad,
               nacionalidad: mestizo.nacionalidad
             });
 
@@ -150,7 +152,13 @@ export class MestizoFormPage implements OnInit {
             });
             this.historiaForm.patchValue({
               historia: mestizo.historia,
-              imagenes: mestizo.imagenMascota
+            });
+            this.selectedImages = [...(mestizo.imagenMascota || [])];
+            const imagenesFormArray = this.historiaForm.get('imagenes') as FormArray;
+            imagenesFormArray.clear();
+
+            this.selectedImages.forEach((img: string) => {
+              imagenesFormArray.push(new FormControl(img));
             });
           } else {
             console.log('No data found for the given ID');
@@ -171,11 +179,15 @@ export class MestizoFormPage implements OnInit {
     if (files.length === 0) {
       return;
     }
+  
     const totalSelectedImages = this.selectedImages.length;
     if (totalSelectedImages + files.length > 6) {
       this.showToast('No puedes seleccionar más de 6 imágenes en total. El límite es 6.', 'danger');
       return;
     }
+  
+    const imagenesFormArray = this.historiaForm.get('imagenes') as FormArray;
+  
     for (let i = 0; i < files.length; i++) {
       const file = files[i];
       if (!['image/jpeg', 'image/png', 'image/gif'].includes(file.type)) {
@@ -186,9 +198,12 @@ export class MestizoFormPage implements OnInit {
         this.showToast('El archivo excede el tamaño máximo de 10MB. Por favor selecciona un archivo más pequeño.', 'danger');
         continue;
       }
+  
       const reader = new FileReader();
       reader.onload = (e: any) => {
-        this.selectedImages.push(e.target.result);
+        const imageUrl = e.target.result;
+        this.selectedImages.push(imageUrl);
+        imagenesFormArray.push(new FormControl(imageUrl));
       };
       reader.readAsDataURL(file);
     }
@@ -198,6 +213,9 @@ export class MestizoFormPage implements OnInit {
 
   removeImages(index: number) {
     this.selectedImages.splice(index, 1);
+  
+    const imagenesFormArray = this.historiaForm.get('imagenes') as FormArray;
+    imagenesFormArray.removeAt(index);
   }
 
   async submitForms() {
@@ -234,7 +252,8 @@ export class MestizoFormPage implements OnInit {
         } catch (error) {
           console.error('Error al actualizar la mascota:', error);
           this.showToast('Error al actualizar la mascota', 'danger');
-        } finally {
+        }
+        finally {
           this.isSubmitting = false;
           loading.dismiss();
         }
