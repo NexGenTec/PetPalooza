@@ -153,11 +153,17 @@ export class PerfilMestizoPage implements OnInit {
     const { tamano, peso, pelaje, color, ojos } = characteristics;
   
     return `
-      <p><span class="font-bold">Tamaño:</span> ${tamano || 'N/A'}</p>
-      <p><span class="font-bold">Peso:</span> ${peso || 'N/A'}</p>
-      <p><span class="font-bold">Pelaje:</span> ${pelaje || 'N/A'}</p>
-      <p><span class="font-bold">Color:</span> ${color || 'N/A'}</p>
-      <p><span class="font-bold">Ojos:</span> ${ojos || 'N/A'}</p>
+      <p class="text-lg">
+      <span class="font-bold ">Tamaño:</span> ${tamano || 'N/A'}
+      </p>
+      <hr class="my-3">
+      <p class="text-lg"><span class="font-bold">Peso:</span> ${peso || 'N/A'}</p>
+      <hr class="my-3">
+      <p class="text-lg"><span class="font-bold ">Pelaje:</span> ${pelaje || 'N/A'}</p>
+      <hr class="my-3">
+      <p class="text-lg"><span class="font-bold ">Color:</span> ${color || 'N/A'}</p>
+      <hr class="my-3">
+      <p class="text-lg"><span class="font-bold">Ojos:</span> ${ojos || 'N/A'}</p>
       <hr class="my-3">
     `;
   }  
