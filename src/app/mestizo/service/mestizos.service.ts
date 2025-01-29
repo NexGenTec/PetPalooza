@@ -18,8 +18,6 @@ export class MestizosService {
     return Promise.all(imageUploadPromises);
   }
 
-
-
   private uploadImageToFirebase(image: string, mestizo: Mestizos): Promise<string> {
     const filePath = `Mestizo/${mestizo.nombre}/${new Date().getTime()}_${Math.random().toString(36).substring(2, 15)}`;
     const fileRef = this.storage.ref(filePath);
@@ -36,7 +34,20 @@ export class MestizosService {
         })
       ).subscribe();
     });
-  }  
+  }
+
+  // Método para actualizar un mestizo sin actualizar las imágenes
+  async updateMestizoWithoutImages(mestizo: Mestizos): Promise<void> {
+    try {
+      const { imagenMascota, ...updatedMestizoData } = mestizo; // Excluimos 'imagenMascota' de la actualización
+      const docRef = this.firestore.collection('Mestizos').doc(mestizo.id);
+      await docRef.update(updatedMestizoData);
+      console.log('Mestizo actualizado correctamente sin modificar las imágenes.');
+    } catch (error) {
+      console.error('Error al actualizar el mestizo:', error);
+      throw new Error('No se pudo actualizar el mestizo');
+    }
+  }
 
   async addMestizos(userId: string, mestizo: Mestizos, imageUrls: string[]): Promise<void> {
     try {
@@ -53,7 +64,17 @@ export class MestizosService {
       console.error('Error al subir las imágenes o los datos:', error);
     }
   }  
-  
+
+  async updateMestizo(mestizo: Mestizos): Promise<void> {
+    try {
+      const docRef = this.firestore.collection('Mestizos').doc(mestizo.id);
+      await docRef.update(mestizo);
+      console.log('Mestizo actualizado correctamente.');
+    } catch (error) {
+      console.error('Error al actualizar el mestizo:', error);
+      throw new Error('No se pudo actualizar el mestizo');
+    }
+  }
 
   async uploadImage(file: File, filePath: string): Promise<string> {
     const fileRef = this.storage.ref(filePath);
@@ -145,18 +166,5 @@ export class MestizosService {
         );
       })
     );
-  }
-  
-  
-
-  async updateMestizo(mestizo: Mestizos): Promise<void> {
-    try {
-      const docRef = this.firestore.collection('Mestizos').doc(mestizo.id);
-      await docRef.update(mestizo);
-      console.log('Mestizo actualizado correctamente.');
-    } catch (error) {
-      console.error('Error al actualizar el mestizo:', error);
-      throw new Error('No se pudo actualizar el mestizo');
-    }
   }
 }

@@ -45,7 +45,7 @@
           <h1 class="pb-2 px-2 text-2xl font-medium text-slate-600">Mestizos Registrados</h1>
           <div class="grid grid-cols-2 gap-3 py-3 w-full">
             <div class="h-max rounded-xl overflow-hidden border border-blue-300 shadow-lg relative" *ngFor="let mestizo of mestizos">
-              <ion-card class="m-0 h-44 relative group" mode="md">
+              <ion-card class="m-0 h-44 relative group" mode="md" (click)="redirectToPerfil(mestizo.id)">
                 <img 
                   class="h-full w-full object-cover object-center absolute top-0 left-0 transition-all duration-300 group-hover:scale-110" 
                   alt="Imagen de {{ mestizo.nombre }}" 

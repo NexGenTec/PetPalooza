@@ -204,6 +204,13 @@ export class MestizoFormPage implements OnInit {
         const imageUrl = e.target.result;
         this.selectedImages.push(imageUrl);
         imagenesFormArray.push(new FormControl(imageUrl));
+  
+        // Verificar que el campo de imágenes esté validado correctamente
+        if (imagenesFormArray.length >= 4 && imagenesFormArray.length <= 6) {
+          this.historiaForm.get('imagenes').setErrors(null);  // Si tiene entre 4 y 6 imágenes, no hay error
+        } else {
+          this.historiaForm.get('imagenes').setErrors({ 'minlength': true });
+        }
       };
       reader.readAsDataURL(file);
     }
@@ -220,70 +227,69 @@ export class MestizoFormPage implements OnInit {
 
   async submitForms() {
     const userSession = JSON.parse(sessionStorage.getItem('user') || '{}');
-  
+
     if (this.mestizoForm.valid && this.caracteristicasForm.valid && this.temperamentoForm.valid && this.historiaForm.valid) {
+      if (this.selectedImages.length < 4 || this.selectedImages.length > 6) {
+        this.showToast('Debes subir entre 4 y 6 imágenes', 'danger');
+        return;
+      }
+
       this.isSubmitting = true;
-  
+
       const loading = await this.loadingController.create({
         message: 'Registrando mascota...',
         mode: 'ios',
       });
       await loading.present();
-  
+
       const mascotaData = {
         ...this.mestizoForm.value,
         ...this.caracteristicasForm.value,
         ...this.temperamentoForm.value,
         ...this.historiaForm.value,
       };
-      if (this.mestizoId) {
-        try {
+
+      try {
+        if (this.mestizoId) {
           if (this.selectedImages.length > 0) {
+            // Subir nuevas imágenes
             const imageUrls = await this.mestizosService.uploadImages(this.selectedImages, mascotaData);
-            mascotaData.imagenes = imageUrls;
+            mascotaData.imagenMascota = imageUrls; // Establecer solo las imágenes
           }
-          await this.mestizosService.updateMestizo({
+
+          // Actualizar los campos
+          await this.mestizosService.updateMestizoWithoutImages({
             id: this.mestizoId,
             ...mascotaData,
           });
+
           this.showToast('Mestizo actualizado con éxito', 'success');
           this.router.navigateByUrl('/tabs/mestizo');
           this.resetForms();
-        } catch (error) {
-          console.error('Error al actualizar la mascota:', error);
-          this.showToast('Error al actualizar la mascota', 'danger');
-        }
-        finally {
-          this.isSubmitting = false;
-          loading.dismiss();
-        }
-      } else {
-        if (this.selectedImages.length > 0) {
-          try {
+        } else {
+          if (this.selectedImages.length > 0) {
             const imageUrls = await this.mestizosService.uploadImages(this.selectedImages, mascotaData);
-            mascotaData.imagenes = imageUrls;
-  
+            mascotaData.imagenMascota = imageUrls;
+
             await this.mestizosService.addMestizos(userSession.id, mascotaData, imageUrls);
             this.showToast('Mascota registrada con éxito', 'success');
             this.router.navigateByUrl('/tabs/mestizo');
             this.resetForms();
-          } catch (error) {
-            console.error('Error al registrar la mascota:', error);
-            this.showToast('Error al registrar la mascota', 'danger');
-          } finally {
-            this.isSubmitting = false;
-            loading.dismiss();
+          } else {
+            this.showToast('Debes seleccionar al menos una imagen', 'danger');
           }
-        } else {
-          loading.dismiss();
-          this.showToast('Debes seleccionar al menos una imagen', 'danger');
-          this.isSubmitting = false;
         }
+      } catch (error) {
+        console.error('Error al registrar o actualizar la mascota:', error);
+        this.showToast('Error al procesar la mascota', 'danger');
+      } finally {
+        this.isSubmitting = false;
+        loading.dismiss();
       }
     } else {
       this.showToast('Completa todos los campos correctamente antes de enviar', 'danger');
     }
-  }    
+  }
   
   resetForms() {
     this.mestizoForm.reset();

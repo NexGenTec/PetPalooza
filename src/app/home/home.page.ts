@@ -299,5 +299,9 @@ export class homePage implements OnInit {
       console.error('Error al mostrar el banner adaptable (Full Banner)', error);
     }
   }
+
+  redirectToPerfil(mestizoId: string) {
+    this.router.navigate([`/perfil-mestizo/${mestizoId}`]);
+  }
 }
 

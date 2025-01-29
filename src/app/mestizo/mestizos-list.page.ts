@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MestizosService } from './service/mestizos.service';
 import { Mestizos, Users } from './models/users.models';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-mestizos-list',
@@ -14,7 +15,9 @@ export class MestizosListPage implements OnInit {
   usersWithMestizos: { user: Users, mestizos: Mestizos[] }[] = [];
   mestizos: Mestizos[] = [];
 
-  constructor(private mestizosService: MestizosService) {}
+  constructor(
+    private mestizosService: MestizosService,
+    private router: Router) {}
 
   ngOnInit() {
     this.loadMestizos();
@@ -29,8 +32,12 @@ export class MestizosListPage implements OnInit {
       },
       error: (err) => {
         console.error('Error al cargar los datos:', err); // Manejo de errores
-        this.isLoading = false; // Se detiene el indicador de carga en caso de error
+        this.isLoading = false;
       }
     });
-  }  
+  }
+  redirectToPerfil(mestizoId: string) {
+    // Redirige directamente al perfil del mestizo usando el ID
+    this.router.navigate([`/perfil-mestizo/${mestizoId}`]);
+  }
 }

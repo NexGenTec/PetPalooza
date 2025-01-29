@@ -78,25 +78,55 @@
               </ng-container>
               <ng-container *ngIf="!loading">
                 <ng-container *ngIf="mestizos.length > 0; else noMestizos">
-                  <div 
-                    *ngFor="let mestizo of mestizos" 
-                    class="h-max rounded-xl overflow-hidden border border-blue-300 shadow-lg relative"
-                  >
-                    <ion-card 
-                      class="m-0 h-44 relative group" 
-                      mode="ios"
-                      (click)="editMestizo(mestizo, $event)" 
-                    >
+                  <div class="h-max rounded-xl overflow-hidden border border-blue-300 shadow-lg relative"   *ngFor="let mestizo of mestizos" >
+                    <ion-card class="m-0 h-44 relative group" mode="md"   (click)="redirectToPerfil(mestizo.id)">
                       <img 
                         class="h-full w-full object-cover object-center absolute top-0 left-0 transition-all duration-300 group-hover:scale-110" 
                         alt="Imagen de {{ mestizo.nombre }}" 
                         [src]="mestizo.imagenMascota[0]" 
                       />
-                      <button 
-                        type="button"
-                        class="absolute top-3 right-3 w-10 h-10 rounded-full bg-white shadow-md flex justify-center items-center hover:bg-gray-100 transition-all"
-                      >
+                      <ion-card-header class="p-2 h-full w-full justify-end bg-gradient-to-b from-transparent from-40% via-black/50 to-black/80">
+                        <ion-card-title class="text-white">{{ mestizo.nombre }}</ion-card-title>
+                        <ion-card-subtitle class="text-gray-200">{{ mestizo.apodo }}</ion-card-subtitle>
+                      </ion-card-header>
+                    </ion-card>
+                    <div class="absolute top-3 right-3 w-10 h-10 rounded-full bg-white flex justify-center items-center text-red-400 ">
+                      <button type="button" (click)="editMestizo(mestizo, $event)">
                         <svg  
+                        xmlns="http://www.w3.org/2000/svg"  
+                        width="24"  
+                        height="24"  
+                        viewBox="0 0 24 24"  
+                        fill="none"  
+                        stroke="currentColor"  
+                        stroke-width="2"  
+                        stroke-linecap="round"  
+                        stroke-linejoin="round"
+                      >
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+                        <path d="M13.5 6.5l4 4" />
+                      </svg>
+                      </button>
+                    </div>
+                  </div>
+                  <!-- <div 
+                    *ngFor="let mestizo of mestizos" 
+                    class="h-max rounded-xl overflow-hidden border border-blue-300 shadow-lg relative"
+                  >
+                    <ion-card 
+                      class="m-0 h-44 relative group" 
+                      mode="ios" 
+                    >
+                      <img 
+                        class="h-full w-full object-cover object-center absolute top-0 left-0 transition-all duration-300 group-hover:scale-110" 
+                        alt="Imagen de {{ mestizo.nombre }}" 
+                        [src]="mestizo.imagenMascota[0]" 
+                        (click)="redirectToPerfil(mestizo.id)"
+                      />
+                      <div class="absolute top-3 right-3 w-10 h-10 rounded-full bg-white flex justify-center items-center text-red-400 ">
+                        <button type="button" (click)="editMestizo(mestizo, $event)">
+                          <svg  
                           xmlns="http://www.w3.org/2000/svg"  
                           width="24"  
                           height="24"  
@@ -111,13 +141,14 @@
                           <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
                           <path d="M13.5 6.5l4 4" />
                         </svg>
-                      </button>
+                        </button>
+                      </div>
                       <ion-card-header class="p-2 h-full w-full bg-gradient-to-b from-transparent from-40% via-black/50 to-black/80">
                         <ion-card-title class="text-white">{{ mestizo.nombre }}</ion-card-title>
                         <ion-card-subtitle class="text-gray-200">{{ mestizo.apodo }}</ion-card-subtitle>
                       </ion-card-header>
                     </ion-card>
-                  </div>
+                  </div> -->
                 </ng-container>
               </ng-container>              
               <ng-template #noMestizos>
