@@ -412,11 +412,7 @@
               </div>
             </form>
           </div>                                    
-          <div class="py-4 px-6" *ngIf="currentForm === 4">
-            <!-- <div class="mt-8 mb-4">
-              <h4 class="text-blue-500 font-bold uppercase text-lg">Historia de tu mascota</h4>
-            </div> -->
-          
+          <div class="py-4 px-6" *ngIf="currentForm === 4">          
             <form [formGroup]="historiaForm" (ngSubmit)="submitForms()">
               <div class="mb-6">
                 <label for="historia" class="flex flex-col w-full">
@@ -437,7 +433,8 @@
                   (drop)="onFileDrop($event)"
                   (dragover)="onDragOver($event)"
                   (dragleave)="onDragLeave($event)"
-                  [class.bg-gray-100]="dragging">
+                  [class.bg-gray-100]="dragging"
+                  [ngClass]="{ 'blurred': mestizoId !== null }">
                   
                   <label for="file-upload" class="flex flex-col items-center cursor-pointer text-blue-500 hover:text-blue-400">
                     <ion-icon name="cloud-upload-outline" class="text-4xl mb-2"></ion-icon>
@@ -449,6 +446,7 @@
                       (change)="onImageSelect($event)"
                       multiple
                       class="sr-only"
+                      [disabled]="mestizoId !== null"
                       accept=".jpg, .jpeg, .png, .gif" />
                   </label>
                   <p class="text-sm text-gray-500 mt-2">PNG, JPG, GIF de hasta 10MB. Debes subir entre 4 y 6 imágenes.</p>
@@ -484,7 +482,7 @@
                 <button 
                   type="submit" 
                   class="bg-blue-500 text-white px-6 py-3 rounded-lg shadow-md hover:bg-blue-600 transition-all" 
-                  [disabled]="isSubmitting || selectedImages.length < 4 || selectedImages.length > 6">
+                  [disabled]="isSubmitting || historiaForm.invalid || selectedImages.length < 4 || selectedImages.length > 6">
                   <span *ngIf="isSubmitting">Enviando...</span>
                   <span *ngIf="!isSubmitting">{{ mestizoId ? 'Actualizar' : 'Enviar' }}</span>
                 </button>

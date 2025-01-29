@@ -27,13 +27,13 @@ export class MestizosListPage implements OnInit {
   loadMestizos(): void {
     this.mestizosService.getAllUsersWithMestizos().subscribe({
       next: (data) => {
-        this.mestizos = data; // Los datos ya están aplanados por la función getAllUsersWithMestizos()
-        this.filteredMestizos = this.mestizos; // Inicializamos la lista filtrada con todos los mestizos
+        this.mestizos = data;
+        this.filteredMestizos = this.mestizos;
         console.log('Datos cargados:', this.mestizos);
-        this.isLoading = false; // Se detiene el indicador de carga
+        this.isLoading = false;
       },
       error: (err) => {
-        console.error('Error al cargar los datos:', err); // Manejo de errores
+        console.error('Error al cargar los datos:', err);
         this.isLoading = false;
       }
     });

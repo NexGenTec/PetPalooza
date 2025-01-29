@@ -6,6 +6,7 @@ import { Mestizos, Users } from '../../models/users.models';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserSessionService } from '../../service/user-session.service';
 import { TemperamentosMestizos } from '../../models/TemperamentosMestizos.models';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 
 @Component({
   selector: 'app-mestizo-form',
@@ -65,7 +66,8 @@ export class MestizoFormPage implements OnInit {
     private router: Router,
     private alertController: AlertController,
     private userService: UserSessionService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private firestore: AngularFirestore,
   ) {}
 
   ngOnInit() {
@@ -116,6 +118,7 @@ export class MestizoFormPage implements OnInit {
       historia: ['', Validators.required],
       imagenes: [, [Validators.required]],
     });
+    
   }
 
   async loadMestizoData(id: string) {
@@ -155,12 +158,7 @@ export class MestizoFormPage implements OnInit {
               historia: mestizo.historia,
             });
             this.selectedImages = [...(mestizo.imagenMascota || [])];
-            const imagenesFormArray = this.historiaForm.get('imagenes') as FormArray;
-            imagenesFormArray.clear();
-
-            this.selectedImages.forEach((img: string) => {
-              imagenesFormArray.push(new FormControl(img));
-            });
+            this.historiaForm.get('imagenes')?.disable();
           } else {
             console.log('No data found for the given ID');
           }
@@ -228,51 +226,64 @@ export class MestizoFormPage implements OnInit {
 
   async submitForms() {
     const userSession = JSON.parse(sessionStorage.getItem('user') || '{}');
-
+    
     if (this.mestizoForm.valid && this.caracteristicasForm.valid && this.temperamentoForm.valid && this.historiaForm.valid) {
       if (this.selectedImages.length < 4 || this.selectedImages.length > 6) {
         this.showToast('Debes subir entre 4 y 6 imágenes', 'danger');
         return;
       }
-
+  
       this.isSubmitting = true;
-
+  
       const loading = await this.loadingController.create({
         message: 'Registrando mascota...',
         mode: 'ios',
       });
       await loading.present();
-
+  
       const mascotaData = {
         ...this.mestizoForm.value,
         ...this.caracteristicasForm.value,
         ...this.temperamentoForm.value,
         ...this.historiaForm.value,
       };
-
+      mascotaData.imagenMascota = mascotaData.imagenMascota || [];
+  
       try {
         if (this.mestizoId) {
-          if (this.selectedImages.length > 0) {
-            // Subir nuevas imágenes
-            const imageUrls = await this.mestizosService.uploadImages(this.selectedImages, mascotaData);
-            mascotaData.imagenMascota = imageUrls; // Establecer solo las imágenes
+          // Verifica si el documento existe en Firestore antes de intentar actualizarlo
+          const userId = userSession.id; // Asegúrate de que el userId esté correctamente asignado
+          const docRef = this.firestore.collection(`users/${userId}/mestizos`).doc(this.mestizoId); // Ruta modificada
+          const docSnapshot = await docRef.get().toPromise();
+  
+          if (docSnapshot.exists) {
+            // Si se están actualizando las imágenes
+            if (this.selectedImages.length > 0) {
+              const imageUrls = await this.mestizosService.uploadImages(this.selectedImages, mascotaData);
+              mascotaData.imagenMascota = [...mascotaData.imagenMascota, ...imageUrls];
+            }
+  
+            // Actualizamos el mestizo, conservando las imágenes previas si no se seleccionaron nuevas
+            await this.mestizosService.updateMestizoWithoutImages({
+              id: this.mestizoId,
+              ...mascotaData,
+            });
+  
+            this.showToast('Mestizo actualizado con éxito', 'success');
+            this.router.navigateByUrl('/tabs/mestizo');
+            this.resetForms();
+          } else {
+            this.showToast('El mestizo no existe, no se puede actualizar', 'danger');
           }
-
-          // Actualizar los campos
-          await this.mestizosService.updateMestizoWithoutImages({
-            id: this.mestizoId,
-            ...mascotaData,
-          });
-
-          this.showToast('Mestizo actualizado con éxito', 'success');
-          this.router.navigateByUrl('/tabs/mestizo');
-          this.resetForms();
         } else {
+          // Si es un nuevo registro y hay imágenes seleccionadas
           if (this.selectedImages.length > 0) {
             const imageUrls = await this.mestizosService.uploadImages(this.selectedImages, mascotaData);
             mascotaData.imagenMascota = imageUrls;
-
-            await this.mestizosService.addMestizos(userSession.id, mascotaData, imageUrls);
+  
+            const userId = userSession.id; // Asegúrate de que el userId esté correctamente asignado
+            await this.mestizosService.addMestizos(userId, mascotaData, imageUrls);
+  
             this.showToast('Mascota registrada con éxito', 'success');
             this.router.navigateByUrl('/tabs/mestizo');
             this.resetForms();
@@ -291,6 +302,7 @@ export class MestizoFormPage implements OnInit {
       this.showToast('Completa todos los campos correctamente antes de enviar', 'danger');
     }
   }
+  
   
   resetForms() {
     this.mestizoForm.reset();

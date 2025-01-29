@@ -22,11 +22,9 @@
           placeholder="Buscar" 
           mode="ios">
         </ion-searchbar>
-      
       </ion-title>
     </div>
     <section class="w-full mx-auto">
-      <!-- Skeleton loader when isLoading is true -->
       <div *ngIf="isLoading; else contentLoaded">
         <div class="grid grid-cols-2 gap-3 py-3 w-full">
           <div class="h-max rounded-xl overflow-hidden border border-gray-300 shadow-lg" *ngFor="let item of [1, 2, 3, 4, 5, 6, 7, 8]">
@@ -44,11 +42,8 @@
         </div>
       </div>
 
-      <!-- Actual content loaded from the database -->
       <ng-template #contentLoaded>
         <div>
-          <!-- <hr class="my-5 border-blue-500/30"> -->
-          <!-- <h2>{{ userItem.user.nombre }}</h2> -->
           <h1 class="pb-2 px-2 text-2xl font-medium text-slate-600">Mestizos Registrados</h1>
           <div class="grid grid-cols-2 gap-3 py-3 w-full">
             <div class="h-max rounded-xl overflow-hidden border border-blue-300 shadow-lg relative" *ngFor="let mestizo of filteredMestizos">
