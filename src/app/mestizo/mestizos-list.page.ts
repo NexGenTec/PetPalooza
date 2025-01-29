@@ -14,6 +14,7 @@ export class MestizosListPage implements OnInit {
   isLoading = true;
   usersWithMestizos: { user: Users, mestizos: Mestizos[] }[] = [];
   mestizos: Mestizos[] = [];
+  filteredMestizos: Mestizos[] = [];
 
   constructor(
     private mestizosService: MestizosService,
@@ -27,6 +28,7 @@ export class MestizosListPage implements OnInit {
     this.mestizosService.getAllUsersWithMestizos().subscribe({
       next: (data) => {
         this.mestizos = data; // Los datos ya están aplanados por la función getAllUsersWithMestizos()
+        this.filteredMestizos = this.mestizos; // Inicializamos la lista filtrada con todos los mestizos
         console.log('Datos cargados:', this.mestizos);
         this.isLoading = false; // Se detiene el indicador de carga
       },
@@ -36,6 +38,18 @@ export class MestizosListPage implements OnInit {
       }
     });
   }
+
+  filterMestizos(): void {
+    if (this.searchTerm.trim() === '') {
+      this.filteredMestizos = this.mestizos;
+    } else {
+      this.filteredMestizos = this.mestizos.filter(mestizo =>
+        mestizo.nombre.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+        mestizo.apodo.toLowerCase().includes(this.searchTerm.toLowerCase())
+      );
+    }
+  }
+
   redirectToPerfil(mestizoId: string) {
     this.router.navigate([`/perfil-mestizo/${mestizoId}`]);
   }
