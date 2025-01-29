@@ -517,5 +517,12 @@ export class MestizoFormPage implements OnInit {
     this.selectedFile = null;
     this.userForm.enable();
   }
+
+  getAvailableTemperamentos() {
+    const selectedTemperamentos = this.temperamentos.controls.map((control) => control.value);
+    return this.TemperamentosMestizos.filter(temperamento => 
+      !selectedTemperamentos.includes(temperamento.nombre)
+    );
+  }
   
 }
