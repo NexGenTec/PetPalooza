@@ -22,18 +22,20 @@ export class PerfilMestizoPage implements OnInit {
   cardSubtitle = '';
   cardContent = '';
   showImagesContainer = false;
+  mestizos: Mestizos[] = [];
 
   constructor(
     private route: ActivatedRoute,
     private mestizosService: MestizosService,
     private userSessionService: UserSessionService
   ) {}
+  private readonly isMestizoComponent = true; 
 
   ngOnInit() {
     this.route.paramMap.subscribe((params) => {
       this.mestizoId = params.get('id');
       if (this.mestizoId) {
-        this.loadMestizoAndUser();
+        this.loadMestizo();
       }
     });
   }
@@ -66,6 +68,37 @@ export class PerfilMestizoPage implements OnInit {
       });
   }
 
+  loadMestizo() {
+    this.mestizosService.getAllUsersWithMestizos().subscribe({
+      next: (data) => {
+        this.mestizos = data;
+        console.log('Datos cargados:', this.mestizos);
+    
+        // Filtra el mestizo por id
+        this.mestizo = this.mestizos.find(mestizo => mestizo.id === this.mestizoId);
+    
+        if (this.mestizo) {
+          this.populateMestizoData();
+        } else {
+          console.error('Mestizo no encontrado');
+        }
+    
+        this.checkLoadingStatus(); // Verificar si ya se puede desactivar la carga
+      },
+      error: (err) => {
+        console.error('Error al cargar los datos:', err);
+        this.checkLoadingStatus(); // Verificar si ya se puede desactivar la carga
+      }
+    });
+  }
+  
+  checkLoadingStatus() {
+    // Si ambas funciones ya han terminado, desactivar la carga
+    if (this.mestizo && this.mestizos.length) {
+      this.isLoading = false;
+    }
+  }
+  
   getImagesArray(mestizo: Mestizos): string[] {
     return Array.isArray(mestizo?.imagenMascota) ? Object.values(mestizo.imagenMascota) : [];
   }

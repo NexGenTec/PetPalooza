@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
-import { Observable, combineLatest, finalize, map, switchMap,} from 'rxjs';
+import { Observable, catchError, combineLatest, finalize, forkJoin, map, of, switchMap, throwError,} from 'rxjs';
 import { Mestizos, Users } from '../models/users.models';
 
 @Injectable({
@@ -125,32 +125,20 @@ export class MestizosService {
           return this.firestore.collection<Mestizos>(`users/${userId}/mestizos`).valueChanges();
         });
         return combineLatest(mestizosObservables).pipe(
-          map(mestizosArrays => 
-            mestizosArrays.reduce((acc, curr) => acc.concat(curr), [])
-          )
+          map(mestizosArrays => {
+            const allMestizos = mestizosArrays.reduce((acc, curr) => acc.concat(curr), []);
+            console.log('All Mestizos:', allMestizos);
+            return allMestizos;
+          })
         );
       })
     );
-  }
+  }  
 
   getMestizoByIdAndUser(userId: string, mestizoId: string): Observable<Mestizos> {
     return this.firestore.collection(`users/${userId}/mestizos`)
       .doc<Mestizos>(mestizoId)
       .valueChanges();
-  }
-
-  getMestizoByIdGlobal(mestizoId: string): Observable<Mestizos | undefined> {
-    return this.firestore.collection<Users>('users').snapshotChanges().pipe(
-      switchMap(usersSnapshot => {
-        const mestizoObservables = usersSnapshot.map(userDoc => {
-          const userId = userDoc.payload.doc.id;
-          return this.firestore.collection<Mestizos>(`users/${userId}/mestizos`).doc(mestizoId).valueChanges();
-        });
-        return combineLatest(mestizoObservables).pipe(
-          map(mestizos => mestizos.find(mestizo => mestizo !== undefined))
-        );
-      })
-    );
   }
 
   getMestizoById(id: string) {

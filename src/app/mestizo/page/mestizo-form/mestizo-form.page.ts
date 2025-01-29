@@ -124,6 +124,7 @@ export class MestizoFormPage implements OnInit {
       this.mestizosService.getMestizoById(id).subscribe({
         next: (mestizo) => {
             this.mestizoName = mestizo.nombre;
+            this.mestizoId = id;
           console.log('Mestizo data loaded:', mestizo);
           
           if (mestizo) {

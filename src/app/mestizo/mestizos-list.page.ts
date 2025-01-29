@@ -37,7 +37,6 @@ export class MestizosListPage implements OnInit {
     });
   }
   redirectToPerfil(mestizoId: string) {
-    // Redirige directamente al perfil del mestizo usando el ID
     this.router.navigate([`/perfil-mestizo/${mestizoId}`]);
   }
 }
