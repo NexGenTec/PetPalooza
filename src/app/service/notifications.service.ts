@@ -29,24 +29,16 @@ export class NotificationsService {
     });
 
     PushNotifications.addListener('registration', (token: Token) => {
-      console.log('Push registration success, token: ' + token.value);
-      // Guardar el token en Firestore
       this.saveToken(token.value);
-      // null indica que no hay notificación asociada
     });
 
     PushNotifications.addListener('pushNotificationReceived', (notification: PushNotificationSchema) => {
-      console.log('Push received: ' + JSON.stringify(notification));
-      // Guardar la notificación en Firestore
       this.notificationToFirestore(notification);
-      // Mostrar la notificación local
     });
 
     PushNotifications.addListener('pushNotificationActionPerformed', (notification: ActionPerformed) => {
-      console.log('Push action performed: ', notification);
       const data = notification.notification.data;
       if (data.Route) {
-        console.log('Redirecting to: ', data.Route);
         this.router.navigate([data.Route]);
       } else {
         console.error('No route found in notification data.');

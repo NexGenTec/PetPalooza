@@ -29,7 +29,6 @@ export class MestizosListPage implements OnInit {
       next: (data) => {
         this.mestizos = data;
         this.filteredMestizos = this.mestizos;
-        console.log('Datos cargados:', this.mestizos);
         this.isLoading = false;
       },
       error: (err) => {

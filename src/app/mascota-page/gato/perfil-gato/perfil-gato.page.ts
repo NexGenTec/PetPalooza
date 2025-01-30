@@ -88,9 +88,7 @@ export class PerfilGatoPage implements OnInit {
     }
     try {
       const deviceIdInfo = await Device.getId();
-      console.log('ID del dispositivo:', deviceIdInfo.identifier);
       this.deviceId = deviceIdInfo.identifier || this.deviceId;
-      console.log('ID del dispositivo:', this.deviceId);
     } catch (error) {
       console.error('Error al obtener el identificador del dispositivo:', error);
     }

@@ -75,9 +75,6 @@ export class PerfilMestizoPage implements OnInit {
     this.mestizosService.getAllUsersWithMestizos().subscribe({
       next: (data) => {
         this.mestizos = data;
-        console.log('Datos cargados:', this.mestizos);
-    
-        // Filtra el mestizo por id
         this.mestizo = this.mestizos.find(mestizo => mestizo.id === this.mestizoId);
     
         if (this.mestizo) {

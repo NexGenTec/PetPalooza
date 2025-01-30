@@ -225,7 +225,6 @@ export class CuidadosPage implements OnInit {
       setTimeout(async () => {
         try {
           await AdmobAds.removeBannerAd();
-          console.log('Banner adaptable (Full Banner) cerrado correctamente');
         } catch (error) {
           console.error('Error al cerrar el banner adaptable (Full Banner)', error);
         }

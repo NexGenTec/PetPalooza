@@ -82,7 +82,6 @@ export class MestizoFormPage implements OnInit {
     }
     
     this.mestizoId = this.route.snapshot.paramMap.get('id');
-    console.log('Mestizo ID from URL:', this.mestizoId);
     if (this.mestizoId) {
       this.loadMestizoData(this.mestizoId);
     }
@@ -122,14 +121,11 @@ export class MestizoFormPage implements OnInit {
   }
 
   async loadMestizoData(id: string) {
-    console.log('Loading mestizo data for ID:', id);
     try {
       this.mestizosService.getMestizoById(id).subscribe({
         next: (mestizo) => {
             this.mestizoName = mestizo.nombre;
             this.mestizoId = id;
-          console.log('Mestizo data loaded:', mestizo);
-          
           if (mestizo) {
             // Patch form with the data
             this.mestizoForm.patchValue({

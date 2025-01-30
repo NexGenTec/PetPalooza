@@ -17,11 +17,8 @@ export class ReactionService {
   
     if (gatoDoc.exists) {
       const gatoData = gatoDoc.data() as InfoGato;
-      console.log('Datos del Gato:', gatoData);
   
       const imgUser = gatoData.ImgUsers.find(img => img.url === imgUserId);
-      console.log('ImgUser encontrado:', imgUser);
-  
       if (imgUser) {
         // Inicializa likedDevices y reactedDevices si son undefined
         imgUser.likedDevices = imgUser.likedDevices || [];
@@ -32,8 +29,6 @@ export class ReactionService {
           ...imgUser,
           ...updates
         };
-  
-        console.log('ImgUser actualizado:', updatedImgUser);
   
         // Actualiza el documento en Firestore
         return gatoRef.update({
@@ -55,10 +50,8 @@ export class ReactionService {
   
     if (perroDoc.exists) {
       const perroData = perroDoc.data() as InfoPerro;
-      console.log('Datos del Perro:', perroData);
   
       const imgUser = perroData.ImgUsers.find(img => img.url === imgUserId);
-      console.log('ImgUser encontrado:', imgUser);
   
       if (imgUser) {
         // Inicializa likedDevices y reactedDevices si son undefined
@@ -70,8 +63,6 @@ export class ReactionService {
           ...imgUser,
           ...updates
         };
-  
-        console.log('ImgUser actualizado:', updatedImgUser);
   
         // Actualiza el documento en Firestore
         return perroRef.update({

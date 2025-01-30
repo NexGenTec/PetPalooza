@@ -32,13 +32,11 @@ export class AppComponent {
       filter((event) => event instanceof NavigationEnd)
     ).subscribe((event: NavigationEnd) => {
       console.log('Navegación a:', event.urlAfterRedirects);
-      // Aquí puedes manejar la navegación basada en el URL
     });
   }
 
 
   async alertExit() {
-    console.log('alert');
     const alert = await this.alertCtrl.create({
       header: 'Salir de la aplicación',
       subHeader: 'Confirmar',

@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
-import { Observable, catchError, combineLatest, finalize, forkJoin, map, of, switchMap, throwError,} from 'rxjs';
+import { Observable, combineLatest, finalize, map, of, switchMap,} from 'rxjs';
 import { Mestizos, Users } from '../models/users.models';
+import { v4 as uuidv4 } from 'uuid';
+import { user } from '@angular/fire/auth';
 
 @Injectable({
   providedIn: 'root'
@@ -26,7 +28,10 @@ export class MestizosService {
   }
   
   private uploadImageToFirebase(image: string, mestizo: Mestizos): Promise<string> {
-    const filePath = `Mestizo/${mestizo.nombre}/${new Date().getTime()}_${Math.random().toString(36).substring(2, 15)}`;
+    const fileId = uuidv4();
+    const userSession = JSON.parse(sessionStorage.getItem('user') || '{}');
+    const userId = userSession.id;
+    const filePath = `Mestizo/${userId}/${fileId}_${new Date().getTime()}`; 
     const fileRef = this.storage.ref(filePath);
   
     return new Promise((resolve, reject) => {
@@ -34,11 +39,11 @@ export class MestizosService {
   
       uploadTask.snapshotChanges().pipe(
         finalize(() => {
-          fileRef.getDownloadURL().subscribe(
-            (downloadURL) => resolve(downloadURL),
-            (error) => reject(error)
-          );
-        })
+          fileRef.getDownloadURL().subscribe({
+              next: (downloadURL) => resolve(downloadURL),
+              error: (error) => reject(error)
+          });
+      })
       ).subscribe();
     });
   }
@@ -51,8 +56,6 @@ export class MestizosService {
       const { imagenMascota, ...updatedMestizoData } = mestizo;
       const docRef = this.firestore.collection(`users/${userId}/mestizos`).doc(mestizo.id);
       await docRef.update(updatedMestizoData);
-  
-      console.log('Mestizo actualizado correctamente sin modificar las imágenes.');
     } catch (error) {
       console.error('Error al actualizar el mestizo:', error);
       throw new Error('No se pudo actualizar el mestizo');
@@ -68,8 +71,6 @@ export class MestizosService {
       };
       const docRef = await this.firestore.collection(`users/${userId}/mestizos`).add(mestizoData);
       await docRef.update({ id: docRef.id });
-  
-      console.log('Mestizo guardado con id:', docRef.id);
     } catch (error) {
       console.error('Error al subir las imágenes o los datos:', error);
     }
@@ -77,12 +78,10 @@ export class MestizosService {
   
   async updateMestizo(mestizo: Mestizos): Promise<void> {
     try {
-      const userId = mestizo.id; // Se debe pasar userId para la subcolección
+      const userId = mestizo.id;
       const docRef = this.firestore.collection(`users/${userId}/mestizos`).doc(mestizo.id);
       await docRef.update(mestizo);
-      console.log('Mestizo actualizado correctamente.');
     } catch (error) {
-      console.error('Error al actualizar el mestizo:', error);
       throw new Error('No se pudo actualizar el mestizo');
     }
   }
@@ -93,21 +92,21 @@ export class MestizosService {
     const task = this.storage.upload(filePath, file);
 
     return new Promise((resolve, reject) => {
-      task.snapshotChanges().pipe(
-        finalize(() => {
-          fileRef.getDownloadURL().subscribe(
-            (downloadURL) => {
-              resolve(downloadURL);
-            },
-            (error) => reject(error)
-          );
-        })
-      ).subscribe();
-    });
+        task.snapshotChanges().pipe(
+            finalize(() => {
+                fileRef.getDownloadURL().subscribe({
+                    next: (downloadURL) => resolve(downloadURL),
+                    error: (error) => reject(error)
+                });
+            })
+        ).subscribe();
+    })
   }
 
+
   async addUser(user: Users, file: File): Promise<Users> {
-    const imagePath = `user/${user.nombre}/${new Date().getTime()}_${file.name}`;
+    const userId = uuidv4();
+    const imagePath = `user/${userId}/${new Date().getTime()}_${file.name}`;
     try {
       const imageUrl = await this.uploadImage(file, imagePath);
       const userData: Users = {
@@ -139,7 +138,6 @@ export class MestizosService {
         return combineLatest(mestizosObservables).pipe(
           map(mestizosArrays => {
             const allMestizos = mestizosArrays.reduce((acc, curr) => acc.concat(curr), []);
-            console.log('All Mestizos:', allMestizos);
             return allMestizos;
           })
         );
@@ -158,7 +156,6 @@ export class MestizosService {
       switchMap(usersSnapshot => {
         const mestizoObservables = usersSnapshot.map(userDoc => {
           const userId = userDoc.payload.doc.id;
-          console.log('Fetching mestizo with ID:', id);
           return this.firestore.collection<Mestizos>(`users/${userId}/mestizos`).doc(id).valueChanges();
         });
         return combineLatest(mestizoObservables).pipe(
