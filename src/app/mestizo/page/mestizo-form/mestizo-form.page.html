@@ -454,6 +454,10 @@
               </div>
               
               <div class="mt-4 flex flex-wrap gap-4">
+                <p *ngIf="mestizoId !== null" class="text-sm text-blue-400 text-center">
+                  Actualmente, no es posible editar o cambiar las imágenes de tu mascota.
+                  Esta opción estará disponible próximamente.
+                </p>
                 <div *ngFor="let image of selectedImages; let i = index" class="relative group">
                   <img [src]="image" class="w-28 h-28 object-cover rounded-lg shadow-md transition-transform duration-300 hover:scale-105" />
                   <button

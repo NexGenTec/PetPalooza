@@ -5,6 +5,9 @@ import { Mestizos, Users } from '../../models/users.models';
 import { UserSessionService } from '../../service/user-session.service';
 import { of, switchMap } from 'rxjs';
 import { TemperamentosMestizos } from '../../models/TemperamentosMestizos.models';
+import { ModalController } from '@ionic/angular';
+import { ImgModalPage } from 'src/app/components/img-modal/img-modal.page';
+import { ModalSwiperPage } from 'src/app/components/modal-swiper/modal-swiper.page';
 
 @Component({
   selector: 'app-perfil-mestizo',
@@ -27,9 +30,9 @@ export class PerfilMestizoPage implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private mestizosService: MestizosService,
-    private userSessionService: UserSessionService
+    private userSessionService: UserSessionService,
+    private modalController: ModalController,
   ) {}
-  private readonly isMestizoComponent = true; 
 
   ngOnInit() {
     this.route.paramMap.subscribe((params) => {
@@ -187,5 +190,23 @@ export class PerfilMestizoPage implements OnInit {
     this.cardHeading = heading;
     this.cardSubtitle = subtitle;
     this.cardContent = content;
+  }
+
+  async openModal(imageUrl: string) {
+    const modal = await this.modalController.create({
+      component: ImgModalPage,
+      componentProps: {
+        imageUrl: imageUrl
+      }
+    })
+    return await modal.present();
+  }
+
+  async openModalSwiper(mestizo: Mestizos) {
+    const modal = await this.modalController.create({
+      component: ModalSwiperPage,
+      componentProps: { images: this.getImagesArray(mestizo), initialSlide: 0 }
+    });
+    await modal.present();
   }
 }
