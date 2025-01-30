@@ -110,8 +110,19 @@
         
         <span class="bg-blue-400 inline-block h-1 w-[90px] rounded"></span>
       </div>
-
+      
       <swiper-container [loop]="false" class="py-5" [breakpoints]="breakpointsRegisteredAnimals">
+        <swiper-slide>
+          <ion-tab-button tab="mestizos-list" href="/tabs/mestizos-list">
+            <ng-container>
+              <div class="my-2 group w-full text-white rounded-lg bg-[rgb(239,144,71)] p-5 transition relative duration-300 cursor-pointer hover:translate-y-[3px] hover:shadow-[0_-8px_0px_0px_rgb(244,67,54)]">
+                <p class="text-2xl">{{ originalMestizos.length }}</p>
+                <p class="text-sm">Mestizos</p>
+                <svg  xmlns="http://www.w3.org/2000/svg"  width="36"  height="36"  viewBox="0 0 24 24"  fill="currentColor"  class="group-hover:opacity-100 absolute right-[10%] top-[50%] translate-y-[-50%] opacity-20 transition group-hover:scale-110 duration-300"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 10c-1.32 0 -1.983 .421 -2.931 1.924l-.244 .398l-.395 .688a50.89 50.89 0 0 0 -.141 .254c-.24 .434 -.571 .753 -1.139 1.142l-.55 .365c-.94 .627 -1.432 1.118 -1.707 1.955c-.124 .338 -.196 .853 -.193 1.28c0 1.687 1.198 2.994 2.8 2.994l.242 -.006c.119 -.006 .234 -.017 .354 -.034l.248 -.043l.132 -.028l.291 -.073l.162 -.045l.57 -.17l.763 -.243l.455 -.136c.53 -.15 .94 -.222 1.283 -.222c.344 0 .753 .073 1.283 .222l.455 .136l.764 .242l.569 .171l.312 .084c.097 .024 .187 .045 .273 .062l.248 .043c.12 .017 .235 .028 .354 .034l.242 .006c1.602 0 2.8 -1.307 2.8 -3c0 -.427 -.073 -.939 -.207 -1.306c-.236 -.724 -.677 -1.223 -1.48 -1.83l-.257 -.19l-.528 -.38c-.642 -.47 -1.003 -.826 -1.253 -1.278l-.27 -.485l-.252 -.432c-1.011 -1.696 -1.618 -2.099 -3.053 -2.099z" /><path d="M19.78 7h-.03c-1.219 .02 -2.35 1.066 -2.908 2.504c-.69 1.775 -.348 3.72 1.075 4.333c.256 .109 .527 .163 .801 .163c1.231 0 2.38 -1.053 2.943 -2.504c.686 -1.774 .34 -3.72 -1.076 -4.332a2.05 2.05 0 0 0 -.804 -.164z" /><path d="M9.025 3c-.112 0 -.185 .002 -.27 .015l-.093 .016c-1.532 .206 -2.397 1.989 -2.108 3.855c.272 1.725 1.462 3.114 2.92 3.114l.187 -.005a1.26 1.26 0 0 0 .084 -.01l.092 -.016c1.533 -.206 2.397 -1.989 2.108 -3.855c-.27 -1.727 -1.46 -3.114 -2.92 -3.114z" /><path d="M14.972 3c-1.459 0 -2.647 1.388 -2.916 3.113c-.29 1.867 .574 3.65 2.174 3.867c.103 .013 .2 .02 .296 .02c1.39 0 2.543 -1.265 2.877 -2.883l.041 -.23c.29 -1.867 -.574 -3.65 -2.174 -3.867a2.154 2.154 0 0 0 -.298 -.02z" /><path d="M4.217 7c-.274 0 -.544 .054 -.797 .161c-1.426 .615 -1.767 2.562 -1.078 4.335c.563 1.451 1.71 2.504 2.941 2.504c.274 0 .544 -.054 .797 -.161c1.426 -.615 1.767 -2.562 1.078 -4.335c-.563 -1.451 -1.71 -2.504 -2.941 -2.504z" /></svg>              
+              </div>
+            </ng-container>
+          </ion-tab-button>
+        </swiper-slide> 
         <swiper-slide>
           <ion-tab-button tab="gato" href="/tabs/gato">
             <ng-container>
@@ -139,6 +150,8 @@
             </ng-container>
           </ion-tab-button>
         </swiper-slide>
+
+           
       </swiper-container> 
     </div>
 
@@ -231,7 +244,79 @@
         </div>
       </div>    
     </div>
-    
+
+    <div id="slider-mestizo">
+      <div class="w-full max-w-[570px] rounded-[20px] px-3 pt-4 text-start">
+        <ng-container *ngIf="isLoading; else contenidoMestizo">
+          <div class="skeleton-heading pb-2">
+            <ion-skeleton-text [animated]="true" style="width:100%;"></ion-skeleton-text>
+          </div>
+        </ng-container>
+        <ng-template #contenidoMestizo>
+          <h1 class="pb-2 text-2xl font-medium">Mestizos</h1>
+        </ng-template>
+        <span class="bg-blue-400 mx-auto mb-4 inline-block h-1 w-[90px] rounded"></span>
+      </div>
+
+      <swiper-container [slidesPerView]="1.3" [loop]="false">
+        <swiper-slide *ngFor="let mestizo of originalMestizos; let i = index">
+          <ng-container *ngIf="!isLoading; else skeletonContent">
+            <div class="px-3">
+              <div class="w-full h-96 bg-white rounded-3xl p-4 flex flex-col items-start justify-between gap-3 border border-gray-200">
+                <div class="w-full">
+                  <div class="w-full h-52 rounded-2xl overflow-hidden relative">
+                    <ion-img class="w-full h-full object-cover" [src]="mestizo.imagenMascota[0]" alt="Imagen de Mestizo" (click)="openModal(mestizo.imagenMascota[0])"></ion-img>
+                    <!-- <div class="absolute top-3 right-3 w-10 h-10 rounded-full bg-white flex justify-center items-center text-red-400">
+                      <button type="button">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-7 h-7">
+                          <path d="m11.645 20.91-.007-.003-.022-.012a15.247 15.247 0 0 1-.383-.218 25.18 25.18 0 0 1-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0 1 12 5.052 5.5 5.5 0 0 1 16.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 0 1-4.244 3.17 15.247 15.247 0 0 1-.383.219l-.022.012-.007.004-.003.001a.752.752 0 0 1-.704 0l-.003-.001Z"/>
+                        </svg>
+                      </button>                      
+                    </div> -->
+                  </div>
+                  <div class="mt-3">
+                    <p class="text-black font-extrabold">{{ mestizo.nombre }} ({{ mestizo.apodo }})</p>
+                    <p class="text-gray-400">{{ mestizo.especie }} - {{ mestizo.edad }} años</p>
+                    <small class="text-slate-400 italic font-thin">{{ mestizo.nacionalidad }}</small>
+                  </div>
+                </div>
+                <div class="bg-blue-400 hover:bg-blue-500 text-white px-4 py-2 rounded-xl cursor-pointer" (click)="redirectToPerfil(mestizo.id)">
+                  <ion-label class="text-lg">Ver más</ion-label>
+                </div>
+              </div>
+            </div>
+          </ng-container>
+        </swiper-slide>
+
+        <swiper-slide *ngIf="originalMestizos.length > 0">
+          <div class="px-3">
+            <div class="w-full h-96 bg-white rounded-3xl p-4 flex flex-col items-center justify-center gap-3 border border-gray-200">
+              <div class="w-full h-full bg-blue-100 rounded-2xl flex justify-center items-center">
+                <div class="bg-blue-400 hover:bg-blue-500 text-white px-4 py-2 rounded-xl cursor-pointer">
+                  <ion-label class="text-lg" (click)="navigateToMestizo()">Ver más</ion-label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </swiper-slide>
+
+        <ng-template #skeletonContent>
+          <div class="px-3">
+            <div class="w-full h-96 bg-gray-100 rounded-3xl p-4 flex flex-col items-start justify-between gap-3 border border-gray-200 animate-pulse">
+              <div class="w-full">
+                <div class="w-full h-52 rounded-2xl bg-gray-300"></div>
+                <div class="mt-3">
+                  <div class="h-4 bg-gray-300 rounded w-3/4"></div>
+                  <div class="h-3 bg-gray-300 rounded w-1/2 mt-2"></div>
+                </div>
+              </div>
+              <div class="h-8 bg-gray-300 rounded w-24 mt-4"></div>
+            </div>
+          </div>
+        </ng-template>
+      </swiper-container>
+    </div>
+
     <div id="slider-cat">
       <div class="w-full max-w-[570px] rounded-[20px] px-3 pt-4 text-start">
         <ng-container *ngIf="texto1showSkeleton; else contenidoGato">

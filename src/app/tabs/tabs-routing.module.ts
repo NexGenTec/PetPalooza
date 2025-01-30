@@ -44,6 +44,14 @@ const routes: Routes = [
       //   loadChildren: () => import('../maps/maps.module').then(m => m.MapsPageModule)
       // },
       {
+        path: 'mestizos-list',
+        loadChildren: () => import('../mestizo/mestizos-list.module').then( m => m.MestizosListPageModule)
+      },
+      {
+        path: 'mestizo',
+        loadChildren: () => import('../mestizo/page/mestizo/mestizo.module').then( m => m.MestizoPageModule)
+      },
+      {
         path: '',
         redirectTo: '/tabs/home',
         pathMatch: 'full'

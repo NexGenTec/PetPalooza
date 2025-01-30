@@ -1,0 +1,67 @@
+<ion-header class="bg-white shadow-none border-b border-gray-200">
+  <a href="/" class="flex gap-2 items-center mx-3 my-2">
+    <img 
+      class="max-h-14 mx-auto"
+      alt="logo PetPalooza" 
+      src="assets/img/logo/PetPalooza.png" 
+    />
+  </a>
+</ion-header>
+
+<ion-content [fullscreen]="true" aria-hidden="false" class="bg-gray-50">
+  <div class="px-3 pt-2 bg-gray-50">
+    <div class="flex flex-row items-center">
+      <ion-buttons slot="start">
+        <ion-back-button defaultHref="/"></ion-back-button>
+      </ion-buttons>
+      <ion-title class="mx-auto">
+        <ion-searchbar 
+          [(ngModel)]="searchTerm" 
+          (ionInput)="filterMestizos()" 
+          class="custom my-2 mt-3" 
+          placeholder="Buscar" 
+          mode="ios">
+        </ion-searchbar>
+      </ion-title>
+    </div>
+    <section class="w-full mx-auto">
+      <div *ngIf="isLoading; else contentLoaded">
+        <div class="grid grid-cols-2 gap-3 py-3 w-full">
+          <div class="h-max rounded-xl overflow-hidden border border-gray-300 shadow-lg" *ngFor="let item of [1, 2, 3, 4, 5, 6, 7, 8]">
+            <ion-card class="m-0 h-44 relative">
+              <ion-skeleton-text class="h-full w-full"></ion-skeleton-text>
+              <ion-card-header class="p-2 h-full w-full bg-gradient-to-b from-transparent from-40% via-black/50 to-black/80">
+                <ion-skeleton-text animated style="width: 80%; height: 16px;"></ion-skeleton-text>
+                <ion-skeleton-text animated style="width: 60%; height: 12px;" class="mt-1"></ion-skeleton-text>
+              </ion-card-header>
+            </ion-card>
+            <div class="absolute top-3 right-3 w-10 h-10 rounded-full bg-white flex justify-center items-center">
+              <ion-skeleton-text animated style="width: 40px; height: 40px; border-radius: 50%;"></ion-skeleton-text>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <ng-template #contentLoaded>
+        <div>
+          <h1 class="pb-2 px-2 text-2xl font-medium text-slate-600">Mestizos Registrados</h1>
+          <div class="grid grid-cols-2 gap-3 py-3 w-full">
+            <div class="h-max rounded-xl overflow-hidden border border-blue-300 shadow-lg relative" *ngFor="let mestizo of filteredMestizos">
+              <ion-card class="m-0 h-44 relative group" mode="md" (click)="redirectToPerfil(mestizo.id)">
+                <img 
+                  class="h-full w-full object-cover object-center absolute top-0 left-0 transition-all duration-300 group-hover:scale-110" 
+                  alt="Imagen de {{ mestizo.nombre }}" 
+                  [src]="mestizo.imagenMascota[0]" 
+                />
+                <ion-card-header class="p-2 h-full w-full justify-end bg-gradient-to-b from-transparent from-40% via-black/50 to-black/80">
+                  <ion-card-title class="text-white">{{ mestizo.nombre }}</ion-card-title>
+                  <ion-card-subtitle class="text-gray-200">{{ mestizo.apodo }}</ion-card-subtitle>
+                </ion-card-header>
+              </ion-card>
+            </div>
+          </div>
+        </div>
+      </ng-template> 
+    </section>
+  </div>
+</ion-content>

@@ -42,6 +42,18 @@ const routes: Routes = [
     path: 'modalswiper-users',
     loadChildren: () => import('./components/modalswiper-users/modalswiper-users.module').then(m => m.ModalswiperUsersPageModule)
   },
+  {
+    path: 'mestizo-form',
+    loadChildren: () => import('./mestizo/page/mestizo-form/mestizo-form.module').then( m => m.MestizoFormPageModule)
+  },
+  {
+    path: 'mestizo-form/:id',
+    loadChildren: () => import('./mestizo/page/mestizo-form/mestizo-form.module').then( m => m.MestizoFormPageModule)
+  },
+  {
+    path: 'perfil-mestizo/:id',
+    loadChildren: () => import('./mestizo/page/perfil-mestizo/perfil-mestizo.module').then(m => m.PerfilMestizoPageModule)
+  },
 ];
 @NgModule({
   imports: [

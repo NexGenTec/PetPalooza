@@ -25,12 +25,12 @@
         <button class="absolute top-2 right-0 w-12 text-gray-700 z-50" (click)="dismiss()">
           <ion-icon class="bg-gray-50 text-gray-700 rounded-full text-xl" slot="icon-only" name="close"></ion-icon>
         </button>
-        <!-- Mostrar botón de retroceso si se están viendo los detalles -->
+        <!-- Mostrar botón de retroceso si se están viendo los detalles 
         <ng-container *ngIf="isShowingDetails; else originalData">
           <button class="absolute top-2 left-0 w-12 text-gray-700 z-50" (click)="goBackToList()">
             <ion-icon class="bg-gray-50 text-gray-700 rounded-full text-xl" slot="icon-only" name="arrow-back"></ion-icon>
           </button>
-          <!-- Vista de detalles de la veterinaria -->
+          <!-- Vista de detalles de la veterinaria 
           <div *ngIf="selectedPlace">
             <ion-img [src]="selectedPlace.Img" alt="Imagen de Veterinaria"></ion-img>
             <h2 class="mt-4 text-2xl font-medium text-black">{{ selectedPlace.Nombre }}</h2>
@@ -62,7 +62,7 @@
             </div>
           </div>
         </ng-container>
-        <!-- Plantilla de la lista original agrupada por categorías -->
+        <!-- Plantilla de la lista original agrupada por categorías 
         <ng-template #originalData>
           <ng-container *ngIf="!isLoading; else skeletonTemplate">
             <ng-container *ngIf="getObjectKeys(placeGroupedByCategoria).length; else noDataTemplate">

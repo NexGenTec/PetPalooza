@@ -1,0 +1,4 @@
+.blurred {
+    filter: blur(5px);
+    pointer-events: none; /* Disable clicking in the blurred state */
+}

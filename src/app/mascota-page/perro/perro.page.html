@@ -1,16 +1,25 @@
 <ion-header class="bg-white shadow-none border-b border-gray-200">
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button defaultHref="/"></ion-back-button>
-    </ion-buttons>
-    <ion-title class="mx-auto">
-      <ion-searchbar class="custom my-3" placeholder="Buscar" mode="md" [(ngModel)]="searchTerm" (ionChange)="filterPerros()"></ion-searchbar>
-    </ion-title>
-  </ion-toolbar>
+  <a href="/" class="flex gap-2 items-center mx-3 my-2">
+    <img 
+      class="max-h-14 mx-auto"
+      alt="logo PetPalooza" 
+      src="assets/img/logo/PetPalooza.png" 
+    />
+  </a>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <div class="px-3 pt-5 bg-gray-50">
+<ion-content [fullscreen]="true" class="bg-gray-50">
+
+  <div class="px-3 pt-1 bg-gray-50">
+    <div class="flex flex-row items-center">
+      <ion-buttons slot="start">
+        <ion-back-button defaultHref="/"></ion-back-button>
+      </ion-buttons>
+      <ion-title class="mx-auto">
+        <ion-searchbar class="custom my-2 mt-3" placeholder="Buscar" mode="ios"></ion-searchbar>
+      </ion-title>
+    </div>
+    
     <section class="w-full mx-auto">
       <!-- Skeleton loader cuando isLoading es true -->
       <div *ngIf="isLoading; else contentLoaded">
