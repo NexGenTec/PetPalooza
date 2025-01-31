@@ -75,7 +75,7 @@ export class MestizoFormPage implements OnInit {
     this.initializeUserForm();
     this.checkUserSession();
     
-    const savedUser = sessionStorage.getItem('user');
+    const savedUser = localStorage.getItem('user');
     if (savedUser) {
       this.userData = JSON.parse(savedUser);
       this.isFormCompleted = true;
@@ -221,7 +221,7 @@ export class MestizoFormPage implements OnInit {
   }
 
   async submitForms() {
-    const userSession = JSON.parse(sessionStorage.getItem('user') || '{}');
+    const userSession = JSON.parse(localStorage.getItem('user') || '{}');
     
     if (this.mestizoForm.valid && this.caracteristicasForm.valid && this.temperamentoForm.valid && this.historiaForm.valid) {
       if (this.selectedImages.length < 4 || this.selectedImages.length > 6) {
@@ -372,7 +372,7 @@ export class MestizoFormPage implements OnInit {
   }  
 
   private checkUserSession() {
-    const userSession = sessionStorage.getItem('user');
+    const userSession = localStorage.getItem('user');
     if (userSession) {
       this.isFormCompleted = true;
     } else {

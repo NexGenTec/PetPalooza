@@ -29,7 +29,7 @@ export class MestizosService {
   
   private uploadImageToFirebase(image: string, mestizo: Mestizos): Promise<string> {
     const fileId = uuidv4();
-    const userSession = JSON.parse(sessionStorage.getItem('user') || '{}');
+    const userSession = JSON.parse(localStorage.getItem('user') || '{}');
     const userId = userSession.id;
     const filePath = `Mestizo/${userId}/${fileId}_${new Date().getTime()}`; 
     const fileRef = this.storage.ref(filePath);
@@ -50,7 +50,7 @@ export class MestizosService {
   
   async updateMestizoWithoutImages(mestizo: Mestizos): Promise<void> {
     try {
-      const userSession = JSON.parse(sessionStorage.getItem('user') || '{}');
+      const userSession = JSON.parse(localStorage.getItem('user') || '{}');
       const userId = userSession.id;
   
       const { imagenMascota, ...updatedMestizoData } = mestizo;

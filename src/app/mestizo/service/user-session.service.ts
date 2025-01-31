@@ -13,12 +13,12 @@ export class UserSessionService {
   user$ = this.userSubject.asObservable();
 
   setUser(user: Users) {
-    sessionStorage.setItem('user', JSON.stringify(user));
+    localStorage.setItem('user', JSON.stringify(user));
     this.userSubject.next(user);
   }
 
   getUserFromStorage(): Users {
-    const userSession = sessionStorage.getItem('user');
+    const userSession = localStorage.getItem('user');
     return userSession ? JSON.parse(userSession) : null;
   }
 }
