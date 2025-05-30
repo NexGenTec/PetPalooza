@@ -16,32 +16,7 @@
         <span class="bg-blue-400 mx-auto mb-4 inline-block h-1 w-[90px] rounded"></span>
       </div>
     </section>
-    <!-- <section>
-      <div class="mt-4 mx-8 flex flex-col md:flex-row h-60 gap-3">
-        <article class="flex flex-row shadow-lg rounded-2xl hover:shadow-2xl hover:scale-105 duration-150 backdrop-brightness-200 bg-[rgb(41,49,79)] h-24  px-3 group">
-          <div class="flex flex-row overflow-hidden">
-            <div class="flex flex-col justify-end text-start mb-3">
-              <h3 class="mt-14 text-gray-50 text-base">Perros</h3>
-              <small class="text-gray-100 text-[12px]">Todos sus cuidados</small>
-            </div>
-            <div class="translate-y-2 group-hover:translate-y-4 duration-300 overflow-hidden">
-              <img class="w-28 drop-shadow-2xl" src="../../assets/img/cuidados/perro.webp"/>
-            </div>
-          </div>
-        </article>
-        <article class="flex flex-row shadow-lg rounded-2xl hover:shadow-2xl hover:scale-105 duration-150 backdrop-brightness-200 bg-blue-400 h-24 px-3 group">
-          <div class="flex flex-row overflow-hidden">
-            <div class="translate-y-0 group-hover:translate-y-3 duration-300 w-32 overflow-hidden">
-              <img class="h-28 w-36 drop-shadow-2xl" src="../../assets/img/cuidados/gato.webp"/>
-            </div>
-            <div class="flex flex-col justify-end text-end mb-3">
-              <h3 class="mt-14 text-gray-50 text-base">Gatos</h3>
-              <small class="text-gray-100 text-[12px]">Todos sus cuidados</small>
-            </div>
-          </div>
-        </article>     
-      </div>
-    </section> -->
+
     <!--ads local--> 
     <div id="myAds" class="grid grid-cols-3 gap-3 h-36 mb-12">
       <article class="relative bg-gray-200 w-full h-full sm:h-40 drop-shadow-xl" *ngFor="let imgs of img">
@@ -80,11 +55,7 @@
                 class="w-4 h-4 p-2 bg-white/50 hover:bg-sky-500 backdrop-blur-md drop-shadow-lg flex justify-center items-center  text-blue-500 hover:text-white duration-200 rounded-full"
               ></ion-icon>
             </a>
-            <!-- <a [href]="imgs.whatsapp" target="_blank" rel="noopener noreferrer">
-              <ion-icon name=""
-                class="w-4 h-4 p-2 bg-white/50 hover:bg-sky-500 backdrop-blur-md drop-shadow-lg flex justify-center items-center  text-blue-500 hover:text-white duration-200 rounded-full"
-              ></ion-icon>
-            </a> -->
+
             <a [href]="imgs.web" target="_blank" rel="noopener noreferrer">
               <ion-icon name="globe-outline"
                 class="w-4 h-4 p-2 bg-white/50 hover:bg-sky-500 backdrop-blur-md drop-shadow-lg flex justify-center items-center  text-blue-500 hover:text-white duration-200 rounded-full"
@@ -94,13 +65,13 @@
         </div>
       </article>
     </div>
-    <!-- <div id="myAds" class="grid grid-cols-3 gap-3 h-36 my-3 mb-8">
-      <article class="bg-gray-200 w-full h-full rounded-lg overflow-hidden" *ngFor="let imgs of img">
-        <a [href]="imgs.instagram" target="_blank" rel="noopener noreferrer">
-          <img [src]="imgs.img" alt="ad1" class="object-cover w-full h-full">
-        </a>
-      </article>
-    </div> -->
+
+    <div class="mt-4 text-center">
+      <ion-button expand="block" size="large" shape="round" color="success" [routerLink]="['/trivia']">
+        🧠 ¡Pon a prueba tus conocimientos!
+      </ion-button>
+    </div>
+
     <section class="my-3 mt-28">
       <div class="border-b border-gray-200 pb-2 bg-white mx-3">
         <ion-segment mode="ios" [(ngModel)]="selectedSegment" (ionChange)="changeCardContent(selectedSegment)" class="rounded-lg mb-3">

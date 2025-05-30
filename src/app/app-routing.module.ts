@@ -53,7 +53,11 @@ const routes: Routes = [
   {
     path: 'perfil-mestizo/:id',
     loadChildren: () => import('./mestizo/page/perfil-mestizo/perfil-mestizo.module').then(m => m.PerfilMestizoPageModule)
+  },  {
+    path: 'trivia',
+    loadChildren: () => import('./trivia/trivia.module').then( m => m.TriviaPageModule)
   },
+
 ];
 @NgModule({
   imports: [
