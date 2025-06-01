@@ -35,6 +35,9 @@ export class AppComponent {
     });
   }
 
+goToTrivia() {
+  this.router.navigate(['/trivia']);
+}
 
   async alertExit() {
     const alert = await this.alertCtrl.create({

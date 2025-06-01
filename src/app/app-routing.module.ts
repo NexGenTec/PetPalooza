@@ -57,6 +57,14 @@ const routes: Routes = [
     path: 'trivia',
     loadChildren: () => import('./trivia/trivia.module').then( m => m.TriviaPageModule)
   },
+  {
+    path: 'trivia-breed',
+    loadChildren: () => import('./pages/trivia-breed/trivia-breed.module').then( m => m.TriviaBreedPageModule)
+  },
+  {
+    path: 'trivia-quiz',
+    loadChildren: () => import('./pages/trivia-quiz/trivia-quiz.module').then( m => m.TriviaQuizPageModule)
+  },
 
 ];
 @NgModule({

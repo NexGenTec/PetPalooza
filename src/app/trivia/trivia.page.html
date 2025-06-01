@@ -9,33 +9,32 @@
 </ion-header>
 
 <ion-content [fullscreen]="true" class="bg-gray-50">
-  <section class="max-w-md w-full mx-auto">    
-      <div class="w-full max-w-[570px] rounded-[20px] px-8 pt-4 text-center">
-        <h1 class="pb-2 text-3xl font-medium">Trivia </h1>
+  <div class="flex flex-row items-center">
+      <ion-buttons slot="start">
+        <ion-back-button defaultHref="/"></ion-back-button>
+      </ion-buttons>
+      <div class=" w-full rounded-[20px] px-8 pt-4 text-center">
+        <h1 class="pb-2 text-3xl font-medium">Trivia PetPalooza</h1>
         <span class="bg-blue-400 mx-auto mb-4 inline-block h-1 w-[90px] rounded"></span>
       </div>
-    </section>
-  <div *ngIf="currentQuestion" class="p-4" >
-    <h6 class="bg-gray-50 text-3xl font-semibold py-3 text-black text-center" >
-      <ion-card-title>{{ currentQuestion.question }}</ion-card-title>
-    </h6>
-
-    <div class="bg-gray-50 my-6">
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 ">
-        <button class="rounded-xl px-4 py-2 items-center w-96 bg-amber-300 text-gray-50 cursor-pointer hover:scale-105 duration-100"
-          *ngFor="let option of currentQuestion.options; index as i"
-          (click)="selectOption(i)"
-          [class.correct]="showAnswerFeedback && i === currentQuestion.correct"
-          [class.wrong]="showAnswerFeedback && i === selectedOptionIndex && i !== currentQuestion.correct"
-        >
-          {{ option.option }}
-        </button>
-      </div>
     </div>
-  </div>
+  <section class="max-w-5xl w-full mx-auto">    
 
-<ion-text class="ion-padding">
-  Pregunta {{ currentQuestionIndex + 1 }} de {{ questionsTrivia.length }}
-</ion-text>
+    <div class="mt-10 flex flex-col md:flex-row gap-4 justify-center items-center px-6">
+         <button class="rounded-xl px-4 py-2 items-center w-80 h-[100px] bg-green-400 text-gray-50 text-xl cursor-pointer hover:scale-105 duration-100"
+         (click) = "goToBreed()"
+         >
+           🧐 Adivina la raza
+          </button>
+          <button class="rounded-xl px-4 py-2 items-center w-80 h-[100px] bg-green-400 text-gray-50 text-xl cursor-pointer hover:scale-105 duration-100"
+         (click) = "goToQuiz()"
+          >
+            🧠 Prueba tu conocimiento
+          </button>
+      
+    </div>
+
+  </section>
+
 
 </ion-content>

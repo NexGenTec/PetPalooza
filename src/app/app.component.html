@@ -1,3 +1,9 @@
-<ion-app>
+<ion-app >
   <ion-router-outlet></ion-router-outlet>
+   <!-- Botón flotante global -->
+  <div class="fixed bottom-16 right-6 z-50 group">
+    <button class="btn-trivia items-center text-3xl bg-black text-gray-50 rounded-full group-hover:scale-105 duration-150" (click)="goToTrivia()">
+      <ion-icon class="icon" name="game-controller-outline"></ion-icon>
+    </button>
+  </div>
 </ion-app>

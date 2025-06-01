@@ -1,8 +1,10 @@
 export interface Trivia {
     id?: string;
+    type:'text' | 'image';
     question: string;
     options:Options[];
     correct: number;
+    imageUrl?:string
     // correct: boolean;
 }
 
