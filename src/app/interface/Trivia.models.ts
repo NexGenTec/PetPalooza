@@ -3,9 +3,9 @@ export interface Trivia {
     type:'text' | 'image';
     question: string;
     options:Options[];
-    correct: number;
+    correct: number; 
     imageUrl?:string
-    // correct: boolean;
+    level:string; //basic - medium - hard - expert
 }
 
 export interface Options {

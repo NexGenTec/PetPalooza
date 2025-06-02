@@ -1,0 +1,46 @@
+.bg-btn-trivia {
+background: linear-gradient(90deg, #aa46fc 0%, #3F5EFB 100%);
+}
+.bg-btn-trivia-lvl {
+background: linear-gradient(90deg, #3F5EFB 0%, #aa46fc 100%);
+}
+
+.bg-btn-trivia-two {
+background: linear-gradient(90deg, #d53369 0%, #da51c8 100%)
+}
+
+.bg-btn-trivia-lvl-two {
+background: linear-gradient(90deg, #da51c8 0%, #d53369 100%)
+}
+
+
+.bg-btn-trivia img,
+.bg-btn-trivia-two img {
+  animation: float 2s ease-in-out infinite;
+  
+}
+
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-5px); /* o +10px si quieres hacia abajo */
+  }
+};
+
+
+// @keyframes floating {
+//   0%, 100% {
+//     transform: translateY(0);
+//   }
+//   50% {
+//     transform: translateY(-6px);
+//   }
+// }
+
+// .animate-floating {
+//   animation: floating 2s ease-in-out infinite;
+// }

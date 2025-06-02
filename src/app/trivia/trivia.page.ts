@@ -19,6 +19,8 @@ export class TriviaPage implements OnInit {
   isCorrectAnswer: boolean = false;
   score: number = 0;
 
+  showLevelsQuiz: boolean = false
+  showLevelsBreed: boolean = false
 
   constructor(
     private firestores : FirestoreService,
@@ -29,6 +31,17 @@ export class TriviaPage implements OnInit {
   ngOnInit(): void {
 }
 
+toggleLevelsQuiz() {
+this.showLevelsQuiz =!this.showLevelsQuiz;
+}
+
+toggleLevelsBreed() {
+this.showLevelsBreed =!this.showLevelsBreed;
+}
+
+// goToLevel(level: string) {
+//   this.router.navigate(['/trivia/quiz', level]);
+// }
 
 goToBreed() {
   this.router.navigate(['/trivia-breed']);
