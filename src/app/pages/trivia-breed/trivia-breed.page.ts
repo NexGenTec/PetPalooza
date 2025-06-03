@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Trivia } from '../../interface/Trivia.models';
 import { FirestoreService } from '../../service/firestore.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute,Router } from '@angular/router';
 
 @Component({
   selector: 'app-trivia-breed',
@@ -19,12 +19,17 @@ export class TriviaBreedPage implements OnInit {
   score: number = 0;
 
   constructor(
+      private route: ActivatedRoute,
       private firestores : FirestoreService,
       private router: Router,
   ) { }
 
   ngOnInit() : void {
-    this.getQuestionsImageTrivia()
+    this.route.queryParams.subscribe(params => {
+      const level = params['level']|| 'basic';
+      this.getQuestionsImageTrivia(level)
+      
+    })
   }
 
   goToBreed() {
@@ -35,11 +40,11 @@ export class TriviaBreedPage implements OnInit {
     this.router.navigate(['/trivia-quiz']);
   };
 
-    getQuestionsImageTrivia(): void {
+    getQuestionsImageTrivia(level:string): void {
         this.firestores.getCollectionChanges<Trivia>('Trivia').subscribe(questions => {
           // console.log(questions, 'questions all')
   
-          const imgQuestions = questions.filter(q => q.type === 'image');
+          const imgQuestions = questions.filter(q => q.type === 'image' && q.level === level);
   
           if (imgQuestions && imgQuestions.length > 0) {
             this.questionsTrivia = imgQuestions;

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Trivia } from '../../interface/Trivia.models';
 import { FirestoreService } from '../../service/firestore.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 
 @Component({
@@ -21,13 +21,18 @@ export class TriviaQuizPage implements OnInit {
 
 
   constructor(
+    private route: ActivatedRoute,
     private firestores : FirestoreService,
     private router: Router,
 
   ) { }
 
   ngOnInit(): void {
-    this.getQuestionsTrivia();
+    this.route.queryParams.subscribe(params => {
+      const level = params['level'] || 'basic';
+      this.getQuestionsTrivia(level);
+
+    });
   }
 
 
@@ -39,11 +44,11 @@ goToQuiz() {
   this.router.navigate(['/trivia-quiz']);
 };
 
-  getQuestionsTrivia(): void {
+  getQuestionsTrivia(level:string): void {
       this.firestores.getCollectionChanges<Trivia>('Trivia').subscribe(questions => {
         // console.log(questions, 'questions all')
 
-        const textQuestions = questions.filter(q => q.type === 'text');
+        const textQuestions = questions.filter(q => q.type === 'text' && q.level === level);
         // console.log(textQuestions, 'questions')
 
         if (textQuestions && textQuestions.length > 0) {

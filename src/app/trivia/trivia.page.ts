@@ -39,17 +39,35 @@ toggleLevelsBreed() {
 this.showLevelsBreed =!this.showLevelsBreed;
 }
 
-// goToLevel(level: string) {
-//   this.router.navigate(['/trivia/quiz', level]);
-// }
+goToLevel(level: string) {
+  this.router.navigate(['/trivia/quiz', level]);
+}
 
-goToBreed() {
-  this.router.navigate(['/trivia-breed']);
+getQuestionsByLevel(level: 'basic' | 'medium' | 'hard'): void {
+  this.firestores.getCollectionChanges<Trivia>('Trivia').subscribe(questions => {
+    const filteredQuestions = questions.filter(q => q.type === 'text' && q.level === level);
+    console.log(`Preguntas nivel ${level}:`, filteredQuestions);
+
+    if (filteredQuestions.length > 0) {
+      this.questionsTrivia = filteredQuestions;
+      this.currentQuestionIndex = 0;
+      this.currentQuestion = this.questionsTrivia[0];
+    }
+  });
+}
+
+
+
+goToBreed(level:string) {
+  this.router.navigate(['/trivia-breed'], {queryParams: {level}});
 };
   
-goToQuiz() {
-  this.router.navigate(['/trivia-quiz']);
+goToQuiz(level: string) {
+  this.router.navigate(['/trivia-quiz'], {queryParams:{level}
+  });
 };
+
+
 
 
 }
