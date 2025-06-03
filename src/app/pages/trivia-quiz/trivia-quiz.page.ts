@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Trivia } from '../../interface/Trivia.models';
 import { FirestoreService } from '../../service/firestore.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AdmobAds, BannerPosition, BannerSize, } from 'capacitor-admob-ads';
+import { environment } from 'src/environments/environment.prod';
 
 
 @Component({
@@ -72,10 +74,10 @@ goToQuiz() {
 
     this.showAnswerFeedback = true;
 
-    // Avanza después de 1.5 segundos
+    // Avanza después de 1.8 segundos
     setTimeout(() => {
       this.nextQuestion();
-    }, 1500);
+    }, 1800);
   }
 
   nextQuestion() {
@@ -91,6 +93,32 @@ goToQuiz() {
       this.currentQuestionIndex = 0;
       this.score = 0;
       this.currentQuestion = this.questionsTrivia[0];
+    }
+  }
+
+
+    /*Anuncio Banner  */
+  async showAdaptiveBanner() {
+    try {
+      await AdmobAds.showBannerAd({
+        adId: environment.adId,
+        isTesting: false,
+        adSize: BannerSize.FULL_BANNER,
+        adPosition: BannerPosition.TOP
+      });
+      console.log('Banner adaptable (Full Banner) mostrado correctamente');
+
+      // Cerrar el banner después de cierto tiempo o evento
+      setTimeout(async () => {
+        try {
+          await AdmobAds.removeBannerAd();
+          console.log('Banner adaptable (Full Banner) cerrado correctamente');
+        } catch (error) {
+          console.error('Error al cerrar el banner adaptable (Full Banner)', error);
+        }
+      }, 10000); // Ejemplo: cerrar el banner después de 10 segundos
+    } catch (error) {
+      console.error('Error al mostrar el banner adaptable (Full Banner)', error);
     }
   }
 }
