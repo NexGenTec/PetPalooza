@@ -20,7 +20,7 @@
 
       </div>
     </div>
-  <section class="max-w-5xl w-full mx-auto">    
+  <section class="max-w-5xl w-full mx-auto relative">    
       <div *ngIf="currentQuestion" class="p-4" >
         <h6 class="bg-gray-50 text-3xl font-semibold py-3 text-black text-center" >
           <ion-card-title>{{ currentQuestion.question }}</ion-card-title>
@@ -47,6 +47,16 @@
     <ion-text class="ion-padding">
       Pregunta {{ currentQuestionIndex + 1 }} de {{ questionsTrivia.length }}
     </ion-text>
+
+      <div *ngIf="showFinalResult" class="animate-fade-in absolute inset-0 w-full h-full bg-gray-50 rounded-xl text-center p-4 mt-10">
+        <h2 class="text-2xl font-bold text-sky-600 mb-4">Resultado Final</h2>
+        <img *ngIf="finalGif" [src]="finalGif" alt="Resultado" class="mx-auto rounded-xl mt-4 w-48 h-48 object-cover shadow-lg" />
+        <p class="text-xl mb-2">{{ finalMessage }}</p>
+        <p class="text-lg text-gray-700 mb-4">Puntaje: {{ score }} / {{ questionsTrivia.length }}</p>
+        <button (click)="restartQuiz()" class="bg-sky-500 hover:bg-sky-600 text-white py-2 px-6 rounded-xl mt-4">
+          Volver a Intentar
+        </button>
+      </div>
 
 
     <div class="mt-10 px-3">
