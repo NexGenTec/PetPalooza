@@ -50,7 +50,15 @@ goToQuiz() {
   this.router.navigate(['/trivia-quiz']);
 };
 
-  getQuestionsTrivia(level:string): void {
+randomArray(array : any []){
+  for (let i = array.length - 1; i > 0; i--){
+    const j =Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+}
+
+getQuestionsTrivia(level:string): void {
       this.firestores.getCollectionChanges<Trivia>('Trivia').subscribe(questions => {
         // console.log(questions, 'questions all')
 
@@ -58,7 +66,11 @@ goToQuiz() {
         // console.log(textQuestions, 'questions')
 
         if (textQuestions && textQuestions.length > 0) {
-          this.questionsTrivia = textQuestions;
+          const shuffled = this.randomArray([...textQuestions]);
+          const selected = shuffled.slice(0,6);
+
+
+          this.questionsTrivia = selected;
           this.currentQuestionIndex = 0;
           this.currentQuestion = this.questionsTrivia[0];
           // this.showRandomQuirkyFact();
@@ -113,6 +125,8 @@ nextQuestion(){
   }
 };
 
+
+
 generateFinalMessage(){
   const total = this.questionsTrivia.length;
   const percent = (this.score / total) * 100;
@@ -140,6 +154,9 @@ restartQuiz() {
   this.showFinalResult = false;
   this.selectedOptionIndex = null;
   this.showAnswerFeedback = false;
+
+  const level = this.route.snapshot.queryParamMap.get('level') || 'basic';
+  this.getQuestionsTrivia(level);
 }
 
 

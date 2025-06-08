@@ -46,14 +46,26 @@ export class TriviaBreedPage implements OnInit {
     this.router.navigate(['/trivia-quiz']);
   };
 
-    getQuestionsImageTrivia(level:string): void {
+  randomArray(array : any []){
+  for (let i = array.length - 1; i > 0; i--){
+    const j =Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+}
+
+  getQuestionsImageTrivia(level:string): void {
         this.firestores.getCollectionChanges<Trivia>('Trivia').subscribe(questions => {
           // console.log(questions, 'questions all')
   
           const imgQuestions = questions.filter(q => q.type === 'image' && q.level === level);
   
           if (imgQuestions && imgQuestions.length > 0) {
-            this.questionsTrivia = imgQuestions;
+
+            const shuffled = this.randomArray([...imgQuestions]);
+            const selected = shuffled.slice(0, 2);
+
+            this.questionsTrivia = selected;
             this.currentQuestionIndex = 0;
             this.currentQuestion = this.questionsTrivia[0];
           }
@@ -126,6 +138,9 @@ restartQuiz() {
   this.showFinalResult = false;
   this.selectedOptionIndex = null;
   this.showAnswerFeedback = false;
+
+ const level = this.route.snapshot.queryParamMap.get('level') || 'basic';
+ this.getQuestionsImageTrivia(level);
 }
 
 
