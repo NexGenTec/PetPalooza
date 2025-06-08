@@ -16,20 +16,20 @@
       <div class=" w-full rounded-[20px] px-8 pt-4 text-center">
         <h1 class="pb-2 text-3xl font-semibold">Pon aprueba tus conocimientos </h1>
         <!-- <span class="bg-blue-400 mx-auto mb-4 inline-block h-1 w-[90px] rounded"></span> -->
-        <small class="text-sm text-center ">Categoria razas</small>
+        <small class="text-sm text-center tracking-widest ">Categoria razas</small>
 
       </div>
     </div>
   <section class="max-w-5xl w-full mx-auto">    
-      <div *ngIf="currentQuestion" class="p-4" >
-        <img [src]="currentQuestion.imageUrl" class="w-full h-80 object-cover rounded-md"/>
-        <p class="bg-gray-50 text-3xl font-semibold py-3 text-black text-center" >
-          <ion-card-title>{{ currentQuestion.question }}</ion-card-title>
+      <div *ngIf="currentQuestion" class="py-4 px-2 mt-4" >
+        <img [src]="currentQuestion.imageUrl" class="w-full h-72 object-cover rounded-sm"/>
+        <p class="bg-gray-50 text-3xl font-semibold py-2 text-black text-center" >
+          {{ currentQuestion.question }}
         </p>
 
-        <div class="bg-gray-50 my-2">
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <button class="rounded-xl px-4 py-2 items-center w-80 h-20 bg-sky-400 text-gray-50 text-lg cursor-pointer hover:scale-105 duration-100"
+        <div class="bg-gray-50 mt-2 ">
+          <div class="grid grid-cols-2 md:grid-cols-2 gap-2">
+            <button class="rounded-md px-4 py-2 items-center w-full h-20 overflow-y-auto bg-sky-400 text-gray-50 text-lg cursor-pointer hover:scale-105 duration-100"
               *ngFor="let option of currentQuestion.options; index as i"
               (click)="selectOption(i)"
               [ngClass]="{
@@ -49,7 +49,21 @@
       Pregunta {{ currentQuestionIndex + 1 }} de {{ questionsTrivia.length }}
     </ion-text>
 
-   <div class="mt-10 px-3">
+  <div *ngIf="showFinalResult"
+  class="animate-fade-in absolute inset-0 w-full h-full bg-gray-50 rounded-xl text-center p-4 mt-10"
+  >
+        <h2 class="text-2xl font-bold text-sky-600 mb-4">Resultado Final</h2>
+        <img *ngIf="finalGif" [src]="finalGif" alt="Resultado" class="mx-auto rounded-lg mt-4 w-48 h-48 object-cover shadow-lg mb-2" />
+        <p class="text-xl mb-2 mt-1">{{ finalMessage }}</p>
+        <p class="text-lg text-gray-700 mb-4">Puntaje: {{ score }} / {{ questionsTrivia.length }}</p>
+        <button (click)="restartQuiz()" class="bg-sky-500 hover:bg-sky-600 text-white py-2 px-6 rounded-xl mt-4">
+          Volver a Intentar
+        </button>
+
+  </div>
+
+
+   <!-- <div class="mt-10 px-3">
      <p>Más juegos</p>
          <div class="mt-2 flex flex-col md:flex-row gap-4 justify-center items-center">
           <button class="rounded-xl px-4 py-2 items-center w-80 h-[100px] bg-green-400 text-gray-50 text-xl cursor-pointer hover:scale-105 duration-100"
@@ -64,7 +78,7 @@
           </button>
       
     </div>
-   </div>
+   </div> -->
 
 
   </section>
