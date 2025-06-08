@@ -63,7 +63,7 @@ export class TriviaBreedPage implements OnInit {
           if (imgQuestions && imgQuestions.length > 0) {
 
             const shuffled = this.randomArray([...imgQuestions]);
-            const selected = shuffled.slice(0, 2);
+            const selected = shuffled.slice(0, 8);
 
             this.questionsTrivia = selected;
             this.currentQuestionIndex = 0;
