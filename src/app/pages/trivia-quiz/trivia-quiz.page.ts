@@ -26,6 +26,8 @@ export class TriviaQuizPage implements OnInit {
   finalGif: string = '';
 
 
+  animate: boolean = false;
+
   constructor(
     private route: ActivatedRoute,
     private firestores : FirestoreService,
@@ -112,17 +114,32 @@ getQuestionsTrivia(level:string): void {
   //   }
   // }
 nextQuestion(){
-   this.currentQuestionIndex++;
+    this.currentQuestionIndex++;
     this.selectedOptionIndex = null;
     this.showAnswerFeedback = false;
+    this.animate = false;
 
-  if(this.currentQuestionIndex < this.questionsTrivia.length){
+
+  setTimeout (() => {
+    if(this.currentQuestionIndex < this.questionsTrivia.length){
     this.currentQuestion = this.questionsTrivia[this.currentQuestionIndex];
+
+    this.animate = true;
   }else {
     //Mostrar resultado
     this.showFinalResult = true;
     this.generateFinalMessage();
   }
+}, 50);
+
+  // if(this.currentQuestionIndex < this.questionsTrivia.length){
+  //   this.currentQuestion = this.questionsTrivia[this.currentQuestionIndex];
+  //   this.animate = true;
+  // }else {
+  //   //Mostrar resultado
+  //   this.showFinalResult = true;
+  //   this.generateFinalMessage();
+  // }
 };
 
 

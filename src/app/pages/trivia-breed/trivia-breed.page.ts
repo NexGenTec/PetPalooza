@@ -24,6 +24,12 @@ export class TriviaBreedPage implements OnInit {
   finalMessage: string = '';
   finalGif: string = '';
 
+  isLoading:boolean = true;
+  animate: boolean = false;
+
+
+
+
   constructor(
       private route: ActivatedRoute,
       private firestores : FirestoreService,
@@ -46,6 +52,19 @@ export class TriviaBreedPage implements OnInit {
     this.router.navigate(['/trivia-quiz']);
   };
 
+
+  // loadQuestion() {
+  // this.isLoading = true;
+  // console.log('Carga terminada, isLoading:', this.isLoading);
+  // setTimeout(() => {
+  //       this.currentQuestionIndex++;
+  //       this.currentQuestion = this.questionsTrivia[this.currentQuestionIndex];
+  //       this.isLoading = false;
+  //     }, 400); // Pequeña pausa para mostrar el loader (opcional)
+  //   }
+
+    
+
   randomArray(array : any []){
   for (let i = array.length - 1; i > 0; i--){
     const j =Math.floor(Math.random() * (i + 1));
@@ -55,6 +74,8 @@ export class TriviaBreedPage implements OnInit {
 }
 
   getQuestionsImageTrivia(level:string): void {
+        this.isLoading = true;
+
         this.firestores.getCollectionChanges<Trivia>('Trivia').subscribe(questions => {
           // console.log(questions, 'questions all')
   
@@ -68,6 +89,9 @@ export class TriviaBreedPage implements OnInit {
             this.questionsTrivia = selected;
             this.currentQuestionIndex = 0;
             this.currentQuestion = this.questionsTrivia[0];
+
+          this.isLoading = false;
+
           }
         });
       }
@@ -92,24 +116,33 @@ export class TriviaBreedPage implements OnInit {
   }
 
   nextQuestion() {
-    this.currentQuestionIndex++;
     this.selectedOptionIndex = null;
     this.showAnswerFeedback = false;
+    // this.isLoading = true;
+    this.currentQuestionIndex++;
+    this.animate = false
+    
+          // if (this.currentQuestionIndex < this.questionsTrivia.length) {
+          //   this.currentQuestion = this.questionsTrivia[this.currentQuestionIndex];
+          // }else {
+          //   // Juego terminado
+          //   this.showFinalResult = true;
+          //   this.generateFinalMessage();
+          // }
+      setTimeout(() => {
+            
+            if (this.currentQuestionIndex < this.questionsTrivia.length) {
+            this.currentQuestion = this.questionsTrivia[this.currentQuestionIndex];
+            // this.currentQuestionIndex++;
 
-    if (this.currentQuestionIndex < this.questionsTrivia.length) {
-      this.currentQuestion = this.questionsTrivia[this.currentQuestionIndex];
-    }else {
-      // Juego terminado
-      this.showFinalResult = true;
-      this.generateFinalMessage();
-    }
-      // } else {
-      //   // Juego terminado
-      //   alert(`¡Juego terminado! Tu puntaje: ${this.score}/${this.questionsTrivia.length}`);
-      //   this.currentQuestionIndex = 0;
-      //   this.score = 0;
-      //   this.currentQuestion = this.questionsTrivia[0];
-      // }
+            this.animate = true;
+          }else {
+            // Juego terminado
+            this.showFinalResult = true;
+            this.generateFinalMessage();
+          }
+
+      }, 50);
   }
 
   generateFinalMessage(){
