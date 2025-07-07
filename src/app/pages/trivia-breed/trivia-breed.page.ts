@@ -90,7 +90,7 @@ export class TriviaBreedPage implements OnInit {
             this.currentQuestionIndex = 0;
             this.currentQuestion = this.questionsTrivia[0];
 
-          this.isLoading = false;
+            this.isLoading = false;
 
           }
         });
@@ -109,16 +109,15 @@ export class TriviaBreedPage implements OnInit {
 
     this.showAnswerFeedback = true;
 
-    // Avanza después de 1.5 segundos
+    // Avanza después de 1.8 segundos
     setTimeout(() => {
       this.nextQuestion();
-    }, 1500);
+    }, 1800);
   }
 
   nextQuestion() {
     this.selectedOptionIndex = null;
     this.showAnswerFeedback = false;
-    // this.isLoading = true;
     this.currentQuestionIndex++;
     this.animate = false
     
@@ -196,7 +195,7 @@ restartQuiz() {
         } catch (error) {
           console.error('Error al cerrar el banner adaptable (Full Banner)', error);
         }
-      }, 10000); // Ejemplo: cerrar el banner después de 10 segundos
+      }, 12000); // Ejemplo: cerrar el banner después de 10 segundos
     } catch (error) {
       console.error('Error al mostrar el banner adaptable (Full Banner)', error);
     }

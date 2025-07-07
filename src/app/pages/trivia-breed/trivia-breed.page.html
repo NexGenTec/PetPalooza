@@ -21,7 +21,7 @@
       </div>
     </div>
   <section class="max-w-5xl w-full mx-auto">    
-    <!-- Skeleton de carga -->
+      <!-- Skeleton de carga -->
       <div *ngIf="isLoading" class=" space-y-4 p-4 animate-pulse" >
         <div class="w-full h-72 bg-gray-300 rounded"></div>
         <div class="h-6 w-3/4 bg-gray-300 mx-auto rounded"></div>
@@ -32,6 +32,7 @@
           <div class="h-20 bg-gray-300 rounded-md"></div>
         </div>
       </div>
+      <!-- End Skeleton de carga -->
       <div *ngIf="!isLoading && currentQuestion" class="question-container py-4 px-2 mt-4" [ngClass]="{'fade-in': animate}" >
         <img [src]="currentQuestion.imageUrl" class="w-full h-72 object-cover rounded-sm"/>
         <p class="bg-gray-50 text-3xl font-semibold py-2 text-black text-center" >

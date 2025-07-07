@@ -25,6 +25,7 @@ export class TriviaQuizPage implements OnInit {
   finalMessage: string =  '';
   finalGif: string = '';
 
+  isLoading: boolean = true;
 
   animate: boolean = false;
 
@@ -61,6 +62,7 @@ randomArray(array : any []){
 }
 
 getQuestionsTrivia(level:string): void {
+      this.isLoading = true
       this.firestores.getCollectionChanges<Trivia>('Trivia').subscribe(questions => {
         // console.log(questions, 'questions all')
 
@@ -76,6 +78,8 @@ getQuestionsTrivia(level:string): void {
           this.currentQuestionIndex = 0;
           this.currentQuestion = this.questionsTrivia[0];
           // this.showRandomQuirkyFact();
+
+          this.isLoading = false;
         }
       });
     }
@@ -198,7 +202,7 @@ restartQuiz() {
         } catch (error) {
           console.error('Error al cerrar el banner adaptable (Full Banner)', error);
         }
-      }, 10000); // Ejemplo: cerrar el banner después de 10 segundos
+      }, 12000); // Ejemplo: cerrar el banner después de 10 segundos
     } catch (error) {
       console.error('Error al mostrar el banner adaptable (Full Banner)', error);
     }

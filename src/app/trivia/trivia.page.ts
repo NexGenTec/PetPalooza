@@ -25,6 +25,8 @@ export class TriviaPage implements OnInit {
   showLevelsQuiz: boolean = false
   showLevelsBreed: boolean = false
 
+  isLoading:boolean = true
+
   constructor(
     private firestores : FirestoreService,
     private router: Router,
@@ -47,14 +49,19 @@ goToLevel(level: string) {
 }
 
 getQuestionsByLevel(level: 'basic' | 'medium' | 'hard'): void {
+  this.isLoading = true;
+
+
   this.firestores.getCollectionChanges<Trivia>('Trivia').subscribe(questions => {
     const filteredQuestions = questions.filter(q => q.type === 'text' && q.level === level);
-    console.log(`Preguntas nivel ${level}:`, filteredQuestions);
+    // console.log(`Preguntas nivel ${level}:`, filteredQuestions);
 
     if (filteredQuestions.length > 0) {
       this.questionsTrivia = filteredQuestions;
       this.currentQuestionIndex = 0;
       this.currentQuestion = this.questionsTrivia[0];
+
+      this.isLoading = false;
     }
   });
 }
