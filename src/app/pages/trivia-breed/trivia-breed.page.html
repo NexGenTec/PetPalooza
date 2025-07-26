@@ -34,7 +34,7 @@
       </div>
       <!-- End Skeleton de carga -->
       <div *ngIf="!isLoading && currentQuestion" class="question-container py-4 px-2 mt-4" [ngClass]="{'fade-in': animate}" >
-        <img [src]="currentQuestion.imageUrl" class="w-full h-72 object-cover rounded-sm"/>
+        <img [src]="currentQuestion.imageUrl" class="w-full h-96 object-cover rounded-sm"/>
         <p class="bg-gray-50 text-3xl font-semibold py-2 text-black text-center" >
           {{ currentQuestion.question }}
         </p>
@@ -62,7 +62,7 @@
     </ion-text>
 
   <div *ngIf="showFinalResult"
-  class="animate-fade-in absolute inset-0 w-full h-full bg-gray-50 rounded-xl text-center p-4 mt-10"
+  class="animate-fade-in absolute top-10 inset-0 w-full h-full bg-gray-50 rounded-xl text-center p-4 mt-10"
   >
         <h2 class="text-2xl font-bold text-sky-600 mb-4">Resultado Final</h2>
         <img *ngIf="finalGif" [src]="finalGif" alt="Resultado" class="mx-auto rounded-lg mt-4 w-48 h-48 object-cover shadow-lg mb-2" />
