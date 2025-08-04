@@ -15,7 +15,7 @@
         <h1 class="pb-2 text-2xl md:text-3xl font-medium">Refugios / Fundaciones</h1>
         <span class="bg-blue-400 mx-auto mb-4 inline-block h-1 w-[90px] rounded"></span>
       </div>
-       <!--<section class="grid grid-cols-1 gap-y-6 mb-6">
+       <section class="grid grid-cols-1 gap-y-6 mb-6">
         <article 
           *ngFor="let fundacion of fundaciones; let i = index"
           class="w-full rounded-3xl p-5 relative"
@@ -50,7 +50,7 @@
           <hr class="border-gray-300 my-3"/>
           <footer class="flex justify-center min-[338px]:justify-between items-center flex-wrap gap-y-1">
             <div class="flex items-center gap-1" [ngStyle]="{'color': colorsCards[i % colorsCards.length].text}">
-                <a (click)="refugio(fundacion.social.instagram)" rel="noopener noreferrer"  class="cursor-pointer">
+                <a [href]="refugio(fundacion.social.instagram)" target="_blank" rel="noopener noreferrer"  class="cursor-pointer">
                   <svg  
                   xmlns="http://www.w3.org/2000/svg" 
                   width="24"  
@@ -68,7 +68,7 @@
                   <path d="M16.5 7.5l0 .01" />
                 </svg>
                </a>
-              <a (click)="refugio(fundacion.social.whatsApp)" rel="noopener noreferrer"  class="cursor-pointer">
+              <a [href]="refugio(fundacion.social.whatsApp)" target="_blank" rel="noopener noreferrer"  class="cursor-pointer">
                 <svg  
                   xmlns="http://www.w3.org/2000/svg" 
                   width="24"  
@@ -85,7 +85,7 @@
                   <path d="M9 10a.5 .5 0 0 0 1 0v-1a.5 .5 0 0 0 -1 0v1a5 5 0 0 0 5 5h1a.5 .5 0 0 0 0 -1h-1a.5 .5 0 0 0 0 1" />
                 </svg>
                </a>
-              <a (click)="refugio(fundacion.social.facebook)" rel="noopener noreferrer"  class="cursor-pointer">
+              <a [href]="refugio(fundacion.social.facebook)" target="_blank" rel="noopener noreferrer"  class="cursor-pointer">
                 <svg  
                   xmlns="http://www.w3.org/2000/svg" 
                   width="24"  
@@ -111,7 +111,7 @@
             <img class="w-16 hover:scale-110 duration-300 rounded-full drop-shadow-lg" [src]="fundacion.logo" />
           </section>
         </article>
-      </section>--> 
+      </section>
 
     <!--ads local--> 
     <div id="myAds" class="grid grid-cols-3 gap-3 h-36 mb-12">
