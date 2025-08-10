@@ -102,7 +102,7 @@
           <img *ngIf="finalGif" [src]="finalGif" class="mx-auto w-40 h-40 rounded-full shadow" />
           <p class="text-xl mt-2">{{ finalMessage }}</p>
           <p class="text-gray-700">Puntaje: {{ score }} / {{ questionsTrivia.length }}</p>
-          <button class="mt-4 bg-purple-600 hover:bg-purple-700 text-white py-2 px-6 rounded-xl shadow-md transition">
+          <button  (click)="restartQuiz()" class="mt-4 bg-purple-600 hover:bg-purple-700 text-white py-2 px-6 rounded-xl shadow-md transition">
             Volver a Intentar
           </button>
         </div>
