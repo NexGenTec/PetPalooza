@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Trivia } from '../../interface/Trivia.models';
+import { TriviaResult } from '../../interface/TriviaResult.models';
 import { FirestoreService } from '../../service/firestore.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AdmobAds, BannerPosition, BannerSize, } from 'capacitor-admob-ads';
@@ -14,6 +15,7 @@ import { environment } from 'src/environments/environment.prod';
 export class TriviaQuizPage implements OnInit {
 
   questionsTrivia: Trivia[] = [];
+  resultsList: TriviaResult[] = [];
   currentQuestionIndex: number = 0;
   currentQuestion!: Trivia;
   selectedOptionIndex: number | null = null;
@@ -89,6 +91,19 @@ getQuestionsTrivia(level:string): void {
 
     this.selectedOptionIndex = index;
     this.isCorrectAnswer = index === this.currentQuestion.correct;
+
+    // Guardar resultado en el arreglo
+    const selectedText = this.currentQuestion.options[index].option;
+    const correctText = this.currentQuestion.options[this.currentQuestion.correct].option;
+
+    this.resultsList.push({
+      question: this.currentQuestion.question,
+      image: "",
+      wasCorrect: this.isCorrectAnswer,
+      selectedAnswer: selectedText,
+      correctAnswer: correctText,
+      explainAnswer: 'Aqui habra una explicacion'
+    });
 
     if (this.isCorrectAnswer) {
       this.score++;
@@ -175,6 +190,8 @@ restartQuiz() {
   this.showFinalResult = false;
   this.selectedOptionIndex = null;
   this.showAnswerFeedback = false;
+  this.resultsList = [];
+
 
   const level = this.route.snapshot.queryParamMap.get('level') || 'basic';
   this.getQuestionsTrivia(level);

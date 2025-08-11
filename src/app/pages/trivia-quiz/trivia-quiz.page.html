@@ -119,7 +119,26 @@
         <button (click)="restartQuiz()" class="bg-sky-500 hover:bg-sky-600 text-white py-2 px-6 rounded-xl mt-4">
           Volver a Intentar
         </button>
+
+        <div class="animate-fade-in mt-6 text-left overflow-y-auto h-96">
+            <h3 class="text-xl font-bold mb-2">📋 Resumen de tus respuestas:</h3>
+            <ul class="space-y-3 ">
+              <li *ngFor="let result of resultsList" class="p-3 rounded-lg shadow bg-white">
+                <div class="flex flex-col gap-3 mb-2">
+                  <p class="font-semibold">Pregunta: {{ result.question }}</p>
+                  <p class="font-semibold">Explicación: {{ result.explainAnswer }}</p>
+                </div>
+                <p *ngIf="result.wasCorrect" class="text-green-600">✅ Correcta ({{ result.selectedAnswer }})</p>
+                <p *ngIf="!result.wasCorrect" class="text-red-600">
+                  ❌ Incorrecta (Tu respuesta: {{ result.selectedAnswer }})<br>
+                  ✅ Respuesta correcta: {{ result.correctAnswer }}
+                </p>
+              </li>
+            </ul>
+          </div>
       </div>
+
+      
 
 
 </ion-content>

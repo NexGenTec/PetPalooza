@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Trivia } from '../../interface/Trivia.models';
+import { TriviaResult } from '../../interface/TriviaResult.models';
 import { FirestoreService } from '../../service/firestore.service';
 import { ActivatedRoute,Router } from '@angular/router';
 import { AdmobAds, BannerPosition, BannerSize, } from 'capacitor-admob-ads';
@@ -13,6 +14,7 @@ import { environment } from 'src/environments/environment.prod';
 export class TriviaBreedPage implements OnInit {
 
   questionsTrivia: Trivia[] = [];
+  resultsList: TriviaResult[] = [];
   currentQuestionIndex: number = 0;
   currentQuestion!: Trivia;
   selectedOptionIndex: number | null = null;
@@ -84,7 +86,7 @@ export class TriviaBreedPage implements OnInit {
           if (imgQuestions && imgQuestions.length > 0) {
 
             const shuffled = this.randomArray([...imgQuestions]);
-            const selected = shuffled.slice(0, 6);
+            const selected = shuffled.slice(0, 2);
 
             this.questionsTrivia = selected;
             this.currentQuestionIndex = 0;
@@ -102,6 +104,19 @@ export class TriviaBreedPage implements OnInit {
 
     this.selectedOptionIndex = index;
     this.isCorrectAnswer = index === this.currentQuestion.correct;
+
+    // Guardar resultado en el arreglo
+    const selectedText = this.currentQuestion.options[index].option;
+    const correctText = this.currentQuestion.options[this.currentQuestion.correct].option;
+
+    this.resultsList.push({
+      question: this.currentQuestion.question,
+      image: this.currentQuestion.imageUrl,
+      wasCorrect: this.isCorrectAnswer,
+      selectedAnswer: selectedText,
+      correctAnswer: correctText,
+      explainAnswer: ''
+    });
 
     if (this.isCorrectAnswer) {
       this.score++;
@@ -170,6 +185,7 @@ restartQuiz() {
   this.showFinalResult = false;
   this.selectedOptionIndex = null;
   this.showAnswerFeedback = false;
+  this.resultsList = [];
 
  const level = this.route.snapshot.queryParamMap.get('level') || 'basic';
  this.getQuestionsImageTrivia(level);

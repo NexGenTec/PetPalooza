@@ -95,18 +95,37 @@
 
 
         <div *ngIf="showFinalResult"
-            class="animate-fade-in absolute top-10 inset-0 w-full h-full bg-gray-50 rounded-xl text-center p-4 mt-10"
+            class="animate-fade-in absolute top-10 inset-0 w-full h-full rounded-xl text-center p-2 mt-10 bg-gray-50"
             >
-        <div class="mt-8 bg-white/80 backdrop-blur-lg rounded-2xl p-6 text-center shadow-lg animate-fade-in">
-          <h2 class="text-3xl font-bold text-green-600 mb-4">🎉 ¡Resultado Final!</h2>
-          <img *ngIf="finalGif" [src]="finalGif" class="mx-auto w-40 h-40 rounded-full shadow" />
-          <p class="text-xl mt-2">{{ finalMessage }}</p>
-          <p class="text-gray-700">Puntaje: {{ score }} / {{ questionsTrivia.length }}</p>
-          <button  (click)="restartQuiz()" class="mt-4 bg-purple-600 hover:bg-purple-700 text-white py-2 px-6 rounded-xl shadow-md transition">
-            Volver a Intentar
-          </button>
+          <div class="mt-8 backdrop-blur-lg rounded-2xl p-4 md:p-6 text-centershadow-lg  animate-fade-in">
+            <h2 class="text-3xl font-bold text-green-600 mb-4">🎉 ¡Resultado Final!</h2>
+            <img *ngIf="finalGif" [src]="finalGif" class="mx-auto w-40 h-40 rounded-full shadow" />
+            <p class="text-lg mt-2">{{ finalMessage }}</p>
+            <p class="text-gray-700">Puntaje: {{ score }} / {{ questionsTrivia.length }}</p>
+            <button  (click)="restartQuiz()" class="mt-4 bg-purple-600 hover:bg-purple-700 text-white py-2 px-6 rounded-xl shadow-md transition">
+              Volver a Intentar
+            </button>
+          </div>
+          
+          <div class="animate-fade-in mt-6 text-left overflow-y-auto h-96">
+            <h3 class="text-xl font-bold mb-2">📋 Resumen de tus respuestas:</h3>
+            <ul class="space-y-3 ">
+              <li *ngFor="let result of resultsList" class="p-3 rounded-lg shadow bg-white">
+                <div class="flex flex-row gap-6 md:gap-3 items-center">
+                  <p class="font-semibold">Pregunta: {{ result.question }}</p>
+                  <img [src]="result.image" class="w-20 h-20  md:max-h-lg object-center object-cover rounded-full"/>
+
+                </div>
+                <p *ngIf="result.wasCorrect" class="text-green-600">✅ Correcta ({{ result.selectedAnswer }})</p>
+                <p *ngIf="!result.wasCorrect" class="text-red-600">
+                  ❌ Incorrecta (Tu respuesta: {{ result.selectedAnswer }})<br>
+                  ✅ Respuesta correcta: {{ result.correctAnswer }}
+                </p>
+              </li>
+            </ul>
+          </div>
         </div>
-        </div>
+
 
     <!-- <div *ngIf="showFinalResult"
     class="animate-fade-in absolute top-10 inset-0 w-full h-full bg-gray-50 rounded-xl text-center p-4 mt-10"
