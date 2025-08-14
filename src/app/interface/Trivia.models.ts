@@ -6,6 +6,7 @@ export interface Trivia {
     correct: number; 
     imageUrl?:string
     level:string; //basic - medium - hard - expert
+    explanation:string
 }
 
 export interface Options {

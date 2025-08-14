@@ -102,7 +102,7 @@ getQuestionsTrivia(level:string): void {
       wasCorrect: this.isCorrectAnswer,
       selectedAnswer: selectedText,
       correctAnswer: correctText,
-      explainAnswer: 'Aqui habra una explicacion'
+      explainAnswer: this.currentQuestion.explanation
     });
 
     if (this.isCorrectAnswer) {
