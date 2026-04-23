@@ -1,8 +1,26 @@
 <ion-app >
   <ion-router-outlet></ion-router-outlet>
+
+  <!-- Botón Asistente IA (arriba) -->
+  <div class="fixed bottom-[140px] right-5 z-50 group">
+    <button 
+      class="btn-asistente items-center text-3xl bg-gradient-to-br from-teal-400 to-cyan-500 text-white border border-2 border-teal-300 rounded-full group-hover:scale-105 duration-150 shadow-lg p-3"
+      (click)="goToAsistente()">
+      <img 
+        src="https://vetassistantai.com/logo.png" 
+        alt="Asistente IA" 
+        class="w-9 h-9 rounded-sm">
+    </button>
+  
+    <!-- Tooltip opcional -->
+    <span class="absolute right-full mr-3 top-1/2 -translate-y-1/2 bg-black text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition whitespace-nowrap">
+      Asistente veterinario IA
+    </span>
+  </div>
    <!-- Botón flotante global -->
   <div class="fixed bottom-[73px] right-6 z-50 group">
-    <button class="btn-trivia items-center text-3xl bg-black text-gray-50 rounded-full group-hover:scale-105 duration-150" (click)="goToTrivia()">
+    <button class="btn-trivia items-center text-3xl bg-black text-gray-50 rounded-full group-hover:scale-105 duration-150" 
+    (click)="goToTrivia()">
       <ion-icon class="icon" name="game-controller-outline"></ion-icon>
     </button>
   </div>

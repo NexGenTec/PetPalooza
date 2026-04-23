@@ -39,6 +39,10 @@ goToTrivia() {
   this.router.navigate(['/trivia']);
 }
 
+goToAsistente() {
+  this.router.navigate(['/asistente']);
+}
+
   async alertExit() {
     const alert = await this.alertCtrl.create({
       header: 'Salir de la aplicación',
