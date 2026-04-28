@@ -8,13 +8,25 @@
   </a>
 </ion-header>
 
-<ion-content [fullscreen]="true" class="asistente-content">
-  <div class="iframe-wrapper">
+<ion-content [fullscreen]="true" class="asistente-content" [scrollY]="false">
+  <div class="iframe-wrapper" lang="es">
+    <div class="loading-overlay" *ngIf="isLoading">
+      <ion-spinner name="crescent"></ion-spinner>
+      <p>Cargando asistente veterinario...</p>
+    </div>
+    
     <iframe
       [src]="chatUrl"
       class="chat-frame"
-      allow="clipboard-write"
-      title="VetAssistant AI Chat">
+      allow="clipboard-write; microphone; camera; autoplay; encrypted-media; fullscreen; web-share"
+      title="Asistente Veterinario IA en Español"
+      sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-top-navigation-by-user-activation allow-pointer-lock allow-downloads allow-modals"
+      (load)="onIframeLoad()"
+      loading="eager"
+      lang="es"
+      data-language="es"
+      data-locale="es-ES"
+      referrerpolicy="no-referrer-when-downgrade">
     </iframe>
   </div>
 </ion-content>
